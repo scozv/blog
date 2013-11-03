@@ -63,3 +63,12 @@
   background: #57A957;
   border: 1px solid #4c964d;
   color: #FFF; }
+
+/* Summary in index.md */
+.summary-title {
+  font-size: 1.4em;
+  font-weight: bold; }
+
+.summary-time {
+  font-size: 1.0em;
+  font-style: italic; }
