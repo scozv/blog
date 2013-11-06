@@ -23,11 +23,9 @@ To speed up the finding minimum length of path in each stage in Dijkstra shortes
 
 {% gist 6200004 %}
 
-It sounds easy, however the 1st revision of `dijkstra()` in Algo.js is failed to update heap correctly.
+It sounds easy, however the 1st revision of `dijkstra()` in Algo.js is failed to update heap correctly, where I just update the value of one vertex without keeping heap order.
 
 {% gist 6200035 %}
-
-Where I just update the value of one vertex without keeping heap order.
 
 How to update and keep heap order?
 
@@ -35,7 +33,9 @@ While, when we update the MinHeap, it means that we may replace the item at that
 
 ![Min Heap](http://upload.wikimedia.org/wikipedia/commons/6/69/Min-heap.png)
 
-So, if we replace $17$ with a __LESS__ value called $x$. $x$ is still less than its children, but $x$ may be less than $2$ (its parent). As the algorithm of `push()` of heap, we need to exchange $x$ with its parent, great-parent..., until heap is ordered. (see [diff]() of revision)
+So, if we replace $17$ with a __LESS__ value called $x$. $x$ is still less than its children, but $x$ may be less than $2$ (its parent). As the algorithm of `push()` of heap, we need to exchange $x$ with its parent, great-parent..., until heap is ordered. That is:
+
+__Using `heap.swim()` to update that heap.__ (see [diff][3] of revision)
 
 {% gist 6200086 %}
 
