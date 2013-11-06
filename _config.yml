@@ -9,7 +9,7 @@ pygments: true
 # so be sure to set them if your theme uses them.
 #
 title : Code This.
-tagline: Any Thoughts During Code
+tagline: Any Thoughts During Code This.
 author :
   name : Scott, Liu
   email : lyu.career@gmail.com
