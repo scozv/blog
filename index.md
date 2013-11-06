@@ -8,7 +8,7 @@ layout: page
   <div class="summary-title"> {{ post.title }} </div>
   <div class="summary-time"> {{ post.date | date_to_string }} </div>
   <br />
-  <div>
+  <div class="summary-content">
   {% if post.content contains '<!--more-->' %}
     {{ post.content | split:'<!--more-->' | first }}
 
@@ -21,7 +21,7 @@ layout: page
     {{ post.content }}
   {% endif %}
   <br />
-  <a href="{{ BASE_PATH }}{{ post.url }}">Read more ...</a>
+  <a href="{{ BASE_PATH }}{{ post.url }}"><span class="read-more">Read more ...</span></a>
   </div>
   <br />
   <br />

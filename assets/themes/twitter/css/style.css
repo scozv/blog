@@ -23,7 +23,7 @@
   margin: 10px 0;
   text-align: left; }
 
-/* post-full*/
+/* post-full */
 .post-full .date {
   margin-bottom: 20px;
   font-weight: bold; }
@@ -65,10 +65,29 @@
   color: #FFF; }
 
 /* Summary in index.md */
-.summary-title {
-  font-size: 1.4em;
-  font-weight: bold; }
+div.summary-title {
+    font-size: 1.4em;
+    font-weight: bold; 
+}
 
-.summary-time {
-  font-size: 1.0em;
-  font-style: italic; }
+div.summary-time {
+    font-size: 1.1em;
+    font-style: italic; 
+}
+
+div.summary-content blockquote {
+    font-size: 1.2em;
+}
+
+div.summary-content a span.read-more {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Abstract in post */
+div.content > blockquote {
+    font-style: italic;
+    font-size: 1.2em;
+    font-family: sans-serif;
+    background-color: wheat; 
+}

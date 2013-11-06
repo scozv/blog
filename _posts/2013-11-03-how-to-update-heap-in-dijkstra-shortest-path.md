@@ -7,17 +7,17 @@ tags: ["algo.js"]
 ---
 {% include JB/setup %}
 
-__Abstract__
-
-_To improve the runing time of Dijkstra shortest path algorithm from $O(nm)$ to $O(n \ln m)$, we need a heap to trace the minimum path "so far" at each loop. Howerver, it is not easy to keep the heap in heap order just using `insert()` or `delete()`. This post descripts the update of the heap._
-
-_I suppose that you might:_
-*	_know how to wirte Dijkstra algorithm with $O(nm)$ running time, and_
-*	_know how to use heap_
+> When we use a __heap__ to improve the runing time of Dijkstra shortest path algorithm from $O(nm)$ to $O(n \ln m)$, we may find that it is not easy to keep the heap in heap order just using insert() or delete(). This post descripts the update of that heap.
+>
+>
+> I suppose that you might:
+> *	know how to wirte Dijkstra algorithm with $O(nm)$ running time, and
+> *	know how to use heap.
+>
+>
+> 为了将Dijkstra最短路径算法的时间复杂度从 $O(nm)$ 降低到 $O(n \ln m)$ ，我们可以使用 __heap__ 。不过迭代中的每一次更新heap的过程，我们需要一些技巧来保持时间复杂度为 $O(\ln m)$ 。本文就会指出该技巧，并且解释我在算法代码中的一些[变动] [3]。
 
 <!--more-->
-
-__Main__
 
 To speed up the finding minimum length of path in each stage in Dijkstra shortest path algorithm, we can use a binary heap to store frontier path, according to many words, like [_Heap Application_] [1], or Tim Roughgarden's [algorithm course] [2].
 
@@ -35,9 +35,10 @@ While, when we update the MinHeap, it means that we may replace the item at that
 
 ![Min Heap](http://upload.wikimedia.org/wikipedia/commons/6/69/Min-heap.png)
 
-So, if we replace $17$ with a __LESS__ value called $x$. $x$ is still less than its children, but $x$ may be less than $2$ (its parent). As the algorithm of `push()` of heap, we need to exchange $x$ with its parent, great-parent..., until heap is ordered. (see [diff](https://code.google.com/p/algo-js/source/diff?spec=svn7a5374091a506bee8f599b0345b14207f62e890a&old=9d86c0442743d9a350afcbb5d2f1d6d3a51f5ec7&r=7a5374091a506bee8f599b0345b14207f62e890a&format=unidiff&path=%2Fgraph.path.js) of revision)
+So, if we replace $17$ with a __LESS__ value called $x$. $x$ is still less than its children, but $x$ may be less than $2$ (its parent). As the algorithm of `push()` of heap, we need to exchange $x$ with its parent, great-parent..., until heap is ordered. (see [diff]() of revision)
 
 {% gist 6200086 %}
 
 [1]: http://en.wikipedia.org/wiki/Heap_(data_structure)#Applications	"Wikipedia"
 [2]: https://www.coursera.org/course/algo 								"Algorithms: Design and Analysis, Part 1"
+[3]: https://goo.gl/NssHNy                                              "Diff of Algo.js"
