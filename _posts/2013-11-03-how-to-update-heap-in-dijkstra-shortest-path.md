@@ -15,7 +15,7 @@ tags: ["algo.js"]
 > *	know how to use heap.
 >
 >
-> 为了将Dijkstra最短路径算法的时间复杂度从 $O(nm)$ 降低到 $O(n \ln m)$ ，我们可以使用 __heap__ 。不过迭代中的每一次更新heap的过程，我们需要一些技巧来保持时间复杂度为 $O(\ln m)$ 。本文就会指出该技巧，并且解释我在算法代码中的一些[变动] [3]。
+> 为了将Dijkstra最短路径算法的时间复杂度从 $O(nm)$ 降低到 $O(n \ln m)$ ，我们可以使用 __heap__ 。不过迭代中的每一次更新heap的过程，我们需要一些技巧来保持heap的有序性。本文就会指出该技巧，并且解释我在算法代码中的一些[变动] [3]。
 
 <!--more-->
 
@@ -38,6 +38,12 @@ So, if we replace $17$ with a __LESS__ value called $x$. $x$ is still less than 
 __Using `heap.swim()` to update that heap.__ (see [diff][3] of revision)
 
 {% gist 6200086 %}
+
+<div class="post-content lang zh-cn">
+
+简言之，算法的每次迭代，都是用较小的值去更新原来的heap，所以我们应该调用 <code>heap.swim()</code> 来维持heap的有序性。
+
+</div>
 
 [1]: http://en.wikipedia.org/wiki/Heap_(data_structure)#Applications	"Wikipedia"
 [2]: https://www.coursera.org/course/algo 								"Algorithms: Design and Analysis, Part 1"
