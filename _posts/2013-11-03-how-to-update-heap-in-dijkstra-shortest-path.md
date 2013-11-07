@@ -7,7 +7,7 @@ tags: ["algo.js"]
 ---
 {% include JB/setup %}
 
-> When we use a __heap__ to improve the runing time of Dijkstra shortest path algorithm from $O(nm)$ to $O(n \ln m)$, we may find that it is not easy to keep the heap in heap order just using insert() or delete(). This post descripts the update of that heap.
+> When we use a __heap__ to improve the runing time of Dijkstra shortest path algorithm from $O(nm)$ to $O(n \ln m)$, we may find that it is not easy to keep the heap in heap order just using insert() or delete(). This post describes the update of that heap.
 >
 >
 > I suppose that you might:
