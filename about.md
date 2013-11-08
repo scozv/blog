@@ -9,7 +9,7 @@ group: navigation
 
 I code codes, and have been working on [Algo.js] [1] for one year.
 
-I write posts and some CSS of this blog, with many help from these frameworks.
+I write posts and some CSS of this blog, with many help from these [frameworks](/credits.html/).
 
 I am working with the team that always inspire me.
 
