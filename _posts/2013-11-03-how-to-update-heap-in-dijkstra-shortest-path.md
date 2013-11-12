@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "How to Update Heap in Dijkstra Shortest Path"
+title: "How to Update Heap in Dijkstra Shortest Path Algorithm"
 description: ""
 category : algo
-tags: ["algo.js"]
+tags: ["algorithm", "graph", "heap"]
 ---
 {% include JB/setup %}
 
@@ -44,6 +44,8 @@ __Using `heap.swim()` to update that heap.__ (see [diff][3] of revision)
 简言之，算法的每次迭代，都是用较小的值去更新原来的heap，所以我们应该调用 <code>heap.swim()</code> 来维持heap的有序性。
 
 </div>
+
+<br />
 
 [1]: http://en.wikipedia.org/wiki/Heap_(data_structure)#Applications	"Wikipedia"
 [2]: https://www.coursera.org/course/algo 								"Algorithms: Design and Analysis, Part 1"

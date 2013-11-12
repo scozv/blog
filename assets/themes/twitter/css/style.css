@@ -91,3 +91,27 @@ div.content > blockquote {
     font-family: sans-serif;
     background-color: wheat; 
 }
+
+/* Table */
+div.content table:not(.lines) {
+    border-collapse: collapse;
+    border-top: 5px solid lightgray;
+    border-bottom: 5px solid lightgray;
+}
+
+div.content table:not(.lines) th {
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-bottom: 2px solid lightgray;
+    padding-top: 2px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+div.content table:not(.lines) td {
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    padding-left: 20px;
+    padding-right: 20px;
+}
