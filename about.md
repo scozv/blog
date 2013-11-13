@@ -32,7 +32,7 @@ Scott
 Nov, 2013
 
 [1]: https://code.google.com/p/algo-js          "Algo.js, some algorithm implemetation in JavaScript"
-[2]: https://www.coursera.org/user/i/4e0166622c8c44bb2ca12371985bdef1   "Coursera Profile"
+[2]: https://www.coursera.org                   "Coursera"
 [3]: https://www.udacity.com                    "Advance Your Education With Free College Courses Online - Udacity"
 [4]: https://www.xuetangx.com                   "XuetangX"
 [5]: https://education.mongodb.com              "MongoDB University"
