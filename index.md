@@ -20,10 +20,10 @@ layout: page
   {% else %}
     {{ post.content }}
   {% endif %}
-  <br />
+
   <a href="{{ BASE_PATH }}{{ post.url }}"><span class="read-more">Read more ...</span></a>
   </div>
-  <br />
+  
   <br />
 {% endfor %}
 

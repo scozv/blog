@@ -86,9 +86,9 @@ div.summary-content a span.read-more {
 
 /* Abstract in post */
 div.content > blockquote {
-    font-style: italic;
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-family: sans-serif;
+    color: #444444;
     background-color: wheat; 
 }
 
@@ -121,4 +121,43 @@ div.content .post-content.lang.zh-cn {
     border-top: 2px solid lightgray;
     margin-top: 20px;
     padding-top: 10px;
+}
+
+/* contents, h1, h2, h3 */
+.content .page-header {
+    margin-bottom: 10px;
+}
+
+.page-header > h1 {
+    font-family: Georgia, Times, "Times New Roman", "Liberation Serif", serif;
+    text-align: center;
+    font-size: 1.7em;
+}
+
+.post-full .date {
+    text-align: center;
+    font-family: Georgia, Times, "Times New Roman", "Liberation Serif", serif;
+}
+
+.post-full {
+    font-family: "Lucida Grande","Lucida Sans Unicode","DejaVu Sans",Lucida,Arial,Helvetica,sans-serif;
+    font-size: 1.1em;
+}
+
+.post-full h2 {
+    font-size: 1.5em;
+}
+
+.post-full h3 {
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+.gist {
+    font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+}
+
+.post-full .post-content.lang.zh-cn  {
+    font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
+    font-size: 1.1em;
 }
