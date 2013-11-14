@@ -115,3 +115,10 @@ div.content table:not(.lines) td {
     padding-left: 20px;
     padding-right: 20px;
 }
+
+/* Chinese contents */
+div.content .post-content.lang.zh-cn {
+    border-top: 2px solid lightgray;
+    margin-top: 20px;
+    padding-top: 10px;
+}
