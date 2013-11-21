@@ -7,7 +7,7 @@ group: navigation
 {% include JB/setup %}
 
 
-I code codes, and have been working on [Algo.js] [1] for one year.
+I write codes, and have been working on [Algo.js] [1] for one year.
 
 I write posts and some CSS of this blog, with many help from these [frameworks](/credits).
 
@@ -18,11 +18,7 @@ I keep leaning from anywhere, including [Coursera] [2], [Udacity] [3], [XuetangX
 <br />
 
 <div class="lang zh-cn">
-
-我写代码。
-
-我热情学习。
-
+我写代码，我热情学习。
 </div>
 
 <br />

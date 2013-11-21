@@ -64,26 +64,6 @@
   border: 1px solid #4c964d;
   color: #FFF; }
 
-/* Summary in index.md */
-div.summary-title {
-    font-size: 1.4em;
-    font-weight: bold; 
-}
-
-div.summary-time {
-    font-size: 1.1em;
-    font-style: italic; 
-}
-
-div.summary-content blockquote {
-    font-size: 1.2em;
-}
-
-div.summary-content a span.read-more {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
 /* Abstract in post */
 div.content > blockquote {
     font-size: 1.1em;
@@ -134,7 +114,7 @@ div.content .post-content.lang.zh-cn {
     font-size: 1.7em;
 }
 
-.post-full .date {
+.content .date {
     text-align: center;
     font-family: Georgia, Times, "Times New Roman", "Liberation Serif", serif;
 }
@@ -148,7 +128,16 @@ div.content .post-content.lang.zh-cn {
     font-size: 1.5em;
 }
 
+.row-fluid h2 {
+    font-size: 1.5em;
+}
+
 .post-full h3 {
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+.row-fluid h3 {
     font-size: 1.2em;
     font-style: italic;
 }
@@ -160,4 +149,24 @@ div.content .post-content.lang.zh-cn {
 .post-full .post-content.lang.zh-cn  {
     font-family: Tahoma, Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
     font-size: 1.1em;
+}
+
+/* Summary in index.md */
+div.summary-title {
+    font-size: 1.4em;
+    font-weight: bold; 
+}
+
+div.summary-time {
+    font-size: 1.1em;
+    font-style: italic; 
+}
+
+div.summary-content blockquote {
+    font-size: 1.2em;
+}
+
+div.summary-content a span.read-more {
+    font-size: 1.2em;
+    font-weight: bold;
 }
