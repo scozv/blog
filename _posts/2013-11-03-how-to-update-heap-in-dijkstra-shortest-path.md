@@ -2,7 +2,7 @@
 layout: post
 title: "How to Update Heap in Dijkstra Shortest Path Algorithm"
 description: ""
-category : algo
+category : "algo"
 tags: ["algorithm", "graph", "heap"]
 ---
 {% include JB/setup %}

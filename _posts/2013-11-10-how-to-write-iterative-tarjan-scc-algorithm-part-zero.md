@@ -2,7 +2,7 @@
 layout: post
 title: "How to Write Iterative Tarjan SCC Algorithm, Part Zero"
 description: ""
-category : algo
+category : "algo"
 tags: ["algorithm", "graph", "stack"]
 ---
 {% include JB/setup %}
