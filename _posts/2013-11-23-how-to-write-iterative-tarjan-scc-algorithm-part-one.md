@@ -41,9 +41,9 @@ Take a directed graph represented by adjacency list below for instance.
 
 (Please draw this simple graph on the paper to help understand. `1: [2, 4]` means there are only two edges from vertex 1, that are 1 → 2 and 1 → 4.)
 
-Here is the call stack of recursive topological sort. In each loop at current `v`, we list its parent vertex in column titled __P__. If all of descendant vertex (in `v.children()`) of `v` have been visited, we set the `order(v)`.
+Here is the call stack of recursive topological sort. In each loop at current `v`, we list its parent vertex in column titled __P__. If all of descendant vertex of `v` which we list in column titled `v.c()` have been visited, we set the `order(v)`.
 
-P | `v` | `v.children()` | Action
+P | `v` | `v.c()` | Action
 :---:|:---:|:---|:---
  | 1 | {2, 4} | initial call
  1 | 2 | {3} | 
@@ -59,7 +59,7 @@ P | `v` | `v.children()` | Action
 
 According to _Part Zero_, we add `frontier` to call stack table as below.
 
-P | `v` | `v.children()` | `frontier` | Action
+P | `v` | `v.c()` | `frontier` | Action
 :---:|:---:|:---|:---|:---
  | 1 | {2, 4} | (1, 4, 2> | initial call
  1 | 2 | {3} | (1, 4, 2, 3> | 
