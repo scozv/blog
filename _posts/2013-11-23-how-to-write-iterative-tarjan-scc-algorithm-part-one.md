@@ -45,15 +45,15 @@ Here is the call stack of recursive topological sort. In each loop at current `v
 
 P | `v` | `v.c()` | Action
 :---:|:---:|:---|:---
- . | 1 | {2, 4} | initial call
- 1 | 2 | {3} | .
- 2 | 3 | {5} | .
+<span></span>| 1 | {2, 4} | initial call
+ 1 | 2 | {3} |<span></span>
+ 2 | 3 | {5} |<span></span>
  3 | 5 | empty | order(5) = 5, back to __p__arent `v#3`
  2 | 3 | empty | order(3) = 4, back to __p__arent `v#2`
  1 | 2 | empty | order(2) = 3, back to __p__arent `v#1`
- . | 1 | {4} | .
+ <span></span>| 1 | {4} |<span></span>
  1 | 4 | empty  | order(4) = 2, back to __p__arent `v#1` (initial call)
- . | 1 | empty  | order(1) = 1
+ <span></span>| 1 | empty  | order(1) = 1
 
 ## Inspiration
 
@@ -61,15 +61,15 @@ According to _Part Zero_, we add `frontier` to call stack table as below.
 
 P | `v` | `v.c()` | `frontier` | Action
 :---:|:---:|:---|:---|:---
- . | 1 | {2, 4} | (1, 4, 2> | initial call
- 1 | 2 | {3} | (1, 4, 2, 3> | .
- 2 | 3 | {5} | (1, 4, 2, 3, 5> | .
+<span></span>| 1 | {2, 4} | (1, 4, 2> | initial call
+ 1 | 2 | {3} | (1, 4, 2, 3> |<span></span>
+ 2 | 3 | {5} | (1, 4, 2, 3, 5> |<span></span>
  3 | 5 | empty | (1, 4, 2, 3, 5> | order(5) = 5, back to __p__arent `v#3`, pop frontier
  2 | 3 | empty | (1, 4, 2, 3> | order(3) = 4, back to __p__arent `v#2`, pop frontier
  1 | 2 | empty | (1, 4, 2>  | order(2) = 3, back to __p__arent `v#1`, pop frontier
-. | 1 | {4} | (1, 4> | .
+<span></span>| 1 | {4} | (1, 4> |<span></span>
  1 | 4 | empty  |  (1, 4> | order(4) = 2, back to __p__arent `v#1` (initial call), pop frontier
-. | 1 | empty  | (1> | order(1) = 1, pop frontier, then frontier is empty
+<span></span>| 1 | empty  | (1> | order(1) = 1, pop frontier, then frontier is empty
 
 If we look into the `frontier` and the time when descendant vertex array is empty, we may notice the top of `frontier` is the vertex we visit currently.
 
