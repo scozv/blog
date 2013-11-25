@@ -7,7 +7,7 @@ tags: ["algorithm", "graph", "stack"]
 ---
 {% include JB/setup %}
 
-> In previous part, we talked about iterative DFS, where we use a stack `frontier` to keep the visiting order. This time, we are going to look at the iterative topological sort and Karasoju SCC algorithm.
+> In [previous part] [4], we talked about iterative DFS, where we use a stack `frontier` to keep the visiting order. This time, we are going to look at the iterative topological sort and Karasoju SCC algorithm.
 >
 >
 > The key idea of my iterative topological sort is use another stack `head` to track when we finish visiting all descendant vertex of the head vertex.
@@ -16,7 +16,7 @@ tags: ["algorithm", "graph", "stack"]
 > 上一次，我们提到了迭代深度优先查找（DFS）——用一个叫`frontier`的栈来保持访问顺序。今天，我们将看到迭代拓扑排序以及Karasoju强连通算法。
 >
 >
-> 今天的重点在于，我们会增加一个栈，名为`head`——当父节点的所有后代都访问过之后，`head.peek() === frontier.peek()`。
+> 今天的重点在于，我们会增加一个栈，名为`head`。当父节点的所有后代都访问过之后，`head.peek() === frontier.peek()`。
 
 <!--more-->
 
@@ -86,14 +86,17 @@ So we introduce a stack named `head` to track the time when we finish visiting a
 ## Kosaraju SCC
 Kosaraju SCC algorithm, which runs DFS twice, finds some kind of visiting order in the first DFS. So we can find topological sort order as in the first DFS, then use the order for the second DFS.
 
+## Running Time
+Roughly speaking, the running time of iterarive topological sort is same as time of DFS. The time of Kosaraju SCC which runs DFS twice, is still $O(m+n)$.
+
 ## Next 
 See code on details in `graph.search.js` of [Algo.js] [3]. And next post, I am going to explain iterative Tarjan SCC algorithm, which cost me a few time.
 
 <div class="post-content lang zh-cn">
-拓扑排序的时候，需要记录当前访问的点，是从哪个父节点下来的。所以我们增加了一个叫head的栈，用来记录这个信息——当两个栈（frotier和head）的peek元素相同是，就意味着，父节点下面已经没有节点可以继续访问了，此时相当于一层递归的DFS结束。
+拓扑排序的时候，需要记录当前访问的点，是从哪个父节点下来的。所以我们增加了一个叫head的栈，用来记录这个信息——当两个栈（frotier和head）的peek元素相同时，就意味着，父节点下面已经没有节点可以继续访问了，此时相当于一层递归的DFS结束。
 <br />
 <br />
-需要留意的是，同一个节点可能来自不同的父节点：比如有两条边3 → 2 and 5 → 2。那么节点2可能有两次push进frontier，所以在处理的时候需要留意节点的状态——显而易见地，如果某一个节点已经被标记了拓扑顺序，那么它就不应该再次被标记，也就是说，它就不应该再次进入head栈。
+需要留意的是，同一个节点可能来自不同的父节点：比如有两条边3 → 2和5 → 2。那么节点2可能有两次push进frontier，所以在处理的时候需要留意节点的状态。显而易见地，如果某一个节点已经被标记了拓扑顺序，那么它就不应该再次被标记，也就是说，它就不应该再次进入head栈。
 </div>
 
 <br />
@@ -101,3 +104,4 @@ See code on details in `graph.search.js` of [Algo.js] [3]. And next post, I am g
 [1]: https://www.coursera.org/course/algo					"Online course by Tim Roughgarden"
 [2]: https://code.google.com/p/algo-js/issues/detail?id=20	"Issue 20"
 [3]: https://code.google.com/p/algo-js						"Algo.js"
+[4]: {% post_url 2013-11-10-how-to-write-iterative-tarjan-scc-algorithm-part-zero %} "Tarjan, Part Zero"
