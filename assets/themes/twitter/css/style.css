@@ -140,6 +140,7 @@ div.summary-time {
 
 div.summary-content blockquote {
     font-size: 1.2em;
+    margin-top: 0.7em;
 }
 
 div.summary-content a span.read-more {
@@ -149,16 +150,16 @@ div.summary-content a span.read-more {
 
 /* Table */
 div.content table:not(.lines) {
-    /* border-collapse: separate; */
     border-top: 2px solid lightgray;
     border-bottom: 2px solid lightgray;
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
 }
 
 div.content table:not(.lines) th {
     border-left: 1px solid lightgray;
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
-    -border-top: 1px solid lightgray;
     padding-top: 2px;
     padding-bottom: 5px;
     padding-left: 10px;
@@ -168,8 +169,6 @@ div.content table:not(.lines) th {
 div.content table:not(.lines) td {
     border-left: 1px solid lightgray;
     border-right: 1px solid lightgray;
-    -border-top: 1px solid lightgray;
-    -border-bottom: 1px solid lightgray;
     padding-left: 5px;
     padding-right: 5px;
 }

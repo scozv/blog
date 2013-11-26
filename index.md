@@ -7,7 +7,6 @@ layout: page
 {% for post in site.posts %}
   <div class="summary-title"> {{ post.title }} </div>
   <div class="summary-time"> {{ post.date | date_to_string }} </div>
-  <br />
   <div class="summary-content">
   {% if post.content contains '<!--more-->' %}
     {{ post.content | split:'<!--more-->' | first }}

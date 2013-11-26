@@ -79,8 +79,24 @@ So we introduce a stack named `head` to track the time when we finish visiting a
 
 {% gist 7599328 %}
 
+Running the iterative code, we update the stack table:
+
+`v` | `head` | `frontier` | Action
+:---:|:---|:---|:---
+ 1 | (1> | (1, 4, 2> | initial call
+ 2 | (1, 2> | (1, 4, 2, 3> |<span></span>
+ 3 | (1, 2, 3> | (1, 4, 2, 3, 5> |<span></span>
+ 5 | (1, 2, 3, 5> |(1, 4, 2, 3, 5> | `peek()` eqauls, set order(5), pop two stacks
+ 3 | (1, 2, 3> | (1, 4, 2, 3> | `peek()` eqauls, set order(3), pop two stacks
+ 2 | (1, 2> | (1, 4, 2>  | `peek()` eqauls, set order(2), pop two stacks
+ 1 | (1> | (1, 4> |<span></span>
+ 4 | (1, 4> | (1, 4> | `peek()` eqauls, set order(4), pop two stacks
+ 1 | (1> | (1> | `peek()` eqauls, set order(1), pop two stacks
+ 
+ As we see, The time of finishing visit all descendant of current `v`, and to set order(current) is when `peek()` eqauls, i.e. `head.peek() == frontier.peek()`.
+
 ## Attention
-* __Empty Head__. At line 10, `head.peek()` may throw an exception if `head.isEmpt()`. We can check it before each `peek()`, or we can push `-1` (whatever bottom item) to make sure head is always contains item(s) before `frontier.isEmpty()`.
+* __Empty Head__. At line 10, `head.peek()` may throw an exception if `head.isEmpty()`. We can check it before each `peek()`, or we can push `-1` (whatever bottom item) to make sure head is always contains item(s) before `frontier.isEmpty()`.
 * __Vertex Status__. Same issue may be occurred similarly as in iterative DFS we mentioned in last part. (see [issue 20] [2])
 
 ## Kosaraju SCC
@@ -93,7 +109,7 @@ Roughly speaking, the running time of iterarive topological sort is same as time
 See code on details in `graph.search.js` of [Algo.js] [3]. And next post, I am going to explain iterative Tarjan SCC algorithm, which cost me a few time.
 
 <div class="post-content lang zh-cn">
-拓扑排序的时候，需要记录当前访问的点，是从哪个父节点下来的。所以我们增加了一个叫head的栈，用来记录这个信息——当两个栈（frotier和head）的peek元素相同时，就意味着，父节点下面已经没有节点可以继续访问了，此时相当于一层递归的DFS结束。
+拓扑排序的时候，需要记录当前访问的点，是从哪个父节点下来的。所以我们增加了一个叫head的栈，用来记录这个信息——当两个栈（frontier和head）的peek元素相同时，就意味着，父节点下面已经没有节点可以继续访问了，此时相当于一层递归的DFS结束。
 <br />
 <br />
 需要留意的是，同一个节点可能来自不同的父节点：比如有两条边3 → 2和5 → 2。那么节点2可能有两次push进frontier，所以在处理的时候需要留意节点的状态。显而易见地，如果某一个节点已经被标记了拓扑顺序，那么它就不应该再次被标记，也就是说，它就不应该再次进入head栈。

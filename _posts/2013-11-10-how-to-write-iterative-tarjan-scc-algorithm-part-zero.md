@@ -74,7 +74,7 @@ Here is simplified code of iterative DFS:
 
 In our code (comment 1.1) below, for each vertex, we process its adjacent vertex, which we find from outgoing edges of current vertex. We let the number of outgoing edges of vertex $i$ is $e_i$, and $n=|V|, m=|E|$ as the number of vertex and number of edges respectively, so we write the running time as following:
 
-$$T = O(1) + \sum_{i=1}^{n} \[O(1) + e_i\] $$
+$$T = O(1) + \sum_{i=1}^{n} \left \[ O(1) + e_i \right \] $$
 $$= O(1) + \sum_{i=1}^{n}O(1) + \sum_{i=1}^{n}e_i$$
 
 And notice that the sum of outgoing edges of all vertex is the the number of all edges, that is $\sum_{i=1}^{n}e_i=|E|=m$, so we have:
