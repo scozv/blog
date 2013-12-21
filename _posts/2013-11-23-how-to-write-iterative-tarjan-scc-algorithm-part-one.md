@@ -20,6 +20,9 @@ tags: ["algorithm", "graph", "SCC"]
 
 <!--more-->
 
+<a name="pi">
+</a>
+
 ## Recursive Topological Sort
 In the beginning, we introduce the code of recursive topological sort:
 

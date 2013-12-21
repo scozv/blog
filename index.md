@@ -20,7 +20,7 @@ layout: page
     {{ post.content }}
   {% endif %}
 
-  <a href="{{ BASE_PATH }}{{ post.url }}"><span class="read-more">Read more ...</span></a>
+  <a href="{{ BASE_PATH }}{{ post.url }}#pi"><span class="read-more">Read more ...</span></a>
   </div>
   
   <br />

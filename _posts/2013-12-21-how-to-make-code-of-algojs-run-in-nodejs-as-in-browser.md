@@ -20,6 +20,9 @@ tags: ["CI", "unit", "grunt"]
 
 <!--more-->
 
+<a name="pi">
+</a>
+
 ## `window` vs `global`
 In browser, we have the global variable named `window` , `Array` is `window.Array`, and `Math` is `window.Math`, etc. The __Algo.js__ also plugs object into `window`: 
 
@@ -123,6 +126,8 @@ The CI command for Algo.js is:
 
 ## Next
 I am going to fix [issue #18] [1].
+
+<br />
 
 [1]: https://github.com/scotv/algo-js/issues/18 "issue #18"
 [2]: https://github.com/scotv/algo-js "Algo.js"

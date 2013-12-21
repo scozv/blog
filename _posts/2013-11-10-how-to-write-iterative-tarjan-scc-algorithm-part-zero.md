@@ -17,6 +17,9 @@ tags: ["algorithm", "graph", "DFS"]
 
 <!--more-->
 
+<a name="pi">
+</a>
+
 ## Recursive DFS
 
 It is easy to write down a recursive BFS or DFS algorithm on graph. Take DFS for example:

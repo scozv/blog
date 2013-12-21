@@ -19,6 +19,9 @@ tags: ["algorithm", "graph", "Dijkstra", "heap"]
 
 <!--more-->
 
+<a name="pi">
+</a>
+
 To speed up the finding minimum length of path in each stage in Dijkstra shortest path algorithm, we can use a binary heap to store frontier path, according to many words, like [_Heap Application_] [1], or Tim Roughgarden's [algorithm course] [2].
 
 {% gist 6200004 %}
