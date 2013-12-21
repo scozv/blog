@@ -23,7 +23,7 @@ tags: ["CI", "unit", "grunt"]
 <a name="pi">
 </a>
 
-## `window` vs `global`
+## window and global
 In browser, we have the global variable named `window` , `Array` is `window.Array`, and `Math` is `window.Math`, etc. The __Algo.js__ also plugs object into `window`: 
 
     (function (sorting, undefined) {
@@ -41,6 +41,7 @@ More than that, in Algo.js, I extend `Array` and `Math` directly:
     })(window.Array = window.Array || {})
 
 It is not a good practice that we change the object in `window` directly. But in my opinion, __the most important part in Algo.js is Algo(rithm), not js.__ So I just want to use a simple way, instead of introducing a global module named like `Algo` which we have to write like this:
+
     Algo.Sorting.mergeSort();
     Algo.Array.zip();
     Algo.Array.clone();
@@ -58,7 +59,7 @@ Look, we give the `global` an alias name at first, so that we do not need to cha
 
 By the way, I did try to exposure module using `module.exports`, but I failed to figure out a way, in Node.js, to exposure ONLY one module named `Sorting` from three files: sorting.js, sorting.mergeSort.js, and sorting.quickSort.js as they are something like partial class.
 
-## `node-qunit`
+## node-qunit
 After loading objects of algorithm into `global`, we are going to find out how to run previous codes of unit test in Node.js without modifying test scripts.
 
 We use the project [`node-qunit`] [4], which allow us to run unit test like this:
@@ -75,7 +76,7 @@ We use the project [`node-qunit`] [4], which allow us to run unit test like this
     >>>>> 	console.log(err ? err : report);
     >>>>> });
 
-## `$ grunt test`
+## Grunt
 Grunt, as it says, is a JavaScript task runner. If you configure your project, you will run unit test using command below which helps us use Continuous Integration:
 `$ grunt test`.
 
@@ -109,7 +110,7 @@ A little attention we should pay on is we may face an error on ubuntu says:
 
 See [here] [8] to fix it.
 
-## drone.io
+## Drone.io
 [![Build Status](https://drone.io/github.com/scotv/algo-js/status.png)](https://drone.io/github.com/scotv/algo-js/latest)
 
 The web [drone.io] [7] is an online CI service. There are other options of online CI.
