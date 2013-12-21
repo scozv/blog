@@ -2,7 +2,7 @@
 layout: post
 title: "How to Make Code of Algo.js Run in Node.js as in Browser"
 description: ""
-category: "x"
+category: "help"
 tags: ["CI", "unit", "grunt"]
 ---
 {% include JB/setup %}
@@ -100,6 +100,12 @@ Here is the list of _How to_:
 0. run `$ grunt --stack` to debug grunt task script
 0. run `$ npm test` to test `package.json` configuration
 
+A little attention we should pay on is we may face an error on ubuntu says:
+
+`/usr/bin/env: node: No such file or directory`
+
+See [here] [8] to fix it.
+
 ## drone.io
 [![Build Status](https://drone.io/github.com/scotv/algo-js/status.png)](https://drone.io/github.com/scotv/algo-js/latest)
 
@@ -125,3 +131,4 @@ I am going to fix [issue #18] [1].
 [5]: http://gruntjs.com/getting-started#package.json "grunt configuration on package.json"
 [6]: https://npmjs.org/package/grunt-node-qunit "Grunt task running node-qnuit"
 [7]: https://drone.io/ "drone.io"
+[8]: https://github.com/joyent/node/issues/3911 "issue #3911"
