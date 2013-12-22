@@ -31,7 +31,8 @@ In browser, we have the global variable named `window` , `Array` is `window.Arra
     })(window.Sorting = window.Sorting || {})
 
 So that we can sort an array in browser using the script below: 
-`Sorting.mergeSort(3, 1, 4, 1, 5, 9, 2, 6);`
+    
+    Sorting.mergeSort(3, 1, 4, 1, 5, 9, 2, 6);
 
 More than that, in Algo.js, I extend `Array` and `Math` directly:
 
@@ -56,6 +57,8 @@ Following this idea of simplification, I load the code of algorithm into the glo
 
 Look, we give the `global` an alias name at first, so that we do not need to change any codes of algorithm. Again, my idea of simplification is that: 
 > It is not a good practice that we change the object in `global` directly. But the most important part in Algo.js is Algo(rithm), not js.
+
+<br />
 
 By the way, I did try to exposure module using `module.exports`, but I failed to figure out a way, in Node.js, to exposure ONLY one module named `Sorting` from three files: sorting.js, sorting.mergeSort.js, and sorting.quickSort.js as they are something like partial class.
 
@@ -85,12 +88,15 @@ We use [`grunt-node-qunit`] [6] plugin for grunt task, which is Grunt task runni
 Here is the list of _How to_:
 
 0. configure project's `package.json` file
-  `$ npm init`
+  
+       $ npm init
 0. install `grunt-cli`
-  `$ npm i -g grunt-cli`
+  
+       $ npm i -g grunt-cli
 0. add grunt dependencies into project (see [official docs] [5])
 0. install `grunt`
-  `$ npm i grunt --save-dev`
+  
+       $ npm i grunt --save-dev
 0. add `Gruntfile.js` to resister task
 
        module.exports = function (grunt) {
@@ -103,6 +109,8 @@ Here is the list of _How to_:
 0. run `$ grunt` to test the configuration
 0. run `$ grunt --stack` to debug grunt task script
 0. run `$ npm test` to test `package.json` configuration
+
+<br />
 
 A little attention we should pay on is we may face an error on ubuntu says:
 
