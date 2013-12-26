@@ -34,13 +34,10 @@ As we notice, we get the topological order from recursive DFS. The proof of corr
 
 Take a directed graph represented by adjacency list below for instance.
 
-`1: [2, 4]`
-
-`2: [3]`
-
-`3: [5]`
-
-`4: [3, 5]`
+	1: [2, 4]
+	2: [3]
+	3: [5]
+	4: [3, 5]
 
 (Please draw this simple graph on the paper to help understand. `1: [2, 4]` means there are only two edges from vertex 1, that are 1 → 2 and 1 → 4.)
 
@@ -100,7 +97,7 @@ Running the iterative code, we update the stack table:
 
 ## Attention
 * __Empty Head__. At line 10, `head.peek()` may throw an exception if `head.isEmpty()`. We can check it before each `peek()`, or we can push `-1` (whatever bottom item) to make sure head is always contains item(s) before `frontier.isEmpty()`.
-* __Vertex Status__. Same issue may be occurred similarly as in iterative DFS we mentioned in last part. (see [issue 20] [2])
+* __Vertex Status__. Same issue may be occurred similarly as in iterative DFS we mentioned in last part. (see [issue #20] [2])
 
 ## Kosaraju SCC
 Kosaraju SCC algorithm, which runs DFS twice, finds some kind of visiting order in the first DFS. So we can find topological sort order as in the first DFS, then use the order for the second DFS.
@@ -121,6 +118,6 @@ See code on details in `graph.search.js` of [Algo.js] [3]. And next post, I am g
 <br />
 
 [1]: https://www.coursera.org/course/algo					"Online course by Tim Roughgarden"
-[2]: https://code.google.com/p/algo-js/issues/detail?id=20	"Issue 20"
-[3]: https://code.google.com/p/algo-js						"Algo.js"
+[2]: https://github.com/scotv/algo-js/issues/20				"Issue 20"
+[3]: https://github.com/scotv/algo-js						"Algo.js"
 [4]: {% post_url 2013-11-10-how-to-write-iterative-tarjan-scc-algorithm-part-zero %} "Tarjan, Part Zero"

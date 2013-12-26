@@ -68,7 +68,7 @@ There are two things we need to pay attentions:
   
   (notation `( >` specifies we push and pop from right side)
 
-  We may notice at row index 3, we push duplicate `3` into frontier. So we need a vertex status to mark vertex as being visited or being pushed into stack (see [issue 8] [3]).
+  We may notice at row index 3, we push duplicate `3` into frontier. So we need a vertex status to mark vertex as being visited or being pushed into stack (see [issue #8] [3]).
 
 ## Running Time
 Here is simplified code of iterative DFS:
@@ -98,7 +98,7 @@ Read code in `graph.search.js` on [Algo.js] [1], and reference [this series of p
 递归的调用需要栈（Call Stack）来维护。碰到一些栈上有容量限制的语言，比如Python、JavaScript等，要么扩大栈的容量，或者如本系列文章这样，尝试将递归转化成迭代。
 <br />
 <br />
-上面提到的深度优先查找（DFS），转化起来比较容易；而在我们第三部分将要提到的Tarjan强连通算法，转化起来就费了不少的心思（参见 <a href="https://code.google.com/p/algo-js/issues/detail?id=14" target="_blank">issue 14</a>）。
+上面提到的深度优先查找（DFS），转化起来比较容易；而在我们第三部分将要提到的Tarjan强连通算法，转化起来就费了不少的心思（参见 <a href="https://github.com/scotv/algo-js/issues/14" target="_blank">issue #14</a>）。
 <br />
 <br />
 当然，我认为，能够用递归的地方应该尽量用，尤其在函数式编程语言中。本系列的递归到迭代的转化，一来解决JavaScript的函数栈的容量问题，二来可以帮助我理解强连通算法。
@@ -110,8 +110,8 @@ Read code in `graph.search.js` on [Algo.js] [1], and reference [this series of p
  
 <br />
 
-[1]: https://code.google.com/p/algo-js											"Algo.js"
+[1]: https://github.com/scotv/algo-js											"Algo.js"
 [2]: http://blog.moertel.com/posts/2013-05-11-recursive-to-iterative.html		"Recursive to Iterative by Tom Moertel"
-[3]:https://code.google.com/p/algo-js/issues/detail?id=8						"Issue 8"
-[3]:https://code.google.com/p/algo-js/issues/detail?id=14						"Issue 14"
+[3]: https://github.com/scotv/algo-js/issues/8						"Issue 8"
+[3]: https://github.com/scotv/algo-js/issues/14						"Issue 14"
 [4]: {% post_url 2013-11-23-how-to-write-iterative-tarjan-scc-algorithm-part-one %} "Tarjan, Part One"

@@ -18,7 +18,7 @@ I keep leaning from anywhere, including [Coursera] [2], [Udacity] [3], [XuetangX
 <br />
 
 <div class="lang zh-cn">
-我写代码，我热情学习。
+我写代码，我热忱于学习。
 </div>
 
 <br />
@@ -27,7 +27,7 @@ Scott
 
 Nov, 2013
 
-[1]: https://code.google.com/p/algo-js          "Algo.js, some algorithm implemetation in JavaScript"
+[1]: https://github.com/scotv/algo-js			"Algo.js, some algorithm implemetation using JavaScript"
 [2]: https://www.coursera.org                   "Coursera"
 [3]: https://www.udacity.com                    "Advance Your Education With Free College Courses Online - Udacity"
 [4]: https://www.xuetangx.com                   "XuetangX"

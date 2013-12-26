@@ -16,7 +16,7 @@ tags: ["CI", "unit", "grunt"]
 > * Introduce CI into my project.
 >
 >
-> 本文描述了我让代码在浏览器和Node.js两边都能运行的过程，略属娱乐。因为就项目 [__Algo.js__] [2] 而言，我认为，重点在算法（ __Algo__rithm ）。至于引入大文本输入测试（参见 [issue #18] [1] ），是为了保证算法的正确和高效，当然这也很重要。引入持续集成，是尽可能想让一切都是自动化。
+> 本文描述了我让代码在浏览器和Node.js两边都能运行的过程，略属娱乐。因为就项目 [__Algo.js__] [2] 而言，我认为，重点在算法（ __Algo__rithm ）。至于引入大文本输入测试（参见 [issue #18] [1] ），是为了保证算法的正确和高效，以及今后的重构，当然这也很重要。引入持续集成，是尽可能想让一切都是自动化。
 
 <!--more-->
 
@@ -114,7 +114,7 @@ Here is the list of _How to_:
 
 A little attention we should pay on is we may face an error on ubuntu says:
 
-`/usr/bin/env: node: No such file or directory`
+	/usr/bin/env: node: No such file or directory
 
 See [here] [8] to fix it.
 

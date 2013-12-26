@@ -4,6 +4,6 @@ scotv.github.com
 
 _Code This._ is my blog.
 
-During the initial period of Jekyll setup, I merged few posts form my previous [Blogger](http://codescott.blogspot.com/).
+During the initial period of Jekyll setup, I moved few posts form my previous [Blogger](http://codescott.blogspot.com/).
 
-I am going to keep fresh here, and __may__ sync here with blogspot.
+See you at [Code This.](http://scotv.github.com).
