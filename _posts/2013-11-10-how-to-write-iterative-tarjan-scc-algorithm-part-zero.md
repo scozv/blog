@@ -32,9 +32,8 @@ The call of recursive function is managed by a stack, we may see 'Call Stack', o
 
 Firstly, we see what happen in recursive DFS above, for the graph with only two paths: 
 
-`1 → 2 → 3`
-
-`1 → 4`
+	1 → 2 → 3
+	1 → 4
 
 we call `DFS(1)`, find `{2, 4}` as adjacent vertex, then we call <code>DFS<sub>1</sub>(2)</code> (notation  <code>DFS<sub>i</sub>(j)</code> means the parent call of `j` in stack is `i`). Next call  <code>DFS<sub>2</sub>(3)</code> finding `{3}` as adjacent vertex of `2` and finish <code>DFS<sub>1</sub>(2)</code>. Finally  call  <code>DFS<sub>1</sub>(4)</code> and finish `DFS(1)`. 
 
@@ -113,5 +112,4 @@ Read code in `graph.search.js` on [Algo.js] [1], and reference [this series of p
 [1]: https://github.com/scotv/algo-js											"Algo.js"
 [2]: http://blog.moertel.com/posts/2013-05-11-recursive-to-iterative.html		"Recursive to Iterative by Tom Moertel"
 [3]: https://github.com/scotv/algo-js/issues/8						"Issue 8"
-[3]: https://github.com/scotv/algo-js/issues/14						"Issue 14"
 [4]: {% post_url 2013-11-23-how-to-write-iterative-tarjan-scc-algorithm-part-one %} "Tarjan, Part One"
