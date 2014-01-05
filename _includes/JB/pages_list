@@ -27,7 +27,7 @@ Usage:
     {% if node.title != null %}
       {% if group == null or group == node.group %}
       	{% if include.alias == "true" %}
-      	<li><a href="{{ BASE_PATH }}{{node.url}}">
+      	<li><a href="{{ BASE_PATH }}{{node.url}}" {% if node.title != null %}title="{{node.description}}"{% endif %}>
         {% if node.alias != null %}{{node.alias}}{% else %}{{node.title}}{% endif %}</a></li>
       	{% else %}
         <li class="active"><a href="{{ BASE_PATH }}{{node.url}}" class="active">{{node.title}}</a></li>      	
