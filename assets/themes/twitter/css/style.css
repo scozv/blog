@@ -64,6 +64,19 @@
   border: 1px solid #4c964d;
   color: #FFF; }
 
+/* nav anchor */
+/*
+.navbar .brand {
+    font-size: 1.1em;
+}
+*/
+
+.navbar .nav>li>a {
+    font-size: 1.7em;
+    font-weight: bolder;
+}
+
+
 /* Abstract in post */
 div.content > blockquote {
     font-size: 1.1em;
