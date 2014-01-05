@@ -1,7 +1,8 @@
 ---
 layout: page
 title: "About"
-description: ""
+alias: "?"
+description: "About me"
 group: navigation
 ---
 {% include JB/setup %}
