@@ -16,7 +16,7 @@ tags: ["CI", "unit", "grunt"]
 > * Introduce CI into my project.
 >
 >
-> 本文描述了我让代码在浏览器和Node.js两边都能运行的过程，略属娱乐。因为就项目 [__Algo.js__] [2] 而言，我认为，重点在算法（ __Algo__rithm ）。至于引入大文本输入测试（参见 [issue #18] [1] ），是为了保证算法的正确和高效，以及今后的重构，当然这也很重要。引入持续集成，是尽可能想让一切都是自动化。
+> 本文描述了我让代码在浏览器和Node.js两边都能运行的过程，略属娱乐。因为就项目 [Algo.js] [2] 而言，我认为，重点在算法（ *Algo*rithm ）。至于引入大文本输入测试（参见 [issue #18] [1] ），是为了保证算法的正确和高效，以及今后的重构，当然这也很重要。引入持续集成，是尽可能想让一切都是自动化。
 
 <!--more-->
 
@@ -56,6 +56,7 @@ Following this idea of simplification, I load the code of algorithm into the glo
     require('../src/sorting.js');
 
 Look, we give the `global` an alias name at first, so that we do not need to change any codes of algorithm. Again, my idea of simplification is that: 
+
 > It is not a good practice that we change the object in `global` directly. But the most important part in Algo.js is Algo(rithm), not js.
 
 <br />

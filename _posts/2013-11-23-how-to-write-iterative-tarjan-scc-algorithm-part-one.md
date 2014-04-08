@@ -7,16 +7,16 @@ tags: ["algorithm", "graph", "SCC"]
 ---
 {% include JB/setup %}
 
-> In [previous part] [4], we talked about iterative DFS, where we use a stack `frontier` to keep the visiting order. This time, we are going to look at the iterative topological sort and Karasoju SCC algorithm.
+> In [previous part] [4], we talked about iterative DFS, where we use a stack named  __frontier__ to keep the visiting order. This time, we are going to look at the iterative topological sort and Karasoju SCC algorithm.
 >
 >
-> The key idea of my iterative topological sort is use another stack `head` to track when we finish visiting all descendant vertex of the head vertex.
+> The key idea of my iterative topological sort is use another stack named __head__ to track when we finish visiting all descendant vertex of the head vertex.
 >
 >
-> 上一次，我们提到了迭代深度优先查找（DFS）——用一个叫`frontier`的栈来保持访问顺序。今天，我们将看到迭代拓扑排序以及Karasoju强连通算法。
+> 上一次，我们提到了迭代深度优先查找（DFS）——用一个叫frontier的栈来保持访问顺序。今天，我们将看到迭代拓扑排序以及Karasoju强连通算法。
 >
 >
-> 今天的重点在于，我们会增加一个栈，名为`head`。当父节点的所有后代都访问过之后，`head.peek() === frontier.peek()`。
+> 今天的重点在于，我们会增加一个栈，名为head。当父节点的所有后代都访问过之后，应该满足head.peek() === frontier.peek()。
 
 <!--more-->
 
