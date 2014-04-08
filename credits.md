@@ -11,6 +11,7 @@ Less|More
 [Twitter Bootstrap] [2] | _Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development._
 [codeitpretty.com] [4] | Suggestions on `font`
 [kendraschaefer.com] [3] | Suggestion on `font-family`
+978-7-302-15567-6 | Brooks, Frederick Phillips著，UML China翻译组译，人月神话，清华大学出版社，2007
 
 
 [1]: http://jekyllbootstrap.com/            "Jekyll Bootstrap"
