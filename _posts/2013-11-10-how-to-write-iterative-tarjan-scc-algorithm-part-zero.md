@@ -41,14 +41,14 @@ we call `DFS(1)`, find `{2, 4}` as adjacent vertex, then we call <code>DFS<sub>1
 
 If we have a stack named `frontier`, we push `1` at first, then pop to visit `1`. Push `[4, 2]`, and pop `2`. Next push `[3]` as adjacent vertex of `2` (the stack is `( 4, 3 >` now). Finally pop `3` and `4` to finish search.
 
-Row Index | Current `v` | Action | `frontier`
-:---:|:---:|:---|:--------
- 0 | 1 | initial call | ( 1 >
- 1 | 1 | find `{2, 4}` as adjacent vertex of `1` | ( 4, 2 >
- 2 | 2 | pop `2` to visit | ( 4 >
- 3 | 2 | find `{3}` of `2` | ( 4, 3 >
- 4 | 3 | pop `3` to visit | ( 4 >
- 5 | 4 | pop `4` to visit| empty
+Row Index \| Current `v` \| Action \| `frontier`
+:---:\|:---:\|:---\|:--------
+ 0 \| 1 \| initial call \| ( 1 >
+ 1 \| 1 \| find `{2, 4}` as adjacent vertex of `1` \| ( 4, 2 >
+ 2 \| 2 \| pop `2` to visit \| ( 4 >
+ 3 \| 2 \| find `{3}` of `2` \| ( 4, 3 >
+ 4 \| 3 \| pop `3` to visit \| ( 4 >
+ 5 \| 4 \| pop `4` to visit\| empty
 
 (notation `( >` specifies we push and pop from right side)
 
@@ -58,12 +58,12 @@ There are two things we need to pay attentions:
 * __Visiting Order__. At row index 1, we push `4` at first, in order to visit graph as same order of recursive call. However this is not very important, I just want to sync the order of iterative way and the order of recursive way. Pushing `4` at first or pushing `2` at first will get correct topological order or SCC, which we are going to find out at following two parts.
 * __Vertex Status__. If we have only two paths in graph like: `1 → 2 → 3` and `1 → 3 → 4`. We have stack like this: 
 
-  Row Index | Current `v` | Action | `frontier`
-  :---:|:---:|:---|:--------
-  0 | 1 | initial call | ( 1 >
-  1 | 1 | find `{2, 3}` as adjacent vertex of `1` | ( 3, 2 >
-  2 | 2 | pop `2` to visit | ( 3 >
-  3 | 2 | find `{3}` of `2` | ( 3, 3 >
+  Row Index \| Current `v` \| Action \| `frontier`
+  :---:\|:---:\|:---\|:--------
+  0 \| 1 \| initial call \| ( 1 >
+  1 \| 1 \| find `{2, 3}` as adjacent vertex of `1` \| ( 3, 2 >
+  2 \| 2 \| pop `2` to visit \| ( 3 >
+  3 \| 2 \| find `{3}` of `2` \| ( 3, 3 >
   
   (notation `( >` specifies we push and pop from right side)
 
@@ -74,12 +74,13 @@ Here is simplified code of iterative DFS:
 
 {% gist 7638166 %}
 
-In our code (comment 1.1) below, for each vertex, we process its adjacent vertex, which we find from outgoing edges of current vertex. We let the number of outgoing edges of vertex $i$ is $e_i$, and $n=|V|, m=|E|$ as the number of vertex and number of edges respectively, so we write the running time as following:
+In our code (comment 1.1) below, for each vertex, we process its adjacent vertex, which we find from outgoing edges of current vertex. We let the number of outgoing edges of vertex $i$ is $e_i$, and $$n=\|V\|, m=\|E\|$$ as the number of vertex and number of edges respectively, so we write the running time as following:
 
-$$T = O(1) + \sum_{i=1}^{n} \left \[ O(1) + e_i \right \] $$
+$$T = O(1) + \sum_{i=1}^{n} \left [ O(1) + e_i \right ] $$
+
 $$= O(1) + \sum_{i=1}^{n}O(1) + \sum_{i=1}^{n}e_i$$
 
-And notice that the sum of outgoing edges of all vertex is the the number of all edges, that is $\sum_{i=1}^{n}e_i=|E|=m$, so we have:
+And notice that the sum of outgoing edges of all vertex is the the number of all edges, that is $$\sum_{i=1}^{n}e_i=\left \|E \right \|=m$$, so we have:
 
 $$T=O(1)+O(n)+O(m)=O(n+m)$$
 
