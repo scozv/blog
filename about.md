@@ -7,29 +7,16 @@ group: navigation
 ---
 {% include JB/setup %}
 
+I write [codes] [1].
 
-I write codes, and have been working on [Algo.js] [1] for one year.
-
-I write posts and some CSS of this blog, with many help from these [frameworks](/credits).
-
-I am working with the team that always inspire me.
-
-I keep leaning from anywhere, including [Coursera] [2], [Udacity] [3], [XuetangX] [4], [MongoDB University] [5], etc.
-
-<br />
+I learn, and I read.
 
 <div class="lang zh-cn">
-我写代码，我热忱于学习。
 </div>
 
 <br />
+_Scott_
 
-Scott
-
-Nov, 2013
+_Apr, 2014_
 
 [1]: https://github.com/scotv/algo-js			"Algo.js, some algorithm implemetation using JavaScript"
-[2]: https://www.coursera.org                   "Coursera"
-[3]: https://www.udacity.com                    "Advance Your Education With Free College Courses Online - Udacity"
-[4]: https://www.xuetangx.com                   "XuetangX"
-[5]: https://education.mongodb.com              "MongoDB University"
