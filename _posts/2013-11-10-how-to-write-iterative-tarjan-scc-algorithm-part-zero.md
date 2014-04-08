@@ -8,6 +8,7 @@ tags: ["algorithm", "graph", "DFS"]
 {% include JB/setup %}
 
 > During the work on [Algo.js] [1], I found there is a limitation on recursive stack size of JavaScript. This series posts describe the way to convert recursive Tarjan SCC algorithm to iterative one, containing:
+>
 > * Part Zero: Iterative BFS and DFS algorithm on graph;
 > * [Part One] [4]: Iterative topological sort and Kosaraju SCC algorithm on graph;
 > * Part Two: Iterative Tarjan SCC algorithm on graph.
@@ -41,29 +42,30 @@ we call `DFS(1)`, find `{2, 4}` as adjacent vertex, then we call <code>DFS<sub>1
 
 If we have a stack named `frontier`, we push `1` at first, then pop to visit `1`. Push `[4, 2]`, and pop `2`. Next push `[3]` as adjacent vertex of `2` (the stack is `( 4, 3 >` now). Finally pop `3` and `4` to finish search.
 
-Row Index \| Current `v` \| Action \| `frontier`
-:---:\|:---:\|:---\|:--------
- 0 \| 1 \| initial call \| ( 1 >
- 1 \| 1 \| find `{2, 4}` as adjacent vertex of `1` \| ( 4, 2 >
- 2 \| 2 \| pop `2` to visit \| ( 4 >
- 3 \| 2 \| find `{3}` of `2` \| ( 4, 3 >
- 4 \| 3 \| pop `3` to visit \| ( 4 >
- 5 \| 4 \| pop `4` to visit\| empty
+Row Index | Current `v` | Action | `frontier`
+:---:|:---:|:---|:--------
+ 0 | 1 | initial call | ( 1 >
+ 1 | 1 | find `{2, 4}` as adjacent vertex of `1` | ( 4, 2 >
+ 2 | 2 | pop `2` to visit | ( 4 >
+ 3 | 2 | find `{3}` of `2` | ( 4, 3 >
+ 4 | 3 | pop `3` to visit | ( 4 >
+ 5 | 4 | pop `4` to visit| empty
 
 (notation `( >` specifies we push and pop from right side)
 
 ## Attentions
 
 There are two things we need to pay attentions:
+
 * __Visiting Order__. At row index 1, we push `4` at first, in order to visit graph as same order of recursive call. However this is not very important, I just want to sync the order of iterative way and the order of recursive way. Pushing `4` at first or pushing `2` at first will get correct topological order or SCC, which we are going to find out at following two parts.
 * __Vertex Status__. If we have only two paths in graph like: `1 → 2 → 3` and `1 → 3 → 4`. We have stack like this: 
 
-  Row Index \| Current `v` \| Action \| `frontier`
-  :---:\|:---:\|:---\|:--------
-  0 \| 1 \| initial call \| ( 1 >
-  1 \| 1 \| find `{2, 3}` as adjacent vertex of `1` \| ( 3, 2 >
-  2 \| 2 \| pop `2` to visit \| ( 3 >
-  3 \| 2 \| find `{3}` of `2` \| ( 3, 3 >
+  Row Index | Current `v` | Action | `frontier`
+  :---:|:---:|:---|:--------
+  0 | 1 | initial call | ( 1 >
+  1 | 1 | find `{2, 3}` as adjacent vertex of `1` | ( 3, 2 >
+  2 | 2 | pop `2` to visit | ( 3 >
+  3 | 2 | find `{3}` of `2` | ( 3, 3 >
   
   (notation `( >` specifies we push and pop from right side)
 
