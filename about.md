@@ -7,9 +7,7 @@ group: navigation
 ---
 {% include JB/setup %}
 
-I write [codes] [1].
-
-I learn, and I read.
+I read, I [write] [1], and I learn.
 
 <div class="lang zh-cn">
 </div>
