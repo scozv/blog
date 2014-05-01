@@ -9,6 +9,7 @@ Less|More
 :---:|:--------
 [Jekyll Bootstrap] [1] | _The Definitive Jekyll Blogging Framework_
 [Twitter Bootstrap] [2] | _Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development._
+[Impress.js] [5] | _A presentation framework based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com._
 [codeitpretty.com] [4] | Suggestions on `font`
 [kendraschaefer.com] [3] | Suggestion on `font-family`
 978-7-302-15567-6 | Brooks, Frederick Phillips著，UML China翻译组译，人月神话，清华大学出版社，2007
@@ -18,3 +19,4 @@ Less|More
 [2]: http://twitter.github.com/bootstrap/   "Twitter Bootstrap"
 [3]: http://www.kendraschaefer.com/2012/06/chinese-standard-web-fonts-the-ultimate-guide-to-css-font-family-declarations-for-web-design-in-simplified-chinese/ "Post on font-family"
 [4]: http://www.codeitpretty.com/2013/05/blog-font-style-with-css-size-weight.html "Posts on font"
+[5]: https://github.com/bartaz/impress.js/  "Impress.js"	

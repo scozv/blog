@@ -3,8 +3,9 @@ layout: page
 ---
 {% include JB/setup %}
 
-
 {% for post in site.posts %}
+  {% if post.categories contains 'slides' %}
+  {% else%}
   <div class="summary-title"> {{ post.title }} </div>
   <div class="summary-time"> {{ post.date | date_to_string }} </div>
   <div class="summary-content">
@@ -22,8 +23,9 @@ layout: page
 
   <a href="{{ BASE_PATH }}{{ post.url }}#pi"><span class="read-more">Read more ...</span></a>
   </div>
-  
+
   <br />
+  {% endif %}
 {% endfor %}
 
 
