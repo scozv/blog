@@ -39,6 +39,11 @@
   </head>
 
   <body>
+    {% if page.categories contains 'slides' %}
+      <div class="content">
+        {{ content }}
+      </div>
+    {% else %}
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container-narrow">
@@ -57,15 +62,14 @@
       <div class="content">
         {{ content }}
       </div>
-      <hr>
+      <hr>      
       <footer>
         <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}
           with many <a href="/credits">thanks</a>.
         </p>
       </footer>
-
-    </div>
-
+    </div>    
+    {% endif %}
     {% include JB/analytics %}
   </body>
 </html>
