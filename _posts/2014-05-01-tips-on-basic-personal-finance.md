@@ -7,19 +7,19 @@ tags: []
 ---
 {% include JB/setup %}
 
-<div id="its" class="step slide" data-x="-2500" data-y="-2000">
+<div id="if" class="step slide" data-x="-2500" data-y="-2000">
         <q>If I ask you ...</q>
 </div>
 
-<div class="step slide" data-x="-1500" data-y="-2000" date-z="0">
+<div id="around" class="step slide" data-x="-1500" data-y="-2000" date-z="0">
     <q style="font-size: 20em">&asymp;</q>
 </div>
 
-<div class="step slide" data-x="-1500" data-y="-2000" data-rotate-x="360">
+<div id="percise" class="step slide" data-x="-1500" data-y="-2000" data-rotate-x="180">
     <q style="font-size: 20em">=</q>
 </div>
 
-<div id="big" class="step slide" data-x="0" data-y="-2000" data-scale="2">
+<div id="acc" class="step slide" data-x="0" data-y="-2000" data-scale="2">
         <q>Accouting</q>
 </div>
 
@@ -28,19 +28,19 @@ tags: []
         <q>Sharing  <strong>5 Tips</strong> on Personal Finance</q>
 </div>
 
-<div id="ing" class="step slide" data-x="2500" data-y="-2000"
+<div id="r1" class="step slide" data-x="2500" data-y="-2000"
     data-scale="2">
         <q>Rule 1, Saving</q>
 </div>
-<div id="imagination" class="step slide" data-x="5000" data-y="-2000" data-scale="2">
+<div id="r2" class="step slide" data-x="5000" data-y="-2000" data-scale="2">
         <q>Rule 2, Leave amount for emergency</q>
 </div>
 
-<div id="r2-i" class="step slide" data-x="5000" data-y="0" data-scale="2">
+<div id="insurance" class="step slide" data-x="5000" data-y="0" data-scale="2">
         <q>and, Insurance</q>
 </div>
 
-<div id="source" class="step slide" data-x="5000" data-y="2000" data-scale="2">
+<div id="r3" class="step slide" data-x="5000" data-y="2000" data-scale="2">
         <q>Rule 3, Accounting, write down the number you spend</q>
 </div>
 
@@ -53,7 +53,7 @@ tags: []
         <q>Rule 5, Keep learning, invest yourself on education</q>
 </div>
 
-<div id="tiny" class="step slide" data-x="0" data-y="0" data-scale="2">
+<div id="review" class="step slide" data-x="0" data-y="0" data-scale="2">
         <q>Review</q>
         <q>Saving, Emergency, Accouting, Investment, and Learning</q>
 </div>
