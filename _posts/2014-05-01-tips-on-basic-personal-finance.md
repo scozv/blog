@@ -7,19 +7,19 @@ tags: []
 ---
 {% include JB/setup %}
 
-<div id="its" class="step slide" data-x="-2500" data-y="0">
+<div id="its" class="step slide" data-x="-2500" data-y="-2000">
         <q>If I ask you ...</q>
 </div>
 
-<div class="step slide" data-x="-1500" data-y="-500">
+<div class="step slide" data-x="-1500" data-y="-2500">
     <q style="font-size: 20em">&asymp;</q>
 </div>
 
-<div class="step slide" data-x="-1500" data-y="500">
+<div class="step slide" data-x="-1500" data-y="-1500">
     <q style="font-size: 20em">=</q>
 </div>
 
-<div id="big" class="step slide" data-x="0" data-y="0" data-scale="2">
+<div id="big" class="step slide" data-x="0" data-y="-2000" data-scale="2">
         <q>Accouting</q>
 </div>
 
@@ -53,7 +53,7 @@ tags: []
         <q>Rule 5, Keep learning, invest yourself on education</q>
 </div>
 
-<div id="tiny" class="step slide" data-x="0" data-y="-2000" data-scale="2">
+<div id="tiny" class="step slide" data-x="0" data-y="0" data-scale="2">
         <q>Review</q>
         <q>Saving, Emergency, Accouting, Investment, and Learning</q>
 </div>
