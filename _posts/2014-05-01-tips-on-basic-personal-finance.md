@@ -11,11 +11,11 @@ tags: []
         <q>If I ask you ...</q>
 </div>
 
-<div class="step slide" data-x="-1500" data-y="-2500">
+<div class="step slide" data-x="-1500" data-y="-2000" date-z="0">
     <q style="font-size: 20em">&asymp;</q>
 </div>
 
-<div class="step slide" data-x="-1500" data-y="-1500">
+<div class="step slide" data-x="-1500" data-y="-2000" data-rotate-x="360">
     <q style="font-size: 20em">=</q>
 </div>
 
