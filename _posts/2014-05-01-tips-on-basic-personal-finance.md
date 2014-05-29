@@ -23,8 +23,7 @@ tags: []
         <q>Accounting</q>
 </div>
 
-<div id="title" class="step" data-x="3000" data-y="-300" 
-    data-rotate="0" data-scale="9">
+<div id="title" class="step" data-x="3000" data-y="-300"  data-rotate="0" data-scale="9">
         <q>5 Tips on</q><br />
         <q><h1>Personal Finance</h1></q>
 </div>
@@ -38,7 +37,7 @@ tags: []
         <q>T2, Plan the emergency amount</q>
 </div>
 
-<div id="insurance" class="step point" data-x="5500" data-y="-700" data-scale="5" data-rotate="90">
+<div id="insurance" class="step" data-x="5500" data-y="250" data-scale="5" data-rotate="90">
         <q>Insurance</q>
 </div>
 
@@ -57,7 +56,7 @@ tags: []
 
 <div id="r5" class="step " data-x="0" data-y="800" data-scale="6"
     deta-z="230" data-rotate="-10">
-        <q>T5, Learn and learn ...</q>
+        <q>T5, Keep learning ...</q>
 </div>
 
 <!--<div id="review" class="step point" data-x="0" data-y="0" data-scale="2">

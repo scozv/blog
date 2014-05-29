@@ -196,7 +196,10 @@ a:focus {
     transition:         opacity 1s;
 }
 
-.impress-enabled .step.active { opacity: 1 }
+.impress-enabled .step.active { 
+    opacity: 1;
+    font-size: 75px;
+}
 
 /*
     These 'slide' step styles were heavily inspired by HTML5 Slides:
@@ -242,7 +245,8 @@ a:focus {
 .point q {
     position: absolute;
     top: 27%;
-    left: 30%;
+    left: 20%;
+    font-size: 45px;
 }
 
 /*
