@@ -7,57 +7,64 @@ tags: []
 ---
 {% include JB/setup %}
 
-<div id="if" class="step slide point" data-x="-2500" data-y="-2000">
+<div id="big" class="step" data-x="-1500" data-y="-1600" data-scale="6" data-rotate="-90">
         <q>If I ask you ...</q>
 </div>
 
-<div id="around" class="step slide point" data-x="-1750" data-y="-2000" date-z="0" data-scale="0.5">
+<div id="around" class="step slide point" data-x="-800" data-y="-2500" date-z="0" data-scale="0.5">
     <q style="font-size: 17em">&asymp;</q>
 </div>
 
-<div id="percise" class="step slide point" data-x="-1250" data-y="-2000" data-scale="0.5">
+<div id="percise" class="step slide point" data-x="-300" data-y="-2500" data-scale="0.5">
     <q style="font-size: 17em">=</q>
-</div>0
-
-<div id="acc" class="step slide point" data-x="0" data-y="-2000" data-scale="2">
-        <q>Accouting</q>
 </div>
 
-<div id="title" class="step slide" data-x="2500" data-y="0" 
-    data-rotate="0" data-scale="3">
-        <q>5 Tips on <strong>Personal Finance</strong></q>
+<div id="acc" class="step" data-x="100" data-y="-2200" data-scale="2.5">
+        <q>Accounting</q>
 </div>
 
-<div id="r1" class="step slide" data-x="2500" data-y="-2000"
-    data-scale="2">
+<div id="title" class="step" data-x="3000" data-y="-300" 
+    data-rotate="0" data-scale="9">
+        <q>5 Tips on</q><br />
+        <q><h1>Personal Finance</h1></q>
+</div>
+
+<div id="r1" class="step " data-x="1500" data-y="-2000"
+    data-scale="6" data-rotate="-10">
         <q>T1, Saving before spending</q>
 </div>
-<div id="r2" class="step slide" data-x="5000" data-y="-2000" data-scale="2">
+<div id="r2" class="step " data-x="3700" data-y="-1800" data-scale="6"
+    data-rotate="-10">
         <q>T2, Plan the emergency amount</q>
 </div>
 
-<div id="insurance" class="step slide point" data-x="5000" data-y="0" data-scale="2">
+<div id="insurance" class="step point" data-x="5500" data-y="-700" data-scale="5" data-rotate="90">
         <q>Insurance</q>
 </div>
 
-<div id="r3" class="step slide" data-x="5000" data-y="2000" data-scale="2">
-        <q>T3, Accounting / 30% ent ...</q>
+<div id="r3" class="step " data-x="6000" data-y="700" data-scale="6"
+    data-rotate="-10">
+        <q>T3, Accounting</q>
 </div>
 
-<div id="r4" class="step slide" data-x="2500" data-y="2000" data-scale="2">
+<div id="source" class="step " data-x="3500" data-y="-900" data-scale="3"
+    data-z="100"></div>
+
+<div id="r4" class="step " data-x="2600" data-y="900" data-scale="6"
+    data-rotate="-10">
         <q>T4, Investment / Risk</q>
 </div>
 
-<div id="r5" class="step slide" data-x="0" data-y="2000" data-scale="2"
-    deta-z="230" data-rotate="0">
+<div id="r5" class="step " data-x="0" data-y="800" data-scale="6"
+    deta-z="230" data-rotate="-10">
         <q>T5, Learn and learn ...</q>
 </div>
 
-<div id="review" class="step slide point" data-x="0" data-y="0" data-scale="2">
+<!--<div id="review" class="step point" data-x="0" data-y="0" data-scale="2">
         <q><strong>Review</strong></q>
-</div>
+</div>-->
 
-<div id="overview" class="step" data-x="2000" data-y="0" data-scale="8">
+<div id="overview" class="step" data-x="1700" data-y="-500" data-scale="7">
 </div>
 
 <div class="hint">
