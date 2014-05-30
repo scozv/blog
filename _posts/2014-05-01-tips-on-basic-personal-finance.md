@@ -49,14 +49,14 @@ tags: []
 <div id="source" class="step " data-x="3500" data-y="-900" data-scale="3"
     data-z="100"></div>
 
-<div id="r4" class="step " data-x="2600" data-y="900" data-scale="6"
+<div id="r4" class="step " data-x="3000" data-y="900" data-scale="6"
     data-rotate="-10">
         <q>T4, Investment / Risk</q>
 </div>
 
 <div id="r5" class="step " data-x="0" data-y="800" data-scale="6"
     deta-z="230" data-rotate="-10">
-        <q>T5, Keep learning ...</q>
+        <q>T5, Stay Healthy / Keep learning ...</q>
 </div>
 
 <!--<div id="review" class="step point" data-x="0" data-y="0" data-scale="2">
