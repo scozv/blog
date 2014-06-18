@@ -106,6 +106,7 @@ JB :
 #       tracking_id : 'UA-***'
     googleUA :
         tracking_id : 'UA-35340941-5'
+        property_name: 'scotv.github.io'
 #    getclicky :
 #      site_id : 
 #    mixpanel :
