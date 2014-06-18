@@ -67,15 +67,12 @@
 
 /* following css should be seperated out from this file */
 /* nav anchor */
-/*
-.navbar .brand {
+.navbar .navbar-header {
     font-size: 1.1em;
-}
-*/
-
-.navbar .nav>li>a {
-    font-size: 1.7em;
     font-weight: bolder;
+}
+
+.navbar .navbar-nav>li>a {
 }
 
 
