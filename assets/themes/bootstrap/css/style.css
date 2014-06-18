@@ -38,7 +38,8 @@
   line-height: 28px; }
 
 .tag_box li i {
-  opacity: 0.9; }
+  margin-right: 5px;
+}
 
 .tag_box.inline li {
   float: left; }
@@ -75,6 +76,12 @@
 .navbar .navbar-nav>li>a {
 }
 
+i.glyphicon {
+    -webkit-transform:scale(0.9);
+    -moz-transform:scale(0.9);
+    -o-transform:scale(0.9);
+    top: 3px;
+}
 
 /* Abstract in post */
 div.content > blockquote {
@@ -186,5 +193,13 @@ div.content table:not(.lines) td {
 }
 
 div.content table:not(.lines) tr:nth-child(2n) {
+    background-color: #E5E5E5;
+}
+
+div.row table:not(.lines) td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+div.row table:not(.lines) tr:nth-child(2n) {
     background-color: #E5E5E5;
 }
