@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Understand Monads in C#"
-description: ""
+description: "An Short Literature Review on Monads in C#"
 category: "pattern"
 tags: ["LINQ", "C#", "monad", "Scala"]
 ---
@@ -13,13 +13,13 @@ tags: ["LINQ", "C#", "monad", "Scala"]
 
 > 本文主要对几篇讨论Monad的文献进行综述，文中的大部分代码都来自参考文献（我会指明参考来源）。本文有几处地方提出了几个思考题，这些思考题也来自参考文献，建议先尝试写写这些思考题，再去阅读参考文献。这一份综述尝试抛开函数编程的背景，去看看我们平时已经在使用但却没有留意的一些Monad。文章主要涉及到C#这门语言，但是不同的语言背景并不会有太多的影响。
 > 
-> 我推荐阅读参考文献中的英文原文。虽然中文意合英文形合（文献[G08][^G08]），但是本文的综述将使用中文，除了部分程序代码，和一些术语、人名 that 我不打算翻译的。
+> 我推荐阅读参考文献中的英文原文。虽然中文意合英文形合[^G08]，但是本文的综述将使用中文，除了部分程序代码，和一些术语、人名 that 我不打算翻译的。
 > 
-> 本文对Haskell和.NET中异步Task的理解不够，如果需要了解Task这个Monad的话，请参考Stephen Toub的文章（文献[ST13][^ST13]）。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲（文献[DC13][^DC13]）。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”。
+> 本文对Haskell和.NET中异步Task的理解不够，如果需要了解Task这个Monad的话，请参考Stephen Toub的文章[^ST13]。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”[^DC13]。
 
 <!--more-->
 
-# 从一个略微复杂的练习题讲起
+# 一个略微复杂的思考题
 假如我们有如下这样一个委托，称其为K：
 
 	delegate Answer K<T,Answer>(Func<T,Answer> k);
@@ -41,7 +41,7 @@ tags: ["LINQ", "C#", "monad", "Scala"]
 
 	public static K<U, Answer> SelectMany<T, U, Answer>(this K<T, Answer> m, Func<T, K<U, Answer>> k)
 
-这个问题来自Wes Dyer文章[^WD08]的最后一部分，我认为，如果能在看懂题意的基础上，尝试写一写内部实现，将有助于理解Monad。如果对题目有些费解，请先往下看。本文的最后会再次提到这个题目。
+这个问题来自Wes Dyer文章的最后一部分[^WD08]，我认为，如果能在看懂题意的基础上，尝试写一写内部实现，将有助于理解Monad。如果对题目有些费解，请先往下看。本文的最后会再次提到这个题目。
 
 # 身边的几个泛型类
 Eric Lippert在他的Monad系列[^EL13]中，给出了如下几个泛型类，并借助这几个泛型类，由浅入深地揭示了Monad的性质。
@@ -119,7 +119,7 @@ Wes Dyer在他的文章中用程序语言的方式来描述复合映射这样的
 
 # 一个简单的加法运算
 
-扩展了一个T之后，我们现在有了增强版的类型M<T\>。一个类型，总会有一些动态的行为。Eric Lippert在他的Monads系列[^EL13]中的第三部分，为上述的一些M<int\>增加了一个加法运算：
+扩展了一个T之后，我们现在有了增强版的类型M<T\>。一个类型，总会有一些动态的行为。Eric Lippert在他的Monads系列中的第三部分，为上述的一些M<int\>增加了一个加法运算[^EL13-3]：
 
 	static Nullable<int> AddOne(Nullable<int> nullable)
 	{ 
@@ -170,7 +170,7 @@ Wes Dyer在他的文章中用程序语言的方式来描述复合映射这样的
 
 	int result = unwrapped + 1;
 
-Eric在他的Monads系列的第四部分，将加法运算更一般化了：
+Eric在他的Monads系列的第四部分，将加法运算更一般化了[^EL13-4]：
 
 	static Nullable<R> ApplyFunction<A, R>(Nullable<A> nullable, Func<A, R> function)
 	{
@@ -184,6 +184,7 @@ Eric在他的Monads系列的第四部分，将加法运算更一般化了：
 	    return new Nullable<R>();
 	}
 	
+    // 使用ApplyFunction构造具体的复合函数
 	static Nullable<int> AddOne(Nullable<int> nullable)
 	{
 	  return ApplyFunction(nullable, (int x) => x + 1);
@@ -199,9 +200,9 @@ Eric在他的Monads系列的第四部分，将加法运算更一般化了：
 	async static Task<R> ApplyFunction<A, R>(Task<A> sequence, Func<A, R> function);
 
 # 平面化
-设想，我们有如下一个方法，它计算一个整数的对数，当x小于零的时候，log函数没有意义，将返回一个空：
+设想，我们有如下一个方法，它计算一个整数的对数，当x小于零的时候，$$\log$$函数没有意义，将返回一个空：
 
-    Nullable<int> SaftLog(int x);
+    Nullable<int> SaftLog(int x) {return x > 0 ? Math.Log(x) : null;}
 
 如果把这个函数传给上一节给出的ApplyFunction，会有什么问题呢？
 
@@ -213,7 +214,7 @@ Eric在他的Monads系列的第四部分，将加法运算更一般化了：
 
 首先，这在C#是不合法的，Nullable只能用在值类型上面。其次，就算合法，但也过多嵌套。同样的，Lazy<Lazy<int\>\>，OnDemand<OnDemand<T\>\>等都是不合适的。我们需要将其平面化。
 
-Eric在他Monads系列的第五部分给出了新的一个函数签名：
+Eric在他Monads系列的第五部分给出了新的一个函数签名[^EL13-5]：
 
     static Nullable<R> ApplySpecialFunction<A, R>(Nullable<A> nullable, Func<A, Nullable<R>> function)
 
@@ -234,12 +235,12 @@ Eric在他Monads系列的第五部分给出了新的一个函数签名：
 # Monad的历史
 Wes Dyer在他的文章中简述了Monad的历史[^WD08]。他指出，Monad这个概念来自理论数学的范畴论，Eugenio Moggi在其文章《Notions of computation and monads》将Monad引入了计算机科学领域。Philip Wadler在其著作《The essence of functional programming》探讨了Monad的应用。Haskell中更是大量的使用了Monad。
 
-这样一来，使得我们一说到Moand就和函数编程扯上关系。就好比面向对象、UML的特性容易表达设计模式那样，我们常常一说到设计模式，就往OOP上面靠 （文献[^CH13]）。
+这样一来，使得我们一说到Moand就和函数编程扯上关系。就好比面向对象、UML的特性容易表达设计模式那样，我们常常一说到设计模式，就往OOP上面靠[^CH13]。
 
-要知道，函数编程里面的匿名函数λ表达式，也是从理论数学中发展过来的（文献[^WL14]）。Eric也多次提及LINQ的设计者之一Erik Meijer正式Haskell的设计参与者（比如在他的一个[回答](http://stackoverflow.com/a/4683716)中）。
+要知道，函数编程里面的匿名函数λ表达式，也是从理论数学中发展过来的[^WL14]。Eric也多次提及LINQ的设计者之一Erik Meijer正式Haskell的设计参与者，比如他在StackOverflow上对LINQ与Haskell关系的回答[^EL11]。
 
 # Monad的性质
-Eric指出Monad是类型（Type）的一种设计模式，是对现有Type的能力的一种放大（amplifier），或者是对T的一种wrapper，借助之前提到的几个M<T\>，我们很容易地设计出一种“asynchronously-computed sequence of nullable bytes”类型：
+Eric指出Monad是类型（Type）的一种设计模式，是对现有Type的能力的一种放大（amplifier），或者是对T的一种wrapper，借助之前提到的几个M<T\>，我们很容易地设计出一种“asynchronously-computed sequence of nullable bytes”[^EL13-2]类型：
 
     Task<IEnumerable<Nullable<int>>>
 
@@ -250,19 +251,19 @@ Eric指出Monad是类型（Type）的一种设计模式，是对现有Type的能
 一个直观的例子就是：
     
     // C#
-    IEnumerabe<T\>.Select().Where().FirstOrDefault();
+    IEnumerabe<T>.Select().Where().FirstOrDefault();
     // Scala
     Seq[T].map().filter().firstOrDefault();
 
 我们可以看到，在这样一条复合运算中，最终只需要一个值，如果数组很长，映射的运算非常耗时，过早地遍历数组显然不是明智之举。是的，LINQ的延迟运算，就是基于这样的思想。
 
-Eric在文中提出[^EL13]：
+Eric在文中提出[^EL13-8]：
 
 > You might have noticed that the asynchronous, lazy, on-demand and sequence monads all have an interesting common property: when you apply a function to any of these monads, what you get back is an object that will perform that function in the future. Essentially, the bind function takes an immutable workflow and its subsequent step, and returns you the resulting new workflow. The bind operator does not execute the workflow; it makes a new workflow out of an old one.
 
 这个复合操作就是我们下面看到的Bind，在C#中，对应的函数名为SelectMany，在Scala中，对应的叫flatMap。
 
-Wes Dyer表明，如果放大用Unit来构造，复合用Bind来表示的话，我们需要如下两个签名：
+Wes Dyer表明，如果放大用Unit来构造，复合用Bind来表示的话，我们需要如下两个签名[^WD08]：
 
     static M<T>  Unit<T>(T value);
     static M<R>  Bind<T, R>(M<T>, Func<T, M<R>>)
@@ -288,7 +289,7 @@ Wes Dyer表明，如果放大用Unit来构造，复合用Bind来表示的话，�
 
 接下来，让我们来看Eric给出的思考题，这个思考题让我们尝试去设计一个Monad。
 
-正如上一节所说，C#的Bind取名为SelectMany，给定实现：
+正如上一节所说，C#的Bind取名为SelectMany，给定实现[^EL13-10]：
 
     static IEnumerable<R> SelectMany<A, R>(this IEnumerable<A> sequence, Func<A, IEnumerable<R>> function)
     { 
@@ -326,11 +327,25 @@ Monad是一种类型的设计模式，用来放大现有Type的能力。需要�
 
 # 参考文献
 
-[^EL13]: Eric Lippert. [Monads, 13 Episodes](http://ericlippert.com/category/monads)[J/OL] 2013
+[^EL13]: Eric Lippert. [Monads](http://ericlippert.com/category/monads)[J/OL] 2013
+
+[^EL13-2]: Eric Lippert. [Monads, Part 2](http://ericlippert.com/2013/02/25/monads-part-two/)[J/OL] 2013.02.25
+
+[^EL13-3]: Eric Lippert. [Monads, Part 3](http://ericlippert.com/2013/02/28/monads-part-three/)[J/OL] 2013.02.28
+
+[^EL13-4]: Eric Lippert. [Monads, Part 4](http://ericlippert.com/2013/03/04/monads-part-four/)[J/OL] 2013.03.04
+
+[^EL13-5]: Eric Lippert. [Monads, Part 5](http://ericlippert.com/2013/03/07/monads-part-five/)[J/OL] 2013.03.07
+
+[^EL13-8]: Eric Lippert. [Monads, Part 8](http://ericlippert.com/2013/03/18/monads-part-eight/)[J/OL] 2013.03.18
+
+[^EL13-10]: Eric Lippert. [Monads, Part 10](http://ericlippert.com/2013/03/25/monads-part-ten/)[J/OL] 2013.03.25
+
+[^EL11]: Eric Lippert. [Answer to _Are there any connections between Haskell and LINQ?_](http://stackoverflow.com/a/4683716)[EB/OL]. StackOverflow.com 2011.01.13
 
 [^WD08]: Wes Dyer. [The Marvels of Monads](http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx)[J/OL] 2008
 
-[^DC13]: Douglas Crockford. Monads and Gonads, in the Speech named JavaScript the Good Parts
+[^DC13]: Douglas Crockford. Monads and Gonads, in the Speech named _JavaScript the Good Parts_
 
 [^ST13]: Stephen Toub. [Tasks, Monads, and LINQ](http://blogs.msdn.com/b/pfxteam/archive/2013/04/03/tasks-monads-and-linq.aspx)[J/OL] 2013
 
