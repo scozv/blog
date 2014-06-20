@@ -260,7 +260,7 @@ Eric在文中提出[^EL13]：
 
 > You might have noticed that the asynchronous, lazy, on-demand and sequence monads all have an interesting common property: when you apply a function to any of these monads, what you get back is an object that will perform that function in the future. Essentially, the bind function takes an immutable workflow and its subsequent step, and returns you the resulting new workflow. The bind operator does not execute the workflow; it makes a new workflow out of an old one.
 
-这个复合操作就是我们下面看到的Bind，在C#中，对应的函数名为SelectMany。
+这个复合操作就是我们下面看到的Bind，在C#中，对应的函数名为SelectMany，在Scala中，对应的叫flatMap。
 
 Wes Dyer表明，如果放大用Unit来构造，复合用Bind来表示的话，我们需要如下两个签名：
 
@@ -326,16 +326,16 @@ Monad是一种类型的设计模式，用来放大现有Type的能力。需要�
 
 # 参考文献
 
-[^EL13]: Eric Lippert, [Monads, 13 Episodes](http://ericlippert.com/category/monads)[J/OL] 2013
+[^EL13]: Eric Lippert. [Monads, 13 Episodes](http://ericlippert.com/category/monads)[J/OL] 2013
 
-[^WD08]: Wes Dyer, [The Marvels of Monads](http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx)[J/OL] 2008
+[^WD08]: Wes Dyer. [The Marvels of Monads](http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx)[J/OL] 2008
 
-[^DC13]: Douglas Crockford, Monads and Gonads, in the Speech named JavaScript the Good Parts
+[^DC13]: Douglas Crockford. Monads and Gonads, in the Speech named JavaScript the Good Parts
 
-[^ST13]: Stephen Toub, [Tasks, Monads, and LINQ](http://blogs.msdn.com/b/pfxteam/archive/2013/04/03/tasks-monads-and-linq.aspx)[J/OL] 2013
+[^ST13]: Stephen Toub. [Tasks, Monads, and LINQ](http://blogs.msdn.com/b/pfxteam/archive/2013/04/03/tasks-monads-and-linq.aspx)[J/OL] 2013
 
-[^CH13]: 陈浩，[从面向对象的设计模式看软件设计](http://coolshell.cn/articles/8961.html)[J/OL] 2013
+[^CH13]: 陈浩. [从面向对象的设计模式看软件设计](http://coolshell.cn/articles/8961.html)[J/OL] 2013
 
-[^WL14]: 维基百科，[λ演算](https://en.wikipedia.org/wiki/Lambda_calculus)[J/OL] 2014
+[^WL14]: 维基百科. [λ演算](https://en.wikipedia.org/wiki/Lambda_calculus)[J/OL] 2014
 
 [^G08]: 郭富强. 意合形合的汉英对比研究[D]. 华东师范大学 2006
