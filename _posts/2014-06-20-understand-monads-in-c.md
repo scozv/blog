@@ -15,7 +15,7 @@ tags: ["LINQ", "C#", "monad", "Scala"]
 > 
 > 我推荐阅读参考文献中的英文原文。虽然中文意合英文形合（文献[G08][^G08]），但是本文的综述将使用中文，除了部分程序代码，和一些术语、人名 that 我不打算翻译的。
 > 
-> 本文对Haskell和Task异步的理解不够，如果需要了解Task<T>这个Monad的话，请参考Stephen Toub的文章（文献[ST13][^ST13]）。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲（文献[DC13][^DC13]）。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”。
+> 本文对Haskell和.NET中异步Task的理解不够，如果需要了解Task这个Monad的话，请参考Stephen Toub的文章（文献[ST13][^ST13]）。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲（文献[DC13][^DC13]）。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”。
 
 <!--more-->
 
@@ -56,10 +56,10 @@ Eric Lippert在他的Monad系列[^EL13]中，给出了如下几个泛型类，�
 
 这几个泛型类的特点是，它们都赋予了T新的能力：
 
-* Nullable<T\> 使得T可空
-* IEnumerable<T\> 使得T可以被遍历
-* Lazy<T\> 使得T只在第一次需要的时候才计算，之后都从cache中获取
-* OnDemand<T\> 使得T只有在需要的时候才被调用
+* Nullable<T\> 使得T可空；
+* IEnumerable<T\> 使得T可以被遍历；
+* Lazy<T\> 使得T只在第一次需要的时候才计算，之后都从cache中获取；
+* OnDemand<T\> 使得T只有在需要的时候才被调用；
 * Task<T\> 使得...
 
 因为这些泛型类扩展了T的能力，所以，我们称它们为Amplifier，对于这一类扩展后的类型，我们统一用M<T\>来表示。
@@ -83,9 +83,9 @@ $ p(x)= \ln (x^2-4x+4) = \ln [(x-2)^2] = 2 \ln (x-2) $
   
 我们思考，假如：
 
-0. 令$$x=e+2=4.718281828459045$$，我们是计算$$(4.718281828459045)^2-4*4.718281828459045$$容易呢，还是计算$$2 \ln (e+2-2)=2\ln e = 2$$容易
-1. 或者，运算器不支持平方运算，却有一张对数表，那么我们通过符号运算化简得到$$p(x)$$，才能计算出结果
-2. 又或者，在程序语言中，传入的参数是Int.MaxValue，平方运算很可能超出存储的范围，那么我们也最好到最后再去用新的映射加以计算
+0. 令$$x=e+2=4.718281828459045$$，我们是计算$$(4.718281828459045)^2-4*4.718281828459045$$容易呢，还是计算$$2 \ln (e+2-2)=2\ln e = 2$$容易？
+1. 或者，运算器不支持平方运算，却有一张对数表，那么我们通过符号运算化简得到$$p(x)$$，才能计算出结果；
+2. 又或者，在程序语言中，传入的参数是Int.MaxValue，平方运算很可能超出存储的范围，那么我们也最好到最后再去用新的映射加以计算。
 
 所以，有些事儿不要急着去处理。后面我们还会看到这句话。
   
@@ -223,7 +223,7 @@ Eric在他Monads系列的第五部分给出了新的一个函数签名：
 
 我们看到，这两个签名本质上是相同的。
 
-同样的，作为辅助思考的联系，请写出如下签名的实现：
+同样的，作为辅助思考的练习，请写出如下签名的实现：
 
     static Nullable<R> ApplySpecialFunction<A, R>(Nullable<A> nullable, Func<A, Nullable<R>> function);
     static OnDemand<R> ApplySpecialFunction<A, R>(OnDemand<A> onDemand, Func<A, OnDemand<R>> function);
@@ -320,7 +320,7 @@ Monad是一种类型的设计模式，用来放大现有Type的能力。需要�
 
 添加操作类的过程，在Haskell中叫Bind，在C#中叫SelectMany，在Scala中叫flatMap。这样，对于凡是实现了这些签名的类，就可以在For Comperhensoin中使用了，Eric在Monad系列的第十二部分，对此有详细的阐述，同时还讨论了如何解决SelectMany多重嵌套导致的效率低下问题。
 
-正如Eric指出的那样，Monad是类型的一种设计模式。所以Scala的Try类，Rx库（rx.codeplex.com）中的IObservale，还有LINQ，都是基于这样的设计模式。
+正如Eric指出的那样，Monad是类型的一种设计模式。所以Scala的Try[T]类，Rx库（rx.codeplex.com）中的IObservable<T\>，还有LINQ，都是基于这样的设计模式。
 
 最后，再次推荐阅读参考文献的英文原文。
 
@@ -334,7 +334,7 @@ Monad是一种类型的设计模式，用来放大现有Type的能力。需要�
 
 [^ST13]: Stephen Toub, [Tasks, Monads, and LINQ](http://blogs.msdn.com/b/pfxteam/archive/2013/04/03/tasks-monads-and-linq.aspx)[J/OL] 2013
 
-[^CH13]: 陈著，[从面向对象的设计模式看软件设计](http://coolshell.cn/articles/8961.html)[J/OL] 2013
+[^CH13]: 陈浩，[从面向对象的设计模式看软件设计](http://coolshell.cn/articles/8961.html)[J/OL] 2013
 
 [^WL14]: 维基百科，[λ演算](https://en.wikipedia.org/wiki/Lambda_calculus)[J/OL] 2014
 
