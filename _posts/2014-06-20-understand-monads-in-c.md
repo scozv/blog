@@ -13,9 +13,9 @@ tags: ["LINQ", "C#", "monad", "Scala"]
 
 > 本文主要对几篇讨论Monad的文献进行综述，文中的大部分代码都来自参考文献（我会指明参考来源）。本文有几处地方提出了几个思考题，这些思考题也来自参考文献，建议先尝试写写这些思考题，再去阅读参考文献。这一份综述尝试抛开函数编程的背景，去看看我们平时已经在使用但却没有留意的一些Monad。文章主要涉及到C#这门语言，但是不同的语言背景并不会有太多的影响。
 > 
-> 我推荐阅读参考文献中的英文原文。虽然中文意合英文形合（参考文献意合形合的汉英对比研究by郭富强），但是本文的综述将使用中文，除了部分程序代码，和一些术语、人名 that 我不打算翻译的。
+> 我推荐阅读参考文献中的英文原文。虽然中文意合英文形合（文献[^G08]），但是本文的综述将使用中文，除了部分程序代码，和一些术语、人名 that 我不打算翻译的。
 > 
-> 本文对Haskell和Task异步的理解不够，如果需要了解`Task<T>`这个Monad的话，请参考Stephen Toub的文章[^ST13]。另外，本文对Monad的综述都建立在强类型系统的基础上，关于`JavaScript`中的Monad，请观看Douglas Crockford的演讲[^DC13]。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”。
+> 本文对Haskell和Task异步的理解不够，如果需要了解Task<T>这个Monad的话，请参考Stephen Toub的文章[^ST13]。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲[^DC13]。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”。
 
 <!--more-->
 
@@ -51,9 +51,10 @@ Eric Lippert在他的Monad系列[^EL13]中，给出了如下几个泛型类，�
 	Lazy<T>
 	OnDemand<T>
 	Task<T>
-其中，OnDemand<T>本质上是Func<T>，指的是一类无参有返回值的函数，Eric这样做，是为了和更一般的Func<V, U\>加以区别。
 
-这几个泛型类的特点是，它们都赋予了T新的能力（下面最好用中文）：
+其中，OnDemand<T\>本质上是Func<T\>，指的是一类无参有返回值的函数，Eric这样做，是为了和更一般的Func<V, U\>加以区别。
+
+这几个泛型类的特点是，它们都赋予了T新的能力：
 
 * Nullable<T\> 使得T可空
 * IEnumerable<T\> 使得T可以被遍历
@@ -70,11 +71,11 @@ Eric Lippert在他的Monad系列[^EL13]中，给出了如下几个泛型类，�
 
 $g(x) =  x^2-4x, f(x) = \ln (x+4)$
  
-令复合映射
+令复合映射：
 
 $p(x) = f(g(x)) $
 
-符号计算得知
+符号计算得知：
 
 $ p(x)= \ln (x^2-4x+4) = \ln [(x-2)^2] = 2 \ln (x-2) $
 
@@ -82,7 +83,7 @@ $ p(x)= \ln (x^2-4x+4) = \ln [(x-2)^2] = 2 \ln (x-2) $
   
 我们思考，假如：
 
-0. 令$$x=e+2=4.718281828459045$$，我们是计算$$(4.718281828459045)^2-4*4.718281828459045$$容易呢，还是计算$$2 ln(e+2-2)=2lne = 2$$容易
+0. 令$$x=e+2=4.718281828459045$$，我们是计算$$(4.718281828459045)^2-4*4.718281828459045$$容易呢，还是计算$$2 \ln (e+2-2)=2\ln e = 2$$容易
 1. 或者，运算器不支持平方运算，却有一张对数表，那么我们通过符号运算化简得到$$p(x)$$，才能计算出结果
 2. 又或者，在程序语言中，传入的参数是Int.MaxValue，平方运算很可能超出存储的范围，那么我们也最好到最后再去用新的映射加以计算
 
@@ -114,11 +115,11 @@ Wes Dyer在他的文章中用程序语言的方式来描述复合映射这样的
 	    return x => Bind(g(x), f);
 	}
 
-那么，前文提到的那些M<T>：Nullable<T>, Lazy<T>, OnDemand<T>, Task<T>, IEnumerable<T>，这些类型的Bind函数分别应该如何实现呢？
+那么，前文提到的那些M<T\>：Nullable<T\>, Lazy<T\>, OnDemand<T\>, Task<T\>, IEnumerable<T\>，这些类型的Bind函数分别应该如何实现呢？
 
 # 一个简单的加法运算
 
-扩展了一个T之后，我们现在有了增强版的类型M<T\>，一个类型，总会有一些动态的行为。Eric Lippert在他的Monads系列[^EL13]中的第三部分，为上述的一些M<int\>增加了一个加法运算：
+扩展了一个T之后，我们现在有了增强版的类型M<T\>。一个类型，总会有一些动态的行为。Eric Lippert在他的Monads系列[^EL13]中的第三部分，为上述的一些M<int\>增加了一个加法运算：
 
 	static Nullable<int> AddOne(Nullable<int> nullable)
 	{ 
@@ -156,7 +157,7 @@ Wes Dyer在他的文章中用程序语言的方式来描述复合映射这样的
 
 因为我们过早地计算了最初的onDemand承载的值。
 
-现在，参考上面两个实现，请写出其它M<\T>的加法运算：
+现在，参考上面两个实现，请写出其它M<T\>的加法运算：
 
 	static Lazy<int> AddOne(Lazy<int> lazy)
 	static IEnumerable<int> AddOne(IEnumerable<int> sequence)
@@ -206,11 +207,11 @@ Eric在他的Monads系列的第四部分，将加法运算更一般化了：
 
     static Nullable<R> ApplyFunction<A, R>(Nullable<A> nullable, Func<A, R> function);
 
-通过依次比对类型签名，我们发现，R对应的是一个Nullable<int\>，也就是说，ApplyFunction返回的类型是：
+通过依次比对类型签名，我们发现，R对应的是Nullable<int\>，也就是说，ApplyFunction返回的类型是：
 
     Nullable<Nullable<int>>
 
-首先，这在C#是不合法的，Nullable只能用在值类型上面。其次，就算合法，但也过多嵌套。同样的，Lazy<Lazy<int\>\>，OnDemand<OnDemand<T>>等都是不合适的。我们需要将其平面化。
+首先，这在C#是不合法的，Nullable只能用在值类型上面。其次，就算合法，但也过多嵌套。同样的，Lazy<Lazy<int\>\>，OnDemand<OnDemand<T\>\>等都是不合适的。我们需要将其平面化。
 
 Eric在他Monads系列的第五部分给出了新的一个函数签名：
 
@@ -238,11 +239,13 @@ Wes Dyer在他的文章中简述了Monad的历史[^WD08]。他指出，Monad这�
 要知道，函数编程里面的匿名函数λ表达式，也是从理论数学中发展过来的（文献[^WL14]）。Eric也多次提及LINQ的设计者之一Erik Meijer正式Haskell的设计参与者（比如在他的一个[回答](http://stackoverflow.com/a/4683716)中）。
 
 # Monad的性质
-Eric指出Monad是类型（Type）的一种设计模式，是对现有Type的能力的一种放大（amplifier），或者是对T的一种wrapper，借助之前提到的几个M<T\>，我们很容易地设计出一种 Task<IEnumerable<Nullable<int\>\>\>类型（“asynchronously-computed sequence of nullable bytes”）。
+Eric指出Monad是类型（Type）的一种设计模式，是对现有Type的能力的一种放大（amplifier），或者是对T的一种wrapper，借助之前提到的几个M<T\>，我们很容易地设计出一种“asynchronously-computed sequence of nullable bytes”类型：
+
+    Task<IEnumerable<Nullable<int>>>
 
 所以我们需要一个构造器将T转化为M<T\>，这就是下面我们会看到的Unit。
 
-另外，Moanded Type还需要定义一个操作，用来复合函数。该放大器不会改变底层（Underlying）类型的原有特性。更重要的是，诸如OnDemand的复合，我们只有在最后invoke函数的时候，才去计算，不能过早。诸如IEnumerable<T\>的复合，只有最终需要内部元素的时候，才去遍历，不能过早。诸如IQueryable<T\>，只有最终需要拿回查询结果的时候，再去连接数据源，也不能过早。
+另外，Moanded类型还需要定义一个操作，用来复合函数。该放大器不会改变底层（Underlying）类型的原有特性。更重要的是，诸如OnDemand的复合，我们只有在最后invoke函数的时候，才去计算，不能过早。诸如IEnumerable<T\>的复合，只有最终需要内部元素的时候，才去遍历，不能过早。诸如IQueryable<T\>，只有最终需要拿回查询结果的时候，再去连接数据源，也不能过早。
 
 一个直观的例子就是：
     
@@ -315,7 +318,7 @@ Wes Dyer表明，如果放大用Unit来构造，复合用Bind来表示的话，�
 # 总结
 Monad是一种类型的设计模式，用来放大现有Type的能力。需要满足一些法则，并且向Monad上面添加操作流的时候，我们不要提早运行，而丢失了Monad特性。
 
-添加操作类的过程，在Haskell中叫Bing，在C#中叫SelectMany，在Scala中叫flatMap。这样，对于凡是实现了这些签名的类，就可以在For Comperhensoin中使用了，Eric在Monad系列的第十二部分，对此有详细的阐述，同时还讨论了如何解决SelectMany多重嵌套导致的效率低下问题。
+添加操作类的过程，在Haskell中叫Bind，在C#中叫SelectMany，在Scala中叫flatMap。这样，对于凡是实现了这些签名的类，就可以在For Comperhensoin中使用了，Eric在Monad系列的第十二部分，对此有详细的阐述，同时还讨论了如何解决SelectMany多重嵌套导致的效率低下问题。
 
 正如Eric指出的那样，Monad是类型的一种设计模式。所以Scala的Try类，Rx库（rx.codeplex.com）中的IObservale，还有LINQ，都是基于这样的设计模式。
 
@@ -334,3 +337,5 @@ Monad是一种类型的设计模式，用来放大现有Type的能力。需要�
 [^CH13]: 陈浩著，[从面向对象的设计模式看软件设计](http://coolshell.cn/articles/8961.html)，2013
 
 [^WL14]: 维基百科，[λ演算](https://en.wikipedia.org/wiki/Lambda_calculus), 2014
+
+[^G08]: 郭富强. 意合形合的汉英对比研究[D]. 华东师范大学 2006
