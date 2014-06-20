@@ -162,6 +162,10 @@ div.summary-content blockquote {
     margin-top: 0.7em;
 }
 
+div.summary-content blockquote .footnote {
+    display: none;
+}
+
 div.summary-content a span.read-more {
     font-size: 1.2em;
     font-weight: bold;
