@@ -326,16 +326,16 @@ Monad是一种类型的设计模式，用来放大现有Type的能力。需要�
 
 # 参考文献
 
-[^EL13]: Eric Lippert, [Monads, 13 Episodes](http://ericlippert.com/category/monads), 2013
+[^EL13]: Eric Lippert, [Monads, 13 Episodes](http://ericlippert.com/category/monads)[J/OL] 2013
 
-[^WD08]: Wes Dyer, [The Marvels of Monads](http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx), 2008
+[^WD08]: Wes Dyer, [The Marvels of Monads](http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx)[J/OL] 2008
 
-[^DC13]: Douglas Crockford, Monads & Gonads, in the Speech named _JavaScript the Good Parts_
+[^DC13]: Douglas Crockford, Monads and Gonads, in the Speech named JavaScript the Good Parts
 
-[^ST13]: Stephen Toub, [Tasks, Monads, and LINQ](http://blogs.msdn.com/b/pfxteam/archive/2013/04/03/tasks-monads-and-linq.aspx), 2013
+[^ST13]: Stephen Toub, [Tasks, Monads, and LINQ](http://blogs.msdn.com/b/pfxteam/archive/2013/04/03/tasks-monads-and-linq.aspx)[J/OL] 2013
 
-[^CH13]: 陈浩著，[从面向对象的设计模式看软件设计](http://coolshell.cn/articles/8961.html)，2013
+[^CH13]: 陈著，[从面向对象的设计模式看软件设计](http://coolshell.cn/articles/8961.html)[J/OL] 2013
 
-[^WL14]: 维基百科，[λ演算](https://en.wikipedia.org/wiki/Lambda_calculus), 2014
+[^WL14]: 维基百科，[λ演算](https://en.wikipedia.org/wiki/Lambda_calculus)[J/OL] 2014
 
 [^G08]: 郭富强. 意合形合的汉英对比研究[D]. 华东师范大学 2006
