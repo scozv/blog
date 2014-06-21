@@ -28,7 +28,7 @@ tags: ["LINQ", "C#", "monad", "Scala"]
 
 	Func<Func<T, Answer>, Answer> K;
 
-也就是说，K这个类型是一类函数签名，这类函数返回一个值Answer，接收一个参数，而接收的参数又是一类函数`Func<T, Answer>`。
+也就是说，K这个类型是一类函数签名，这类函数返回一个值Answer，接收一个参数，而接收的参数又是一类函数Func<T, Answer\>。
 
 另外，给出K的构造方法：
 
