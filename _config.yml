@@ -15,7 +15,7 @@ title : Code This.
 tagline: Any Thoughts During Code This.
 author :
   name : Scott
-  email : lyu.career@gmail.com
+  email : scotv@yandex.com
   github : scotv
 #  twitter : username
 #  feedburner : feedname
@@ -101,12 +101,14 @@ JB :
   # Set 'provider' to false to turn analytics off globally.
   #
   analytics :
-    provider : googleUA
+    provider : yandex
+    yandex :
+       tracking_id : '25680314'
 #   google :
 #       tracking_id : 'UA-***'
-    googleUA :
-        tracking_id : 'UA-35340941-5'
-        property_name: 'scotv.github.io'
+#    googleUA :
+#        tracking_id : 'UA-35340941-5'
+#        property_name: 'scotv.github.io'
 #    getclicky :
 #      site_id : 
 #    mixpanel :
