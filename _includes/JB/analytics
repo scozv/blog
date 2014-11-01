@@ -11,6 +11,8 @@
   {% include JB/analytics-providers/mixpanel %}
 {% when "piwik" %}
   {% include JB/analytics-providers/piwik %}
+{% when "yandex" %}
+  {% include JB/analytics-providers/yandex %}
 {% when "custom" %}
   {% include custom/analytics %}
 {% endcase %}
