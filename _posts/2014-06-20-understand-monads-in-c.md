@@ -10,6 +10,7 @@ tags: ["LINQ", "C#", "monad", "Scala"]
 
 
 # 摘要
+{:.no_toc}
 
 > 本文主要对几篇讨论Monad的文献进行综述，文中的大部分代码都来自参考文献（我会指明参考来源）。本文有几处地方提出了几个思考题，这些思考题也来自参考文献，建议先尝试写写这些思考题，再去阅读参考文献。这一份综述尝试抛开函数编程的背景，去看看我们平时已经在使用但却没有留意的一些Monad。文章主要涉及到C#这门语言，但是不同的语言背景并不会有太多的影响。
 > 
@@ -18,6 +19,10 @@ tags: ["LINQ", "C#", "monad", "Scala"]
 > 本文对Haskell和.NET中异步Task的理解不够，如果需要了解Task这个Monad的话，请参考Stephen Toub的文章[^ST13]。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”[^DC13]。
 
 <!--more-->
+
+
+* Will be replaced with the ToC, excluding the "Contents" header
+{:toc}
 
 # 一个略微复杂的思考题
 假如我们有如下这样一个委托，称其为K：
