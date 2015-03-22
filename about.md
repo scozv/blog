@@ -6,15 +6,26 @@ description: "About me"
 group: navigation
 ---
 {% include JB/setup %}
+    \documentclass[a4paper]
+    \newcommand{\a}{https://github.com/scotv/algo-js}
 
-I read, I [write] [1], and I learn.
+    \begin{document}
+    \author{Scott}
+    \date{March, 22, 2014}
+    \maketitle
+
+
+
+
+    I read, I code \footnote{\a{}}, 
+    I \LaTeX{} and I am Play!ing with Scala.
+
+
+
+
+    \end{document}
 
 <div class="lang zh-cn">
 </div>
 
-<br />
-_Scott_
 
-_Apr, 2014_
-
-[1]: https://github.com/scotv/algo-js			"Algo.js, some algorithm implemetation using JavaScript"
