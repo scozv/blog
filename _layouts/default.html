@@ -8,6 +8,7 @@ theme :
 <!--mathjax should be included in if-else-->
 <!-- Load KaTeX -->
 <link rel="stylesheet" href="{{ BASE_PATH }}/assets/katex/katex.min.css" />
+<script src="{{ BASE_PATH }}/assets/katex/katex.min.js" type='text/javascript'>    
     $("script[type='math/tex']").replaceWith(
       function(){
         var tex = $(this).text();
