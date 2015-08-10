@@ -6,24 +6,21 @@ theme :
 {% include themes/bootstrap/default.html %}
 
 <!--mathjax should be included in if-else-->
-<script src='http://cdn.mathjax.org/mathjax/latest/MathJax.js' type='text/javascript'>    
-	MathJax.Hub.Config({
-		HTML: ["input/TeX","output/HTML-CSS"],
-		TeX: {
-            extensions: ["AMSmath.js","AMSsymbols.js"],
-            equationNumbers: { autoNumber: "AMS" } 
-        },
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX","output/HTML-CSS"],
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-            processEscapes: true
-        },
-        "HTML-CSS": { 
-            availableFonts: ["TeX"],
-            linebreaks: { automatic: true },
-            scale: 85
-        }
-	});
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="{{ BASE_PATH }}/assets/katex/katex.min.css" />
+    $("script[type='math/tex']").replaceWith(
+      function(){
+        var tex = $(this).text();
+        return "<span class=\"inline-equation\">" + 
+               katex.renderToString(tex) +
+               "</span>";
+    });
+    
+    $("script[type='math/tex; mode=display']").replaceWith(
+      function(){
+        var tex = $(this).text();
+        return "<div class=\"equation\">" + 
+               katex.renderToString("\\displaystyle "+tex) +
+               "</div>";
+    });
 </script>
