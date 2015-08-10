@@ -121,4 +121,4 @@ See code on details in `graph.search.js` of [Algo.js] [3]. And next post, I am g
 [1]: https://www.coursera.org/course/algo					"Online course by Tim Roughgarden"
 [2]: https://github.com/scotv/algo-js/issues/20				"Issue 20"
 [3]: https://github.com/scotv/algo-js						"Algo.js"
-[4]: {% post_url 2013-11-10-how-to-write-iterative-tarjan-scc-algorithm-part-zero %} "Tarjan, Part II"
+[4]: {% post_url 2013-11-10-how-to-write-iterative-tarjan-scc-algorithm-part-zero %} "Tarjan, Part I"
