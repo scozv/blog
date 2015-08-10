@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Write Iterative Tarjan SCC Algorithm, Part Zero"
+title: "How to Write Iterative Tarjan SCC Algorithm, Part I"
 description: ""
 category : "algo"
 tags: ["algorithm", "graph", "DFS"]
@@ -76,7 +76,10 @@ Here is simplified code of iterative DFS:
 
 {% gist 7638166 %}
 
-In our code (comment 1.1) below, for each vertex, we process its adjacent vertex, which we find from outgoing edges of current vertex. We let the number of outgoing edges of vertex $i$ is $e_i$, and $$n=\|V\|, m=\|E\|$$ as the number of vertex and number of edges respectively, so we write the running time as following:
+In our code (comment 1.1) below, for each vertex, we process its adjacent vertex, 
+which we find from outgoing edges of current vertex. 
+We let the number of outgoing edges of vertex $$i$$ is $$e_i$$, 
+and $$n=\|V\|, m=\|E\|$$ as the number of vertex and number of edges respectively, so we write the running time as following:
 
 $$T = O(1) + \sum_{i=1}^{n} \left [ O(1) + e_i \right ] $$
 
