@@ -9,9 +9,9 @@ tags: ["algorithm", "graph", "DFS"]
 
 > During the work on [Algo.js] [1], I found there is a limitation on recursive stack size of JavaScript. This series posts describe the way to convert recursive Tarjan SCC algorithm to iterative one, containing:
 >
-> * Part Zero: Iterative BFS and DFS algorithm on graph;
-> * [Part One] [4]: Iterative topological sort and Kosaraju SCC algorithm on graph;
-> * Part Two: Iterative Tarjan SCC algorithm on graph.
+> * Part I: Iterative BFS and DFS algorithm on graph;
+> * [Part II] [4]: Iterative topological sort and Kosaraju SCC algorithm on graph;
+> * Part III: Iterative Tarjan SCC algorithm on graph.
 >
 >
 > 上个月我完成了迭代版的Tarjan强连通算法（参见 [Algo.js] [1] ） 。这一个系列的文章将解释这一过程和相关代码——包括迭代图遍历、迭代拓扑排序和Kosaraju强连通算法以及最后的迭代Tarjan算法三部分。本文先讲迭代图遍历。
