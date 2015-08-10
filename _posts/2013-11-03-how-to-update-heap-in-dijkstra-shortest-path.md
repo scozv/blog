@@ -7,16 +7,16 @@ tags: ["algorithm", "graph", "Dijkstra", "heap"]
 ---
 {% include JB/setup %}
 
-> When we use a __heap__ to improve the runing time of Dijkstra shortest path algorithm from $O(nm)$ to $O(n \ln m)$, we may find that it is not easy to keep the heap in heap order just using insert() or delete(). This post describes the update of that heap.
+> When we use a __heap__ to improve the runing time of Dijkstra shortest path algorithm from $$O(nm)$$ to $$O(n \ln m)$$, we may find that it is not easy to keep the heap in heap order just using insert() or delete(). This post describes the update of that heap.
 >
 >
 > I suppose that you might:
 >
-> *	know how to wirte Dijkstra algorithm with $O(nm)$ running time, and
+> *	know how to wirte Dijkstra algorithm with $$O(nm)$$ running time, and
 > *	know how to use heap.
 >
 >
-> 为了将Dijkstra最短路径算法的时间复杂度从 $O(nm)$ 降低到 $O(n \ln m)$ ，我们可以使用 __heap__ 。不过迭代中的每一次更新heap的过程，我们需要一些技巧来保持heap的有序性。本文就会指出该技巧，并且解释我在算法代码中的一些[变动] [3]。
+> 为了将Dijkstra最短路径算法的时间复杂度从 $$O(nm)$$ 降低到 $$O(n \ln m)$$ ，我们可以使用 __heap__ 。不过迭代中的每一次更新heap的过程，我们需要一些技巧来保持heap的有序性。本文就会指出该技巧，并且解释我在算法代码中的一些[变动] [3]。
 
 <!--more-->
 
@@ -37,7 +37,10 @@ While, when we update the MinHeap, it means that we may replace the item at that
 
 ![Min Heap](http://upload.wikimedia.org/wikipedia/commons/6/69/Min-heap.png)
 
-So, if we replace $17$ with a __LESS__ value called $x$. $x$ is still less than its children, but $x$ may be less than $2$ (its parent). As the algorithm of `push()` of heap, we need to exchange $x$ with its parent, great-parent..., until heap is ordered. That is:
+So, if we replace $$17$$ with a __LESS__ value called $$x$$. 
+$$x$$ is still less than its children, 
+but $$x$$ may be less than $$2$$ (its parent). 
+As the algorithm of `push()` of heap, we need to exchange $$x$$ with its parent, great-parent..., until heap is ordered. That is:
 
 __Using `heap.swim()` to update that heap.__ (see [diff][3] of revision)
 

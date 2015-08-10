@@ -13,6 +13,7 @@ Less|More
 [Impress.js] [5] | _A presentation framework based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com._
 [codeitpretty.com] [4] | Suggestions on `font`
 [kendraschaefer.com] [3] | Suggestion on `font-family`
+[xuc.me] [7] | Rendering LaTeX using KaTeX and Jekyll
 978-7-302-15567-6 | Brooks, Frederick Phillips著，UML China翻译组译，人月神话，清华大学出版社，2007
 
 
@@ -22,3 +23,4 @@ Less|More
 [4]: http://www.codeitpretty.com/2013/05/blog-font-style-with-css-size-weight.html "Posts on font"
 [5]: https://github.com/bartaz/impress.js/  "Impress.js"	
 [6]: http://jekyllbootstrap3.tk/    "Jekyll Bootstrap 3"
+[7]: http://xuc.me/blog/KaTeX-and-Jekyll/ "KaTeX for Jekyll"

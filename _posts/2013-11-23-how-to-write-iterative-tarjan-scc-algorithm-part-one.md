@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Write Iterative Tarjan SCC Algorithm, Part One"
+title: "How to Write Iterative Tarjan SCC Algorithm, Part II"
 description: ""
 category: "algo"
 tags: ["algorithm", "graph", "SCC"]
@@ -103,7 +103,8 @@ Running the iterative code, we update the stack table:
 Kosaraju SCC algorithm, which runs DFS twice, finds some kind of visiting order in the first DFS. So we can find topological sort order as in the first DFS, then use the order for the second DFS.
 
 ## Running Time
-Roughly speaking, the running time of iterarive topological sort is same as time of DFS. The time of Kosaraju SCC which runs DFS twice, is still $O(m+n)$.
+Roughly speaking, the running time of iterarive topological sort is same as time of DFS. 
+The time of Kosaraju SCC which runs DFS twice, is still $$O(m+n)$$.
 
 ## Next 
 See code on details in `graph.search.js` of [Algo.js] [3]. And next post, I am going to explain iterative Tarjan SCC algorithm, which cost me a few time.
