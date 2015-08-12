@@ -330,7 +330,7 @@ xelatex.exe: Data: Source Sans Pro/OT
 ```TeX
 +% bold emphasized text
 +\makeatletter
-+\DeclareRobustCommand{\em}{%
++\DeclareRobustCommand{\em}{\%
 +  \@nomath\em \if b\expandafter\@car\f@series\@nil
 +  \normalfont \else \bfseries \fi}
 +\makeatother
