@@ -76,14 +76,17 @@ tags: ["latex","tex"]
 另外官方的[tug.org](http://tug.org/begin.html)和无所不知的[stackoverflow](http://tex.stackexchange.com/)都能找到
 很多帮助文档。
 
-准备一张_LaTeX Cheat Sheet_供参考。
+准备一张 _LaTeX Cheat Sheet_ 供参考。
 
-## `TeX`、`LaTeX`的区别
+## `TeX`和`LaTeX`的区别
+
 正如前面说的那样：
 
 * `TeX`是一个排版系统的基础；
 * `LaTeX`在`TeX`基础上，定义了很多便捷的样式模板；
 * `XeLaTeX`增加了对`CJK`的更好支持。
+
+### `TeX`注重排版
 
 `TeX`更像一个排版系统，参考[tex.stack问答](http://stackoverflow.com/a/7014579)
 或者[此处](http://www.haverford.edu/mathematics/resources/LaTeX_vs_TeX.php)：
@@ -92,6 +95,7 @@ tags: ["latex","tex"]
 
 > `TeX` is a system designed for typesetting
 
+### `LaTeX`注重内容
 
 `LaTeX`能够更快地编写文档，但是没法体会到`TeX`的很多特性，
 参考[tug.org上的文档](http://www.tug.org/pipermail/texhax/2009-October/013645.html)。
@@ -173,11 +177,7 @@ tags: ["latex","tex"]
 
 如下的公式就是通过`KaTeX`渲染的：
 
-$$
-e^x = \lim_{n\rightarrow \infty}
-\sum_{t=0}^{n} ( \frac{1}{t!}\cdot x^t )
-= \sum_{t=0}^{\infty} (1 + x + \frac{1}{2!}x^2+\frac{1}{3!}x^3+\dots+ \frac{1}{t!}\cdot x^t)
-$$
+$$e^x = \lim_{n\rightarrow \infty} \sum_{t=0}^{n} ( \frac{1}{t!}\cdot x^t )= \sum_{t=0}^{\infty} (1 + x + \frac{1}{2!}x^2+\frac{1}{3!}x^3+\dots+ \frac{1}{t!}\cdot x^t)$$
 
 `KaTeX`在`Jekyll`中的集成，可以参考这篇文章（[链接](http://xuc.me/blog/KaTeX-and-Jekyll/)）。
 
@@ -188,7 +188,7 @@ $$
 
 ## `LaTeX`使用过程中的问题列表
 
-#### LaTeX Font Warning: Font shape undefined
+### LaTeX Font Warning: Font shape undefined
 如果一个字体集，少了粗体定义，则会出现这样的提示。解决方案是，
 手动指定文档中粗体对应的字体：
     
@@ -205,7 +205,7 @@ $$
      \begin{document}
      \maketitle
 
-#### latex error: file `multind.sty' not found
+### latex error: file `multind.sty' not found
 
 Windows 下的`MiKTeX 2.9`不会出现这样的问题， `Lubuntu 14.04`下的`TeX Live`出现过这样的问题。
 tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?label=multind) 指出：
@@ -225,7 +225,7 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 * `mkdir /usr/share/texmf/tex/latex/multind`
 * `sudo texhash`
 
-#### `makeindex finance`不会生成Multi Index页面
+### `makeindex finance`不会生成Multi Index页面
 
 `finance`是一个文件名，而非命令。对比如下两个命令：
     
@@ -246,7 +246,7 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
     Transcript written in finance.ilg.
 
 
-#### xeCJK error: "key-unknown"
+### xeCJK error: "key-unknown"
 
 可能会在`Lubuntu 14.04`下遇到这样的问题：
   
@@ -279,7 +279,7 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
      \begin{document}
 
 
-#### CJK字体的选用
+### CJK字体的选用
 
 字体的选用，首先要注意版权的问题。
 
@@ -301,7 +301,7 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 顺带提一下，拉丁字符字体，可选用开源的[`Gentium`](http://scripts.sil.org/cms/scripts/page.php?item_id=Gentium)字体集，
 非常适合印刷出版物。
 
-#### CJK字体不能在数学公式环境中显示
+### CJK字体不能在数学公式环境中显示
 
 解决方案如下：
 
@@ -309,15 +309,15 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
     +\xeCJKsetup{AutoFakeBold=true, CJKmath=true}
 
 
-#### 使用强调`\emph`而非加粗`\textbf`
+### 使用强调`\emph`而非加粗`\textbf`
 
 对于需要加粗的段落，建议使用声明式的强调（`\emph`），而非命令式的加粗（`\textbf`）。
 
-[Wkibook/LaTeX](https://en.wikibooks.org/wiki/LaTeX/Fonts#Finding_fonts) says:
+[Wkibook/LaTeX](https://en.wikibooks.org/wiki/LaTeX/Fonts#Finding_fonts)中提到:
 
 > Do not use bold text in your paragraphs.
 
-[tex.stackexchange/Stefan Kottwitz](http://tex.stackexchange.com/a/1983) mentioned:
+[tex.stackexchange/Stefan Kottwitz](http://tex.stackexchange.com/a/1983)也有这样的说明:
 
 > Further, I rarely use physical font commands in my body text. 
 > I use them to define styles in the preamble and 
@@ -334,13 +334,13 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
     +  \normalfont \else \bfseries \fi}
     +\makeatother
 
-#### 编译之后的文档输出有乱码
+### 编译之后的文档输出有乱码
 
 检查`.tex`文档的编码，是否为`UTF-8`：
 
     file -i *.tex
 
-#### 文献引用编号显示为`[?]`
+### 文献引用编号显示为`[?]`
 
 仔细阅读编译日志，可以找到解决方案：
 
@@ -352,8 +352,8 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 
 也就是说，编译过程中，执行两次编译命令。
 
+### 修改目录中“索引”的层级
 
-#### 修改目录中“索引”的层级
 如果想要将目录中“索引”的层级提高到“章节”级别，可以定义如下的排版格式：
   
     +  \makeatletter
@@ -364,7 +364,7 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
     +  \renewcommand*{\toclevel@section}{1}
     +  \makeatother
 
-#### 定义“摘要”章节的样式
+### 定义“摘要”章节的样式
 
 参考stackoverflow中的讨论：
 
