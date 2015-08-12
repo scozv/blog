@@ -85,10 +85,24 @@ i.glyphicon {
 
 /* Abstract in post */
 div.content > blockquote {
-    font-size: 1.1em;
     font-family: sans-serif;
     color: #444444;
     background-color: wheat; 
+}
+
+div.content > blockquote p {
+  font-size: 1em;
+}
+
+div.content > blockquote p code {
+  font-size: 1em;
+  color: #444444;
+  background-color: wheat;
+}
+
+code {
+  color: #333333;
+  background-color: #F5F5F5;
 }
 
 /* Chinese contents */
