@@ -37,7 +37,7 @@ tags: ["latex","tex"]
 `LaTeX`是非常流行的宏包，除此之外还有`AMS-TeX`、`XeTeX`等[^TUG01]。
 
 
-## 为什么使用`TeX`家族排版
+# 为什么使用`TeX`家族排版
 和Office这类所见所得的文档处理器不同的是，`TeX`系列使用大量的命令来描述排版格式。
 此外，所见非得的`TeX`和所见即得的Office相比：
 
@@ -110,9 +110,13 @@ tags: ["latex","tex"]
 
 
 ## 样例模板参考
+
 ### `LaTeX`的格式样例
+
 参考附录部分的样例模板。
+
 ### 学术论文格式样例
+
 在互联网上总能找到很多学术论文的模板样例：
 
 * [MIT thesis templates] [3]
@@ -125,28 +129,29 @@ tags: ["latex","tex"]
 
 ### 编译命令参考
 
-```TeX
-# 文件名: build.sh
-
-# 编译过程中如果出现异常中断，可能需要清除临时文件
-# 谨慎使用git clean命令，这会删除untracked文件
-# git clean -fx
-
-# 编译入口
-xelatex index.tex
-# 编译索引
-makeindex idx_finance.idx
-# 编译参考文献
-for x in {c,f} ; do 
-	bibtex $x
-done
-
-# 引用参考文献编号
-xelatex index.tex
-xelatex index.tex
-```
+  ```TeX
+  # 文件名: build.sh
+  
+  # 编译过程中如果出现异常中断，可能需要清除临时文件
+  # 谨慎使用git clean命令，这会删除untracked文件
+  # git clean -fx
+  
+  # 编译入口
+  xelatex index.tex
+  # 编译索引
+  makeindex idx_finance.idx
+  # 编译参考文献
+  for x in {c,f} ; do 
+  	bibtex $x
+  done
+  
+  # 引用参考文献编号
+  xelatex index.tex
+  xelatex index.tex
+  ```
 
 ## `LaTeX`在Web页面的使用——基于`KaTeX`库
+
 如果想要体验在线编辑`TeX`文档，可以试用这两个网站：
 
 * sharelatex.com
@@ -164,46 +169,52 @@ xelatex index.tex
 * 使用`$$ \equation $$`而非`$ \equation $`。
 * 如果需要居中显示行级公式，可以自定义`CSS`。
 * 目前[`KaTeX v0.5.0`](https://github.com/Khan/KaTeX/releases/tag/v0.5.0)并不支持所有的`LaTeX`语法，
-  比如$$\LaTeX{}$$就无法被渲染。
+  比如`$$\LaTeX{}$$`就无法被渲染。
 
 
-## `gh-pagh`中的集成`KaTeX`
+### `gh-pagh`中的集成`KaTeX`
+
 如下的公式就是通过`KaTeX`渲染的：
 
 $$e^x=\sum_{t=0}^{\infty} \frac{x^t}{t!}$$
 
 `KaTeX`在`Jekyll`中的集成，可以参考这篇文章（[链接](http://xuc.me/blog/KaTeX-and-Jekyll/)）。
 
-## `gitbook`中的集成`KaTeX`
+### `gitbook`中的集成`KaTeX`
 `gitbook`以及提供了`KaTeX`的插件：[`gitbook-plugin-katex`](http://plugins.gitbook.com/plugin/katex)。
 
 # 参考文献
-[^TUG01] [Pointers to Frequently Asked and Answered Questions](https://tug.org/tex-ptr-faq). tug.org. [OL]
-[^WIK01] [`LaTeX`的趣味应用](https://zh.wikipedia.org/wiki/LaTeX#.E8.B6.A3.E5.91.B3.E6.87.89.E7.94.A8). wikipedia.org. [OL]
+
+[^TUG01]: [Pointers to Frequently Asked and Answered Questions](https://tug.org/tex-ptr-faq). tug.org. [OL]
+
+[^WIK01]: [`LaTeX`的趣味应用](https://zh.wikipedia.org/wiki/LaTeX#.E8.B6.A3.E5.91.B3.E6.87.89.E7.94.A8). wikipedia.org. [OL]
 
 
 # 附录
+
 ## `LaTeX`使用过程中的问题列表
+
 #### LaTeX Font Warning: Font shape undefined
 如果一个字体集，少了粗体定义，则会出现这样的提示。解决方案是，
 手动指定文档中粗体对应的字体：
-
-```TeX
- % CJK for XeTeX
- % http://www.ctan.org/pkg/xetexref
- % https://zh.wikipedia.org/wiki/XeTeX
--\usepackage{xltxtra}
--\setmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-+% http://mirror.bjtu.edu.cn/CTAN/macros/xetex/latex/xecjk/xeCJK.pdf
-+\usepackage{xltxtra, xeCJK}
-+\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-+\xeCJKsetup{AutoFakeBold=true, LoadFandol=false}
- 
- \begin{document}
- \maketitle
-```
+  
+  ```TeX
+   % CJK for XeTeX
+   % http://www.ctan.org/pkg/xetexref
+   % https://zh.wikipedia.org/wiki/XeTeX
+  -\usepackage{xltxtra}
+  -\setmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
+  +% http://mirror.bjtu.edu.cn/CTAN/macros/xetex/latex/xecjk/xeCJK.pdf
+  +\usepackage{xltxtra, xeCJK}
+  +\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
+  +\xeCJKsetup{AutoFakeBold=true, LoadFandol=false}
+   
+   \begin{document}
+   \maketitle
+  ```
 
 #### latex error: file `multind.sty' not found
+
 Windows 下的`MiKTeX 2.9`不会出现这样的问题， `Lubuntu 14.04`下的`TeX Live`出现过这样的问题。
 tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?label=multind) 指出：
 
@@ -211,11 +222,11 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 
 所以[该文档](http://bioinforma.weebly.com/random-troubleshooting.html#/)尝试安装`texlive-full`来解决问题:
 
-```bash
-sudo apt-get install texlive-full
-sudo texhash
-sudo texconfig
-```
+  ```bash
+  sudo apt-get install texlive-full
+  sudo texhash
+  sudo texconfig
+  ```
 
 如果想要尝试手动安装`multind.sty`，可以按照如下步骤：
 
@@ -225,62 +236,65 @@ sudo texconfig
 * `sudo texhash`
 
 #### `makeindex finance`不会生成Multi Index页面
+
 `finance`是一个文件名，而非命令。对比如下两个命令：
-
-```bash
-scott@c9 [~/repo/notes] (master *) 
-$ makeindex finance
-This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
-Scanning input file finance...done (0 entries accepted, 0 rejected).
-Nothing written in finance.ind.
-Transcript written in finance.ilg.
-
-scott@c9 [~/repo/notes] (master *) 
-$ makeindex finance.idx
-This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
-Scanning input file finance.idx....done (22 entries accepted, 0 rejected).
-Sorting entries....done (106 comparisons).
-Generating output file finance.ind....done (59 lines written, 0 warnings).
-Output written in finance.ind.
-Transcript written in finance.ilg.
-```
+  
+  ```bash
+  scott@c9 [~/repo/notes] (master *) 
+  $ makeindex finance
+  This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
+  Scanning input file finance...done (0 entries accepted, 0 rejected).
+  Nothing written in finance.ind.
+  Transcript written in finance.ilg.
+  
+  scott@c9 [~/repo/notes] (master *) 
+  $ makeindex finance.idx
+  This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
+  Scanning input file finance.idx....done (22 entries accepted, 0 rejected).
+  Sorting entries....done (106 comparisons).
+  Generating output file finance.ind....done (59 lines written, 0 warnings).
+  Output written in finance.ind.
+  Transcript written in finance.ilg.
+  ```
 
 #### xeCJK error: "key-unknown"
+
 可能会在`Lubuntu 14.04`下遇到这样的问题：
 
-```bash
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!
-! xeCJK error: "key-unknown"
-! 
-! Sorry, but xeCJK/options does not have a key called `LoadFandol'.
-! 
-! The key `LoadFandol' is being ignored.
-! 
-! See the xeCJK documentation for further information.
-! 
-! Type <return> to continue.
-!...............................................  
-                                                  
-l.37 ...setup{AutoFakeBold=true, LoadFandol=false}
-```
+  ```bash
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  !
+  ! xeCJK error: "key-unknown"
+  ! 
+  ! Sorry, but xeCJK/options does not have a key called `LoadFandol'.
+  ! 
+  ! The key `LoadFandol' is being ignored.
+  ! 
+  ! See the xeCJK documentation for further information.
+  ! 
+  ! Type <return> to continue.
+  !...............................................  
+                                                    
+  l.37 ...setup{AutoFakeBold=true, LoadFandol=false}
+  ```
 
 解决方案是，更换字体配置：
 
-```tex
- \usepackage{xltxtra, xeCJK}
--\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-+\setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
- \xeCJKsetup{AutoFakeBold=true, CJKmath=true}
- 
-+% Latin
-+\usepackage{fontspec, pifont}
-+\setmainfont{Gentium Book Basic}
-+
- \begin{document}
-```
+  ```tex
+   \usepackage{xltxtra, xeCJK}
+  -\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
+  +\setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
+   \xeCJKsetup{AutoFakeBold=true, CJKmath=true}
+   
+  +% Latin
+  +\usepackage{fontspec, pifont}
+  +\setmainfont{Gentium Book Basic}
+  +
+   \begin{document}
+  ```
 
 #### CJK字体的选用
+
 字体的选用，首先要注意版权的问题。
 
 开源的CJK字体，可以选用[文泉驿](http://wenq.org/)，或者[思源黑体](http://blog.typekit.com/alternate/source-han-sans-chs/)。
@@ -288,10 +302,10 @@ l.37 ...setup{AutoFakeBold=true, LoadFandol=false}
 不过，目前并不能顺利地在LaTeX中使用思源黑体， 参考[知乎问答](http://www.zhihu.com/question/24535443)。
 而且使用思源黑体，可能会遇到如下错误：
 
-```bash
-xelatex.exe: The font file could not be found.
-xelatex.exe: Data: Source Sans Pro/OT
-```
+  ```bash
+  xelatex.exe: The font file could not be found.
+  xelatex.exe: Data: Source Sans Pro/OT
+  ```
 
 可以参考知乎专题的[解决方案](http://zhuanlan.zhihu.com/LaTeX/19807822)，
 或者stackoverflow上的[问答](http://tex.stackexchange.com/questions/84186/how-can-i-use-source-sans-pro-in-tex-live-2012)。
@@ -303,14 +317,16 @@ xelatex.exe: Data: Source Sans Pro/OT
 非常适合印刷出版物。
 
 #### CJK字体不能在数学公式环境中显示
+
 解决方案如下：
 
-```TeX
--\xeCJKsetup{AutoFakeBold=true}
-+\xeCJKsetup{AutoFakeBold=true, CJKmath=true}
-```
+  ```TeX
+  -\xeCJKsetup{AutoFakeBold=true}
+  +\xeCJKsetup{AutoFakeBold=true, CJKmath=true}
+  ```
 
 #### 使用强调`\emph`而非加粗`\textbf`
+
 对于需要加粗的段落，建议使用声明式的强调（`\emph`），而非命令式的加粗（`\textbf`）。
 
 [Wkibook/LaTeX](https://en.wikibooks.org/wiki/LaTeX/Fonts#Finding_fonts) says:
@@ -327,60 +343,63 @@ xelatex.exe: Data: Source Sans Pro/OT
 可以参考[此处](http://tex.stackexchange.com/questions/6754/what-is-the-canonical-way-to-redefine-the-emph-command/6757#6757)
 定义强调段落的样式：
 
-```TeX
-+% bold emphasized text
-+\makeatletter
-+\DeclareRobustCommand{\em}{\%
-+  \@nomath\em \if b\expandafter\@car\f@series\@nil
-+  \normalfont \else \bfseries \fi}
-+\makeatother
-```
+  ```TeX
+  +% bold emphasized text
+  +\makeatletter
+  +\DeclareRobustCommand{\em}{\%
+  +  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  +  \normalfont \else \bfseries \fi}
+  +\makeatother
+  ```
 
 #### 编译之后的文档输出有乱码
+
 检查`.tex`文档的编码，是否为`UTF-8`：
 
-```bash
-file -i *.tex
-```
+  ```bash
+  file -i *.tex
+  ```
 
 #### 文献引用编号显示为`[?]`
+
 仔细阅读编译日志，可以找到解决方案：
 
-```TeX
- makeindex idx_finance.idx
- bibtex index.aux
- xelatex index.tex
-+xelatex index.tex
-```
+  ```TeX
+   makeindex idx_finance.idx
+   bibtex index.aux
+   xelatex index.tex
+  +xelatex index.tex
+  ```
 
 也就是说，编译过程中，执行两次编译命令。
 
 
 #### 修改目录中“索引”的层级
 如果想要将目录中“索引”的层级提高到“章节”级别，可以定义如下的排版格式：
-
-```TeX
-+  \makeatletter
-+  % Put section depth at the same level as \chapter.
-+  \renewcommand*{\toclevel@section}{0}
-   \printindex{idx_finance}{Index of Finance}
-+  % Put section depth back to its default value.
-+  \renewcommand*{\toclevel@section}{1}
-+  \makeatother
-```
+  
+  ```TeX
+  +  \makeatletter
+  +  % Put section depth at the same level as \chapter.
+  +  \renewcommand*{\toclevel@section}{0}
+     \printindex{idx_finance}{Index of Finance}
+  +  % Put section depth back to its default value.
+  +  \renewcommand*{\toclevel@section}{1}
+  +  \makeatother
+  ```
 
 #### 定义“摘要”章节的样式
+
 参考stackoverflow中的讨论：
 
-```TeX
-% http://stackoverflow.com/q/2737326
-+\chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
-+\begin{quotation}
-+\noindent % abstract text
-% Abstract
-+\end{quotation}
-+\clearpage
-```
+  ```TeX
+  % http://stackoverflow.com/q/2737326
+  +\chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
+  +\begin{quotation}
+  +\noindent % abstract text
+  % Abstract
+  +\end{quotation}
+  +\clearpage
+  ```
 
 [1]: https://en.wikipedia.org/wiki/TeX "TeX Wikipage"
 [2]: https://github.com/weijianwen/SJTUThesis "SJTU Thesis LaTeX Template"
