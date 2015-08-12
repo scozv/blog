@@ -125,30 +125,27 @@ tags: ["latex","tex"]
 * [Generic EPFL Template in LaTeX](http://phd.epfl.ch/thesistemplates)，Scala！
 * [Elsevier LaTeX instructions](http://www.elsevier.com/authors/author-schemas/latex-instructions)
 * [AMS LaTeX Guide](https://www2.ametsoc.org/ams/index.cfm/publications/authors/journal-and-bams-authors/author-resources/latex-author-info/preparing-a-latex-manuscript-for-submission/)
-* $$\ldots$$
 
 ### 编译命令参考
 
-  ```TeX
-  # 文件名: build.sh
-  
-  # 编译过程中如果出现异常中断，可能需要清除临时文件
-  # 谨慎使用git clean命令，这会删除untracked文件
-  # git clean -fx
-  
-  # 编译入口
-  xelatex index.tex
-  # 编译索引
-  makeindex idx_finance.idx
-  # 编译参考文献
-  for x in {c,f} ; do 
-  	bibtex $x
-  done
-  
-  # 引用参考文献编号
-  xelatex index.tex
-  xelatex index.tex
-  ```
+      # 文件名: build.sh
+      
+      # 编译过程中如果出现异常中断，可能需要清除临时文件
+      # 谨慎使用git clean命令，这会删除untracked文件
+      # git clean -fx
+      
+      # 编译入口
+      xelatex index.tex
+      # 编译索引
+      makeindex idx_finance.idx
+      # 编译参考文献
+      for x in {c,f} ; do 
+      	bibtex $x
+      done
+      
+      # 引用参考文献编号
+      xelatex index.tex
+      xelatex index.tex
 
 ## `LaTeX`在Web页面的使用——基于`KaTeX`库
 
@@ -183,13 +180,6 @@ $$e^x=\sum_{t=0}^{\infty} \frac{x^t}{t!}$$
 ### `gitbook`中的集成`KaTeX`
 `gitbook`以及提供了`KaTeX`的插件：[`gitbook-plugin-katex`](http://plugins.gitbook.com/plugin/katex)。
 
-# 参考文献
-
-[^TUG01]: [Pointers to Frequently Asked and Answered Questions](https://tug.org/tex-ptr-faq). tug.org. [OL]
-
-[^WIK01]: [`LaTeX`的趣味应用](https://zh.wikipedia.org/wiki/LaTeX#.E8.B6.A3.E5.91.B3.E6.87.89.E7.94.A8). wikipedia.org. [OL]
-
-
 # 附录
 
 ## `LaTeX`使用过程中的问题列表
@@ -197,21 +187,19 @@ $$e^x=\sum_{t=0}^{\infty} \frac{x^t}{t!}$$
 #### LaTeX Font Warning: Font shape undefined
 如果一个字体集，少了粗体定义，则会出现这样的提示。解决方案是，
 手动指定文档中粗体对应的字体：
-  
-  ```TeX
-   % CJK for XeTeX
-   % http://www.ctan.org/pkg/xetexref
-   % https://zh.wikipedia.org/wiki/XeTeX
-  -\usepackage{xltxtra}
-  -\setmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-  +% http://mirror.bjtu.edu.cn/CTAN/macros/xetex/latex/xecjk/xeCJK.pdf
-  +\usepackage{xltxtra, xeCJK}
-  +\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-  +\xeCJKsetup{AutoFakeBold=true, LoadFandol=false}
-   
-   \begin{document}
-   \maketitle
-  ```
+    
+         % CJK for XeTeX
+         % http://www.ctan.org/pkg/xetexref
+         % https://zh.wikipedia.org/wiki/XeTeX
+        -\usepackage{xltxtra}
+        -\setmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
+        +% http://mirror.bjtu.edu.cn/CTAN/macros/xetex/latex/xecjk/xeCJK.pdf
+        +\usepackage{xltxtra, xeCJK}
+        +\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
+        +\xeCJKsetup{AutoFakeBold=true, LoadFandol=false}
+         
+         \begin{document}
+         \maketitle
 
 #### latex error: file `multind.sty' not found
 
@@ -400,6 +388,14 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
   +\end{quotation}
   +\clearpage
   ```
+
+
+# 参考文献
+
+[^TUG01]: [Pointers to Frequently Asked and Answered Questions](https://tug.org/tex-ptr-faq). tug.org. [OL]
+
+[^WIK01]: [`LaTeX`的趣味应用](https://zh.wikipedia.org/wiki/LaTeX#.E8.B6.A3.E5.91.B3.E6.87.89.E7.94.A8). wikipedia.org. [OL]
+
 
 [1]: https://en.wikipedia.org/wiki/TeX "TeX Wikipage"
 [2]: https://github.com/weijianwen/SJTUThesis "SJTU Thesis LaTeX Template"
