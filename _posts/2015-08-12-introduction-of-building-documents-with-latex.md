@@ -188,18 +188,18 @@ $$e^x=\sum_{t=0}^{\infty} \frac{x^t}{t!}$$
 如果一个字体集，少了粗体定义，则会出现这样的提示。解决方案是，
 手动指定文档中粗体对应的字体：
     
-         % CJK for XeTeX
-         % http://www.ctan.org/pkg/xetexref
-         % https://zh.wikipedia.org/wiki/XeTeX
-        -\usepackage{xltxtra}
-        -\setmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-        +% http://mirror.bjtu.edu.cn/CTAN/macros/xetex/latex/xecjk/xeCJK.pdf
-        +\usepackage{xltxtra, xeCJK}
-        +\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-        +\xeCJKsetup{AutoFakeBold=true, LoadFandol=false}
-         
-         \begin{document}
-         \maketitle
+   % CJK for XeTeX
+   % http://www.ctan.org/pkg/xetexref
+   % https://zh.wikipedia.org/wiki/XeTeX
+  -\usepackage{xltxtra}
+  -\setmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
+  +% http://mirror.bjtu.edu.cn/CTAN/macros/xetex/latex/xecjk/xeCJK.pdf
+  +\usepackage{xltxtra, xeCJK}
+  +\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
+  +\xeCJKsetup{AutoFakeBold=true, LoadFandol=false}
+   
+   \begin{document}
+   \maketitle
 
 #### latex error: file `multind.sty' not found
 
