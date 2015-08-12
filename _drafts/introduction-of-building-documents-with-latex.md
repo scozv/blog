@@ -3,7 +3,7 @@ layout: post
 title: "Introduction of Building Documents with LaTeX"
 description: ""
 category: "help"
-tags: ["latex"]
+tags: ["latex","tex"]
 ---
 {% include JB/setup %}
 
@@ -11,14 +11,16 @@ tags: ["latex"]
 
 # 摘要
 {:.no_toc}
-
-> This artical will give brief introduction for `LaTeX` and discuss many issues during using `LaTeX`.
-> and finally, this artical will list how to use `LaTeX` on web.
+> `TeX`家族是一个专业的排版系统。本文简要的介绍了`TeX`家族的常见成员，并整理出了`LaTeX`入门使用过程中会遇到的一些问题，
+> 同时，将演示`LaTeX`在网页中的集成。最后在附录部分，给出了样式模板的参考代码。
+>
+> This artical will give brief introduction for `TeX` and `LaTeX`, then discuss a few issues during using `LaTeX`
+> and how to display `LaTeX` eqation on web page. Finally, a `LaTeX` template will be attached in _Appendix_.
 
 <!--more-->
 
-<a name="pi">
-</a>
+* Will be replaced with the ToC, excluding the "Contents" header
+{:toc}
 
 # `TeX`家族简介
 `TeX`可以视为出版行业的专业排版系统，由[Donald Knuth](http://www-cs-faculty.stanford.edu/~knuth/)于1978年发布，
@@ -30,32 +32,51 @@ tags: ["latex"]
 
 在`TeX`的基础上，可以定义一系列的宏包（macro），可以更方便地描述排版样式。比如上述的表格语法，其实来自`LaTeX`宏包，
 如果要使用纯`TeX`（plain `TeX`）来绘制表格，则要使用更多的排版命令
-（参考这两个网页文献 [1](http://www.volkerschatz.com/tex/halign.html)、 
-[2](http://tex.stackexchange.com/questions/183235/vertically-aligned-table-in-plaintex-latex-context-etc) ）。
+（参考这两个网页文献 [A](http://www.volkerschatz.com/tex/halign.html)、 
+[B](http://tex.stackexchange.com/questions/183235/vertically-aligned-table-in-plaintex-latex-context-etc) ）。
 `LaTeX`是非常流行的宏包，除此之外还有`AMS-TeX`、`XeTeX`等[^TUG01]。
 
 
 ## 为什么使用`TeX`家族排版
 和Office这类所见所得的文档处理器不同的是，`TeX`系列使用大量的命令来描述排版格式。
-此外，所见即得的Office和所见非得的`TeX`相比：
+此外，所见非得的`TeX`和所见即得的Office相比：
 
 * 使用`TeX`，不需要考虑软件的版权费用问题，它是免费的。
 * 使用`TeX`，不需要担心跨软件、跨平台的格式兼容问题。
   不同的Office软件在排版格式上并不完全兼容，即使同一个软件公司的不同Office版本，
-  格式也不完全兼容。但同样的一份`TeX`文档，经过不同的环境编译之后，输出的排版都是完全一样的。
+  格式上也不完全兼容。但是，同样的一份`TeX`文档，经过不同的环境编译之后，输出的排版都是完全一样的。
 * 使用`LaTeX`，精力可以放在撰写文档的内容，而非花大量的时间，用鼠标选中不同的文本段落，调整大量的排版样式。
 * `TeX`更多用于学术领域，很多出版社、大学会提供指定的学术论文模板，
-  比如[MIT thesis templates](http://web.mit.edu/thesis/tex/)或者非官方的[上海交通大学学位论文模板] [2]。使用这些
+  比如[MIT thesis templates] [3]或者非官方的[上海交通大学学位论文模板] [2]。使用这些
   模板，基本上不用考虑排版格式的问题，只要专心写文章就好了。
 * 很多专业的学术语言——复杂的数学公式，化学分子式，五线谱，电路图——是没法仅仅使用Office就能编写的。`TeX`可以[^WIK01]。
 * `TeX`文档是一个普通的文本文档，这意味着，可以进行源代码的版本管理。
 
-类似的所见非得系统还有[`Markdown`](http://daringfireball.net/projects/markdown/)，`Markdown`更常用于网页展示：
+类似的所见非得系统还有[`Markdown`](http://daringfireball.net/projects/markdown/)，不过，`Markdown`更常用于网页展示：
 
 * `Markdown`语法定义了不同的`HTML`节点；
 * 不同的`Markdown`处理系统（在线编译网站，或者软件）定义不同的`CSS`样式；
 * 使得同样的`Markdown`文档，最终的展示并不一样。以`online markdown`为关键字搜索，
   可以找到不同的在线`Markdown`编辑网站，它们对同一份文档的渲染结果是不同的。
+
+# `TeX`的使用说明
+目前，我会优先考虑使用`LaTeX`，而非直接使用纯粹的`TeX`，因为前者的使用，能够将精力更多
+的放在撰写的内容上。
+
+使用`LaTeX`的过程中，建议积累自己的一份样式模板，并通过源代码管理这个过程。后面的附录会附上我自己积累的一份样式模板。
+
+目前在`LaTeX`的使用过程中，碰到的问题有如下几类（详细的问题清单，也会附在后文的附录中，供参考）：
+
+* 中文等CJK字体的编译问题：解决方案通常是选用合适的字体，配置不同格式的字体名称，需要留意字体的版权声明；
+* 文档编译出错：这时，需要仔细阅读编译日志，通常用编译日志中的错误信息在网上搜索，都能得到解决方案；
+* 不知道如何实现具体的排版样式：我目前没有精力仔细研究纯粹的`TeX`（plain `TeX`）语法，所以还是通过搜索
+  来解决问题。
+
+可以从`LaTex`的[Wikibook](https://en.wikibooks.org/wiki/LaTeX)开始读起。
+另外官方的[tug.org](http://tug.org/begin.html)和无所不知的[stackoverflow](http://tex.stackexchange.com/)都能找到
+很多帮助文档。
+
+准备一张_LaTeX Cheat Sheet_供参考。
 
 ## `TeX`、`LaTeX`的区别
 正如前面说的那样：
@@ -87,8 +108,82 @@ tags: ["latex"]
 > 这个时候，还真就没plain TeX用着舒服。不过舒服也是有代价的，
 > 因为plain TeX很短，能很快看完，但是前提是能够顺利地把TeXbook看完。
 
-# `LaTeX`环境配置过程及问题
 
+## 样例模板参考
+### `LaTeX`的格式样例
+参考附录部分的样例模板。
+### 学术论文格式样例
+在互联网上总能找到很多学术论文的模板样例：
+
+* [MIT thesis templates] [3]
+* 非官方的[上海交通大学学位论文模板] [2]
+* [ACM LaTeX Style Guide](https://www.acm.org/publications/article-templates/acm-latex-style-guide)
+* [Generic EPFL Template in LaTeX](http://phd.epfl.ch/thesistemplates)，Scala！
+* [Elsevier LaTeX instructions](http://www.elsevier.com/authors/author-schemas/latex-instructions)
+* [AMS LaTeX Guide](https://www2.ametsoc.org/ams/index.cfm/publications/authors/journal-and-bams-authors/author-resources/latex-author-info/preparing-a-latex-manuscript-for-submission/)
+* $$\ldots$$
+
+### 编译命令参考
+
+```TeX
+# 文件名: build.sh
+
+# 编译过程中如果出现异常中断，可能需要清除临时文件
+# 谨慎使用git clean命令，这会删除untracked文件
+# git clean -fx
+
+# 编译入口
+xelatex index.tex
+# 编译索引
+makeindex idx_finance.idx
+# 编译参考文献
+for x in {c,f} ; do 
+	bibtex $x
+done
+
+# 引用参考文献编号
+xelatex index.tex
+xelatex index.tex
+```
+
+## `LaTeX`在Web页面的使用——基于`KaTeX`库
+如果想要体验在线编辑`TeX`文档，可以试用这两个网站：
+
+* sharelatex.com
+* overleaf.com
+
+这里主要讨论Web页面中使用`LaTeX`语法，显示数学公式。常用的解决方案是在网页中嵌入`MathJax`库，
+然后使用`$$ \equation $$`语法在网页中显示数学公式。
+
+但是`MathJax`库的加载和公式渲染（render）比较耗时。
+一个替代方案是使用`KaTeX`——出自[Khan Academy](https://khan.github.io/KaTeX/) 团队。
+`KaTeX`的渲染速度得益于它将所有的数学公式用`CSS`的方式展示。
+
+使用`KaTeX`需要注意的是：
+
+* 使用`$$ \equation $$`而非`$ \equation $`。
+* 如果需要居中显示行级公式，可以自定义`CSS`。
+* 目前[`KaTeX v0.5.0`](https://github.com/Khan/KaTeX/releases/tag/v0.5.0)并不支持所有的`LaTeX`语法，
+  比如$$\LaTeX{}$$就无法被渲染。
+
+
+## `gh-pagh`中的集成`KaTeX`
+如下的公式就是通过`KaTeX`渲染的：
+
+$$e^x=\sum_{t=0}^{\infty} \frac{x^t}{t!}$$
+
+`KaTeX`在`Jekyll`中的集成，可以参考这篇文章（[链接](http://xuc.me/blog/KaTeX-and-Jekyll/)）。
+
+## `gitbook`中的集成`KaTeX`
+`gitbook`以及提供了`KaTeX`的插件：[`gitbook-plugin-katex`](http://plugins.gitbook.com/plugin/katex)。
+
+# 参考文献
+[^TUG01] [Pointers to Frequently Asked and Answered Questions](https://tug.org/tex-ptr-faq). tug.org. [OL]
+[^WIK01] [`LaTeX`的趣味应用](https://zh.wikipedia.org/wiki/LaTeX#.E8.B6.A3.E5.91.B3.E6.87.89.E7.94.A8). wikipedia.org. [OL]
+
+
+# 附录
+## `LaTeX`使用过程中的问题列表
 #### LaTeX Font Warning: Font shape undefined
 如果一个字体集，少了粗体定义，则会出现这样的提示。解决方案是，
 手动指定文档中粗体对应的字体：
@@ -287,39 +382,6 @@ file -i *.tex
 +\clearpage
 ```
 
-# 样例模板参考
-## `LaTeX`的格式样例
-## 学术论文格式样例
-## 编译命令
-
-# `LaTeX`在Web页面的使用——基于`KaTeX`库
-如果想要体验在线编辑`TeX`文档，可以试用这两个网站：
-
-* sharelatex.com
-* overleaf.com
-
-这里主要讨论Web页面中使用`LaTeX`语法，显示数学公式。常用的解决方案是在网页中嵌入`MathJax`库，
-然后使用`$$ \equation $$`语法在网页中显示数学公式。
-
-但是`MathJax`库的加载和公式渲染（render）比较耗时。
-一个替代方案是使用`KaTeX`——出自[Khan Academy](https://khan.github.io/KaTeX/) 团队。
-`KaTeX`的渲染速度得益于它将所有的数学公式用`CSS`的方式展示。
-
-使用`KaTeX`需要注意的是：
-
-## `gh-pagh`中的集成`KaTeX`
-如下的公式就是通过`KaTeX`渲染的：
-
-$$e^x=\sum_{t=0}^{\infty} \frac{x^t}{t!}$$
-
-`KaTeX`在`Jekyll`中的集成，可以参考这篇文章（[链接](http://xuc.me/blog/KaTeX-and-Jekyll/)）。
-
-## `gitbook`中的集成`KaTeX`
-`gitbook`以及提供了`KaTeX`的插件：[`gitbook-plugin-katex`](http://plugins.gitbook.com/plugin/katex)。
-
-# 参考文献
-[^TUG01] [Pointers to Frequently Asked and Answered Questions](https://tug.org/tex-ptr-faq). tug.org. [OL]
-[^WIK01] [`LaTeX`的趣味应用](https://zh.wikipedia.org/wiki/LaTeX#.E8.B6.A3.E5.91.B3.E6.87.89.E7.94.A8). wikipedia.org. [OL]
-
 [1]: https://en.wikipedia.org/wiki/TeX "TeX Wikipage"
 [2]: https://github.com/weijianwen/SJTUThesis "SJTU Thesis LaTeX Template"
+[3]: http://web.mit.edu/thesis/tex/ "MIT Thesis LaTeX Template"
