@@ -56,7 +56,7 @@ tags: ["latex","tex"]
 
 * `Markdown`语法定义了不同的`HTML`节点；
 * 不同的`Markdown`处理系统（在线编译网站，或者软件）定义不同的`CSS`样式；
-* 使得同样的`Markdown`文档，最终的展示并不一样。以`online markdown`为关键字搜索，
+* 使得同样的`Markdown`文档，最终的展示并不一样。以“`online markdown`”为关键字搜索，
   可以找到不同的在线`Markdown`编辑网站，它们对同一份文档的渲染结果是不同的。
 
 # `TeX`的使用说明
@@ -173,7 +173,7 @@ tags: ["latex","tex"]
   比如`$$\LaTeX{}$$`就无法被渲染。
 
 
-### `gh-pagh`中的集成`KaTeX`
+### `Jekyll`中的集成`KaTeX`
 
 如下的公式就是通过`KaTeX`渲染的：
 
@@ -182,7 +182,7 @@ $$e^x = \lim_{n\rightarrow \infty} \sum_{t=0}^{n} ( \frac{1}{t!}\cdot x^t )= \su
 `KaTeX`在`Jekyll`中的集成，可以参考这篇文章（[链接](http://xuc.me/blog/KaTeX-and-Jekyll/)）。
 
 ### `gitbook`中的集成`KaTeX`
-`gitbook`以及提供了`KaTeX`的插件：[`gitbook-plugin-katex`](http://plugins.gitbook.com/plugin/katex)。
+`gitbook`已经提供了`KaTeX`的插件：[`gitbook-plugin-katex`](http://plugins.gitbook.com/plugin/katex)。
 
 # 附录
 
