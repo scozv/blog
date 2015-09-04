@@ -85,7 +85,7 @@ Git的仓库（repo）有三类：
 * 直接在bitbucket.org上进行在线文档编辑
 
 ## 移动端的访问
-`iOS`上使用CodeBucket - Bitbucket for iOS访问源代码库。
+`iOS`上使用[CodeBucket](https://itunes.apple.com/cn/app/codebucket-bitbucket-for-ios/id551531422?)访问源代码库。
 
 `Android`平台使用[Bitbeaker](http://www.coolapk.com/apk/fi.iki.kuitsi.bitbeaker)。
 
@@ -100,6 +100,7 @@ Git的仓库（repo）有三类：
 0. 新增一个问题（issue）
 0. 团队成员在每一个问题的评论中讨论
 0. 编写对应的需求文档，并在提交的时候，关联问题编号（使用英文字符井号`#`）
+
        git commit -m '新增某某需求，参考问题 #1'
 
 
@@ -108,6 +109,7 @@ Git的仓库（repo）有三类：
 ## 全局规则
 
 * 所有的文件名称只包含英文字母、数字和下划线，比如：
+
         requirement_001_user_login.md
 * 所有的文本文件，比如`.md`，都设置为`UTF-8`编码，以免中文字体出现乱码
 * 所有的图片编号，并以简短的文件名描述图片内容，并在文档中注明
