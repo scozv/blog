@@ -47,7 +47,7 @@ tags: ["latex","markdown","CI","management"]
 * 问题（issues）：所有的问题列表，可对每一个问题进行讨论，并跟踪当前问题的处理进度
 * 下载（downloads）：可以将每一个阶段的文档整理成PDF文件，存放到“下载”表中，以便向团队之外人展示
 
-Bitbucket支持在线编辑和预览Markdown文档
+Bitbucket支持在线编辑和预览Markdown文档。
 
 ## 安装Git环境
 当团队成员获得了某一个源代码仓库（repo）的访问权限之后，需要安装Git环境，用来提交和查看不是时期的源代码。
@@ -65,13 +65,13 @@ Git的仓库（repo）有三类：
 
 一般而言，Git环境的基本流程是：
 
-0 克隆或更新本地库，将服务器上的变更，更新到本地
+0. 克隆或更新本地库，将服务器上的变更，更新到本地
   `git pull`
-0 修改、编辑源代码，标记变更的文件，并为本次变更添加一个描述
+0. 修改、编辑源代码，标记变更的文件，并为本次变更添加一个描述
   `git add file_changed.txt`
   `git commit -m '本次变更的描述信息'`
-0 可以重复上一个步骤，多次变更文件
-0 一并提交本地的所有的更新到服务器上
+0. 可以重复上一个步骤，多次变更文件
+0. 一并提交本地的所有的更新到服务器上
   `git push`
   
 ## 编辑文本文档
@@ -90,16 +90,18 @@ Git的仓库（repo）有三类：
 
 
 # 不同角色的工作流程
+
 ## 产品和需求的变更
 需求最开始可以在问题（issue） 列表中讨论，逐步反映到需求文档中，具体而言：
 
-0 新增一个问题（issue）
-0 团队成员在每一个问题的评论中讨论
-0 编写对应的需求文档，并在提交的时候，关联问题编号（使用英文字符井号`#`）
+0. 新增一个问题（issue）
+0. 团队成员在每一个问题的评论中讨论
+0. 编写对应的需求文档，并在提交的时候，关联问题编号（使用英文字符井号`#`）
   `git commit -m '新增某某需求，参考问题 #1'`
 
 
 # 附录
+
 ## 全局规则
 
 * 所有的文件名称只包含英文字母、数字和下划线，比如：
@@ -116,39 +118,55 @@ bitbucket中可以直接编辑和预览文件。
 * 目录
   使用`[TOC]`来自动生成文章的目录
 * 章节1
+
   使用一个井号，来表示章节1，比如
+  
   `# Heading 1`
 * 章节1.1
+
   使用两个井号，来表示第二级章节，比如
+  
   `## Heading 1.1`
 * 可以向下一直写到第五级，即
+
   `##### Heading 1.1.1.1.1`
 * 粗体和斜体
+
   用两个星号包围需要加粗的字体：
+  
   ``** 粗体 **``
+  
   用一个星号包围需要倾斜的字体：
+  
   ``* 斜体 *``
 * 超链接
+
   通常的超链接语法如下：
+  
   `[超链接名称](www.bitbucket.org)`
 * 列表
-  使用一个井号，标记一些列的列表，比如
-    
-    * Item one
-    * Item two
-    * Item three
-* 表格
 
-    First Header  | Second Header
-    ------------- | -------------
-    Content Cell  | Content Cell
-    Content Cell  | Content Cell
+  使用一个井号，标记列表中的元素，比如
+    
+        * Item one
+        * Item two
+        * Item three
+        
+* 表格
+    
+        First Header  | Second Header
+        ------------- | -------------
+        Content Cell  | Content Cell
+        Content Cell  | Content Cell
  
   注意，短横线只需要使用一个就够了
   
 ## LaTeX基本语法介绍
+
 ## Git命令和SourceTree工具使用
+
 ## Bitbucket和Github在Acadamic License上的比较
+
 在Acadamic License结束之后，Bitbucket依然允许5人小组的私有库，但是Github需要付费，才能继续使用私有库。
 
 [1]: https://www.sourcetreeapp.com/ "SourceTree"
