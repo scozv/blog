@@ -211,6 +211,27 @@ bitbucket中可以直接编辑和预览文件。
       
         $ git checkout master
 
+### 如何在当前的版本上做一些实验性的修改，但不确定是否提交
+
+充分利用Git的Branch特性，在当前的版本上创建一个分支，然后做实验性的修改。
+
+        $ git branch experiment
+        
+确认了这些修改之后，可以将实验分支上的更改合并到当前位置
+
+        $ git checkout master
+        $ git merge master experiment
+        
+另外，关于分支合并，`rebase`和`merge`的区别可以参考[这篇文章](https://www.atlassian.com/git/tutorials/merging-vs-rebasing)（这个区别一般
+只有开发才会用到）。简单理解：
+
+* `merge`是将两条路径的最后一个节点合并在一起，然后继续往下走
+* `rebase`是将旁边路径上的更改，反映到当前路径上。原先的两条路径不会有交点，但是当前路径上的每一分提交都会被重写，从而反映
+  旁边路径上的更改
+* 如果当前路径上的某些提交已经更新（`git push`）到了服务器，则需要重新获取历史版本（`git `）
+
+
+
 ## Bitbucket和Github在Acadamic License上的比较
 
 在Acadamic License结束之后，Bitbucket依然允许5人小组的私有库，但是Github需要付费，才能继续使用私有库。
