@@ -52,9 +52,11 @@ Bitbucket支持在线编辑和预览Markdown文档。
 ## 安装Git环境
 当团队成员获得了某一个源代码仓库（repo）的访问权限之后，需要安装Git环境，用来提交和查看不是时期的源代码。
 
-* Linux用户建议在`Bash`环境下使用Git
-* Mac用户可以安装[SourceTree for Mac] [1]
-* Windows用户可以安装[SourceTree for Windows] [1]或者[Git for Windows] [2]
+<!--* Linux用户建议在`Bash`环境下使用Git-->
+<!--* Mac用户可以通过-->
+<!--* Windows用户可以安装[TortoiseGit] [1]或者[Git for Windows] [2]-->
+
+建议在`Bash`环境下使用Git。
 
 Git的仓库（repo）有三类：
 
@@ -184,31 +186,30 @@ bitbucket中可以直接编辑和预览文件。
 
 0. 列出最近的一系列提交
 
-      $ git log --pretty=oneline -n 20 --graph --abbrev-commit
-      
-      * 9ecb341 fix markdown href syntax
-      * 3f0828b fix markdown coding syntax
-      * 72fc362 fix markdown syntax
-      * 4175860 draft for vcs wrkflow
-      * 94259e0 fix typo of lataxing
-      * 8ecbced no center for equation
-      * 794bcee blockquote equation
-      * b0ca566 fix div in markdown
+        $ git log --pretty=oneline -n 20 --graph --abbrev-commit
+        * 9ecb341 fix markdown href syntax
+        * 3f0828b fix markdown coding syntax
+        * 72fc362 fix markdown syntax
+        * 4175860 draft for vcs wrkflow
+        * 94259e0 fix typo of lataxing
+        * 8ecbced no center for equation
+        * 794bcee blockquote equation
+        * b0ca566 fix div in markdown
 
 0. 临时返回到之前的某一次提交
 
-      $ git checkout 94259e0
+        $ git checkout 94259e0
       
 0. 使用二分查找，反复执行`git checkout`，直到定位到某两个**相邻**的版本，也即，
     前一个版本还是正常的，后一个版本就出现了问题
 
 0. 比较这两个**相邻**版本的差异，分析问题
 
-      $ git diff 4175860 94259e0
+        $ git diff 4175860 94259e0
       
 0. 回撤这些临时版本
       
-      $ git checkout master
+        $ git checkout master
 
 ## Bitbucket和Github在Acadamic License上的比较
 
@@ -217,7 +218,8 @@ bitbucket中可以直接编辑和预览文件。
 # 参考文献
 [^pro_git2]: Chacon, S. and Straub, B. (2014). Pro Git, Second Edition.: NY. Apress.
 [^gb_undo]: [Git Basics - Undoing Things](https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things)
+[^st_checkout]: [Temporarily switch to a different commit](http://stackoverflow.com/a/4114122)
 
 
-[1]: https://www.sourcetreeapp.com/ "SourceTree"
+[1]: https://tortoisegit.org/ "TortoiseGit"
 [2]: https://git-for-windows.github.io/ "Git for Windows"
