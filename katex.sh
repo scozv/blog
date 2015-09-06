@@ -1,4 +1,6 @@
-# cd assets
+# find out latest version of katex release
+# download the zip file
+# unzip it into assets/
 
 # https://gist.github.com/cjus/1047794
 function jsonval {
