@@ -3,7 +3,7 @@ layout: post
 title: "A Version Controlled Project Workflow for Requirement, Coding and Continuous Integration"
 description: ""
 category: "help"
-tags: ["latex","markdown","CI","management"]
+tags: ["latex","markdown","CI","git"]
 ---
 {% include JB/setup %}
 
@@ -168,11 +168,56 @@ bitbucket中可以直接编辑和预览文件。
   
 ## LaTeX基本语法介绍
 
-## Git命令和SourceTree工具使用
+## 常用的Git场景
+本小节主要参考文献[Chacon and Straub, 2014] [^pro_git2]。
+
+下列的代码段中，以`$`打头的命令需要在`bash`中执行。其余的为命令执行的结果。
+
+### 如何修改最近一次commit的备注[^gb_undo]
+
+      $ git commit --amend
+      
+### 想暂时回到某一个历史版本
+
+有的时候，突然发现了一个问题，但是明明记得之前某个时间段是正常的。
+此时，需要回到之前的某一个版本（commit），尝试找到是哪一次提交引发了该问题。
+
+0. 列出最近的一系列提交
+
+      $ git log --pretty=oneline -n 20 --graph --abbrev-commit
+      
+      * 9ecb341 fix markdown href syntax
+      * 3f0828b fix markdown coding syntax
+      * 72fc362 fix markdown syntax
+      * 4175860 draft for vcs wrkflow
+      * 94259e0 fix typo of lataxing
+      * 8ecbced no center for equation
+      * 794bcee blockquote equation
+      * b0ca566 fix div in markdown
+
+0. 临时返回到之前的某一次提交
+
+      $ git checkout 94259e0
+      
+0. 使用二分查找，反复执行`git checkout`，直到定位到某两个**相邻**的版本，也即，
+    前一个版本还是正常的，后一个版本就出现了问题
+
+0. 比较这两个**相邻**版本的差异，分析问题
+
+      $ git diff 4175860 94259e0
+      
+0. 回撤这些临时版本
+      
+      $ git checkout master
 
 ## Bitbucket和Github在Acadamic License上的比较
 
 在Acadamic License结束之后，Bitbucket依然允许5人小组的私有库，但是Github需要付费，才能继续使用私有库。
+
+# 参考文献
+[^pro_git2]: Chacon, S. and Straub, B. (2014). Pro Git, Second Edition.: NY. Apress.
+[^gb_undo]: [Git Basics - Undoing Things](https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things)
+
 
 [1]: https://www.sourcetreeapp.com/ "SourceTree"
 [2]: https://git-for-windows.github.io/ "Git for Windows"
