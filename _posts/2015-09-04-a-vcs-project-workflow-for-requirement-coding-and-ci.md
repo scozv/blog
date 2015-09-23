@@ -49,7 +49,15 @@ tags: ["latex","markdown","CI","git"]
 
 Bitbucket支持在线编辑和预览Markdown文档。
 
-## 安装Git环境
+## 操作系统和Git环境
+
+* 建议使用Ubuntu操作系统，便于自动化脚本的管理
+* 如果使用Windows系统，需要安装[Git-for-windows](https://git-for-windows.github.io/)
+* 可以尝试使用CloudIDE，推荐使用[c9.io](https://c9.io)或者[Koding.io](https://Koding.io)，
+  这两个云端IDE都配置了Ubuntu的虚机
+
+## Git环境简介
+
 当团队成员获得了某一个源代码仓库（repo）的访问权限之后，需要安装Git环境，用来提交和查看不是时期的源代码。
 
 <!--* Linux用户建议在`Bash`环境下使用Git-->
