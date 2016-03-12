@@ -1,3 +1,6 @@
+# Jekyll 3
+gems: [jekyll-paginate, jekyll-gist]
+
 # This is the default format.
 # For more see: http://jekyllrb.com/docs/permalinks/
 permalink: /:categories/:year/:month/:day/:title
@@ -87,7 +90,7 @@ JB :
   comments :
     provider : disqus
     disqus :
-      short_name : scotv 
+      short_name : scotv
 #    livefyre :
 #      site_id : 123
 #    intensedebate :
@@ -112,7 +115,7 @@ JB :
 #        tracking_id : 'UA-35340941-5'
 #        property_name: 'scotv.github.io'
 #    getclicky :
-#      site_id : 
+#      site_id :
 #    mixpanel :
 #        token : '_MIXPANEL_TOKEN_'
 #    piwik :
@@ -137,4 +140,3 @@ JB :
   # and include your custom code. Your custom file must be defined at:
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
-  
