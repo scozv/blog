@@ -2,7 +2,7 @@
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
       <h1>
-        <a href="{{  BASE_PATH }}">
+        <a href="{{ HOME_PATH }}">
           {{ site.title }}
         </a>
       </h1>
@@ -10,7 +10,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item{% if page.url == BASE_PATH %} active{% endif %}" href="{{ BASE_PATH }}">Home</a>
+      <a class="sidebar-nav-item{% if page.url == HOME_PATH %} active{% endif %}" href="{{ HOME_PATH }}">Home</a>
 
       {% comment %}
         The code below dynamically generates a sidebar nav of pages with
