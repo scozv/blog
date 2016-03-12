@@ -3,7 +3,7 @@ layout: page
 title: "About"
 alias: "?"
 description: "About me"
-group: navigation
+group: !navigation
 ---
 {% include JB/setup %}
     \documentclass[a4paper]
@@ -17,8 +17,9 @@ group: navigation
 
 
 
-    I read, I code \footnote{\a{}}, 
-    I \LaTeX{} and I am Play!ing with Scala.
+    I read, I code \footnote{\a{}},
+    I \LaTeX{}, I <React />,
+    and I am Play!ing with Scala.
 
 
 
@@ -27,5 +28,3 @@ group: navigation
 
 <div class="lang zh-cn">
 </div>
-
-
