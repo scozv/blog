@@ -25,18 +25,29 @@ tags: ["algorithm", "graph", "DFS"]
 
 It is easy to write down a recursive BFS or DFS algorithm on graph. Take DFS for example:
 
-{% gist 7413740 %}
+        function DFS(graph, node) {
+          // do something on this node and mark it as visited
+
+          (for x in graph.getAdjacentVertex(node)) {
+            // then we DFS on each adjacent vertex of this node
+            if (!graph.isVisited(x)) {
+                DFS(graph, x)
+            }
+          }
+
+          graph.markVisited(node);
+        }
 
 The call of recursive function is managed by a stack, we may see 'Call Stack', or 'Error Stack' in some IDE tools. Recursive function is brief, and it is easy to understand sometimes. But if there is limitation on stack size, We may try to write it as iterative way.
 
 ## Call Stack
 
-Firstly, we see what happen in recursive DFS above, for the graph with only two paths: 
+Firstly, we see what happen in recursive DFS above, for the graph with only two paths:
 
 	1 → 2 → 3
 	1 → 4
 
-we call `DFS(1)`, find `{2, 4}` as adjacent vertex, then we call <code>DFS<sub>1</sub>(2)</code> (notation  <code>DFS<sub>i</sub>(j)</code> means the parent call of `j` in stack is `i`). Next call  <code>DFS<sub>2</sub>(3)</code> finding `{3}` as adjacent vertex of `2` and finish <code>DFS<sub>1</sub>(2)</code>. Finally  call  <code>DFS<sub>1</sub>(4)</code> and finish `DFS(1)`. 
+we call `DFS(1)`, find `{2, 4}` as adjacent vertex, then we call <code>DFS<sub>1</sub>(2)</code> (notation  <code>DFS<sub>i</sub>(j)</code> means the parent call of `j` in stack is `i`). Next call  <code>DFS<sub>2</sub>(3)</code> finding `{3}` as adjacent vertex of `2` and finish <code>DFS<sub>1</sub>(2)</code>. Finally  call  <code>DFS<sub>1</sub>(4)</code> and finish `DFS(1)`.
 
 ## Stack Frontier
 
@@ -58,7 +69,7 @@ Row Index | Current `v` | Action | `frontier`
 There are two things we need to pay attentions:
 
 * __Visiting Order__. At row index 1, we push `4` at first, in order to visit graph as same order of recursive call. However this is not very important, I just want to sync the order of iterative way and the order of recursive way. Pushing `4` at first or pushing `2` at first will get correct topological order or SCC, which we are going to find out at following two parts.
-* __Vertex Status__. If we have only two paths in graph like: `1 → 2 → 3` and `1 → 3 → 4`. We have stack like this: 
+* __Vertex Status__. If we have only two paths in graph like: `1 → 2 → 3` and `1 → 3 → 4`. We have stack like this:
 
   Row Index | Current `v` | Action | `frontier`
   :---:|:---:|:---|:--------
@@ -66,7 +77,7 @@ There are two things we need to pay attentions:
   1 | 1 | find `{2, 3}` as adjacent vertex of `1` | ( 3, 2 >
   2 | 2 | pop `2` to visit | ( 3 >
   3 | 2 | find `{3}` of `2` | ( 3, 3 >
-  
+
   (notation `( >` specifies we push and pop from right side)
 
   We may notice at row index 3, we push duplicate `3` into frontier. So we need a vertex status to mark vertex as being visited or being pushed into stack (see [issue #8] [3]).
@@ -74,11 +85,24 @@ There are two things we need to pay attentions:
 ## Running Time
 Here is simplified code of iterative DFS:
 
-{% gist 7638166 %}
+        function f() {
+          // 0. initialize stack, O(1)
 
-In our code (comment 1.1) below, for each vertex, we process its adjacent vertex, 
-which we find from outgoing edges of current vertex. 
-We let the number of outgoing edges of vertex $$i$$ is $$e_i$$, 
+          // 1. for all vertex, O(|V|)
+          while (not frontier.isEmpty()) {
+            // 1.0 visit current vertex, O(1)
+
+            // 1.1 process all vertex out from the current
+            (for x in graph.getAdjacentVertex(current)) {
+              frontier.push(x);
+              // process each adjacent vertex of the current one
+            }
+          }
+        }
+
+In our code (comment 1.1) below, for each vertex, we process its adjacent vertex,
+which we find from outgoing edges of current vertex.
+We let the number of outgoing edges of vertex $$i$$ is $$e_i$$,
 and $$n=\|V\|, m=\|E\|$$ as the number of vertex and number of edges respectively, so we write the running time as following:
 
 $$T = O(1) + \sum_{i=1}^{n} \left [ O(1) + e_i \right ] $$
@@ -91,7 +115,7 @@ $$T=O(1)+O(n)+O(m)=O(n+m)$$
 
 ## Next
 
-Read code in `graph.search.js` on [Algo.js] [1], and reference [this series of posts] [2] by Tom Moertel for more details on _Recursive to Iterative_. 
+Read code in `graph.search.js` on [Algo.js] [1], and reference [this series of posts] [2] by Tom Moertel for more details on _Recursive to Iterative_.
 
 [Next] [4] part of this series, I am going to describe some ideas on iterative topological order algorithm which can be applied on Kosaraju SCC algorithm.
 
@@ -112,7 +136,7 @@ Read code in `graph.search.js` on [Algo.js] [1], and reference [this series of p
 下一篇我会整理一下拓扑排序的迭代转化，并将其应用到Kosaraju强连通算法中。
 
 </div>
- 
+
 <br />
 
 [1]: https://github.com/scotv/algo-js											"Algo.js"

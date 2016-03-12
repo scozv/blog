@@ -25,11 +25,42 @@ tags: ["algorithm", "graph", "Dijkstra", "heap"]
 
 To speed up the finding minimum length of path in each stage in Dijkstra shortest path algorithm, we can use a binary heap to store frontier path, according to many words, like [_Heap Application_] [1], or Tim Roughgarden's [algorithm course] [2].
 
-{% gist 6200004 %}
+        function dijstra(graph, s) {
+          s = s || 1;
+          i = 0;
+
+          frontier = new Heap();
+          frontier.push([s, 0]);
+
+          while ( !frontier.isEmpty && i < graph.n ) {
+            // O(logn) on pop() instead of O(n)
+            //   from linear selection of minimum length
+            current = frontier.pop();
+
+            graph.edgesOf(current)
+             .filter(v => !v.isVisisted)
+             .forEach(v =>
+                if (frontier.has(v))
+                  // update path length on v in frontier
+                else:
+                  frontier.push([v, current[1] + weightOf(current, v)]);
+            );
+          }
+        }
 
 It sounds easy, however the 1st revision of `dijkstra()` in Algo.js is failed to update heap correctly, where I just update the value of one vertex without keeping heap order.
 
-{% gist 6200035 %}
+        if (g.__labelAt__(v[0]) === -1){
+        	// not visited, update each in frontier
+        	var updated = frontier.__id__.some(function(x){
+    	      return x && (x[0] === v[0]) &&
+              (x[1] = Math.min(x[1], current[1] + v[1]), true);
+        	});
+
+        	if (!updated){
+    	      frontier.push([v[0], v[1]]);
+        	}
+        } // end if, unvisited
 
 How to update and keep heap order?
 
@@ -37,14 +68,24 @@ While, when we update the MinHeap, it means that we may replace the item at that
 
 ![Min Heap](http://upload.wikimedia.org/wikipedia/commons/6/69/Min-heap.png)
 
-So, if we replace $$17$$ with a __LESS__ value called $$x$$. 
-$$x$$ is still less than its children, 
-but $$x$$ may be less than $$2$$ (its parent). 
+So, if we replace $$17$$ with a __LESS__ value called $$x$$.
+$$x$$ is still less than its children,
+but $$x$$ may be less than $$2$$ (its parent).
 As the algorithm of `push()` of heap, we need to exchange $$x$$ with its parent, great-parent..., until heap is ordered. That is:
 
 __Using `heap.swim()` to update that heap.__ (see [diff][3] of revision)
 
-{% gist 6200086 %}
+        var updated = frontier.__id__.some(function(x, k){
+          // return x && x[0] === v[0] && (doUpdate, true)
+          return x && (x[0] === v[0]) &&
+            ((function(){
+              if (current[1] + v[1] < x[1]) {
+                x[1] = current[1] + v[1];
+                // swim like push() in heap is important to update heap
+                frontier.__swim__(k);
+              }
+            })(), true);
+        });
 
 <div class="post-content lang zh-cn">
 
