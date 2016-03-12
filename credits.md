@@ -14,6 +14,8 @@ Less|More
 [codeitpretty.com] [4] | Suggestions on `font`
 [kendraschaefer.com] [3] | Suggestion on `font-family`
 [xuc.me] [7] | Rendering LaTeX using KaTeX and Jekyll
+[kersulis.github.io](http://kersulis.github.io/2015/10/31/jekyll-3/) | Guide for upgrading to Jekyll 3.0
+[Hyde] [9] | Hyde is a brazen two-column [Jekyll](http://jekyllrb.com/) theme that pairs a prominent sidebar with uncomplicated content. It's based on [Poole](http://getpoole.com/), the Jekyll butler.
 [`related_posts`] [8] | A enhanced `related_posts` by [@Ovilia](https://github.com/Ovilia)
 
 
@@ -25,3 +27,4 @@ Less|More
 [6]: http://jekyllbootstrap3.tk/    "Jekyll Bootstrap 3"
 [7]: http://xuc.me/blog/KaTeX-and-Jekyll/ "KaTeX for Jekyll"
 [8]: http://zhangwenli.com/blog/2014/07/15/jekyll-related-posts-without-plugin/ "related_posts"
+[9]: http://hyde.getpoole.com/ "Hyde for Jekyll"
