@@ -26,7 +26,31 @@ tags: ["algorithm", "graph", "SCC"]
 ## Recursive Topological Sort
 In the beginning, we introduce the code of recursive topological sort:
 
-{% gist 7599131 %}
+        function topologicalSortRec(graph) {
+          var n = graph.numberOfVertex,
+          order = [],
+
+          DFS= function(g, i) {
+            // recursive search graph g,
+            // from the initial node i
+            (for x in g.getAdjacentVertex(i)) {
+              if (not g.isVisited(x)) {
+                DFS(g, x);
+              }
+            };
+
+            order[i] = n--;
+            graph.markVisited(i);
+          };
+
+          (for 1 <= i <= n) {
+            if (not graph.isVisited(i)) {
+              DFS(graph, i);
+            }
+          }
+
+          return order;
+        }
 
 As we notice, we get the topological order from recursive DFS. The proof of correctness will be found at Wikipedia or online course [_Algorithms: Design and Analysis, Part 1_] [1]
 
@@ -34,10 +58,10 @@ As we notice, we get the topological order from recursive DFS. The proof of corr
 
 Take a directed graph represented by adjacency list below for instance.
 
-	1: [2, 4]
-	2: [3]
-	3: [5]
-	4: [3, 5]
+  1: [2, 4]
+  2: [3]
+  3: [5]
+  4: [3, 5]
 
 (Please draw this simple graph on the paper to help understand. `1: [2, 4]` means there are only two edges from vertex 1, that are 1 → 2 and 1 → 4.)
 
@@ -75,9 +99,34 @@ If we look into the `frontier` and the time when descendant vertex array is empt
 
 ## Stack Head
 
-So we introduce a stack named `head` to track the time when we finish visiting all descendant vertex of the head vertex (current `v`). 
+So we introduce a stack named `head` to track the time when we finish visiting all descendant vertex of the head vertex (current `v`).
 
-{% gist 7599328 %}
+        function iterTopologicalSort(graph) {
+          var frontier = new Stack(),
+              head = new Stack(),
+              n = graph.numberOfVertex,
+              order = [];
+
+          frontier.push(1);
+            while (not frontier.isEmpty()) {
+              current = frontier.peek();
+              if (current === head.peek() /*head may be empty here*/) {
+                  // we hit the time to set order
+                  frontier.pop();
+                  head.pop();
+                  order[current] = n--;
+                  graph.markVisited(current);
+              } else {
+                  // current is just a child of some v
+                  head.push(current);
+                  (for x in graph.getAdjacentVertex(current)) {
+                    if (not graph.isVisited(x)) {
+                      frontier.push(x);
+                    }
+                  };  // end for
+              } // end else
+            } // end while
+        }
 
 Running the iterative code, we update the stack table:
 
@@ -92,7 +141,7 @@ Running the iterative code, we update the stack table:
  1 | (1> | (1, 4> |<span></span>
  4 | (1, 4> | (1, 4> | `peek()` eqauls, set order(4), pop two stacks
  1 | (1> | (1> | `peek()` eqauls, set order(1), pop two stacks
- 
+
  As we see, The time of finishing visit all descendant of current `v`, and to set order(current) is when `peek()` eqauls, i.e. `head.peek() == frontier.peek()`.
 
 ## Attention
@@ -103,10 +152,10 @@ Running the iterative code, we update the stack table:
 Kosaraju SCC algorithm, which runs DFS twice, finds some kind of visiting order in the first DFS. So we can find topological sort order as in the first DFS, then use the order for the second DFS.
 
 ## Running Time
-Roughly speaking, the running time of iterarive topological sort is same as time of DFS. 
+Roughly speaking, the running time of iterarive topological sort is same as time of DFS.
 The time of Kosaraju SCC which runs DFS twice, is still $$O(m+n)$$.
 
-## Next 
+## Next
 See code on details in `graph.search.js` of [Algo.js] [3]. And next post, I am going to explain iterative Tarjan SCC algorithm, which cost me a few time.
 
 <div class="post-content lang zh-cn">
@@ -118,7 +167,7 @@ See code on details in `graph.search.js` of [Algo.js] [3]. And next post, I am g
 
 <br />
 
-[1]: https://www.coursera.org/course/algo					"Online course by Tim Roughgarden"
-[2]: https://github.com/scotv/algo-js/issues/20				"Issue 20"
-[3]: https://github.com/scotv/algo-js						"Algo.js"
+[1]: https://www.coursera.org/course/algo          "Online course by Tim Roughgarden"
+[2]: https://github.com/scotv/algo-js/issues/20        "Issue 20"
+[3]: https://github.com/scotv/algo-js            "Algo.js"
 [4]: {% post_url 2013-11-10-how-to-write-iterative-tarjan-scc-algorithm-part-zero %} "Tarjan, Part I"
