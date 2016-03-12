@@ -25,14 +25,15 @@
           {% endif %}
         {% endif %}
       {% endfor %}
-
-      <a class="sidebar-nav-item" href="{{ site.github.repo }}/archive/v{{ site.version }}.zip">Download</a>
-      <a class="sidebar-nav-item" href="{{ site.github.repo }}">GitHub project</a>
-      <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
+      <span class="sidebar-nav-item">
+        &copy; {{ site.time | date: '%Y' }} &middot;
+        <a href="{{ site.author.github }}">{{ site.author.name }}</a>
+      </span>
     </nav>
 
-    <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}
-          with many <a href="/credits">thanks</a>.
+    <p>
+      &#9825; Themed by <a href="http://hyde.getpoole.com/">Hyde</a> &middot;
+      <a href="/credits">Credits</a>
     </p>
   </div>
 </div>
