@@ -5,11 +5,22 @@
 
   <body>
 
-    {% include sidebar.html %}
+    {% if page.categories contains 'slides' %}
+      <div class="content">
+        {{ content }}
+      </div>
+    {% else %}
 
-    <div class="content container">
-      {{ content }}
-    </div>
+      {% include sidebar.html %}
 
+      <div class="content container">
+        {{ content }}
+      </div>
+    {% endif %}
+
+    {% include JB/analytics %}
+    <script src="{{ ASSET_PATH }}/resources/jquery/jquery.min.js"></script>
+    <script src="{{ ASSET_PATH }}/resources/bootstrap/js/bootstrap.min.js"></script>
+  
   </body>
 </html>
