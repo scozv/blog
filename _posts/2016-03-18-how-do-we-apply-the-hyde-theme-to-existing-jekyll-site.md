@@ -16,8 +16,8 @@ tags: ["Jekyll", "markdown"]
 > And this approach can be used for applying any theme of Jekyll. The main ideas of integrating the 3rd Jekyll Theme
 > are:
 > 
-> * learn the basic structure of Jekyll site,
-> * learn the basic workflow of rendering HTML from Jekyll scripts,
+> * knowing the basic structure of Jekyll site,
+> * knowing the basic workflow of rendering HTML from Jekyll scripts,
 > * comparing the code differences between `Hyde` and your site,
 > * replacing code and test.
 
