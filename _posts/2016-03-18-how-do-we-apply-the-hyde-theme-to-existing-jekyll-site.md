@@ -14,7 +14,7 @@ tags: ["Jekyll", "markdown"]
 
 > This article will describe the process of applying Hyde theme on my existing Jekyll Bootstrap site.
 > And this approach can be used for applying any theme of Jekyll. The main ideas of integrating the 3rd Jekyll Theme
-> is:
+> are:
 > 
 > * learn the basic structure of Jekyll site,
 > * learn the basic workflow of rendering HTML from Jekyll scripts,
