@@ -116,7 +116,7 @@ The HTML layout design of theme, Jekyll Bootstrap or Hyde, can be found in this 
 
 ### `./assets/themes/`, the CSS design, JavaScript or image of the Theme
 
-## Steps of Installing Hyde into Existing Site
+# Steps of Installing Hyde into Existing Site
 
 Comparing the `Hyde` project to your existing site will tell you which files you need 
 to install. The steps below based on my previous site.
@@ -140,7 +140,7 @@ to install. The steps below based on my previous site.
    * git commit -m [tags and about](https://github.com/scotv/scotv.github.com/commit/89e9d8fdd22780d714f5fe12ae2180be0e5c1074).
 0. test and release.
 
-## Conclusions
+# Conclusions
 
 For installing the theme of Jekyll:
 
@@ -152,7 +152,7 @@ For installing the theme of Jekyll:
 * test and improving.
 
 
-## Encore
+# Encore
 
 I am not with rich experiences on CSS and Jekyll, even on ruby. I mostly
 write `Scala` and `<React.js />`, so I will not spend much time on Jekyll
