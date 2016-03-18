@@ -23,6 +23,7 @@ tags: ["Jekyll", "markdown"]
 
 <!--more-->
 
+* Will be replaced with the ToC, excluding the "Contents" header
 {:toc}
 
 # Before Applying...
