@@ -175,6 +175,9 @@ div.summary-time {
 div.summary-content h1#section {
     display: none;
 }
+div.summary-content h1#abstract {
+    display: none;
+}
 
 div.summary-content blockquote {
     font-size: 1.2em;
@@ -225,4 +228,15 @@ div.row table:not(.lines) td {
 }
 div.row table:not(.lines) tr:nth-child(2n) {
     background-color: #E5E5E5;
+}
+
+/*  container */
+.container {
+  max-width: 47rem;
+}
+
+@media (min-width: 48em) {
+  .content {
+    max-width: 47rem;
+  }
 }
