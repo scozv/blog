@@ -95,7 +95,7 @@ Read the source code of any `html` file in `_layout` folder, and notice that:
 
 * a variable named `layout.theme.name` has been defined in these `html` files, and it may be used for Jekyll 3. 
   see [issue #15](https://github.com/scotv/scotv.github.com/issues/15#issuecomment-195689664),
-* make sure the path correct in `{% include %}`.
+* make sure the path correct in `{ % include % }`.
 
 ### `./_includes/JB/*`, the Utilities Scripts as the HTML Rendering Helper
 
@@ -106,7 +106,7 @@ rendering a `part` of HTML:
 * define some global variable, see `./_includes/JB/setup`.
 
 The scripts in `JB/` are mainly used in `./_includes/themes/*`, 
-You will figure out the usage of utilities by searching `{% include _includes/JB/setup %}`
+You will figure out the usage of utilities by searching `{ % include _includes/JB/setup % }`
 
 
 ### `./_includes/themes/`, the Layout Design of the Theme
