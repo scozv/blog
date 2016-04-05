@@ -36,7 +36,7 @@ of a project.
 
 ## Low Coupling
 
-* A project MUST be separated into a series of INDEPENDENT module,
+* A project MUST be separated into a series of INDEPENDENT modules,
 * Each module will be a code repository,
 * The communication among these INDEPENDENT modules is not depended
   on source code, it is depended on the API docs.
@@ -63,7 +63,7 @@ of a project.
 # Limitation of Bitbucket Cloud Build-in Issue System
 
 If we want to build a library system (the project code is `LS`),
-we may separate the project into a series of repository (module) below:
+we may separate the project into a series of repositories (modules) below:
 
 * `ls-core-restful`: A core RESTful service, including user management, book management,
 and borrowing management,
