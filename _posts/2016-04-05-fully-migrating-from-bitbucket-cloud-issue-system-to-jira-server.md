@@ -15,10 +15,10 @@ tags: ["markdown","CI","git"]
 >
 > * Import legacy Bitbucket Cloud Issue into JIRA Server,
 > * Build Dual-direction connection between Bitbucket Cloud and JIRA Server,
-> * Upgrade the issue ticket number in git commits history, to archive the FULLY
->   migration.
+> * Upgrade the issue ticket number in git commits history,
+> to archive the __FULLY__ migration.
 >
-> This post will NOT cover the topics below:
+> This post will __NOT__ cover the topics below:
 >
 > * Why I choose JIRA instead of other issue system,
 > * Why I choose Bitbucket Cloud instead of other git server,
@@ -36,7 +36,7 @@ of a project.
 
 ## Low Coupling
 
-* A project MUST be separated into a serial of INDEPENDENT module
+* A project MUST be separated into a series of INDEPENDENT module,
 * Each module will be a code repository,
 * The communication among these INDEPENDENT modules is not depended
   on source code, it is depended on the API docs.
@@ -54,16 +54,16 @@ of a project.
    * All issues referenced in the commit message must be UNRESOLVED,
    * All issues referenced in the commit message must be assigned to the committer.
 * Every commit to any module need to be build and tested on CI server,
-* Committer will be noticed when the commit leaded a failure build or test
+* Committer will be noticed when the commit leaded a failure build or test,
 * __Each code commit can be traced to the issue system__,
-* __Each issue can be traced to a serial of commits__,
+* __Each issue can be traced to a series of commits__,
 * The environment of each iterative build should be independent,
 * Continuous build, deployment and more...
 
 # Limitation of Bitbucket Cloud Build-in Issue System
 
 If we want to build a library system (the project code is `LS`),
-we may separate the project into a serial of repository (module) below:
+we may separate the project into a series of repository (module) below:
 
 * `ls-core-restful`: A core RESTful service, including user management, book management,
 and borrowing management,
@@ -108,7 +108,8 @@ The limitation of Bitbucket Cloud build-in Issue System is:
   to expose an API docs of `ls-core-restful`
   to committers of other repositories,
 * The commit history of "Login page implementation" has to be
-  separated into different repositories, violating the __CI__ principle.
+  separated into different repositories,
+  violating the __Continuous Integration__ principle.
 
 # JIRA, a Central Issue System
 
@@ -148,7 +149,7 @@ Meet the system requirement, and pay attention on:
 
 * Neither MariaDB nor PerconaDB are supported [^ATL_maria_null] [^ATL_maria_null_2],
 * Atlassian JIRA Commit Acceptance Plugin is only support for JIRA Server 5.0 - 6.4.13,
-* For JIRA Server 6.1 - 7.1.4, we can use Midori Commit Policy Plugin for JIRA [^CAP02] with a paid license
+* For JIRA Server 6.1 - 7.1.4, we can use Midori Commit Policy Plugin for JIRA [^CAP02] with a paid license.
 
 I provide a installation `sh` file for quick installation and configuration of MySQL, see appendix below.
 
@@ -165,7 +166,7 @@ each issue will be prepended with `LS`, such as:
 
         LS-101 Hello JIRA
 
-## Import legacy issue from Bitbucket Cloud
+## Import Legacy Issue from Bitbucket Cloud
 
 JIRA administrator can import the legacy issue from Bitbucket Cloud into JIRA:
 
@@ -179,12 +180,13 @@ in JIRA will satisfy our request.
 
 Please read the official guide [^ATL_dvcs].
 
-## Setup the JIRA link in Bitbucket Cloud
+## Setup the JIRA Link in Bitbucket Cloud
 
 We want to display the hyperlink in Bitbucket Cloud commit history page.
 Adding a JIRA link in repository setting will satisfy our request.
 
 * Go to repository setting, find the Integrations - Links:
+
         https://bitbucket.org/scotv/ls-core-restful/admin/links
 * Click the JIRA icon,
 * Fill the JIRA website and the JIRA project code, such as `LS`
@@ -233,8 +235,8 @@ Here is the script:
 
 I haven't found the solution for:
 
-* Resolved JIRA issue is not displayed as a deleted HTML element in Bitbucket Cloud
-* Bitbucket Cloud doesn't reject the bad commit if the commit violates the Acceptance Policy
+* Resolved JIRA issue is not displayed as a <del>deleted HTML element</del> in Bitbucket Cloud,
+* Bitbucket Cloud doesn't reject the bad commit if the commit violates the Acceptance Policy.
 
 For the 2nd issue, Atlassian Support replied me as:
 
