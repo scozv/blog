@@ -19,6 +19,7 @@ tags: ["markdown","CI","git"]
 >   migration.
 >
 > This post will NOT cover the topics below:
+>
 > * Why I choose JIRA instead of other issue system,
 > * Why I choose Bitbucket Cloud instead of other git server,
 > * Why I choose Ubuntu 14.04 Server instead of other OS.
@@ -46,7 +47,7 @@ of a project.
   code covered,
 * An infrastructure module MUST satisfy 100% code coverage,
 * A RESTful Service module MUST contain the `FakeRequest` BDD test,
-* A web page module shoud consider the web page test, such as using [Selenium](www.seleniumhq.org)
+* A web page module shoud consider the web page test, such as using [Selenium](www.seleniumhq.org),
 * 不写测试的代码就是耍流氓
 * Each module need to satisfy the Commit Acceptance Policy [^CAP01]:
    * The source commit message must contain a valid issue number(s),
@@ -103,7 +104,7 @@ The limitation of Bitbucket Cloud build-in Issue System is:
 
 * Not a central issue system,
 * Have to grant access right of `ls-core-restful` to other committers.
-  This has violated the __Low Coupling__ principle, cause we just need
+  This has been violating the __Low Coupling__ principle, cause we just need
   to expose an API docs of `ls-core-restful`
   to committers of other repositories,
 * The commit history of "Login page implementation" has to be
@@ -216,6 +217,7 @@ We want to change the Legacy git history to:
 We need the Message Filter of git command [^GIT]:
 
 > --msg-filter <command>
+>
 > This is the filter for rewriting the commit messages. The argument is evaluated in the shell with the original commit message on standard input; its standard output is used as the new commit message.
 
 Here is the script:
@@ -227,7 +229,7 @@ Here is the script:
         git gc --aggressive
         git prune
 
-## NOT Fully Migrating
+# NOT a Fully Migrating
 
 I haven't found the solution for:
 
@@ -241,6 +243,7 @@ For the 2nd issue, Atlassian Support replied me as:
   https://bitbucket.org/site/master/issues/5658
 
 # Appendix
+
 ## JIRA Installation Script
 
 ```bash
@@ -281,7 +284,7 @@ mysql -uroot -p
 > GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX
 > | on $MS_JIRA_DB.* TO '$MS_JIRA_DBUSER'@'localhost'
 > | IDENTIFIED BY PASSWORD '$MS_JIRA_PWD';
-flush privileges;
+> flush privileges;
 > SHOW GRANTS FOR '$MS_JIRA_DBUSER'@'localhost';
 
 MYSQL_CONF="/etc/mysql/my.cnf"
