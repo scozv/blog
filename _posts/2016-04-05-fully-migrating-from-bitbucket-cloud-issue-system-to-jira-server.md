@@ -10,13 +10,13 @@ tags: ["markdown","CI","git"]
 # Abstract
 {:.no_toc}
 
-> This post will give a fully migration guide from Bitbucket Cloud Issue
+> This post will give a full migration guide from Bitbucket Cloud Issue
 > to JIRA Server, including:
 >
 > * Import legacy Bitbucket Cloud Issue into JIRA Server,
 > * Build Dual-direction connection between Bitbucket Cloud and JIRA Server,
 > * Upgrade the issue ticket number in git commits history,
-> to archive the __FULLY__ migration.
+> to archive the __FULL__ migration.
 >
 > This post will __NOT__ cover the topics below:
 >
@@ -140,7 +140,7 @@ We can:
   the JIRA Acceptance Policy.
 
 
-# Fully Migration Guide to JIRA Server
+# Full Migration Guide to JIRA Server
 
 ## Installing JIRA Server on Ubuntu
 
