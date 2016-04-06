@@ -87,7 +87,7 @@ i.glyphicon {
 div.content > blockquote {
     font-family: sans-serif;
     color: #444444;
-    background-color: wheat; 
+    background-color: wheat;
 }
 
 div.content > blockquote p {
@@ -164,12 +164,12 @@ div.content .post-content.lang.zh-cn {
 /* Summary in index.md */
 div.summary-title {
     font-size: 1.4em;
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 div.summary-time {
     font-size: 1.1em;
-    font-style: italic; 
+    font-style: italic;
 }
 
 div.summary-content h1#section {
@@ -239,4 +239,19 @@ div.row table:not(.lines) tr:nth-child(2n) {
   .content {
     max-width: 47rem;
   }
+}
+
+/* decrease font size of post content */
+div.post > h1[id] {
+  font-size: 1.5rem;
+}
+
+div.post > h2[id] {
+  font-size: 1.01rem;
+  font-weight: 11;
+  font-style: italic;
+}
+
+div.post > h1.post-title {
+  font-size: 2.0rem;
 }
