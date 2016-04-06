@@ -180,6 +180,11 @@ in JIRA will satisfy our request.
 
 Please read the official guide [^ATL_dvcs].
 
+According to the Atlassian Support, the DVCS will refresh status
+from Bitbucket Cloud every 60 minutes [^DCON-379]. That means when we
+push commits to Bitbucket Cloud, the JIRA issue page may not reflect
+the latest commits immediately.
+
 ## Setup the JIRA Link in Bitbucket Cloud
 
 We want to display the hyperlink in Bitbucket Cloud commit history page.
@@ -342,3 +347,4 @@ sudo bash $JIRA_HOME/bin/start-jira.sh
 [^ATL_dvcs]: [Connect Bitbucket Cloud to JIRA Server applications](https://confluence.atlassian.com/bitbucket/connect-bitbucket-cloud-to-jira-server-applications-814208991.html)
 [^GIT]: [git-filter-branch - Rewrite branches](https://git-scm.com/docs/git-filter-branch)
 [^GIT2]: [Extract to Git submodule](http://will.willandorla.com/extract-to-git-submodule)
+[^DCON-379]: [Allow configurable refresh times for commit checks](https://jira.atlassian.com/browse/DCON-379)
