@@ -208,9 +208,9 @@ we have the hyperlink in commit history page of Bitbucket Cloud, leading to:
 
 ## Change the Legacy Issue Number of Git History, ie. Fully Migrating
 
-> __Attention: __
+> __Attention:__
 >
-> __The sha1 of all commits will be rewritten (changed) in the step below;__
+> __The `sha1` of all commits will be rewritten (changed) in the step below;__
 >
 > __Make backup and decision.__
 
