@@ -208,6 +208,9 @@ we have the hyperlink in commit history page of Bitbucket Cloud, leading to:
 
 ## Change the Legacy Issue Number of Git History, ie. Fully Migrating
 
+> __Attention: the sha1 of ALL commits will be rewritten (changed) in the step below,_
+> __make backup and decision.__
+
 In individual Bitbucket Cloud build-in Issue System, the
 issue number is started from `1`. For Bitbucket Cloud, we commit code
 using message such as below:
