@@ -235,6 +235,8 @@ We need the Message Filter of git command [^GIT]:
 
 Here is the script:
 
+        # The `sha1` of all commits will be rewritten (changed) in the step below;
+        # Make backup and decision.
         git clone --no-hardlinks git@bitbucket.org:scotv/ls-core-restful.git
         git filter-branch -f --msg-filter \
             'sed "s/#\([0-9][0-9]*\)/LS-\1/g"'
