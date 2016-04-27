@@ -222,9 +222,9 @@ https://c9.io
 
 **如下的文件，请不要放到源代码托管：**
 
-* 源代码的编译产物，比如`dll`、`exe`或者其它编译后的文件
-* 非文本的文档，比如`pdf`、`docs`等，参考[这个讨论](https://github.com/weijianwen/SJTUThesis/issues/26)
-* 源代码的dependencies，比如`Node.js`项目里面的`node_modules`文件夹
+* <del>源代码的编译产物，比如`dll`、`exe`或者其它编译后的文件</del>
+* <del>非文本的文档，比如`pdf`、`docs`等</del>，参考[这个讨论](https://github.com/weijianwen/SJTUThesis/issues/26)
+* <del>源代码的dependencies，比如`Node.js`项目里面的`node_modules`文件夹</del>
 
 
 ## Markdown基本语法介绍
