@@ -181,7 +181,7 @@ https://c9.io
 
 ## Email Notification
 
-除了用于登录、注册的邮箱外，如果你想及时的收到Notification（比如某人`@`了你），
+除了用于登录、注册的邮箱外，如果你想及时地收到Notification（比如某人`@`了你），
 可以在个人设置中，添加一个额外的邮箱地址。
 
 # 附录
@@ -226,6 +226,11 @@ https://c9.io
 * <del>非文本的文档，比如`pdf`、`docs`等</del>，参考[这个讨论](https://github.com/weijianwen/SJTUThesis/issues/26)
 * <del>源代码的dependencies，比如`Node.js`项目里面的`node_modules`文件夹</del>
 
+参考常用的`gitignore`文件：
+
+```
+https://github.com/github/gitignore
+```
 
 ## Markdown基本语法介绍
 bitbucket中可以直接编辑和预览文件。
