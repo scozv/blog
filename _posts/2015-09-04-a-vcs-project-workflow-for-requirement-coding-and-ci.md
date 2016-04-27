@@ -3,7 +3,7 @@ layout: post
 title: "A Version Controlled Project Workflow for Requirement, Coding and Continuous Integration"
 description: ""
 category: "help"
-tags: ["latex","markdown","CI","git"]
+tags: ["latex","markdown","CI","git", "JIRA"]
 ---
 {% include JB/setup %}
 
@@ -36,6 +36,30 @@ tags: ["latex","markdown","CI","git"]
 
 所有输出的成品，比如编译生成的PDF文件，不应该纳入源代码管理。
 
+## 了解Atlassian
+
+Atlassian的[产品线](https://www.atlassian.com/software)比较全面，
+我目前使用的三个是：
+
+* JIRA：Issue系统
+* Bitbucket：Git源代码管理
+* Bamboo：CI系统
+
+目前，每一个产品都有如下两个版本：
+
+* Cloud：由Atlassian托管的SaaS服务
+* Server：自主托管的软件
+
+**两个版本出了部署托管方式不同，页面和使用方式都非常类似。**
+
+**所以，在同一个产品的不同版本之间相互迁移，不会造成用户体验的不习惯。**
+
+比如：
+
+* Bitbucket Cloud：对应的网址是如下，所有的源代码托管到Atlassian服务器
+
+      https://bitbucket.org
+* Bitbucket Server（原名叫Stash）：个人或企业自主购买服务器，自主部署
 
 ## 注册Bitbucket
 首先注册一个[bitbucket.org](https://bitbucket.org)账号，bitbucket是一个在线的源代码管理系统，支持多个私有库，
@@ -89,10 +113,33 @@ Git的仓库（repo）有三类：
 
 ## 编辑文本文档
 
-文本文档的编辑，可以使用
+### Ubuntu系统下的建议
 
-* 记事本，建议安装`notepad2`或者`notepad++`，务必将文件设置为`UTF-8`编码
-* 直接在bitbucket.org上进行在线文档编辑
+* 如果有能力，请用`vim`或`emacs`。（**友情提示：这两个编辑器的学习比较耗时，请合理安排时间**）
+* 使用开源的[`atom.io`](https://atom.io/)编辑器，可以使用[`webupd8team`提供的`ppa`](https://launchpad.net/~webupd8team/+archive/ubuntu/atom)
+* 付费使用[Sublime Text](https://www.sublimetext.com/)
+
+### Windows系统下的建议
+
+* 使用开源的[`atom.io`](https://atom.io/)编辑器
+
+### 使用c9.io
+
+```
+https://c9.io
+```
+
+这是一个网页版的代码编辑器，在一些个人电脑环境有限的情况下，可以直接在网页里面写代码。
+
+特色是：
+
+* 登录之后，整个环境就是你上次的文档环境，不管你在什么操作系统上，只要你能上网
+* 代码高亮
+* `Markdown`同步预览，一边编辑`.md`文件，一边查看最终的效果
+* 智能提示
+* 更重要的是，提供了一个具有`su`权限的`Ubuntu`的`Terminal`，也就
+  意味着，你在网页里面可以使用一个`Ubuntu`操作系统了
+
 
 ## 移动端的访问
 `iOS`上使用[CodeBucket](https://itunes.apple.com/cn/app/codebucket-bitbucket-for-ios/id551531422?)访问源代码库。
@@ -113,16 +160,70 @@ Git的仓库（repo）有三类：
 
        git commit -m '新增某某需求，参考问题 #1'
 
+## `@`mention
+
+在issue的讨论中，可以使用`@username`提及某一个队员，一般来说，对方会收到一封邮件，
+所以为了方便，请使用 **简短** 并且容易在键盘上打出来的`username`。
+
+另外，我建议：
+
+* 请将你的`username`视为互联网开发社区的一个身份，所以尽量，在如下开发这社区使用同样的`username`：
+  * Bitbucket.org
+  * c9.io
+  * github.com
+  * gitlab.com
+  * stackexchange.com
+  * stackoverflow.com
+  * mail.yandex.com
+* 可以使用同样的邮箱
+* 如果刚刚进入互联网开发社区，可以修改你觉得不合适的`username`
+* 确定`username`之后，或者使用了很久的`username`，永远不要修改
+
+## Email Notification
+
+除了用于登录、注册的邮箱外，如果你想及时的收到Notification（比如某人`@`了你），
+可以在个人设置中，添加一个额外的邮箱地址。
 
 # 附录
 
 ## 全局规则
 
+### 文件命名
+
 * 所有的文件名称只包含英文字母、数字和下划线，比如：
 
         requirement_001_user_login.md
+* 所有的文件名不要出现空格和其它特殊字符
 * 所有的文本文件，比如`.md`，都设置为`UTF-8`编码，以免中文字体出现乱码
-* 所有的图片编号，并以简短的文件名描述图片内容，并在文档中注明
+* 所有的附件（图片、PPT文件等），使用简短的文件名描述图片内容，并在文档中注明
+
+### 源代码存放的文件要求
+
+源代码存放的文件，都要能够做比较（`git diff`）。
+
+对于诸如，`.pdf`、`.exe`、`.ppt`等文件，是不适合做`git diff`的，因为如果
+使用`text`文本编辑器打开这些文件，看到的都是二进制编码。
+
+如下文件，需要通过源代码管理：
+
+* 所有的`Markdown`文档的源文件：`.md`，包括：
+  * 面向开发者的文档
+  * 团队的规范文档
+  * 必要的会议记录
+  * 所有的需求文档
+  * 其它
+* 有能力的团队，可以使用`LaTeX`来编写文档，参考[此处](http://scotv.github.io/help/2015/08/12/introduction-of-building-documents-with-latex)
+* 所有的源代码
+* 必要的配置文件，注意区分开发环境和生产环境，同时，注意生产配置的保密
+
+**如下的文件，请不要放到源代码托管，**
+**如下的文件，请不要放到源代码托管，**
+**如下的文件，请不要放到源代码托管：**
+
+* 源代码的编译产物，比如`dll`、`exe`或者其它编译后的文件
+* 非文本的文档，比如`pdf`、`docs`等，参考[这个讨论](https://github.com/weijianwen/SJTUThesis/issues/26)
+* 源代码的dependencies，比如`Node.js`项目里面的`node_modules`文件夹
+
 
 ## Markdown基本语法介绍
 bitbucket中可以直接编辑和预览文件。
