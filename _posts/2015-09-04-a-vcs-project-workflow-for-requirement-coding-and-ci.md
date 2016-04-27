@@ -167,7 +167,7 @@ https://c9.io
 
 另外，我建议：
 
-* 请将你的`username`视为互联网开发社区的一个身份，所以尽量，在如下开发这社区使用同样的`username`：
+* 请将你的`username`视为开源开发社区的一个身份，所以尽量，在如下开发这社区使用同样的`username`：
   * Bitbucket.org
   * c9.io
   * github.com
@@ -176,7 +176,7 @@ https://c9.io
   * stackoverflow.com
   * mail.yandex.com
 * 可以使用同样的邮箱
-* 如果刚刚进入互联网开发社区，可以修改你觉得不合适的`username`
+* 如果刚刚进入开源开发社区，可以修改你觉得不合适的`username`
 * 确定`username`之后，或者使用了很久的`username`，永远不要修改
 
 ## Email Notification
