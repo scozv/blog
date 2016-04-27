@@ -167,7 +167,7 @@ https://c9.io
 
 另外，我建议：
 
-* 请将你的`username`视为开源开发社区的一个身份，所以尽量，在如下开发这社区使用同样的`username`：
+* 请将你的`username`视为开源开发社区的一个身份，所以尽量，在如下开发者社区使用同样的`username`：
   * Bitbucket.org
   * c9.io
   * github.com
