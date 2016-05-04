@@ -390,6 +390,24 @@ bitbucket中可以直接编辑和预览文件。
   旁边路径上的更改
 * 如果当前路径上的某些提交已经更新（`git push`）到了服务器，则需要重新获取历史版本（`git pull`）
 
+## c9.io的基本环境配置
+
+```
+# create workspace
+# private
+# choose a EMPTY template
+
+# generate SSH key for Git server,
+# https://confluence.atlassian.com/x/YwV9E
+ssh-keygen -t rsa -b 4096
+vi ~/.ssh/id_rsa.pub
+# start the ssh-agent in the background
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+# record SSH key into Github and Bitbucket
+# clone Git repo into c9.io
+# git clone git@bitbucket.org:username/repo.git
+```
 
 
 ## Bitbucket和Github在Acadamic License上的比较
