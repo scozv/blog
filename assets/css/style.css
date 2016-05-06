@@ -44,10 +44,6 @@
 .tag_box.inline li {"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace
   float: left; }
 
-.force-mono-font span h2 {
-  font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
-}
-
 .tag_box a {
   padding: 3px 6px;
   margin: 2px;
@@ -264,4 +260,8 @@ div.post > h3[id] {
 
 div.post > h1.post-title {
   font-size: 2.0rem;
+}
+
+.force-mono-font span h2 {
+  font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
 }
