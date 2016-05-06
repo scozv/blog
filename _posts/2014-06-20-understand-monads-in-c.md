@@ -13,9 +13,9 @@ tags: ["LINQ", "C#", "monad", "Scala"]
 {:.no_toc}
 
 > 本文主要对几篇讨论Monad的文献进行综述，文中的大部分代码都来自参考文献（我会指明参考来源）。本文有几处地方提出了几个思考题，这些思考题也来自参考文献，建议先尝试写写这些思考题，再去阅读参考文献。这一份综述尝试抛开函数编程的背景，去看看我们平时已经在使用但却没有留意的一些Monad。文章主要涉及到C#这门语言，但是不同的语言背景并不会有太多的影响。
-> 
+>
 > 我推荐阅读参考文献中的英文原文。虽然中文意合英文形合[^G08]，但是本文的综述将使用中文，除了部分程序代码，和一些术语、人名 that 我不打算翻译的。
-> 
+>
 > 本文对Haskell和.NET中异步Task的理解不够，如果需要了解Task这个Monad的话，请参考Stephen Toub的文章[^ST13]。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”[^DC13]。
 
 <!--more-->
@@ -74,7 +74,7 @@ Eric Lippert在他的Monad系列[^EL13]中，给出了如下几个泛型类，�
 给定如下两个映射：
 
 $$g(x) =  x^2-4x, f(x) = \ln (x+4)$$
- 
+
 令复合映射：
 
 $$p(x) = f(g(x)) $$
@@ -84,7 +84,7 @@ $$p(x) = f(g(x)) $$
 $$ p(x)= \ln (x^2-4x+4) = \ln [(x-2)^2] = 2 \ln (x-2) $$
 
 我们可以看到，复合映射之后，新的映射计算过程被重新组合，我们并不需要先计算出$$x^2-4x$$的值，再代入第二层函数。
-  
+
 我们思考，假如：
 
 0. 令$$x=e+2=4.718281828459045$$，我们是计算$$(4.718281828459045)^2-4*4.718281828459045$$容易呢，还是计算$$2 \ln (e+2-2)=2\ln e = 2$$容易？
@@ -92,7 +92,7 @@ $$ p(x)= \ln (x^2-4x+4) = \ln [(x-2)^2] = 2 \ln (x-2) $$
 2. 又或者，在程序语言中，传入的参数是Int.MaxValue，平方运算很可能超出存储的范围，那么我们也最好到最后再去用新的映射加以计算。
 
 所以，有些事儿不要急着去处理。后面我们还会看到这句话。
-  
+
 # 从复合映射到复合函数
 Wes Dyer在他的文章中用程序语言的方式来描述复合映射这样的概念[^WD08]，Wes Dyer首先给出对一般类型T的函数复合：
 
@@ -113,7 +113,7 @@ Wes Dyer在他的文章中用程序语言的方式来描述复合映射这样的
 简单的替换导致编译错误，因此Wes Dyer在文中引入了一个中间函数Bind，用来解决值域属于M<T\>复合函数的绑定：
 
 	public static M<V> Bind<U, V>(this M<U> m, Func<U, M<V>> k);
-	
+
 	public static Func<T, M<V>> Compose<T, U, V>(this Func<U, M<V>> f, Func<T, M<U>> g)
 	{
 	    return x => Bind(g(x), f);
@@ -126,7 +126,7 @@ Wes Dyer在他的文章中用程序语言的方式来描述复合映射这样的
 扩展了一个T之后，我们现在有了增强版的类型M<T\>。一个类型，总会有一些动态的行为。Eric Lippert在他的Monads系列中的第三部分，为上述的一些M<int\>增加了一个加法运算[^EL13-3]：
 
 	static Nullable<int> AddOne(Nullable<int> nullable)
-	{ 
+	{
 	  if (nullable.HasValue)
 	  {
 	    int unwrapped = nullable.Value;
@@ -140,7 +140,7 @@ Wes Dyer在他的文章中用程序语言的方式来描述复合映射这样的
 以及OnDemand<T\>的加法运算：
 
 	static OnDemand<int> AddOne(OnDemand<int> onDemand)
-	{ 
+	{
 	  return ()=>
 	  {
 	    int unwrapped = onDemand();
@@ -187,7 +187,7 @@ Eric在他的Monads系列的第四部分，将加法运算更一般化了[^EL13-
 	  else
 	    return new Nullable<R>();
 	}
-	
+
     // 使用ApplyFunction构造具体的复合函数
 	static Nullable<int> AddOne(Nullable<int> nullable)
 	{
@@ -253,7 +253,7 @@ Eric指出Monad是类型（Type）的一种设计模式，是对现有Type的能
 另外，Moanded类型还需要定义一个操作，用来复合函数。该放大器不会改变底层（Underlying）类型的原有特性。更重要的是，诸如OnDemand的复合，我们只有在最后invoke函数的时候，才去计算，不能过早。诸如IEnumerable<T\>的复合，只有最终需要内部元素的时候，才去遍历，不能过早。诸如IQueryable<T\>，只有最终需要拿回查询结果的时候，再去连接数据源，也不能过早。
 
 一个直观的例子就是：
-    
+
     // C#
     IEnumerabe<T>.Select().Where().FirstOrDefault();
     // Scala
@@ -296,10 +296,10 @@ Wes Dyer表明，如果放大用Unit来构造，复合用Bind来表示的话，�
 正如上一节所说，C#的Bind取名为SelectMany，给定实现[^EL13-10]：
 
     static IEnumerable<R> SelectMany<A, R>(this IEnumerable<A> sequence, Func<A, IEnumerable<R>> function)
-    { 
-      foreach(A outerItem in sequence) 
-        foreach(R innerItem in function(outerItem)) 
-          yield return innerItem; 
+    {
+      foreach(A outerItem in sequence)
+        foreach(R innerItem in function(outerItem))
+          yield return innerItem;
     }
 
 使用SelectMany，请设计如下的实现：
