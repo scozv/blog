@@ -68,7 +68,7 @@ tags: ["CI", "architecture"]
 | Chromium   +------------> | ASP .NET MVC    |
 |            |              | Database        |
 | mobile     |              |                 |
-| device     |              |                 |
+| de^ice     |              |                 |
 +------------+              +-----------------+
 
 
@@ -98,6 +98,7 @@ tags: ["CI", "architecture"]
                                                                        |  connection
                                                                        |  string
                                                                        |
+                                                                       |
                                                                      +-+------------------+
                                                                      | PaaS               |
                                                                      | Database+aaS       |
@@ -106,52 +107,75 @@ tags: ["CI", "architecture"]
                                                                      |                    |
                                                                      |                    |
                                                                      +--------------------+
+
+
 
 
 ####################################  scenario 04, multiple Databases
 
-+-------------+             +-----------------+                      +--------------------+              +--------------------+
-| you and me  |             | View            |    HTTP Request      | RESTful API        |              | PaaS               |
-| Chromium    +-----------> | React.js        +--------------------> | http://spray.io/   +--------------+ Database+aaS       |
-|             |             | static HTML page|                      |                    |  connection  |                    |
-| mobile      |             | mobile App      |                      |                    |  string      | Core Business      |
-| device      |             |                 |                      |                    |              |                    |
-|             |             |                 | <--------------------+                    |              |                    |
-+-------------+             +-----------------+    HTTP Response     +-+------------------+              +--------------------+
-                                                                       |
-                                                                       |
-                                                                       |
-                                                                       |  connection
-                                                                       |  string
-                                                                       |
-                                                                       |
-                                                                     +-+------------------+
-                                                                     | PaaS               |
-                                                                     | Database+aaS       |
-                                                                     |                    |
-                                                                     | user agent data    |
-                                                                     |                    |
-                                                                     |                    |
-                                                                     +--------------------+
+
+                                                                      +--------------------+
+                                                                      | PaaS               |
+                                                                      | Database+aaS       |
+                                                                      |                    |
+                                                                      | Core Business      |
+                                                                      |                    |
+                                                                      |                    |
+                                                                      +-+------------------+
+                                                                        |
+                                                                        | connection
+                                                                        | string
+                                                                        |
+                                                                        |
+ +-------------+             +-----------------+                      +-+------------------+
+ | you and me  |             | View            |    HTTP Request      | RESTful API        |
+ | Chromium    +-----------> | React.js        +--------------------> | http://spray.io/   |
+ |             |             | static HTML page|                      |                    |
+ | mobile      |             | mobile App      |                      |                    |
+ | device      |             |                 |                      |                    |
+ |             |             |                 | <--------------------+                    |
+ +-------------+             +-----------------+    HTTP Response     +-+------------------+
+                                                                        |
+                                                                        | connection
+                                                                        | string
+                                                                        |
+                                                                        |
+                                                                      +-+------------------+
+                                                                      | PaaS               |
+                                                                      | Database+aaS       |
+                                                                      |                    |
+                                                                      | user+agent data    |
+                                                                      |                    |
+                                                                      |                    |
+                                                                      +--------------------+
 
 
-####################################  scenario 05, separating and combination
 
-+------------+              +-----------------+                      +--------------------+              +--------------------+
-| you and me |              | View            |    HTTP Request      | RESTful API        |              | PaaS               |
-| Chromium   +------------> | React.js        +--------------------> | http://spray.io/   +--------------+ Database+aaS       |
-|            |              | static HTML page|                      |                    |  connection  |                    |
-| mobile     |              | mobile App      |                      |                    |  string      | Core Business      |
-| device     |              |                 |                      |                    |              |                    |
-|            |              |                 | <--------------------+                    |              |                    |
-+------------+              +-----------------+    HTTP Response     +--------------------+              +--------------------+
-                            | Database        |
-                            |                 |
-                            | user agent data |
-                            |                 |
-                            |                 |
-                            |                 |
-                            +-----------------+
+
+ ####################################  scenario 05, separating and combination
+
+ +------------+              +-----------------+                      +--------------------+
+ | you and me |              | View            |    HTTP Request      | RESTful API        |
+ | Chromium   +------------> | React.js        +--------------------> | http://spray.io/   |
+ |            |              | static HTML page|                      |                    |
+ | mobile     |              | mobile App      |                      |                    |
+ | device     |              |                 |                      |                    |
+ |            |              |                 | <--------------------+                    |
+ +------------+              +-----------------+    HTTP Response     +-+------------------+
+                             | Database        |                        |
+                             |                 |                        | connection
+                             | user+agent data |                        | string
+                             |                 |                        |
+                             |                 |                        |
+                             |                 |                        |
+                             +-----------------+                      +-+-------------------+
+                                                                      | PaaS                |
+                                                                      | Database+aaS        |
+                                                                      |                     |
+                                                                      | Core Business       |
+                                                                      |                     |
+                                                                      |                     |
+                                                                      +---------------------+
 
 ```
 
