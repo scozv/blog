@@ -20,7 +20,7 @@ Collate_posts helper. Collated posts only by year.
   {% else %}
     {% if this_year != next_year %}
       </ul>
-      <h2>{{next_year}}</h2>
+      <h2 class="force-mono-font">{{next_year}}</h2>
       <ul>
     {% endif %}
   {% endif %}

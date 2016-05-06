@@ -17,6 +17,7 @@ Less|More
 [kersulis.github.io](http://kersulis.github.io/2015/10/31/jekyll-3/) | Guide for upgrading to Jekyll 3.0
 [Hyde] [9] | _Hyde is a brazen two-column [Jekyll](http://jekyllrb.com/) theme that pairs a prominent sidebar with uncomplicated content. It's based on [Poole](http://getpoole.com/), the Jekyll butler._
 [`related_posts`] [8] | A enhanced `related_posts` by [@Ovilia](https://github.com/Ovilia)
+`tags_list` | A enhanced `tags_list` from [kelsin.github.io](https://github.com/kelsin/kelsin.github.io)
 favicon | A favicon made from Chrome incognito mode `BASE64` image string with [GIMP](https://www.gimp.org/)
 
 
