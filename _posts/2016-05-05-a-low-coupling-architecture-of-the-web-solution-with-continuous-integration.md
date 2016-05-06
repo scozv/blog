@@ -68,7 +68,7 @@ tags: ["CI", "architecture"]
 | Chromium   +------------> | ASP .NET MVC    |
 |            |              | Database        |
 | mobile     |              |                 |
-| de^ice     |              |                 |
+| device     |              |                 |
 +------------+              +-----------------+
 
 
@@ -144,7 +144,7 @@ tags: ["CI", "architecture"]
                                                                       | PaaS               |
                                                                       | Database+aaS       |
                                                                       |                    |
-                                                                      | user+agent data    |
+                                                                      | user-agent data    |
                                                                       |                    |
                                                                       |                    |
                                                                       +--------------------+
@@ -164,7 +164,7 @@ tags: ["CI", "architecture"]
  +------------+              +-----------------+    HTTP Response     +-+------------------+
                              | Database        |                        |
                              |                 |                        | connection
-                             | user+agent data |                        | string
+                             | user-agent data |                        | string
                              |                 |                        |
                              |                 |                        |
                              |                 |                        |
@@ -178,6 +178,7 @@ tags: ["CI", "architecture"]
                                                                       +---------------------+
 
 ```
+
 
 ## 独立的Server
 
