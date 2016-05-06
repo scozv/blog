@@ -7,7 +7,7 @@ layout: page
   {% if post.categories contains 'slides' %}
   {% else%}
   <div class="summary-title"> {{ post.title }} </div>
-  <div class="summary-time"> {{ post.date | date_to_string }} </div>
+  <div class="summary-time"> {{ post.date | date: "%b %d, %Y" }} </div>
   <div class="summary-content">
   {% if post.content contains '<!--more-->' %}
     {{ post.content | split:'<!--more-->' | first }}
@@ -27,5 +27,3 @@ layout: page
   <br />
   {% endif %}
 {% endfor %}
-
-
