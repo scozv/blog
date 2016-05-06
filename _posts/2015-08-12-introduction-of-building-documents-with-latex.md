@@ -3,7 +3,7 @@ layout: post
 title: "Introduction of Building Documents with LaTeX"
 description: ""
 category: "help"
-tags: ["latex","tex","architecture"]
+tags: ["latex","tex","project"]
 ---
 {% include JB/setup %}
 
