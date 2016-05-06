@@ -3,7 +3,7 @@ layout: post
 title: "Introduction of Building Documents with LaTeX"
 description: ""
 category: "help"
-tags: ["latex","tex"]
+tags: ["latex","tex","architecture"]
 ---
 {% include JB/setup %}
 
@@ -32,7 +32,7 @@ tags: ["latex","tex"]
 
 在`TeX`的基础上，可以定义一系列的宏包（macro），可以更方便地描述排版样式。比如上述的表格语法，其实来自`LaTeX`宏包，
 如果要使用纯`TeX`（plain `TeX`）来绘制表格，则要使用更多的排版命令
-（参考这两个网页文献 [A](http://www.volkerschatz.com/tex/halign.html)、 
+（参考这两个网页文献 [A](http://www.volkerschatz.com/tex/halign.html)、
 [B](http://tex.stackexchange.com/questions/183235/vertically-aligned-table-in-plaintex-latex-context-etc) ）。
 `LaTeX`是非常流行的宏包，除此之外还有`AMS-TeX`、`XeTeX`等[^TUG01]。
 
@@ -106,7 +106,7 @@ tags: ["latex","tex"]
 > 用LaTeX的时候，还真有你想要某些功能而没有的情况。怎么办？两种办法：花钱找高人帮着写；自己写。
 >
 > ...
-> 
+>
 > 首先需要熟悉LaTeX的内部命令（大部分是含有@字符的命令），有时候这还不够，
 > 万一碰到\expandafter，\futurelet，\ifvoid等等还得碰底层的primitive（基本命令）。
 > 这个时候，还真就没plain TeX用着舒服。不过舒服也是有代价的，
@@ -133,20 +133,20 @@ tags: ["latex","tex"]
 ### 编译命令参考
 
       # 文件名: build.sh
-      
+
       # 编译过程中如果出现异常中断，可能需要清除临时文件
       # 谨慎使用git clean命令，这会删除untracked文件
       # git clean -fx
-      
+
       # 编译入口
       xelatex index.tex
       # 编译索引
       makeindex idx_finance.idx
       # 编译参考文献
-      for x in {c,f} ; do 
+      for x in {c,f} ; do
       	bibtex $x
       done
-      
+
       # 引用参考文献编号
       xelatex index.tex
       xelatex index.tex
@@ -191,7 +191,7 @@ $$e^x = \lim_{n\rightarrow \infty} \sum_{t=0}^{n} ( \frac{1}{t!}\cdot x^t )= \su
 ### LaTeX Font Warning: Font shape undefined
 如果一个字体集，少了粗体定义，则会出现这样的提示。解决方案是，
 手动指定文档中粗体对应的字体：
-    
+
      % CJK for XeTeX
      % http://www.ctan.org/pkg/xetexref
      % https://zh.wikipedia.org/wiki/XeTeX
@@ -201,7 +201,7 @@ $$e^x = \lim_{n\rightarrow \infty} \sum_{t=0}^{n} ( \frac{1}{t!}\cdot x^t )= \su
     +\usepackage{xltxtra, xeCJK}
     +\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
     +\xeCJKsetup{AutoFakeBold=true, LoadFandol=false}
-     
+
      \begin{document}
      \maketitle
 
@@ -228,15 +228,15 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 ### `makeindex finance`不会生成Multi Index页面
 
 `finance`是一个文件名，而非命令。对比如下两个命令：
-    
-    scott@c9 [~/repo/notes] (master *) 
+
+    scott@c9 [~/repo/notes] (master *)
     $ makeindex finance
     This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
     Scanning input file finance...done (0 entries accepted, 0 rejected).
     Nothing written in finance.ind.
     Transcript written in finance.ilg.
-    
-    scott@c9 [~/repo/notes] (master *) 
+
+    scott@c9 [~/repo/notes] (master *)
     $ makeindex finance.idx
     This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
     Scanning input file finance.idx....done (22 entries accepted, 0 rejected).
@@ -249,20 +249,20 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 ### xeCJK error: "key-unknown"
 
 可能会在`Lubuntu 14.04`下遇到这样的问题：
-  
+
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     !
     ! xeCJK error: "key-unknown"
-    ! 
+    !
     ! Sorry, but xeCJK/options does not have a key called `LoadFandol'.
-    ! 
+    !
     ! The key `LoadFandol' is being ignored.
-    ! 
+    !
     ! See the xeCJK documentation for further information.
-    ! 
+    !
     ! Type <return> to continue.
     !...............................................  
-                                                      
+
     l.37 ...setup{AutoFakeBold=true, LoadFandol=false}
 
 解决方案是，更换字体配置：
@@ -271,7 +271,7 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
     -\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
     +\setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
      \xeCJKsetup{AutoFakeBold=true, CJKmath=true}
-     
+
     +% Latin
     +\usepackage{fontspec, pifont}
     +\setmainfont{Gentium Book Basic}
@@ -319,9 +319,9 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 
 [tex.stackexchange/Stefan Kottwitz](http://tex.stackexchange.com/a/1983)也有这样的说明:
 
-> Further, I rarely use physical font commands in my body text. 
-> I use them to define styles in the preamble and 
-> use the styles in the document afterwards, 
+> Further, I rarely use physical font commands in my body text.
+> I use them to define styles in the preamble and
+> use the styles in the document afterwards,
 > ensuring consistency and allowing changes to be easily made.
 
 可以参考[此处](http://tex.stackexchange.com/questions/6754/what-is-the-canonical-way-to-redefine-the-emph-command/6757#6757)
@@ -355,7 +355,7 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 ### 修改目录中“索引”的层级
 
 如果想要将目录中“索引”的层级提高到“章节”级别，可以定义如下的排版格式：
-  
+
     +  \makeatletter
     +  % Put section depth at the same level as \chapter.
     +  \renewcommand*{\toclevel@section}{0}
@@ -375,49 +375,49 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
     % Abstract
     +\end{quotation}
     +\clearpage
-    
+
 ## 模板样例
 
     \documentclass[a4paper]{book}
-    
+
     % shortcut for scotv's github homepage
     \usepackage{hyperref}
     \newcommand{\scotv}{https://github.com/scotv}
-    
+
     % shortcut for \ding{213}
     \newcommand{\To}{\ding{213}}
-    
+
     \usepackage{listings, color}
     % shortcut for inline code snippet, like `code` in markdown
     % \newcommand{\cd}[1]{\colorbox[rgb]{0.86,0.86,0.86}{\lstinline$#1$}}
     \newcommand{\cd}[1]{\lstinline$#1$}
-    
+
     % shortcut for section, subsection, subsubsection
     % mb stands for member
     \newcommand{\mb}[1]{\subsection*{#1}}
     \newcommand{\mmb}[1]{\subsubsection*{#1}}
-    
+
     % set style for multiple lines code snippet
     \lstset{numbers=left, numberstyle=\tiny
     	, stepnumber=2, numbersep=5pt
     	, backgroundcolor=\color[rgb]{0.86,0.86,0.86}
     	, basicstyle=\footnotesize\ttfamily
     	, breaklines=true}
-    
+
     % set index
     \usepackage{multind}
     \makeindex{idx_finance}
     \newcommand{\idxf}[1]{\index{idx_finance}{#1}}
     % heading
     \setcounter{secnumdepth}{3}
-    
+
     % set multi-ref
     \usepackage{multibib}
     \newcommand{\bibnamec}{References of Programming}
     \newcites{c}{\bibnamec}
     \newcommand{\bibnamef}{References of Finance}
     \newcites{f}{\bibnamef}
-    
+
     % CJK for XeTeX
     % http://www.ctan.org/pkg/xetexref
     % https://zh.wikipedia.org/wiki/XeTeX
@@ -425,21 +425,21 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
     \usepackage{xltxtra, xeCJK}
     \setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
     \xeCJKsetup{AutoFakeBold=true, CJKmath=true}
-    
+
     % Latin
     \usepackage{fontspec, pifont}
     \setmainfont{Gentium Book Basic} %[ItalicFont=Gentium Book Basic Bold]
-    
+
     % intertext, trigleq and proof
     \usepackage{amsmath, amssymb, amsthm}
-    
+
     % bold emphasized text
     \makeatletter
     \DeclareRobustCommand{\em}{\%
       \@nomath\em \if b\expandafter\@car\f@series\@nil
       \normalfont \else \bfseries \fi}
     \makeatother
-    
+
     % tiny margin note
     \makeatletter
       \long\def\@ympar#1{\%
@@ -447,30 +447,30 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
       \global\setbox\@currbox\copy\@marbox
       \@xympar}
     \makeatother
-    
+
     % reduce the space of itemize
     \newlength{\wideitemsep}%
     \setlength{\wideitemsep}{.5\itemsep}%
     \addtolength{\wideitemsep}{-7pt}%
     \let\olditem\item
     \renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
-    
+
     \begin{document}
     \title{Introduction of Building Documents with LaTeX}
     \author{Scott}
     \date{Aug, 12, 2015}
     \maketitle
-    
+
     \chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
     \begin{quotation}
     \noindent % abstract text
-    This artical will give brief introduction for TeX and LaTeX, 
-    then discuss a few issues during using LaTeX 
-    and how to display LaTeX eqation on web page. 
+    This artical will give brief introduction for TeX and LaTeX,
+    then discuss a few issues during using LaTeX
+    and how to display LaTeX eqation on web page.
     Finally, a LaTeX template will be attached in Appendix.
     \end{quotation}
     \clearpage
-    
+
     % no indent of second ... paragraphs of each section
     \setlength{\parindent}{0pt}
     \setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
@@ -482,13 +482,13 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
         \include{p2_c01}
       \chapter{C02-02}
         \include{p2_c02}
-        
+
       \cleardoublepage
       \phantomsection
       \addcontentsline{toc}{chapter}{\bibnamec}
       \bibliographystylec{GBT7714-2005NLang}
       \bibliographyc{code/ref}
-   
+
       \makeatletter
       % Put section depth at the same level as \chapter.
       \renewcommand*{\toclevel@section}{0}
@@ -496,13 +496,13 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
       % Put section depth back to its default value.
       \renewcommand*{\toclevel@section}{1}
       \makeatother  
-    
+
       \cleardoublepage
       \phantomsection
       \addcontentsline{toc}{chapter}{\bibnamef}
       \bibliographystylef{GBT7714-2005NLang}
       \bibliographyf{finance/ref}
-    
+
     \appendix
     \part{Appendix}
     \chapter{Appendix I}
