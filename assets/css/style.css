@@ -262,6 +262,6 @@ div.post > h1.post-title {
   font-size: 2.0rem;
 }
 
-.force-mono-font span h2 {
+.force-mono-font {
   font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
 }
