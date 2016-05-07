@@ -3,7 +3,7 @@ layout: post
 title: "Understand Monads in C#"
 description: "An Short Literature Review on Monads in C#"
 category: "pattern"
-tags: ["LINQ", "C#", "monad", "Scala"]
+tags: ["LINQ", "monad", "Scala"]
 ---
 
 {% include JB/setup %}
