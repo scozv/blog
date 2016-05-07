@@ -24,17 +24,16 @@
           {% endif %}
         {% endif %}
       {% endfor %}
-
-      <span class="sidebar-nav-item">
-        &copy; {{ site.time | date: '%Y' }} &middot;
-        <a href="{{ site.author.github }}">{{ site.author.name }}</a> &middot;
-        <a href="{{ BASE_PATH }}/about">About</a>
-      </span>
     </nav>
 
-    <p>
-      &#9825; Themed by <a href="http://hyde.getpoole.com/">Hyde</a> &middot;
+    <span class="sidebar-nav-item">
+      <span class="force-mono-font">&copy;</span> {{ site.time | date: '%Y' }} &middot;
+      <a href="{{ site.author.github }}">{{ site.author.name }}</a> &middot;
+      <a href="{{ BASE_PATH }}/about">About</a>
+    </span>
+    <span class="sidebar-nav-item">
+      <span class="force-mono-font">&#9825;</span> Themed by <a href="http://hyde.getpoole.com/">Hyde</a> &middot;
       <a href="/credits">Credits</a>
-    </p>
+    </span>
   </div>
 </div>
