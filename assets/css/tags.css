@@ -1,8 +1,6 @@
 /*
 https://github.com/kelsin/kelsin.github.io/tree/master/css
 */
-
-
 section.tags #tags {
 font-size:.7em;
 margin-top:40px;
@@ -62,6 +60,18 @@ display:block;
 position:relative;
 top:-90px;
 visibility:hidden;
+}
+
+h2,section.tags #cloud .huge {
+font-size:1.8em;
+}
+
+h3,section.posts h1,.post .body h1 {
+font-size:1.6em;
+}
+
+h4,section.tags #cloud .large,.post .body h2 {
+font-size:1.4em;
 }
 
 ul.tag_box.inline {
