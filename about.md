@@ -19,11 +19,12 @@ group: !navigation
 
 
 
-I read and code \footnote{\a{}},
-I \LaTeX{},
-I <React />,
-and,
-I am Play!ing with Scala.
+I read and code \footnote{\a{}}   ::
+I \LaTeX{}                        ::
+I <React />                       ::
+and                               ::
+I am Play!ing with Scala.         :: Nil mkString ",\r\n"
+
 
 
 
