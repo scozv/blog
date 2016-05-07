@@ -9,7 +9,7 @@ Collate_posts helper. Collated posts only by year.
   {% capture next_month %}{{ post.previous.date | date: "%B" }}{% endcapture %}
 
   {% if forloop.first %}
-    <h2 class="force-mono-font">{{this_year}}</h2>
+    <h3 class="force-mono-font">{{this_year}}</h3>
     <ul>
   {% endif %}
 
@@ -20,7 +20,7 @@ Collate_posts helper. Collated posts only by year.
   {% else %}
     {% if this_year != next_year %}
       </ul>
-      <h2 class="force-mono-font">{{next_year}}</h2>
+      <h3 class="force-mono-font">{{next_year}}</h3>
       <ul>
     {% endif %}
   {% endif %}
