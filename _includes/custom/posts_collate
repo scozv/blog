@@ -1,29 +1,60 @@
 {% comment %}<!--
-Collate_posts helper. Collated posts only by year.
+https://github.com/kelsin/kelsin.github.io/blob/master/tags/index.html
+http://stackoverflow.com/a/28157613
 -->{% endcomment %}
 
-{% for post in posts_collate  %}
-  {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
-  {% capture this_month %}{{ post.date | date: "%B" }}{% endcapture %}
-  {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
-  {% capture next_month %}{{ post.previous.date | date: "%B" }}{% endcapture %}
 
-  {% if forloop.first %}
-    <h3 class="force-mono-font">{{this_year}}</h3>
-    <ul>
-  {% endif %}
+<section class="tags">
 
-  <li><span class="force-mono-font">{{ post.date | date: "%b %d, %Y" }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
-
-  {% if forloop.last %}
-    </ul>
-  {% else %}
+  <div id="cloud">
+    {% assign number = 0 %}
+    {% for post in posts_collate %}
+    {% assign this_year = post.date | date: "%Y" %}
+    {% assign next_year = post.previous.date | date: "%Y" %}
+    {% assign number = number | plus: 1 %}
     {% if this_year != next_year %}
-      </ul>
-      <h3 class="force-mono-font">{{next_year}}</h3>
-      <ul>
+      <span class="{% if number == 1 %}small{% elsif number <= 5 %}medium{% elsif number <= 10 %}large{% else %}huge{% endif %}">
+        <a href="#{{ post.date | date:"%Y" }}">{{ this_year }}</a>
+        <sup class="force-mono-font">{{ number }}</sup>
+      </span>
+      {% assign number = 0 %}
     {% endif %}
-  {% endif %}
-{% endfor %}
+    {% endfor %}
+  </div>
 
-{% assign posts_collate = nil %}
+  <div id="tags">
+    {% for post in posts_collate  %}
+      {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+      {% capture this_month %}{{ post.date | date: "%B" }}{% endcapture %}
+      {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
+      {% capture next_month %}{{ post.previous.date | date: "%B" }}{% endcapture %}
+
+      {% if forloop.first %}
+        <a class="anchor" id="{{ this_year }}"></a>
+        <h3 class="force-mono-font">{{ this_year }}</h3>
+        <ul>
+      {% endif %}
+
+      <li>
+        <span class="force-mono-font small">{{ post.date | date: "%b %d" }}</span> &raquo;
+        <a href="{{post.url}}">{{post.title}}</a>
+      </li>
+
+      {% comment %}<!--
+      <li><span class="force-mono-font">{{ post.date | date: "%b %d, %Y" }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
+      -->{% endcomment %}
+
+      {% if forloop.last %}
+        </ul>
+      {% else %}
+        {% if this_year != next_year %}
+          </ul>
+          <h3 class="force-mono-font">{{next_year}}</h3>
+          <ul>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% assign tags_list = nil %}
