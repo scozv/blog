@@ -4,7 +4,7 @@ title: "A Version Controlled Project Workflow for Requirement, Coding and Contin
 description: ""
 category: "pattern"
 tags: ["latex","markdown","CI","git", "JIRA","project"]
-lang: en
+lang: zh
 ---
 {% include JB/setup %}
 

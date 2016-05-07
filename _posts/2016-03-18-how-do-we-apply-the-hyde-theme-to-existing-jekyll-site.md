@@ -4,6 +4,7 @@ title: "How Do We Apply the Hyde Theme to Existing Jekyll Site?"
 description: ""
 category: "guide"
 tags: ["Jekyll", "markdown"]
+lang: en
 ---
 {% include JB/setup %}
 

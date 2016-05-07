@@ -4,6 +4,7 @@ title: "Fully Migrating from Bitbucket Cloud Issue System to JIRA Server"
 description: ""
 category: "guide"
 tags: ["markdown","CI","git", "JIRA", "project"]
+lang: en
 ---
 {% include JB/setup %}
 

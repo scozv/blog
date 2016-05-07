@@ -4,7 +4,7 @@ title: "Understand Monads in C#"
 description: "An Short Literature Review on Monads in C#"
 category: "pattern"
 tags: ["LINQ", "monad", "Scala"]
-lang: en
+lang: zh
 ---
 
 {% include JB/setup %}
