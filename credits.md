@@ -6,7 +6,7 @@ description: ""
 {% include JB/setup %}
 
 Less|More
-:---:|:--------
+:---|:--------
 [Jekyll Bootstrap] [1] | _The Definitive Jekyll Blogging Framework_
 [Jekyll Bootstrap 3] [6] | _The Quickest Way to Blog on GitHub Pages, Now with Power of Bootstrap 3_
 [Bootstrap] [2] | _The most popular front-end framework for developing responsive, mobile first projects on the web._
@@ -17,8 +17,7 @@ Less|More
 [kersulis.github.io](http://kersulis.github.io/2015/10/31/jekyll-3/) | Guide for upgrading to Jekyll 3.0
 [Hyde] [9] | _Hyde is a brazen two-column [Jekyll](http://jekyllrb.com/) theme that pairs a prominent sidebar with uncomplicated content. It's based on [Poole](http://getpoole.com/), the Jekyll butler._
 [`related_posts`] [8] | A enhanced `related_posts` by [@Ovilia](https://github.com/Ovilia)
-`tags_list` | A enhanced `tags_list` from [kelsin.github.io](https://github.com/kelsin/kelsin.github.io) and [codeofclimber.ru](http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/
-)
+`tags_list` | A enhanced `tags_list` from [kelsin.github.io](https://github.com/kelsin/kelsin.github.io) and [codeofclimber.ru](http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/)
 favicon | A favicon made from Chrome incognito mode `BASE64` image string with [GIMP](https://www.gimp.org/)
 
 
