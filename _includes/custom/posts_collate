@@ -56,4 +56,4 @@ http://stackoverflow.com/a/28157613
   </div>
 </section>
 
-{% assign tags_list = nil %}
+{% assign posts_collate = nil %}

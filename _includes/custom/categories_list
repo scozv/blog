@@ -42,4 +42,4 @@ http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/
   </div>
 </section>
 
-{% assign tags_list = nil %}
+{% assign categories_list = nil %}

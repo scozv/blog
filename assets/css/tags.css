@@ -67,3 +67,7 @@ visibility:hidden;
 ul.tag_box.inline {
   padding-left: 0px;
 }
+
+span.force-mono-font.small {
+  font-size: .1em;
+}
