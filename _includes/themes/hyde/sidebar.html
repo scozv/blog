@@ -26,14 +26,27 @@
       {% endfor %}
     </nav>
 
-    <span class="sidebar-nav-item">
-      <span class="force-mono-font">&copy;</span> {{ site.time | date: '%Y' }} &middot;
-      <a href="{{ site.author.github }}">{{ site.author.name }}</a> &middot;
-      <a href="{{ BASE_PATH }}/about">About</a>
-    </span>
-    <span class="sidebar-nav-item">
-      <span class="force-mono-font">&#9825;</span> Themed by <a href="http://hyde.getpoole.com/">Hyde</a> &middot;
-      <a href="/credits">Credits</a>
-    </span>
+    <nav class="sidebar-nav">
+      <span class="sidebar-nav-item">
+        <span class="force-mono-font">&copy;</span> {{ site.time | date: '%Y' }} &middot;
+        <a href="{{ site.author.github }}">{{ site.author.name }}</a> &middot;
+        <a href="{{ BASE_PATH }}/about">About</a>
+      </span>
+      <span class="sidebar-nav-item">
+        <span class="force-mono-font">&#9825;</span> Themed by <a href="http://hyde.getpoole.com/">Hyde</a> &middot;
+        <a href="/credits">Credits</a>
+      </span>
+    </nav>
+
+
+    <nav class="sidebar-nav">
+      <span>
+        {% for tongue in site.languages %}
+          <a {% if tongue == site.active_lang %}style="font-weight: bold;"{% endif %}" href="{% if tongue == site.default_lang %} {{site.baseurl}}{{page.url}} {% else %} {{site.baseurl}}/{{ tongue }}{{page.url}} {% endif %}">{{ tongue }}</a> |
+        {% endfor %}
+      </span>
+    </nav>
+
+
   </div>
 </div>
