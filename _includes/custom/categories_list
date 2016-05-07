@@ -17,7 +17,7 @@ http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/
 
       {% for post in posts_collate %}
 
-        {% if post.lang ==  site.active_lang %}
+        {% if post.lang ==  site.active_lang or slug == "slides" %}
           {% assign number = number | plus: 1 %}
         {% endif %}
 
@@ -45,11 +45,12 @@ http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/
       <a class="anchor" id="tag-{{ slug }}"></a>
       <h3 class="force-mono-font">{{ tag | downcase }}</h3>
       <ul>
-        {% for post in categories_list[tag] %}{% if post.lang ==  site.active_lang %}
-        <li>
-        &middot;
-        <a href="{{post.url}}">{{post.title}}</a>
-        </li>
+        {% for post in categories_list[tag] %}
+        {% if post.lang ==  site.active_lang or slug == "slides" %}
+          <li>
+          &middot;
+          <a href="{{post.url}}">{{post.title}}</a>
+          </li>
         {% endif %}{% endfor %}
       </ul>
     </div>
