@@ -4,7 +4,7 @@ title: "Introduction of Building Documents with LaTeX"
 description: ""
 category: "guide"
 tags: ["latex","tex","project"]
-lang: en
+lang: zh
 ---
 {% include JB/setup %}
 

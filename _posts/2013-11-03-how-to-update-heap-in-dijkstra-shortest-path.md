@@ -4,6 +4,7 @@ title: "How to Update Heap in Dijkstra Shortest Path Algorithm"
 description: ""
 category : "algo"
 tags: ["algorithm", "graph", "Dijkstra", "heap"]
+lang: en
 ---
 {% include JB/setup %}
 

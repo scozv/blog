@@ -4,6 +4,7 @@ title: "How to Write Iterative Tarjan SCC Algorithm, Part I"
 description: ""
 category : "algo"
 tags: ["algorithm", "graph", "DFS"]
+lang: en
 ---
 {% include JB/setup %}
 
