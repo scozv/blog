@@ -11,7 +11,9 @@ http://stackoverflow.com/a/28157613
     {% for post in posts_collate %}
     {% assign this_year = post.date | date: "%Y" %}
     {% assign next_year = post.previous.date | date: "%Y" %}
-    {% assign number = number | plus: 1 %}
+    {% if post.lang ==  site.active_lang %}
+      {% assign number = number | plus: 1 %}
+    {% endif %}
     {% if this_year != next_year %}
       <span class="{% if number == 1 %}small{% elsif number <= 5 %}medium{% elsif number <= 10 %}large{% else %}huge{% endif %}">
         <a href="#{{ post.date | date:"%Y" }}">{{ this_year }}</a>
@@ -36,11 +38,11 @@ http://stackoverflow.com/a/28157613
         <ul>
       {% endif %}
 
-      <li>
+      {% if post.lang ==  site.active_lang %}<li>
         <span class="force-mono-font small">{{ post.date | date: "%b %d" }}</span>
         &middot;
         <a href="{{post.url}}">{{post.title}}</a>
-      </li>
+      {% endif %}</li>
 
       {% if forloop.last %}
         </ul></div>
