@@ -2,7 +2,7 @@
 layout: post
 title: "Introduction of Building Documents with LaTeX"
 description: ""
-category: "help"
+category: "guide"
 tags: ["latex","tex","project"]
 ---
 {% include JB/setup %}

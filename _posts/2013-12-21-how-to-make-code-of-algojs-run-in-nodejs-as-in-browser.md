@@ -2,7 +2,7 @@
 layout: post
 title: "How to Make Code of Algo.js Run in Node.js as in Browser"
 description: ""
-category: "help"
+category: "guide"
 tags: ["CI", "unit", "grunt"]
 ---
 {% include JB/setup %}
@@ -24,20 +24,20 @@ tags: ["CI", "unit", "grunt"]
 </a>
 
 ## window and global
-In browser, we have the global variable named `window` , `Array` is `window.Array`, and `Math` is `window.Math`, etc. The __Algo.js__ also plugs object into `window`: 
+In browser, we have the global variable named `window` , `Array` is `window.Array`, and `Math` is `window.Math`, etc. The __Algo.js__ also plugs object into `window`:
 
     (function (sorting, undefined) {
         sorting.mergeSort = function () {};
     })(window.Sorting = window.Sorting || {})
 
-So that we can sort an array in browser using the script below: 
-    
+So that we can sort an array in browser using the script below:
+
     Sorting.mergeSort(3, 1, 4, 1, 5, 9, 2, 6);
 
 More than that, in Algo.js, I extend `Array` and `Math` directly:
 
     (function (array, undefined) {
-        array.zip = function (a, b) {};	
+        array.zip = function (a, b) {};
         array.prototype.clone = function () {};
     })(window.Array = window.Array || {})
 
@@ -50,12 +50,12 @@ It is not a good practice that we change the object in `window` directly. But in
 Following this idea of simplification, I load the code of algorithm into the global variable in Node.js named `global` (see [`./qunit/q.js`] [3]):
 
     window = global;
-    
+
     require('../src/t.js')
     require('../src/x.array.js');
     require('../src/sorting.js');
 
-Look, we give the `global` an alias name at first, so that we do not need to change any codes of algorithm. Again, my idea of simplification is that: 
+Look, we give the `global` an alias name at first, so that we do not need to change any codes of algorithm. Again, my idea of simplification is that:
 
 > It is not a good practice that we change the object in `global` directly. But the most important part in Algo.js is Algo(rithm), not js.
 
@@ -89,14 +89,14 @@ We use [`grunt-node-qunit`] [6] plugin for grunt task, which is Grunt task runni
 Here is the list of _How to_:
 
 0. configure project's `package.json` file
-  
+
        $ npm init
 0. install `grunt-cli`
-  
+
        $ npm i -g grunt-cli
 0. add grunt dependencies into project (see [official docs] [5])
 0. install `grunt`
-  
+
        $ npm i grunt --save-dev
 0. add `Gruntfile.js` to resister task
 
@@ -105,7 +105,7 @@ Here is the list of _How to_:
           grunt.loadNpmTasks('grunt-node-qunit');
           grunt.registerTask('default', ['task-name']);
        };
-       
+
 0. add test script into `package.json`, which allow us to run `$ npm test`
 0. run `$ grunt` to test the configuration
 0. run `$ grunt --stack` to debug grunt task script
@@ -128,7 +128,7 @@ Some advantages of drone.io are:
 * CI for Github, Google Code and Bitbucket
 * CI command is hosted in drone.io, instead of a file in our project folder
 
-The CI command for Algo.js is: 
+The CI command for Algo.js is:
 
     npm -d install
     npm install -g grunt-cli

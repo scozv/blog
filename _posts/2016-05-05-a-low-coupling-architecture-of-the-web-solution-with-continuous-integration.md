@@ -2,7 +2,7 @@
 layout: post
 title: "A Low Coupling Architecture of the Web Solution with Continuous Integration"
 description: ""
-category: "help"
+category: "pattern"
 tags: ["CI", "project"]
 ---
 {% include JB/setup %}
