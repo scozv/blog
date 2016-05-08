@@ -4,6 +4,7 @@ title: "About"
 alias: "?"
 description: "About me"
 group: !navigation
+i18n: about
 ---
 {% include JB/setup %}
 
