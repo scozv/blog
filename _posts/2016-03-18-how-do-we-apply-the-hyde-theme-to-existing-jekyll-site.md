@@ -50,7 +50,7 @@ __[Directory structure](https://jekyllrb.com/docs/structure/)__
 For me, I used [Jekyll-bootstrap 3](https://github.com/dbtek/jekyll-bootstrap-3) before.
 the directory structure has a little bit difference comparing with the original Jekyll.
 
-```bash
+{% highlight sh %}
 .
 ├── assets
 |   ├── css
@@ -74,7 +74,7 @@ the directory structure has a little bit difference comparing with the original 
 |   ├── default.html
 |   ├── page.html
 |   └── post.html
-```
+{% endhighlight %}
 
 Notice that there are two folders named `themes`, I will explain more letter.
 The `Hyde` theme will be installed into these two `themes/` folder.
@@ -136,9 +136,9 @@ to install. The steps below based on my previous site.
 0. change the theme name in `_config.yml`, see my commit
    [4743d50a](https://github.com/scotv/scotv.github.com/commit/4743d50aa0a04456005b1ced9c480880e342dd69),
 0. customize your site, see
-   * git commit -m [change on footer](https://github.com/scotv/scotv.github.com/commit/b3c26850d164f77485e1c3cd041a61680cffc92c),
-   * git commit -m [enhanced related_posts](https://github.com/scotv/scotv.github.com/commit/4291fdc0dc42ad18d5fd72c1fbf2fd92d6a60fd9),
-   * git commit -m [tags and about](https://github.com/scotv/scotv.github.com/commit/89e9d8fdd22780d714f5fe12ae2180be0e5c1074).
+   * git commit -m '[change on footer](https://github.com/scotv/scotv.github.com/commit/b3c26850d164f77485e1c3cd041a61680cffc92c)',
+   * git commit -m '[enhanced related_posts](https://github.com/scotv/scotv.github.com/commit/4291fdc0dc42ad18d5fd72c1fbf2fd92d6a60fd9)',
+   * git commit -m '[tags and about](https://github.com/scotv/scotv.github.com/commit/89e9d8fdd22780d714f5fe12ae2180be0e5c1074)'.
 0. test and release.
 
 # Conclusions

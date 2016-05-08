@@ -133,24 +133,26 @@ lang: zh
 
 ### 编译命令参考
 
-      # 文件名: build.sh
+{% highlight sh %}
+# 文件名: build.sh
 
-      # 编译过程中如果出现异常中断，可能需要清除临时文件
-      # 谨慎使用git clean命令，这会删除untracked文件
-      # git clean -fx
+# 编译过程中如果出现异常中断，可能需要清除临时文件
+# 谨慎使用git clean命令，这会删除untracked文件
+# git clean -fx
 
-      # 编译入口
-      xelatex index.tex
-      # 编译索引
-      makeindex idx_finance.idx
-      # 编译参考文献
-      for x in {c,f} ; do
-      	bibtex $x
-      done
+# 编译入口
+xelatex index.tex
+# 编译索引
+makeindex idx_finance.idx
+# 编译参考文献
+for x in {c,f} ; do
+	bibtex $x
+done
 
-      # 引用参考文献编号
-      xelatex index.tex
-      xelatex index.tex
+# 引用参考文献编号
+xelatex index.tex
+xelatex index.tex
+{% endhighlight %}
 
 ## `LaTeX`在Web页面的使用——基于`KaTeX`库
 
@@ -193,18 +195,20 @@ $$e^x = \lim_{n\rightarrow \infty} \sum_{t=0}^{n} ( \frac{1}{t!}\cdot x^t )= \su
 如果一个字体集，少了粗体定义，则会出现这样的提示。解决方案是，
 手动指定文档中粗体对应的字体：
 
-     % CJK for XeTeX
-     % http://www.ctan.org/pkg/xetexref
-     % https://zh.wikipedia.org/wiki/XeTeX
-    -\usepackage{xltxtra}
-    -\setmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-    +% http://mirror.bjtu.edu.cn/CTAN/macros/xetex/latex/xecjk/xeCJK.pdf
-    +\usepackage{xltxtra, xeCJK}
-    +\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-    +\xeCJKsetup{AutoFakeBold=true, LoadFandol=false}
+{% highlight tex %}
+% CJK for XeTeX
+% http://www.ctan.org/pkg/xetexref
+% https://zh.wikipedia.org/wiki/XeTeX
+-\usepackage{xltxtra}
+-\setmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
++% http://mirror.bjtu.edu.cn/CTAN/macros/xetex/latex/xecjk/xeCJK.pdf
++\usepackage{xltxtra, xeCJK}
++\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
++\xeCJKsetup{AutoFakeBold=true, LoadFandol=false}
 
-     \begin{document}
-     \maketitle
+\begin{document}
+\maketitle
+{% endhighlight %}
 
 ### latex error: file `multind.sty' not found
 
@@ -215,9 +219,11 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 
 所以[该文档](http://bioinforma.weebly.com/random-troubleshooting.html#/)尝试安装`texlive-full`来解决问题:
 
-    sudo apt-get install texlive-full
-    sudo texhash
-    sudo texconfig
+{% highlight base %}
+sudo apt-get install texlive-full
+sudo texhash
+sudo texconfig
+{% endhighlight %}
 
 如果想要尝试手动安装`multind.sty`，可以按照如下步骤：
 
@@ -230,55 +236,59 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 
 `finance`是一个文件名，而非命令。对比如下两个命令：
 
-    scott@c9 [~/repo/notes] (master *)
-    $ makeindex finance
-    This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
-    Scanning input file finance...done (0 entries accepted, 0 rejected).
-    Nothing written in finance.ind.
-    Transcript written in finance.ilg.
+{% highlight sh %}
+scott@c9 [~/repo/notes] (master *)
+$ makeindex finance
+This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
+Scanning input file finance...done (0 entries accepted, 0 rejected).
+Nothing written in finance.ind.
+Transcript written in finance.ilg.
 
-    scott@c9 [~/repo/notes] (master *)
-    $ makeindex finance.idx
-    This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
-    Scanning input file finance.idx....done (22 entries accepted, 0 rejected).
-    Sorting entries....done (106 comparisons).
-    Generating output file finance.ind....done (59 lines written, 0 warnings).
-    Output written in finance.ind.
-    Transcript written in finance.ilg.
-
+scott@c9 [~/repo/notes] (master *)
+$ makeindex finance.idx
+This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
+Scanning input file finance.idx....done (22 entries accepted, 0 rejected).
+Sorting entries....done (106 comparisons).
+Generating output file finance.ind....done (59 lines written, 0 warnings).
+Output written in finance.ind.
+Transcript written in finance.ilg.
+{% endhighlight %}
 
 ### xeCJK error: "key-unknown"
 
 可能会在`Lubuntu 14.04`下遇到这样的问题：
 
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    !
-    ! xeCJK error: "key-unknown"
-    !
-    ! Sorry, but xeCJK/options does not have a key called `LoadFandol'.
-    !
-    ! The key `LoadFandol' is being ignored.
-    !
-    ! See the xeCJK documentation for further information.
-    !
-    ! Type <return> to continue.
-    !...............................................  
+{% highlight sh %}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! xeCJK error: "key-unknown"
+!
+! Sorry, but xeCJK/options does not have a key called `LoadFandol'.
+!
+! The key `LoadFandol' is being ignored.
+!
+! See the xeCJK documentation for further information.
+!
+! Type <return> to continue.
+!...............................................  
 
-    l.37 ...setup{AutoFakeBold=true, LoadFandol=false}
+l.37 ...setup{AutoFakeBold=true, LoadFandol=false}
+{% endhighlight %}
 
 解决方案是，更换字体配置：
 
-     \usepackage{xltxtra, xeCJK}
-    -\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
-    +\setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
-     \xeCJKsetup{AutoFakeBold=true, CJKmath=true}
+{% highlight tex %}
+ \usepackage{xltxtra, xeCJK}
+-\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
++\setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
+ \xeCJKsetup{AutoFakeBold=true, CJKmath=true}
 
-    +% Latin
-    +\usepackage{fontspec, pifont}
-    +\setmainfont{Gentium Book Basic}
-    +
-     \begin{document}
-
++% Latin
++\usepackage{fontspec, pifont}
++\setmainfont{Gentium Book Basic}
++
+ \begin{document}
+{% endhighlight %}
 
 ### CJK字体的选用
 
@@ -289,8 +299,10 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 不过，目前并不能顺利地在LaTeX中使用思源黑体， 参考[知乎问答](http://www.zhihu.com/question/24535443)。
 而且使用思源黑体，可能会遇到如下错误：
 
-    xelatex.exe: The font file could not be found.
-    xelatex.exe: Data: Source Sans Pro/OT
+{% highlight sh %}
+xelatex.exe: The font file could not be found.
+xelatex.exe: Data: Source Sans Pro/OT
+{% endhighlight %}
 
 
 可以参考知乎专题的[解决方案](http://zhuanlan.zhihu.com/LaTeX/19807822)，
@@ -306,9 +318,10 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 
 解决方案如下：
 
-    -\xeCJKsetup{AutoFakeBold=true}
-    +\xeCJKsetup{AutoFakeBold=true, CJKmath=true}
-
+{% highlight tex %}
+-\xeCJKsetup{AutoFakeBold=true}
++\xeCJKsetup{AutoFakeBold=true, CJKmath=true}
+{% endhighlight %}
 
 ### 使用强调`\emph`而非加粗`\textbf`
 
@@ -328,28 +341,34 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 可以参考[此处](http://tex.stackexchange.com/questions/6754/what-is-the-canonical-way-to-redefine-the-emph-command/6757#6757)
 定义强调段落的样式：
 
-    +% bold emphasized text
-    +\makeatletter
-    +\DeclareRobustCommand{\em}{\%
-    +  \@nomath\em \if b\expandafter\@car\f@series\@nil
-    +  \normalfont \else \bfseries \fi}
-    +\makeatother
+{% highlight tex %}
++% bold emphasized text
++\makeatletter
++\DeclareRobustCommand{\em}{\%
++  \@nomath\em \if b\expandafter\@car\f@series\@nil
++  \normalfont \else \bfseries \fi}
++\makeatother
+{% endhighlight %}
+
 
 ### 编译之后的文档输出有乱码
 
 检查`.tex`文档的编码，是否为`UTF-8`：
 
-    file -i *.tex
+{% highlight sh %}
+file -i *.tex
+{% endhighlight %}
 
 ### 文献引用编号显示为`[?]`
 
 仔细阅读编译日志，可以找到解决方案：
 
-     makeindex idx_finance.idx
-     bibtex index.aux
-     xelatex index.tex
-    +xelatex index.tex
-
+{% highlight sh %}
+makeindex idx_finance.idx
+bibtex index.aux
+xelatex index.tex
++xelatex index.tex
+{% endhighlight %}
 
 也就是说，编译过程中，执行两次编译命令。
 
@@ -357,158 +376,166 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 
 如果想要将目录中“索引”的层级提高到“章节”级别，可以定义如下的排版格式：
 
-    +  \makeatletter
-    +  % Put section depth at the same level as \chapter.
-    +  \renewcommand*{\toclevel@section}{0}
-       \printindex{idx_finance}{Index of Finance}
-    +  % Put section depth back to its default value.
-    +  \renewcommand*{\toclevel@section}{1}
-    +  \makeatother
+{% highlight tex %}
++  \makeatletter
++  % Put section depth at the same level as \chapter.
++  \renewcommand*{\toclevel@section}{0}
+   \printindex{idx_finance}{Index of Finance}
++  % Put section depth back to its default value.
++  \renewcommand*{\toclevel@section}{1}
++  \makeatother
+{% endhighlight %}
+
 
 ### 定义“摘要”章节的样式
 
 参考stackoverflow中的讨论：
 
-    % http://stackoverflow.com/q/2737326
-    +\chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
-    +\begin{quotation}
-    +\noindent % abstract text
-    % Abstract
-    +\end{quotation}
-    +\clearpage
+{% highlight tex %}
+% http://stackoverflow.com/q/2737326
++\chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
++\begin{quotation}
++\noindent % abstract text
+% Abstract
++\end{quotation}
++\clearpage
+{% endhighlight %}
+
 
 ## 模板样例
 
-    \documentclass[a4paper]{book}
+{% highlight tex %}
+\documentclass[a4paper]{book}
 
-    % shortcut for scotv's github homepage
-    \usepackage{hyperref}
-    \newcommand{\scotv}{https://github.com/scotv}
+% shortcut for scotv's github homepage
+\usepackage{hyperref}
+\newcommand{\scotv}{https://github.com/scotv}
 
-    % shortcut for \ding{213}
-    \newcommand{\To}{\ding{213}}
+% shortcut for \ding{213}
+\newcommand{\To}{\ding{213}}
 
-    \usepackage{listings, color}
-    % shortcut for inline code snippet, like `code` in markdown
-    % \newcommand{\cd}[1]{\colorbox[rgb]{0.86,0.86,0.86}{\lstinline$#1$}}
-    \newcommand{\cd}[1]{\lstinline$#1$}
+\usepackage{listings, color}
+% shortcut for inline code snippet, like `code` in markdown
+% \newcommand{\cd}[1]{\colorbox[rgb]{0.86,0.86,0.86}{\lstinline$#1$}}
+\newcommand{\cd}[1]{\lstinline$#1$}
 
-    % shortcut for section, subsection, subsubsection
-    % mb stands for member
-    \newcommand{\mb}[1]{\subsection*{#1}}
-    \newcommand{\mmb}[1]{\subsubsection*{#1}}
+% shortcut for section, subsection, subsubsection
+% mb stands for member
+\newcommand{\mb}[1]{\subsection*{#1}}
+\newcommand{\mmb}[1]{\subsubsection*{#1}}
 
-    % set style for multiple lines code snippet
-    \lstset{numbers=left, numberstyle=\tiny
-    	, stepnumber=2, numbersep=5pt
-    	, backgroundcolor=\color[rgb]{0.86,0.86,0.86}
-    	, basicstyle=\footnotesize\ttfamily
-    	, breaklines=true}
+% set style for multiple lines code snippet
+\lstset{numbers=left, numberstyle=\tiny
+	, stepnumber=2, numbersep=5pt
+	, backgroundcolor=\color[rgb]{0.86,0.86,0.86}
+	, basicstyle=\footnotesize\ttfamily
+	, breaklines=true}
 
-    % set index
-    \usepackage{multind}
-    \makeindex{idx_finance}
-    \newcommand{\idxf}[1]{\index{idx_finance}{#1}}
-    % heading
-    \setcounter{secnumdepth}{3}
+% set index
+\usepackage{multind}
+\makeindex{idx_finance}
+\newcommand{\idxf}[1]{\index{idx_finance}{#1}}
+% heading
+\setcounter{secnumdepth}{3}
 
-    % set multi-ref
-    \usepackage{multibib}
-    \newcommand{\bibnamec}{References of Programming}
-    \newcites{c}{\bibnamec}
-    \newcommand{\bibnamef}{References of Finance}
-    \newcites{f}{\bibnamef}
+% set multi-ref
+\usepackage{multibib}
+\newcommand{\bibnamec}{References of Programming}
+\newcites{c}{\bibnamec}
+\newcommand{\bibnamef}{References of Finance}
+\newcites{f}{\bibnamef}
 
-    % CJK for XeTeX
-    % http://www.ctan.org/pkg/xetexref
-    % https://zh.wikipedia.org/wiki/XeTeX
-    % http://ctan.org/pkg/xecjk
-    \usepackage{xltxtra, xeCJK}
-    \setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
-    \xeCJKsetup{AutoFakeBold=true, CJKmath=true}
+% CJK for XeTeX
+% http://www.ctan.org/pkg/xetexref
+% https://zh.wikipedia.org/wiki/XeTeX
+% http://ctan.org/pkg/xecjk
+\usepackage{xltxtra, xeCJK}
+\setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
+\xeCJKsetup{AutoFakeBold=true, CJKmath=true}
 
-    % Latin
-    \usepackage{fontspec, pifont}
-    \setmainfont{Gentium Book Basic} %[ItalicFont=Gentium Book Basic Bold]
+% Latin
+\usepackage{fontspec, pifont}
+\setmainfont{Gentium Book Basic} %[ItalicFont=Gentium Book Basic Bold]
 
-    % intertext, trigleq and proof
-    \usepackage{amsmath, amssymb, amsthm}
+% intertext, trigleq and proof
+\usepackage{amsmath, amssymb, amsthm}
 
-    % bold emphasized text
-    \makeatletter
-    \DeclareRobustCommand{\em}{\%
-      \@nomath\em \if b\expandafter\@car\f@series\@nil
-      \normalfont \else \bfseries \fi}
-    \makeatother
+% bold emphasized text
+\makeatletter
+\DeclareRobustCommand{\em}{\%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
 
-    % tiny margin note
-    \makeatletter
-      \long\def\@ympar#1{\%
-      \@savemarbox\@marbox{\small #1}%
-      \global\setbox\@currbox\copy\@marbox
-      \@xympar}
-    \makeatother
+% tiny margin note
+\makeatletter
+  \long\def\@ympar#1{\%
+  \@savemarbox\@marbox{\small #1}%
+  \global\setbox\@currbox\copy\@marbox
+  \@xympar}
+\makeatother
 
-    % reduce the space of itemize
-    \newlength{\wideitemsep}%
-    \setlength{\wideitemsep}{.5\itemsep}%
-    \addtolength{\wideitemsep}{-7pt}%
-    \let\olditem\item
-    \renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
+% reduce the space of itemize
+\newlength{\wideitemsep}%
+\setlength{\wideitemsep}{.5\itemsep}%
+\addtolength{\wideitemsep}{-7pt}%
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
 
-    \begin{document}
-    \title{Introduction of Building Documents with LaTeX}
-    \author{Scott}
-    \date{Aug, 12, 2015}
-    \maketitle
+\begin{document}
+\title{Introduction of Building Documents with LaTeX}
+\author{Scott}
+\date{Aug, 12, 2015}
+\maketitle
 
-    \chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
-    \begin{quotation}
-    \noindent % abstract text
-    This artical will give brief introduction for TeX and LaTeX,
-    then discuss a few issues during using LaTeX
-    and how to display LaTeX eqation on web page.
-    Finally, a LaTeX template will be attached in Appendix.
-    \end{quotation}
-    \clearpage
+\chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
+\begin{quotation}
+\noindent % abstract text
+This artical will give brief introduction for TeX and LaTeX,
+then discuss a few issues during using LaTeX
+and how to display LaTeX eqation on web page.
+Finally, a LaTeX template will be attached in Appendix.
+\end{quotation}
+\clearpage
 
-    % no indent of second ... paragraphs of each section
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
-    \part{Part I}
-      \chapter{C01-01}
-        \include{p1_c01}
-    \part{Part II}
-      \chapter{C02-01}
-        \include{p2_c01}
-      \chapter{C02-02}
-        \include{p2_c02}
+% no indent of second ... paragraphs of each section
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\part{Part I}
+  \chapter{C01-01}
+    \include{p1_c01}
+\part{Part II}
+  \chapter{C02-01}
+    \include{p2_c01}
+  \chapter{C02-02}
+    \include{p2_c02}
 
-      \cleardoublepage
-      \phantomsection
-      \addcontentsline{toc}{chapter}{\bibnamec}
-      \bibliographystylec{GBT7714-2005NLang}
-      \bibliographyc{code/ref}
+  \cleardoublepage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\bibnamec}
+  \bibliographystylec{GBT7714-2005NLang}
+  \bibliographyc{code/ref}
 
-      \makeatletter
-      % Put section depth at the same level as \chapter.
-      \renewcommand*{\toclevel@section}{0}
-      \printindex{idx_finance}{Index of Finance}
-      % Put section depth back to its default value.
-      \renewcommand*{\toclevel@section}{1}
-      \makeatother  
+  \makeatletter
+  % Put section depth at the same level as \chapter.
+  \renewcommand*{\toclevel@section}{0}
+  \printindex{idx_finance}{Index of Finance}
+  % Put section depth back to its default value.
+  \renewcommand*{\toclevel@section}{1}
+  \makeatother  
 
-      \cleardoublepage
-      \phantomsection
-      \addcontentsline{toc}{chapter}{\bibnamef}
-      \bibliographystylef{GBT7714-2005NLang}
-      \bibliographyf{finance/ref}
+  \cleardoublepage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\bibnamef}
+  \bibliographystylef{GBT7714-2005NLang}
+  \bibliographyf{finance/ref}
 
-    \appendix
-    \part{Appendix}
-    \chapter{Appendix I}
-    \include{appendix}
-    \end{document}
+\appendix
+\part{Appendix}
+\chapter{Appendix I}
+\include{appendix}
+\end{document}
+{% endhighlight %}
 
 
 # 参考文献
