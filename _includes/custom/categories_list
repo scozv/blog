@@ -23,7 +23,9 @@ http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/
 
         {% if forloop.last %}
           <span class="{% if number == 1 %}small{% elsif number <= 5 %}medium{% elsif number <= 10 %}large{% else %}huge{% endif %}">
-            <a href="#tag-{{ slug }}">{{ tag | downcase }}</a>
+            <a href="#tag-{{ slug }}">
+            {{ site.i18n[slug][site.active_lang] | default: tag }}
+            </a>
             <sup class="force-mono-font">{{ number }}</sup>
           </span>
           {% assign number = 0 %}
@@ -43,7 +45,9 @@ http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/
     {% assign slug = tag | downcase | replace: ' ', '_' %}
     <div class="tag">
       <a class="anchor" id="tag-{{ slug }}"></a>
-      <h3 class="force-mono-font">{{ tag | downcase }}</h3>
+      <h3 class="force-mono-font">
+        {{ site.i18n[slug][site.active_lang] | default: tag }}
+      </h3>
       <ul>
         {% for post in categories_list[tag] %}
         {% if post.lang ==  site.active_lang or slug == "slides" %}

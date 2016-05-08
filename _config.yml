@@ -179,6 +179,15 @@ i18n:
   categories:
     zh: "分类"
     en: "Categories"
-  credits:
-    zh: "致谢"
-    en: "Credits"
+  algo:
+    zh: "算法"
+    en: "algo"
+  guide:
+    zh: "指南"
+    en: "guide"
+  pattern:
+    zh: "模式"
+    en: "pattern"
+  slides:
+    zh: "讲稿"
+    en: "slides"
