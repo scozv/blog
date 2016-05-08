@@ -4,6 +4,7 @@ title: "How to Update Heap in Dijkstra Shortest Path Algorithm"
 description: ""
 category : "algo"
 tags: ["algorithm", "graph", "Dijkstra", "heap"]
+lang: en
 ---
 {% include JB/setup %}
 
@@ -25,7 +26,7 @@ tags: ["algorithm", "graph", "Dijkstra", "heap"]
 
 To speed up the finding minimum length of path in each stage in Dijkstra shortest path algorithm, we can use a binary heap to store frontier path, according to many words, like [_Heap Application_] [1], or Tim Roughgarden's [algorithm course] [2].
 
-```JavaScript  
+{% highlight js %}
 function dijstra(graph, s) {
   s = s || 1;
   i = 0;
@@ -48,11 +49,11 @@ function dijstra(graph, s) {
     );
   }
 }
-```
+{% endhighlight %}
 
 It sounds easy, however the 1st revision of `dijkstra()` in Algo.js is failed to update heap correctly, where I just update the value of one vertex without keeping heap order.
 
-```JavaScript  
+{% highlight js %}
 if (g.__labelAt__(v[0]) === -1){
 	// not visited, update each in frontier
 	var updated = frontier.__id__.some(function(x){
@@ -64,7 +65,8 @@ if (g.__labelAt__(v[0]) === -1){
     frontier.push([v[0], v[1]]);
 	}
 } // end if, unvisited
-```
+{% endhighlight %}
+
 How to update and keep heap order?
 
 While, when we update the MinHeap, it means that we may replace the item at that index with a value __LESS__ than the origin one. According to the definition of minimum binary heap, each parent is less than their children. (see picture from [Wikipedia] [1])
@@ -78,7 +80,7 @@ As the algorithm of `push()` of heap, we need to exchange $$x$$ with its parent,
 
 __Using `heap.swim()` to update that heap.__ (see [diff][3] of revision)
 
-```JavaScript        
+{% highlight js %}
 var updated = frontier.__id__.some(function(x, k){
   // return x && x[0] === v[0] && (doUpdate, true)
   return x && (x[0] === v[0]) &&
@@ -90,7 +92,7 @@ var updated = frontier.__id__.some(function(x, k){
       }
     })(), true);
 });
-```
+{% endhighlight %}
 
 <div class="post-content lang zh-cn">
 

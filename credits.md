@@ -2,6 +2,7 @@
 layout: page
 title: "Credits"
 description: ""
+i18n: credits
 ---
 {% include JB/setup %}
 
@@ -19,6 +20,7 @@ Less|More
 [`related_posts`] [8] | A enhanced `related_posts` by [@Ovilia](https://github.com/Ovilia)
 `tags_list` | A enhanced `tags_list` from [kelsin.github.io](https://github.com/kelsin/kelsin.github.io) and [codeofclimber.ru](http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/)
 favicon | A favicon made from Chrome incognito mode `BASE64` image string with [GIMP](https://www.gimp.org/)
+[Polyglot] [10] | _A i18n support plugin for Jekyll that makes multi-language support fast and intuitive, for blogs big and small. Made by [@untra](https://github.com/untra)._
 
 
 
@@ -31,3 +33,4 @@ favicon | A favicon made from Chrome incognito mode `BASE64` image string with [
 [7]: http://xuc.me/blog/KaTeX-and-Jekyll/ "KaTeX for Jekyll"
 [8]: http://zhangwenli.com/blog/2014/07/15/jekyll-related-posts-without-plugin/ "related_posts"
 [9]: http://hyde.getpoole.com/ "Hyde for Jekyll"
+[10]: http://untra.github.io/polyglot "Ployglot for Jekyll"

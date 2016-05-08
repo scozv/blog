@@ -266,3 +266,8 @@ div.post > h1.post-title {
 .force-mono-font {
   font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
 }
+
+div.force-zero-padding figure {
+  padding-left: 0px;
+  margin-left: 0px;
+}

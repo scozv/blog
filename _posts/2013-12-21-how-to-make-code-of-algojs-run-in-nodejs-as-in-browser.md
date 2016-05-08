@@ -4,6 +4,7 @@ title: "How to Make Code of Algo.js Run in Node.js as in Browser"
 description: ""
 category: "guide"
 tags: ["CI", "unit", "grunt"]
+lang: en
 ---
 {% include JB/setup %}
 

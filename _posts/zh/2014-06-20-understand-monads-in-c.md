@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Understand Monads in C#"
+title: "对Eric Lippert所著的Monads系列文章的综述"
 description: "An Short Literature Review on Monads in C#"
 category: "pattern"
 tags: ["LINQ", "monad", "Scala"]
-lang: en
+lang: zh
 ---
 
 {% include JB/setup %}

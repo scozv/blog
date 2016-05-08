@@ -8,7 +8,8 @@ sudo gem install bundler
 bundle install
 
 # upgrade to Jekyll 3
-sudo gem install jekyll
-sudo gem install github-pages
-sudo gem install jekyll-paginate
+gem install jekyll
+gem install github-pages
+gem install jekyll-paginate
 gem install jekyll-gist
+gem install jekyll-polyglot
