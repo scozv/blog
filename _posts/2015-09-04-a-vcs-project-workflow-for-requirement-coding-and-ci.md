@@ -100,17 +100,16 @@ Git的仓库（repo）有三类：
 
 一般而言，Git环境的基本流程是：
 
-0. 克隆或更新本地库，将服务器上的变更，更新到本地
-
-        git pull
-0. 修改、编辑源代码，标记变更的文件，并为本次变更添加一个描述
-
-        git add file_changed.txt
-        git commit -m '本次变更的描述信息'
-0. 可以重复上一个步骤，多次变更文件
-0. 一并提交本地的所有的更新到服务器上
-
-        git push
+{% highlight sh %}
+# 0. 克隆或更新本地库，将服务器上的变更，更新到本地
+git pull
+# 0. 修改、编辑源代码，标记变更的文件，并为本次变更添加一个描述
+git add file_changed.txt
+git commit -m '本次变更的描述信息'
+# 0. 可以重复上一个步骤，多次变更文件
+# 0. 一并提交本地的所有的更新到服务器上
+git push
+{% endhighlight %}
 
 ## 编辑文本文档
 
@@ -242,17 +241,18 @@ bitbucket中可以直接编辑和预览文件。
 * 目录
 
   在文档的开始，使用`[TOC]`来自动生成文章的目录，比如
+{% highlight md %}
+# 第一章
+第一章内容
+## 1.1小节
+## 1.2小节
+# 第二章
+{% endhighlight %}
 
-        [TOC]
-
-        # 第一章
-        第一章内容
-        ## 1.1小节
-        ## 1.2小节
-        # 第二章
 * 换行
 
-  `Markdown`中的换行需要敲两下回车，一个回车不会换行。
+  `Markdown`中的换行需要敲两下回车，
+  一个回车不会换行。
   这样的好处是，我们在编写文档的过程中，
   每行不会太长，便于我们阅读。
   不管是文档还是代码，如果每行的内容
@@ -263,71 +263,76 @@ bitbucket中可以直接编辑和预览文件。
   如果，真的这样的话，想必是很
   不方便的。
 
-  比如，“换行”这一小节的`Markdown`源代码是：
+  比如，“换行”这一小节的`Markdown`源代码如下，同时，我们不需要让每行段落，
+  过长，比如两种源代码，最终的显示效果一样：
+{% highlight md %}
+`Markdown`中的换行需要敲两下回车，
+一个回车不会换行。
+这样的好处是，我们在编写文档的过程中，
+每行不会太长，便于我们阅读。
+不管是文档还是代码，如果每行的内容
+太多的话，我们就要拖动
+页面下方的水平滚动条，
+来查看和阅读
+这一行后面的内容。
+如果，真的这样的话，想必是很
+不方便的。
 
-        `Markdown`中的换行需要敲两下回车，一个回车不会换行。
-        这样的好处是，我们在编写文档的过程中，
-        每行不会太长，便于我们阅读。
-        不管是文档还是代码，如果每行的内容
-        太多的话，我们就要拖动
-        页面下方的水平滚动条，
-        来查看和阅读
-        这一行后面的内容。
-        如果，真的这样的话，想必是很
-        不方便的。
-
-        比如，“换行”这一小节的`Markdown`源代码是：
+比如，“换行”这一小节的`Markdown`源代码如下，
+同时，我们不需要让每行段落，
+过长，比如两种源代码，最终的显示效果一样：
 
 
-  我们不需要让每行段落，过长，比如下面的例子和上面的例子，最终的显示效果一样：
+`Markdown`中的换行需要敲两下回车，一个回车不会换行。  这样的好处是，我们在编写文档的过程中，  每行不会太长，便于我们阅读。  不管是文档还是代码，如果每行的内容 太多的话，我们就要拖动  页面下方的水平滚动条，  来查看和阅读  这一行后面的内容。  如果，真的这样的话，想必是很  不方便的。
 
-        `Markdown`中的换行需要敲两下回车，一个回车不会换行。  这样的好处是，我们在编写文档的过程中，  每行不会太长，便于我们阅读。  不管是文档还是代码，如果每行的内容 太多的话，我们就要拖动  页面下方的水平滚动条，  来查看和阅读  这一行后面的内容。  如果，真的这样的话，想必是很  不方便的。
+比如，“换行”这一小节的`Markdown`源代码如下，同时，我们不需要让每行段落，过长，比如两种源代码，最终的显示效果一样：
+{% endhighlight %}
 
-        比如，“换行”这一小节的`Markdown`源代码是：
+* 章节级别
 
-* 章节1
+{% highlight md %}
+<!-- 使用一个井号，来表示章节1，比如 -->
+# Heading 1
+<!-- 使用两个井号，来表示第二级章节，比如 -->
+## Heading 1.1
+<!-- 可以向下一直写到第五级，即 -->
+##### Heading 1.1.1.1.1
+{% endhighlight %}
 
-  使用一个井号，来表示章节1，比如
-
-        # Heading 1
-* 章节1.1
-
-  使用两个井号，来表示第二级章节，比如
-
-        ## Heading 1.1
-* 可以向下一直写到第五级，即
-
-        ##### Heading 1.1.1.1.1
 * 粗体和斜体
+{% highlight md %}
+<!-- 用两个星号包围需要加粗的字体： -->
+**粗体**
+<!-- 用一个星号包围需要倾斜的字体： -->
+*斜体*
+{% endhighlight %}
 
-  用两个星号包围需要加粗的字体：
-
-        ** 粗体 **
-
-  用一个星号包围需要倾斜的字体：
-
-        * 斜体 *
 * 超链接
 
-  通常的超链接语法如下：
+  通常超链接的语法如下：
+{% highlight md %}
+[Markdown 语法](https://daringfireball.net/projects/markdown/syntax)
+{% endhighlight %}
 
-        [超链接名称](www.bitbucket.org)
 * 列表
 
   使用一个井号，标记列表中的元素，比如
-
-        * Item one
-        * Item two
-        * Item three
+{% highlight md %}
+* Item one
+* Item two
+* Item three
+{% endhighlight %}
 
 * 表格
 
-        第一列的表头        | 第二列的表头
-        ------------------- | -------------
-        第一行第一列的内容  | 第一行第二列的内容
-        第二行第一列的内容  | 第二行第二列的内容
+  注意，下列语法中的短横线只需要使用一个就够了，列之间用竖线分割。
+{% highlight md %}
+第一列的表头       | 第二列的表头
+-----------------| -------------
+第一行第一列的内容  | 第一行第二列的内容
+第二行第一列的内容  | 第二行第二列的内容
+{% endhighlight %}
 
-  注意，短横线只需要使用一个就够了，列之间用竖线分割。
 
 ## LaTeX基本语法介绍
 
@@ -337,51 +342,49 @@ bitbucket中可以直接编辑和预览文件。
 下列的代码段中，以`$`打头的命令需要在`bash`中执行。其余的为命令执行的结果。
 
 ### 如何修改最近一次commit的备注[^gb_undo]
-
-      $ git commit --amend
-
+{% highlight sh %}
+$ git commit --amend
+{% endhighlight %}
 ### 想暂时回到某一个历史版本[^st_checkout]
 
 有的时候，突然发现了一个问题，但是明明记得之前某个时间段是正常的。
 此时，需要回到之前的某一个版本（commit），尝试找到是哪一次提交引发了该问题。
 
-0. 列出最近的一系列提交
+{% highlight sh %}
+# 0. 列出最近的一系列提交
+$ git log --pretty=oneline -n 20 --graph --abbrev-commit
+* 9ecb341 fix markdown href syntax
+* 3f0828b fix markdown coding syntax
+* 72fc362 fix markdown syntax
+* 4175860 draft for vcs wrkflow
+* 94259e0 fix typo of lataxing
+* 8ecbced no center for equation
+* 794bcee blockquote equation
+* b0ca566 fix div in markdown
 
-        $ git log --pretty=oneline -n 20 --graph --abbrev-commit
-        * 9ecb341 fix markdown href syntax
-        * 3f0828b fix markdown coding syntax
-        * 72fc362 fix markdown syntax
-        * 4175860 draft for vcs wrkflow
-        * 94259e0 fix typo of lataxing
-        * 8ecbced no center for equation
-        * 794bcee blockquote equation
-        * b0ca566 fix div in markdown
+# 0. 临时返回到之前的某一次提交
+$ git checkout 94259e0
 
-0. 临时返回到之前的某一次提交
+# 0. 使用二分查找，反复执行`git checkout`，直到定位到某两个**相邻**的版本，也即，
+# 前一个版本还是正常的，后一个版本就出现了问题
 
-        $ git checkout 94259e0
+# 0. 比较这两个**相邻**版本的差异，分析问题
+$ git diff 4175860 94259e0
 
-0. 使用二分查找，反复执行`git checkout`，直到定位到某两个**相邻**的版本，也即，
-    前一个版本还是正常的，后一个版本就出现了问题
-
-0. 比较这两个**相邻**版本的差异，分析问题
-
-        $ git diff 4175860 94259e0
-
-0. 回撤这些临时版本
-
-        $ git checkout master
+# 0. 回撤这些临时版本
+$ git checkout master
+{% endhighlight %}
 
 ### 如何在当前的版本上做一些实验性的修改，但不确定是否提交
 
-充分利用Git的Branch特性，在当前的版本上创建一个分支，然后做实验性的修改。
+{% highlight sh %}
+# 充分利用Git的Branch特性，在当前的版本上创建一个分支，然后做实验性的修改。
+$ git branch experiment
 
-        $ git branch experiment
-
-确认了这些修改之后，可以将实验分支上的更改合并到当前位置
-
-        $ git checkout master
-        $ git merge master experiment
+# 确认了这些修改之后，可以将实验分支上的更改合并到当前位置
+$ git checkout master
+$ git merge master experiment
+{% endhighlight %}
 
 另外，关于分支合并，`rebase`和`merge`的区别可以参考[这篇文章](https://www.atlassian.com/git/tutorials/merging-vs-rebasing)（这个区别一般
 只有开发才会用到）。简单理解：
@@ -393,7 +396,7 @@ bitbucket中可以直接编辑和预览文件。
 
 ## c9.io的基本环境配置
 
-```
+{% highlight sh %}
 # create workspace
 # private
 # choose a EMPTY template
@@ -408,7 +411,7 @@ ssh-add ~/.ssh/id_rsa
 # record SSH key into Github and Bitbucket
 # clone Git repo into c9.io
 # git clone git@bitbucket.org:username/repo.git
-```
+{% endhighlight %}
 
 
 ## Bitbucket和Github在Acadamic License上的比较

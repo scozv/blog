@@ -277,15 +277,15 @@ Wes Dyer表明，如果放大用Unit来构造，复合用Bind来表示的话，�
 
 1.  Left Identity
 
-     Bind(Unit(e), k) = k(e)
+        Bind(Unit(e), k) = k(e)
 
 2.  Right Identity
 
-     Bind(m, Unit) = m
+        Bind(m, Unit) = m
 
 3.  结合律
 
-     Bind(m, x => Bind(k(x), y => h(y)) = Bind(Bind(m, x => k(x)), y => h(y))
+        Bind(m, x => Bind(k(x), y => h(y)) = Bind(Bind(m, x => k(x)), y => h(y))
 
 
 # 开头的思考题
