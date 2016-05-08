@@ -13,15 +13,15 @@ layout: page
     {{ post.content | split:'<!--more-->' | first }}
 
     {% comment %}
-    {% assign post_less =  post.content | split:'<!--more-->' | first %}
-    {{ post_less | replace_first:'Abstract', '' }}
+    {% assign post_less =  post.content | split:'<!--more-->' | first | replace_first:'Abstract', '' | replace_first:'摘要', '' %}
+    {{ post_less }}
     {% endcomment %}
 
   {% else %}
     {{ post.content }}
   {% endif %}
 
-  <a href="{{ BASE_PATH }}{{ post.url }}#pi"><span class="read-more">Read more ...</span></a>
+  <a href="{{ BASE_PATH }}/{{ site.active_lang }}{{ post.url }}"><span class="read-more">{{ site.i18n["more"][site.active_lang] }}</span></a>
   </div>
 
   <br />
