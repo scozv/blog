@@ -153,3 +153,32 @@ languages: ["zh", "en"]
 default_lang: "en"
 exclude_from_localization: ["assets", "img", "css"]
 parallel_localization: true
+
+i18n:
+  zh:
+    zh: "中文"
+    en: "中文"
+  en:
+    zh: "English"
+    en: "English"
+  home:
+    zh: "首页"
+    en: "Home"
+  archive:
+    zh: "归档"
+    en: "Archive"
+  pages:
+    zh: "页面"
+    en: "Pages"
+  tags:
+    zh: "标签"
+    en: "Tags"
+  about:
+    zh: "关于"
+    en: "About"
+  categories:
+    zh: "分类"
+    en: "Categories"
+  credits:
+    zh: "致谢"
+    en: "Credits"

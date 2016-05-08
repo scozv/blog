@@ -2,6 +2,7 @@
 layout: page
 title: "Credits"
 description: ""
+i18n: credits
 ---
 {% include JB/setup %}
 
