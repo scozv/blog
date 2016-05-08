@@ -21,7 +21,7 @@ layout: page
     {{ post.content }}
   {% endif %}
 
-  <a href="{{ BASE_PATH }}/{{ site.active_lang }}{{ post.url }}"><span class="read-more">{{ site.i18n["more"][site.active_lang] }}</span></a>
+  <a href="{{ BASE_PATH }}{{ LANG_PATH }}{{ post.url }}"><span class="read-more">{{ site.i18n["more"][site.active_lang] }}</span></a>
   </div>
 
   <br />

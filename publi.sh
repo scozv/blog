@@ -10,4 +10,5 @@ git push -f origin _site
 git branch -D gh-pages
 git push origin :gh-pages
 git subtree push --prefix  _site/ origin gh-pages
-git checkout master
+git push origin :_site
+git checkout -f master

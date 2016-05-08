@@ -11,3 +11,10 @@
 {% else %}
   {% capture ASSET_PATH %}{{ BASE_PATH }}/assets/themes/{{ layout.theme.name }}{% endcapture %}
 {% endif %}
+
+
+{% if site.active_lang == site.default_lang %}
+  {% assign LANG_PATH = "" %}
+{% else %}
+  {% capture LANG_PATH %}/{{ site.active_lang }}{% endcapture %}
+{% endif %}
