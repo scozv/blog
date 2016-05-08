@@ -4,6 +4,7 @@ title: "How to Write Iterative Tarjan SCC Algorithm, Part II"
 description: ""
 category: "algo"
 tags: ["algorithm", "graph", "SCC"]
+lang: en
 ---
 {% include JB/setup %}
 
@@ -26,31 +27,33 @@ tags: ["algorithm", "graph", "SCC"]
 ## Recursive Topological Sort
 In the beginning, we introduce the code of recursive topological sort:
 
-        function topologicalSortRec(graph) {
-          var n = graph.numberOfVertex,
-          order = [],
+{% highlight js %}
+function topologicalSortRec(graph) {
+  var n = graph.numberOfVertex,
+  order = [],
 
-          DFS= function(g, i) {
-            // recursive search graph g,
-            // from the initial node i
-            (for x in g.getAdjacentVertex(i)) {
-              if (not g.isVisited(x)) {
-                DFS(g, x);
-              }
-            };
+  DFS= function(g, i) {
+    // recursive search graph g,
+    // from the initial node i
+    (for x in g.getAdjacentVertex(i)) {
+      if (not g.isVisited(x)) {
+        DFS(g, x);
+      }
+    };
 
-            order[i] = n--;
-            graph.markVisited(i);
-          };
+    order[i] = n--;
+    graph.markVisited(i);
+  };
 
-          (for 1 <= i <= n) {
-            if (not graph.isVisited(i)) {
-              DFS(graph, i);
-            }
-          }
+  (for 1 <= i <= n) {
+    if (not graph.isVisited(i)) {
+      DFS(graph, i);
+    }
+  }
 
-          return order;
-        }
+  return order;
+}
+{% endhighlight %}
 
 As we notice, we get the topological order from recursive DFS. The proof of correctness will be found at Wikipedia or online course [_Algorithms: Design and Analysis, Part 1_] [1]
 
@@ -101,32 +104,34 @@ If we look into the `frontier` and the time when descendant vertex array is empt
 
 So we introduce a stack named `head` to track the time when we finish visiting all descendant vertex of the head vertex (current `v`).
 
-        function iterTopologicalSort(graph) {
-          var frontier = new Stack(),
-              head = new Stack(),
-              n = graph.numberOfVertex,
-              order = [];
+{% highlight js %}
+function iterTopologicalSort(graph) {
+  var frontier = new Stack(),
+      head = new Stack(),
+      n = graph.numberOfVertex,
+      order = [];
 
-          frontier.push(1);
-            while (not frontier.isEmpty()) {
-              current = frontier.peek();
-              if (current === head.peek() /*head may be empty here*/) {
-                  // we hit the time to set order
-                  frontier.pop();
-                  head.pop();
-                  order[current] = n--;
-                  graph.markVisited(current);
-              } else {
-                  // current is just a child of some v
-                  head.push(current);
-                  (for x in graph.getAdjacentVertex(current)) {
-                    if (not graph.isVisited(x)) {
-                      frontier.push(x);
-                    }
-                  };  // end for
-              } // end else
-            } // end while
-        }
+  frontier.push(1);
+    while (not frontier.isEmpty()) {
+      current = frontier.peek();
+      if (current === head.peek() /*head may be empty here*/) {
+          // we hit the time to set order
+          frontier.pop();
+          head.pop();
+          order[current] = n--;
+          graph.markVisited(current);
+      } else {
+          // current is just a child of some v
+          head.push(current);
+          (for x in graph.getAdjacentVertex(current)) {
+            if (not graph.isVisited(x)) {
+              frontier.push(x);
+            }
+          };  // end for
+      } // end else
+    } // end while
+}
+{% endhighlight %}
 
 Running the iterative code, we update the stack table:
 

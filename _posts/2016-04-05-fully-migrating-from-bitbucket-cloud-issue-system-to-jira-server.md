@@ -4,6 +4,7 @@ title: "Fully Migrating from Bitbucket Cloud Issue System to JIRA Server"
 description: ""
 category: "guide"
 tags: ["markdown","CI","git", "JIRA", "project"]
+lang: en
 ---
 {% include JB/setup %}
 
@@ -78,27 +79,31 @@ We create a project with code name `LS` in Bitbucket Cloud.
 
 We create four repositories under `LS` in Bitbucket Cloud:
 
-        ls-core-restful.git
-        ls-core-model.git
-        ls-web-user.git
-        ls-web-admin.git
+{% highlight sh %}
+ls-core-restful.git
+ls-core-model.git
+ls-web-user.git
+ls-web-admin.git
+{% endhighlight %}
 
 If we raise an issue saying:
-
-        Login page should be designed and implemented
+{% highlight sh %}
+Login page should be designed and implemented
+{% endhighlight %}
 
 Where we open the issue in the Bitbucket Cloud build-in Issue System?
 In Bitbucket Cloud, the build-in issue system is not share in project,
 we have to raise an individual issue in each repo:
-
-        # ls-core-model.git/issue/1
-        Implement the User model
-        # ls-core-restful.git/issue/1
-        Implement the login with token authentication service
-        # ls-web-user/issue/1
-        Implement the user login page
-        # ls-web-admin/issue/1
-        Implement the admin authorization page
+{% highlight sh %}
+# ls-core-model.git/issue/1
+Implement the User model
+# ls-core-restful.git/issue/1
+Implement the login with token authentication service
+# ls-web-user/issue/1
+Implement the user login page
+# ls-web-admin/issue/1
+Implement the admin authorization page
+{% endhighlight %}
 
 The limitation of Bitbucket Cloud build-in Issue System is:
 
@@ -117,16 +122,18 @@ We need a Central Issue System that can be synced with multiple source code
 repositories. I choose JIRA 6.4.13 + JIRA Agile deploying on the environment
 below:
 
-        Ubuntu 14.04.4 LTS
-        mysql  Ver 14.14 Distrib 5.5.47,
-          for debian-linux-gnu (x86_64) using readline 6.3
-        openjdk version "1.8.0_72-internal"
-          OpenJDK Runtime Environment (build 1.8.0_72-internal-b15)
-          OpenJDK 64-Bit Server VM (build 25.72-b15, mixed mode)
-        Atlassian JIRA Project Management Software
-          (v6.4.13#64028-sha1:b7939e9)
-        JIRA Agile 6.7.12
-        JIRA Commit Acceptance Plugin 1.6.0
+{% highlight sh %}
+Ubuntu 14.04.4 LTS
+mysql  Ver 14.14 Distrib 5.5.47,
+  for debian-linux-gnu (x86_64) using readline 6.3
+openjdk version "1.8.0_72-internal"
+OpenJDK Runtime Environment (build 1.8.0_72-internal-b15)
+OpenJDK 64-Bit Server VM (build 25.72-b15, mixed mode)
+Atlassian JIRA Project Management Software
+  (v6.4.13#64028-sha1:b7939e9)
+JIRA Agile 6.7.12
+JIRA Commit Acceptance Plugin 1.6.0
+{% endhighlight %}
 
 Currently, my deployment of JIRA 6 + Agile works smoothly with Bitbucket Cloud.
 We can:
@@ -163,14 +170,16 @@ Supposing that we have:
 
 We now create a project with the JIRA code `LS`, the ticket number of
 each issue will be prepended with `LS`, such as:
-
-        LS-101 Hello JIRA
-
+{% highlight sh %}
+LS-101 Hello JIRA
+{% endhighlight %}
 ## Import Legacy Issue from Bitbucket Cloud
 
 JIRA administrator can import the legacy issue from Bitbucket Cloud into JIRA:
 
-        http://jira.domain.com/secure/admin/views/ExternalImport1.jspa
+{% highlight html %}
+http://jira.domain.com/secure/admin/views/ExternalImport1.jspa
+{% endhighlight %}
 
 ## Setup the DVCS Accounts in JIRA with Bitbucket Cloud
 
@@ -191,20 +200,24 @@ We want to display the hyperlink in Bitbucket Cloud commit history page.
 Adding a JIRA link in repository setting will satisfy our request.
 
 * Go to repository setting, find the Integrations - Links:
+{% highlight html %}
+https://bitbucket.org/scotv/ls-core-restful/admin/links
+{% endhighlight %}
 
-        https://bitbucket.org/scotv/ls-core-restful/admin/links
 * Click the JIRA icon,
 * Fill the JIRA website and the JIRA project code, such as `LS`
 * Save
 
 For the new source commit, such as:
-
-        git commit -avm 'LS-101 Hello JIRA'
-        git push
+{% highlight sh %}
+git commit -avm 'LS-101 Hello JIRA'
+git push
+{% endhighlight %}
 
 we have the hyperlink in commit history page of Bitbucket Cloud, leading to:
-
-        http://jira.domain.me/browse/LS-101
+{% highlight html %}
+http://jira.domain.me/browse/LS-101
+{% endhighlight %}
 
 ## Change the Legacy Issue Number of Git History, ie. Fully Migrating
 
@@ -218,14 +231,17 @@ In individual Bitbucket Cloud build-in Issue System, the
 issue number is started from `1`. For Bitbucket Cloud, we commit code
 using message such as below:
 
-        git commit -avm 'fix issue #101 Hello Bitbucket'
+{% highlight sh %}
+git commit -avm 'fix issue #101 Hello Bitbucket'
+{% endhighlight %}
 
 After importing the Bitbucket Issue into JIRA System, issue `101` becomes to
 issue `LS-101`
 
 We want to change the Legacy git history to:
-
-        fix issue LS-101 Hello Bitbucket
+{% highlight html %}
+fix issue LS-101 Hello Bitbucket
+{% endhighlight %}
 
 We need the Message Filter of git command [^GIT]:
 
@@ -234,15 +250,17 @@ We need the Message Filter of git command [^GIT]:
 > This is the filter for rewriting the commit messages. The argument is evaluated in the shell with the original commit message on standard input; its standard output is used as the new commit message.
 
 Here is the script:
+{% highlight sh %}
+# The `sha1` of all commits will be rewritten (changed) in the step below;
+# Make backup and decision.
+git clone --no-hardlinks git@bitbucket.org:scotv/ls-core-restful.git
+git filter-branch -f --msg-filter \
+    'sed "s/#\([0-9][0-9]*\)/LS-\1/g"'
+git reset --hard
+git gc --aggressive
+git prune
+{% endhighlight %}
 
-        # The `sha1` of all commits will be rewritten (changed) in the step below;
-        # Make backup and decision.
-        git clone --no-hardlinks git@bitbucket.org:scotv/ls-core-restful.git
-        git filter-branch -f --msg-filter \
-            'sed "s/#\([0-9][0-9]*\)/LS-\1/g"'
-        git reset --hard
-        git gc --aggressive
-        git prune
 
 # NOT a Fully Migrating
 
@@ -261,7 +279,7 @@ For the 2nd issue, Atlassian Support replied me as:
 
 ## JIRA Installation Script
 
-```bash
+{% highlight sh %}
 # JAVA
 sudo add-apt-repository ppa:openjdk-r/ppa
 sudo apt-get update
@@ -343,7 +361,7 @@ sudo bash /etc/init.d/mysql stop
 JIRA_HOME="/opt/atlassian/jira"
 sudo bash /etc/init.d/mysql start
 sudo bash $JIRA_HOME/bin/start-jira.sh
-```
+{% endhighlight %}
 
 # References
 
