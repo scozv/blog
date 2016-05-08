@@ -139,7 +139,7 @@ JB :
   categories_list:
     provider : custom
   pages_list:
-    provider : custom\
+    provider : custom
 
   # Settings for all other include helpers can be defined by creating
   # a hash with key named for the given helper. ex:
@@ -197,3 +197,6 @@ i18n:
   slides:
     zh: "讲稿"
     en: "slides"
+  more:
+    zh: "阅读详细内容……"
+    en: "Read more ..."
