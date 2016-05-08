@@ -130,7 +130,8 @@ JB :
   #
   sharing :
     provider : false
-
+  setup:
+    provider : custom
   posts_collate:
     provider : custom
   tags_list:
@@ -138,7 +139,7 @@ JB :
   categories_list:
     provider : custom
   pages_list:
-    provider : custom
+    provider : custom\
 
   # Settings for all other include helpers can be defined by creating
   # a hash with key named for the given helper. ex:
