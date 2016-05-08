@@ -4,6 +4,7 @@ title: "How to Write Iterative Tarjan SCC Algorithm, Part I"
 description: ""
 category : "algo"
 tags: ["algorithm", "graph", "DFS"]
+lang: en
 ---
 {% include JB/setup %}
 
@@ -25,18 +26,20 @@ tags: ["algorithm", "graph", "DFS"]
 
 It is easy to write down a recursive BFS or DFS algorithm on graph. Take DFS for example:
 
-        function DFS(graph, node) {
-          // do something on this node and mark it as visited
+{% highlight js %}
+function DFS(graph, node) {
+  // do something on this node and mark it as visited
 
-          (for x in graph.getAdjacentVertex(node)) {
-            // then we DFS on each adjacent vertex of this node
-            if (!graph.isVisited(x)) {
-                DFS(graph, x)
-            }
-          }
+  (for x in graph.getAdjacentVertex(node)) {
+    // then we DFS on each adjacent vertex of this node
+    if (!graph.isVisited(x)) {
+        DFS(graph, x)
+    }
+  }
 
-          graph.markVisited(node);
-        }
+  graph.markVisited(node);
+}
+{% endhighlight %}
 
 The call of recursive function is managed by a stack, we may see 'Call Stack', or 'Error Stack' in some IDE tools. Recursive function is brief, and it is easy to understand sometimes. But if there is limitation on stack size, We may try to write it as iterative way.
 
@@ -85,20 +88,22 @@ There are two things we need to pay attentions:
 ## Running Time
 Here is simplified code of iterative DFS:
 
-        function f() {
-          // 0. initialize stack, O(1)
+{% highlight js %}
+function f() {
+  // 0. initialize stack, O(1)
 
-          // 1. for all vertex, O(|V|)
-          while (not frontier.isEmpty()) {
-            // 1.0 visit current vertex, O(1)
+  // 1. for all vertex, O(|V|)
+  while (not frontier.isEmpty()) {
+    // 1.0 visit current vertex, O(1)
 
-            // 1.1 process all vertex out from the current
-            (for x in graph.getAdjacentVertex(current)) {
-              frontier.push(x);
-              // process each adjacent vertex of the current one
-            }
-          }
-        }
+    // 1.1 process all vertex out from the current
+    (for x in graph.getAdjacentVertex(current)) {
+      frontier.push(x);
+      // process each adjacent vertex of the current one
+    }
+  }
+}
+{% endhighlight %}
 
 In our code (comment 1.1) below, for each vertex, we process its adjacent vertex,
 which we find from outgoing edges of current vertex.
