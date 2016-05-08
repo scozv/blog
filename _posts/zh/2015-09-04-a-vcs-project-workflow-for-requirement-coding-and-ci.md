@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Version Controlled Project Workflow for Requirement, Coding and Continuous Integration"
+title: "用于需求分析、开发以至持续集成的源代码管理工作模式"
 description: ""
 category: "pattern"
 tags: ["latex","markdown","CI","git", "JIRA","project"]

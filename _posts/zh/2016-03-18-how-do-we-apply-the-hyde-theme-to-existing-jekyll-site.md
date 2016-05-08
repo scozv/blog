@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How Do We Apply the Hyde Theme to Existing Jekyll Site?"
+title: "将Hyde风格移至到现有的Jekyll站点"
 description: ""
 category: "guide"
 tags: ["Jekyll", "markdown"]

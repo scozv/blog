@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Write Iterative Tarjan SCC Algorithm, Part I"
+title: "迭代版本的Tarjan强连通算法（一）"
 description: ""
 category : "algo"
 tags: ["algorithm", "graph", "DFS"]
