@@ -1,5 +1,5 @@
 # Jekyll 3
-gems: [jekyll-paginate, jekyll-gist]
+gems: [jekyll-polyglot, jekyll-paginate, jekyll-gist]
 
 # This is the default format.
 # For more see: http://jekyllrb.com/docs/permalinks/
