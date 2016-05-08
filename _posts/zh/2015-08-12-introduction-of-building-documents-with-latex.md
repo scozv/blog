@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Introduction of Building Documents with LaTeX"
+title: "介绍专业的文档系统LaTeX"
 description: ""
 category: "guide"
 tags: ["latex","tex","project"]

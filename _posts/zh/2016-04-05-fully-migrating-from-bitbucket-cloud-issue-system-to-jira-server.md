@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Fully Migrating from Bitbucket Cloud Issue System to JIRA Server"
+title: "Bitbucket Cloud的Issue至JIRA Server的完全迁移指南"
 description: ""
 category: "guide"
 tags: ["markdown","CI","git", "JIRA", "project"]

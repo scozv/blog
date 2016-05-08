@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Update Heap in Dijkstra Shortest Path Algorithm"
+title: "使用Heap数据结构将Dijkstra最短路算法的时间复杂度降到O(n ln m)"
 description: ""
 category : "algo"
 tags: ["algorithm", "graph", "Dijkstra", "heap"]

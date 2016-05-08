@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Make Code of Algo.js Run in Node.js as in Browser"
+title: "将网页版的QUnit.js测试移植到Node.js"
 description: ""
 category: "guide"
 tags: ["CI", "unit", "grunt"]
