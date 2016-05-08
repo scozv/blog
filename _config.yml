@@ -137,6 +137,8 @@ JB :
     provider : custom
   categories_list:
     provider : custom
+  pages_list:
+    provider : custom
 
   # Settings for all other include helpers can be defined by creating
   # a hash with key named for the given helper. ex:
@@ -179,6 +181,9 @@ i18n:
   categories:
     zh: "分类"
     en: "Categories"
+  credits:
+    zh: "致谢"
+    en: "Credits"
   algo:
     zh: "算法"
     en: "algo"
