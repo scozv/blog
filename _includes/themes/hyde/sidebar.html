@@ -23,7 +23,7 @@
         {% if node.title != null %}
           {% if "navigation" == node.group %}
               <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"
-                href="{{ BASE_PATH }}/{{ site.active_lang}}{{ node.url }}">
+                href="{{ BASE_PATH }}{{ LANG_PATH }}{{ node.url }}">
                 {% if node.i18n != null %}
                   {{ site.i18n[node.i18n][site.active_lang] | default: node.title }}
                 {% else %}
@@ -39,13 +39,13 @@
       <span class="sidebar-nav-item">
         <span class="force-mono-font">&copy;</span> {{ site.time | date: '%Y' }} &middot;
         <a href="https://github.com/scotv">{{ site.author.name }}</a> &middot;
-        <a href="{{ BASE_PATH }}/{{ site.active_lang}}/about">
+        <a href="{{ BASE_PATH }}{{ LANG_PATH }}/about">
           {{ site.i18n["about"][site.active_lang] | default: "About" }}
         </a>
       </span>
       <span class="sidebar-nav-item">
         <span class="force-mono-font">&#9825;</span> Themed by <a href="http://hyde.getpoole.com/">Hyde</a> &middot;
-        <a href="{{ BASE_PATH }}/{{ site.active_lang}}/credits">
+        <a href="{{ BASE_PATH }}{{ LANG_PATH }}/credits">
           {{ site.i18n["credits"][site.active_lang] | default: "Credits" }}
         </a>
       </span>

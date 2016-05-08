@@ -35,7 +35,7 @@ http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/
         {% for post in tags_list[tag] %}{% if post.lang ==  site.active_lang %}
         <li>
         &middot;
-        <a href="{{BASE_PATH}}/{{site.active_lang}}{{post.url}}">{{post.title}}</a>
+        <a href="{{ BASE_PATH }}{{ LANG_PATH }}{{post.url}}">{{post.title}}</a>
         </li>
         {% endif %}{% endfor %}
       </ul>
