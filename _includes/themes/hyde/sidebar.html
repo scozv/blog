@@ -9,7 +9,9 @@
 
     <nav class="sidebar-nav">
       <a class="sidebar-nav-item{% if page.url == HOME_PATH %} active{% endif %}"
-      href="{{ HOME_PATH }}">{{ site.i18n["home"][site.active_lang] | default: "Home" }}</a>
+      href="{{ BASE_PATH }}{% if site.active_lang != site.default_lang %}/{{site.active_lang}}{% endif %}">
+      {{ site.i18n["home"][site.active_lang] | default: "Home" }}
+    </a>
 
       {% comment %}
         The code below dynamically generates a sidebar nav of pages with
@@ -21,7 +23,7 @@
         {% if node.title != null %}
           {% if "navigation" == node.group %}
               <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"
-                href="{{ node.url }}">
+                href="{{ BASE_PATH }}/{{ site.active_lang}}{{ node.url }}">
                 {% if node.i18n != null %}
                   {{ site.i18n[node.i18n][site.active_lang] | default: node.title }}
                 {% else %}
@@ -37,13 +39,13 @@
       <span class="sidebar-nav-item">
         <span class="force-mono-font">&copy;</span> {{ site.time | date: '%Y' }} &middot;
         <a href="https://github.com/scotv">{{ site.author.name }}</a> &middot;
-        <a href="/about">
+        <a href="{{ BASE_PATH }}/{{ site.active_lang}}/about">
           {{ site.i18n["about"][site.active_lang] | default: "About" }}
         </a>
       </span>
       <span class="sidebar-nav-item">
         <span class="force-mono-font">&#9825;</span> Themed by <a href="http://hyde.getpoole.com/">Hyde</a> &middot;
-        <a href="/credits">
+        <a href="{{ BASE_PATH }}/{{ site.active_lang}}/credits">
           {{ site.i18n["credits"][site.active_lang] | default: "Credits" }}
         </a>
       </span>
@@ -53,8 +55,9 @@
     <nav class="sidebar-nav">
       <span>
         {% for tongue in site.languages %}
-          <a {% if tongue == site.active_lang %}style="font-weight: bold;"{% endif %}" href="{% if tongue == site.default_lang %} {{site.baseurl}}{{page.url}} {% else %} {{site.baseurl}}/{{ tongue }}{{page.url}} {% endif %}">
-            {{ site.i18n[tongue][site.active_lang] | default: tongue }}
+          <a {% if tongue == site.active_lang %}style="font-weight: bold;"{% endif %}"
+            href="{% if tongue == site.default_lang %} {{BASE_PATH}}{{page.url}} {% else %} {{BASE_PATH}}/{{ tongue }}{{page.url}} {% endif %}">
+              {{ site.i18n[tongue][site.active_lang] | default: tongue }}
           </a> |
         {% endfor %}
       </span>

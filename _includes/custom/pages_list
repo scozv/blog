@@ -5,13 +5,13 @@
       {% if group == null or group == node.group %}
       	{% if page.url == node.url %}
         <span class="medium active">
-          <a href="{{node.url}}" class="active">
+          <a href="{{BASE_PATH}}/{{site.active_lang}}{{node.url}}" class="active">
           {{ site.i18n[node.i18n][site.active_lang] | default: node.title }}
           </a>
         </span>
       	{% else %}
         <span class="medium active">
-          <a href="{{node.url}}">
+          <a href="{{BASE_PATH}}/{{site.active_lang}}{{node.url}}">
           {{ site.i18n[node.i18n][site.active_lang] | default: node.title }}
           </a>
         </span>
