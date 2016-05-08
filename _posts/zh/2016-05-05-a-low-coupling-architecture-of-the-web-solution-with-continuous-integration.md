@@ -14,12 +14,6 @@ lang: zh
 > 本文将要解释，我目前以及未来在项目中，将会一直实践的两个概念：低耦合与持续集成。
 >
 > 本文还没有完全地写完。
->
->
-> This article will discuss two core ideas for a Architecture of the Web Solution,
-> that is Low Coupling and Continuous Integration.
->
-> This article is still on the writing.
 
 <!--more-->
 

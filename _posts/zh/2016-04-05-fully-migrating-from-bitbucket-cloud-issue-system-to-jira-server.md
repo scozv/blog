@@ -8,251 +8,71 @@ lang: zh
 ---
 {% include JB/setup %}
 
-# Abstract
+# 摘要
 {:.no_toc}
 
-> This post will give a full migration guide from Bitbucket Cloud Issue
-> to JIRA Server, including:
+> 本文给出Bitbucket Cloud的Issue系统至JIRA Server的完整迁移方案，包括:
 >
-> * Import legacy Bitbucket Cloud Issue into JIRA Server,
-> * Build Dual-direction connection between Bitbucket Cloud and JIRA Server,
-> * Upgrade the issue ticket number in git commits history,
-> to archive the __FULL__ migration.
+> * Issue的导入；
+> * Bitbucket和JIRA的双向关联；
+> * 修订历史的Git提交记录，从而与JIRA关联
 >
-> This post will __NOT__ cover the topics below:
+> 如下话题，本文不作解释:
 >
-> * Why I choose JIRA instead of other issue system,
-> * Why I choose Bitbucket Cloud instead of other git server,
-> * Why I choose Ubuntu 14.04 Server instead of other OS.
+> * 为什么是JIRA；
+> * 为什么用Bitbucket；
+> * 为什么我只用Ubuntu 14.04 Server操作系统
+>
+> 完整的迁移方案和迁移脚本，需要阅读英文版本。
 
 <!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
 
-# Core Ideas of My Understanding of a Project
+# 项目架构的两个核心思想
 
-__Low Coupling__ and __CI__ are two core ideas of my understanding
-of a project.
+低耦合与持续集成这两个概念，是我目前以及未来在项目实践中，
+会应用，而且必须应用的两个核心概念。
 
-## Low Coupling
+我在另外一篇文章里面会更详细的解释这两个思想。
 
-* A project MUST be separated into a series of INDEPENDENT modules,
-* Each module will be a code repository,
-* The communication among these INDEPENDENT modules is not depended
-  on source code, it is depended on the API docs.
+## 低耦合的原则
 
-## Continuous Integration
+* 将项目分割成相互独立的节点
+* 每一个节点是独立的源代码库
+* 节点的交互只能通过接口文档，相互之间不需要访问对方的源代码，不需要了解对方的实现细节
 
-* Each module MUST contains the necessary tests with at least 80%
-  code covered,
-* An infrastructure module MUST satisfy 100% code coverage,
-* A RESTful Service module MUST contain the `FakeRequest` BDD test,
-* A web page module shoud consider the web page test, such as using [Selenium](www.seleniumhq.org),
+## 基本的持续集成
+
+* 代码的测试覆盖率至少80%
+* 基本架构节点的覆盖率必须达到100%
+* 使用`FakeRequest`对`RESTful API`进行测试
+* 考虑UI测试
 * 不写测试的代码就是耍流氓
-* Each module need to satisfy the Commit Acceptance Policy [^CAP01]:
-   * The source commit message must contain a valid issue number(s),
-   * All issues referenced in the commit message must be UNRESOLVED,
-   * All issues referenced in the commit message must be assigned to the committer.
-* Every commit to any module need to be build and tested on CI server,
-* Committer will be noticed when the commit leaded a failure build or test,
-* __Each code commit can be traced to the issue system__,
-* __Each issue can be traced to a series of commits__,
-* The environment of each iterative build should be independent,
-* Continuous build, deployment and more...
+* 每一次代码的提交需要满足Commit Acceptance Policy [^CAP01]，即：
+   * 提交的message中包含issue编号
+   * 该issue处于未解决的状态
+   * 该issue有指定的resolver
+* 每一次的提交需要由CI系统测试
+* 如果测试失败，代码提交者应该收到通知
+* __每一次commit必须关联到Issue系统__
+* __每一个issue都要包含一系列的代码commits__
+* 每一次的CI编译环境，和上一次的环境无关
+* 持续编译和持续发布
 
-# Limitation of Bitbucket Cloud Build-in Issue System
+# 完整的迁移指南
 
-If we want to build a library system (the project code is `LS`),
-we may separate the project into a series of repositories (modules) below:
+更详细的迁移解释需要阅读英文文档。
 
-* `ls-core-restful`: A core RESTful service, including user management, book management,
-and borrowing management,
-* `ls-web-user`: A web page system for user to send the borrowing request,
-* `ls-web-admin`: A web page system for library staff to approve the borrowing request,
-* `ls-core-model`: An infrastructure data model in JavaScript (or TypeScript) shared by two web page systems.
-
-(This separation is only used for the example, it may not be a perfect module
-  architecture)
-
-We create a project with code name `LS` in Bitbucket Cloud.
-
-We create four repositories under `LS` in Bitbucket Cloud:
-
+* 在Ubuntu上安装JIRA Server
+* 在JIRA里面创建Project
+* 导入Issue数据
+* 在JIRA Server中设置DVCS Accounts
+* 在Bitbucket Cloud里面指定JIRA Link
+* 修订历史代码提交信息，如下
 {% highlight sh %}
-ls-core-restful.git
-ls-core-model.git
-ls-web-user.git
-ls-web-admin.git
-{% endhighlight %}
-
-If we raise an issue saying:
-{% highlight sh %}
-Login page should be designed and implemented
-{% endhighlight %}
-
-Where we open the issue in the Bitbucket Cloud build-in Issue System?
-In Bitbucket Cloud, the build-in issue system is not share in project,
-we have to raise an individual issue in each repo:
-{% highlight sh %}
-# ls-core-model.git/issue/1
-Implement the User model
-# ls-core-restful.git/issue/1
-Implement the login with token authentication service
-# ls-web-user/issue/1
-Implement the user login page
-# ls-web-admin/issue/1
-Implement the admin authorization page
-{% endhighlight %}
-
-The limitation of Bitbucket Cloud build-in Issue System is:
-
-* Not a central issue system,
-* Have to grant access right of `ls-core-restful` to other committers.
-  This has been violating the __Low Coupling__ principle, cause we just need
-  to expose an API docs of `ls-core-restful`
-  to committers of other repositories,
-* The commit history of "Login page implementation" has to be
-  separated into different repositories,
-  violating the __Continuous Integration__ principle.
-
-# JIRA, a Central Issue System
-
-We need a Central Issue System that can be synced with multiple source code
-repositories. I choose JIRA 6.4.13 + JIRA Agile deploying on the environment
-below:
-
-{% highlight sh %}
-Ubuntu 14.04.4 LTS
-mysql  Ver 14.14 Distrib 5.5.47,
-  for debian-linux-gnu (x86_64) using readline 6.3
-openjdk version "1.8.0_72-internal"
-OpenJDK Runtime Environment (build 1.8.0_72-internal-b15)
-OpenJDK 64-Bit Server VM (build 25.72-b15, mixed mode)
-Atlassian JIRA Project Management Software
-  (v6.4.13#64028-sha1:b7939e9)
-JIRA Agile 6.7.12
-JIRA Commit Acceptance Plugin 1.6.0
-{% endhighlight %}
-
-Currently, my deployment of JIRA 6 + Agile works smoothly with Bitbucket Cloud.
-We can:
-
-* Raise only one issue that need code changes on multiple repositories,
-* Push code to Bitbucket Cloud,
-  then review the commit history in JIRA issue page,
-* Configure Bitbucket Cloud, so that the commit history page can link to
-  the JIRA issue.
-* [TODO] Reject push that committed to Bitbucket Cloud if this commit violates
-  the JIRA Acceptance Policy.
-
-
-# Full Migration Guide to JIRA Server
-
-## Installing JIRA Server on Ubuntu
-
-Atlassian provides an official installation guide [^ATL_jira_install].
-Meet the system requirement, and pay attention on:
-
-* Neither MariaDB nor PerconaDB are supported [^ATL_maria_null] [^ATL_maria_null_2],
-* Atlassian JIRA Commit Acceptance Plugin is only support for JIRA Server 5.0 - 6.4.13,
-* For JIRA Server 6.1 - 7.1.4, we can use Midori Commit Policy Plugin for JIRA [^CAP02] with a paid license.
-
-I provide a installation `sh` file for quick installation and configuration of MySQL, see appendix below.
-
-## Create a Project in JIRA
-
-Supposing that we have:
-
-* Deployed the JIRA Server, and can access `https://jira.domain.com`,
-* Configured the User and Group,
-* Login as the JIRA administrator.
-
-We now create a project with the JIRA code `LS`, the ticket number of
-each issue will be prepended with `LS`, such as:
-{% highlight sh %}
-LS-101 Hello JIRA
-{% endhighlight %}
-## Import Legacy Issue from Bitbucket Cloud
-
-JIRA administrator can import the legacy issue from Bitbucket Cloud into JIRA:
-
-{% highlight html %}
-http://jira.domain.com/secure/admin/views/ExternalImport1.jspa
-{% endhighlight %}
-
-## Setup the DVCS Accounts in JIRA with Bitbucket Cloud
-
-When we push the code to Bitbucket Cloud, we want to disply the commit history
-in JIRA issue page, setting up the OAuth in Bitbucket Cloud and DVCS Accounts
-in JIRA will satisfy our request.
-
-Please read the official guide [^ATL_dvcs].
-
-According to the Atlassian Support, the DVCS will refresh status
-from Bitbucket Cloud every 60 minutes [^DCON-379]. That means when we
-push commits to Bitbucket Cloud, the JIRA issue page may not reflect
-the latest commits immediately.
-
-## Setup the JIRA Link in Bitbucket Cloud
-
-We want to display the hyperlink in Bitbucket Cloud commit history page.
-Adding a JIRA link in repository setting will satisfy our request.
-
-* Go to repository setting, find the Integrations - Links:
-{% highlight html %}
-https://bitbucket.org/scotv/ls-core-restful/admin/links
-{% endhighlight %}
-
-* Click the JIRA icon,
-* Fill the JIRA website and the JIRA project code, such as `LS`
-* Save
-
-For the new source commit, such as:
-{% highlight sh %}
-git commit -avm 'LS-101 Hello JIRA'
-git push
-{% endhighlight %}
-
-we have the hyperlink in commit history page of Bitbucket Cloud, leading to:
-{% highlight html %}
-http://jira.domain.me/browse/LS-101
-{% endhighlight %}
-
-## Change the Legacy Issue Number of Git History, ie. Fully Migrating
-
-> __Attention:__
->
-> __The `sha1` of all commits will be rewritten (changed) in the step below;__
->
-> __Make backup and decision.__
-
-In individual Bitbucket Cloud build-in Issue System, the
-issue number is started from `1`. For Bitbucket Cloud, we commit code
-using message such as below:
-
-{% highlight sh %}
-git commit -avm 'fix issue #101 Hello Bitbucket'
-{% endhighlight %}
-
-After importing the Bitbucket Issue into JIRA System, issue `101` becomes to
-issue `LS-101`
-
-We want to change the Legacy git history to:
-{% highlight html %}
-fix issue LS-101 Hello Bitbucket
-{% endhighlight %}
-
-We need the Message Filter of git command [^GIT]:
-
-> --msg-filter <command>
->
-> This is the filter for rewriting the commit messages. The argument is evaluated in the shell with the original commit message on standard input; its standard output is used as the new commit message.
-
-Here is the script:
-{% highlight sh %}
-# The `sha1` of all commits will be rewritten (changed) in the step below;
-# Make backup and decision.
+# 警告：如下的代码将会重写所有的历史commits信息
+# 警告：如下的代码将会重写所有的历史commits信息
+# 警告：如下的代码将会重写所有的历史commits信息
 git clone --no-hardlinks git@bitbucket.org:scotv/ls-core-restful.git
 git filter-branch -f --msg-filter \
     'sed "s/#\([0-9][0-9]*\)/LS-\1/g"'
@@ -261,23 +81,7 @@ git gc --aggressive
 git prune
 {% endhighlight %}
 
-
-# NOT a Fully Migrating
-
-I haven't found the solution for:
-
-* Resolved JIRA issue is not displayed as a <del>deleted HTML element</del> in Bitbucket Cloud,
-* Bitbucket Cloud doesn't reject the bad commit if the commit violates the Acceptance Policy.
-
-For the 2nd issue, Atlassian Support replied me as:
-
-> Unfortunately, this is not possible to be done on Bitbucket Cloud for now.
-> We have a feature request on this though:
-  https://bitbucket.org/site/master/issues/5658
-
-# Appendix
-
-## JIRA Installation Script
+# JIRA安装脚本
 
 {% highlight sh %}
 # JAVA
