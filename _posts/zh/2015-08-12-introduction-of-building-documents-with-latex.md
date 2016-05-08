@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Introduction of Building Documents with LaTeX"
+title: "介绍专业的文档系统LaTeX"
 description: ""
 category: "guide"
 tags: ["latex","tex","project"]
-lang: en
+lang: zh
 ---
 {% include JB/setup %}
 
@@ -12,11 +12,10 @@ lang: en
 
 # 摘要
 {:.no_toc}
-> `TeX`家族是一个专业的排版系统。本文简要地介绍了`TeX`家族的常见成员，并整理出了`LaTeX`入门使用过程中会遇到的一些问题，
-> 同时，将演示`LaTeX`在网页中的集成。最后在附录部分，给出了样式模板的参考代码。
+> `TeX`家族是一个专业的排版系统。本文简要地介绍了`TeX`家族的常见成员，
+> 并整理出了`LaTeX`入门使用过程中会遇到的一些问题，
 >
-> This artical will give brief introduction for `TeX` and `LaTeX`, then discuss a few issues during using `LaTeX`
-> and how to display `LaTeX` eqation on web page. Finally, a `LaTeX` template will be attached in _Appendix_.
+> 同时，将演示`LaTeX`在网页中的集成。最后在附录部分，给出了样式模板的参考代码。
 
 <!--more-->
 
