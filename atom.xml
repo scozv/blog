@@ -14,7 +14,6 @@ title : Atom Feed
    <name>{{ site.author.name }}</name>
    <email>{{ site.author.email }}</email>
  </author>
-
  {% for post in site.posts %}
  {% if post.categories contains 'slides' %}
  {% else %}
@@ -27,5 +26,4 @@ title : Atom Feed
  </entry>
  {% endif %}
  {% endfor %}
-
 </feed>

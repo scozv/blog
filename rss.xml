@@ -6,26 +6,24 @@ title : RSS Feed
 <rss version="2.0">
 {% include JB/setup %}
 <channel>
-        <title>{{ site.title }}</title>
-        <description>{{ site.title }} - {{ site.author.name }}</description>
-        <link>{{ site.production_url }}{{ LANG_PATH }}{{ site.JB.rss_path }}</link>
-        <link>{{ site.production_url }}{{ LANG_PATH }}</link>
-        <lastBuildDate>{{ site.time | date_to_xmlschema }}</lastBuildDate>
-        <pubDate>{{ site.time | date_to_xmlschema }}</pubDate>
-        <ttl>1800</ttl>
-
-{% for post in site.posts %}
-	{% if post.categories contains 'slides' %}
-	{% else %}
-        <item>
-                <title>{{ post.title }}</title>
-                <description>{{ post.content | xml_escape }}</description>
-                <link>{{ site.production_url }}{{ LANG_PATH }}{{ post.url }}</link>
-                <guid>{{ site.production_url }}{{ LANG_PATH }}{{ post.id }}</guid>
-                <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
-        </item>
-	{% endif  %}
-{% endfor %}
-
+  <title>{{ site.title }}</title>
+  <description>{{ site.title }} - {{ site.author.name }}</description>
+  <link>{{ site.production_url }}{{ LANG_PATH }}{{ site.JB.rss_path }}</link>
+  <link>{{ site.production_url }}{{ LANG_PATH }}</link>
+  <lastBuildDate>{{ site.time | date_to_xmlschema }}</lastBuildDate>
+  <pubDate>{{ site.time | date_to_xmlschema }}</pubDate>
+  <ttl>1800</ttl>
+  {% for post in site.posts %}
+    {% if post.categories contains 'slides' %}
+    {% else %}
+      <item>
+        <title>{{ post.title }}</title>
+        <description>{{ post.content | xml_escape }}</description>
+        <link>{{ site.production_url }}{{ LANG_PATH }}{{ post.url }}</link>
+        <guid>{{ site.production_url }}{{ LANG_PATH }}{{ post.id }}</guid>
+        <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
+      </item>
+    {% endif  %}
+  {% endfor %}
 </channel>
 </rss>
