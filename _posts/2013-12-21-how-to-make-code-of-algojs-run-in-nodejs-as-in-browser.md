@@ -15,9 +15,6 @@ lang: en
 > * Making codes of algorithm work in Node.js, and
 > * Making codes of unit tests work in Node.js, and
 > * Introduce CI into my project.
->
->
-> 本文描述了我让代码在浏览器和Node.js两边都能运行的过程，略属娱乐。因为就项目 [Algo.js] [2] 而言，我认为，重点在算法（ *Algo*rithm ）。至于引入大文本输入测试（参见 [issue #18] [1] ），是为了保证算法的正确和高效，以及今后的重构，当然这也很重要。引入持续集成，是尽可能想让一切都是自动化。
 
 <!--more-->
 
