@@ -20,9 +20,9 @@ title : Code this.
 tagline: Any Thoughts During Code this
 # description:
 author :
-  name : Scott
+  name : "Scott"
   email : scotv@yandex.com
-  github : //github.com/scotv
+  github : https://github.com/scotv
 #  twitter : username
 #  feedburner : feedname
 
@@ -34,7 +34,7 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : http://scotv.github.io/blog
+production_url : https://scotv.github.io/blog
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
@@ -198,5 +198,5 @@ i18n:
     zh: "讲稿"
     en: "slides"
   more:
-    zh: "阅读详细内容……"
+    zh: "详细内容……"
     en: "Read more ..."

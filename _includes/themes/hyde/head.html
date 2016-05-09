@@ -7,10 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   {% I18n_Headers https://scotv.github.io/blog %}
-
   <title>
     {% if page.title %}
-      {{ page.title }} &middot; {{ site.title }}
+      {% assign slug = page.title | downcase | replace: ' ', '_' %}
+      {{ site.i18n[slug][site.active_lang] | default: page.title }} &middot; {{ site.title }}
     {% else %}
       {{ site.tagline}} &middot; The Blog by {{ site.author.name }}
     {% endif %}
