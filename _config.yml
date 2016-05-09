@@ -20,9 +20,9 @@ title : Code this.
 tagline: Any Thoughts During Code this
 # description:
 author :
-  name : Scott
+  name : "Scott"
   email : scotv@yandex.com
-  github : //github.com/scotv
+  github : https://github.com/scotv
 #  twitter : username
 #  feedburner : feedname
 
