@@ -1,4 +1,7 @@
 # https://github.com/untra/polyglot/wiki/Github-Pages-Support
+git stash save
+GIT_PWD=`git rev-parse --abbrev-ref HEAD`
+
 git branch -D _site
 git branch _site
 git checkout _site
@@ -11,4 +14,6 @@ git branch -D gh-pages
 git push origin :gh-pages
 git subtree push --prefix  _site/ origin gh-pages
 git push origin :_site
-git checkout -f master
+
+git checkout -f $GIT_PWD
+git stash pop
