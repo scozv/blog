@@ -5,7 +5,9 @@ gems: [jekyll-paginate, jekyll-gist]
 # For more see: http://jekyllrb.com/docs/permalinks/
 permalink: /:categories/:year/:month/:day/:title
 
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", ".sh"]
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md",
+  "0.sh", "build.sh", "katex.sh", "publi.sh", "History.markdown",
+  "Gemfile", "Gemfile.lock"]
 highlighter: rouge
 
 # https://help.github.com/articles/migrating-your-pages-site-from-maruku
