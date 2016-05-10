@@ -38,12 +38,7 @@
   <div class="sidebar-item">
     <span class="force-mono-font">&copy;</span> {{ site.time | date: '%Y' }} &middot;
     <a href="https://github.com/scotv">{{ site.author.name }}</a> &middot;
-    <a href="{{ BASE_PATH }}{{ LANG_PATH }}/about">
-      {{ site.i18n["about"][site.active_lang] | default: "About" }}
-    </a>
-  </div>
-  <div class="sidebar-item">
-    <span class="force-mono-font">&#9825;</span> Themed by <a href="http://hyde.getpoole.com/">Hyde</a> &middot;
+
     <a href="{{ BASE_PATH }}{{ LANG_PATH }}/credits">
       {{ site.i18n["credits"][site.active_lang] | default: "Credits" }}
     </a>
