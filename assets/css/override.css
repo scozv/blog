@@ -6,8 +6,8 @@
 .container-narrow > hr {
   margin: 30px 0; }
 
-.navbar .nav {
-  float: right; }
+/*.navbar .nav {
+  float: right; }*/
 
 /* posts index */
 .post > h3.title {
@@ -30,13 +30,13 @@
 
 /* following css should be seperated out from this file */
 /* nav anchor */
-.navbar .navbar-header {
+/*.navbar .navbar-header {
     font-size: 1.1em;
     font-weight: bolder;
 }
 
 .navbar .navbar-nav>li>a {
-}
+}*/
 
 i.glyphicon {
     -webkit-transform:scale(0.9);
@@ -231,4 +231,12 @@ div.post > h1.post-title {
 div.force-zero-padding figure {
   padding-left: 0px;
   margin-left: 0px;
+}
+
+@media (min-width: 48em)
+.sidebar-nav-item {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 1.1rem;
+  align-content: center;
 }
