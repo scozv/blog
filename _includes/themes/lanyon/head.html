@@ -6,24 +6,34 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
+  {% I18n_Headers https://scotv.github.io/blog %}
+
+  {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+   <meta name="author" content="{{ site.author.name }}">
+
   <title>
-    {% if page.title == "Home" %}
-      {{ site.title }} &middot; {{ site.tagline }}
+    {% if page.title %}
+      {% assign slug = page.title | downcase | replace: ' ', '_' %}
+      {{ site.i18n[slug][site.active_lang] | default: page.title }} &middot; {{ site.title }}
     {% else %}
-      {{ page.title }} &middot; {{ site.title }}
+      {{ site.tagline}} &middot; The Blog by {{ site.author.name }}
     {% endif %}
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/poole.css">
-  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/syntax.css">
-  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/lanyon.css">
+  <link rel="stylesheet" href="{{ ASSET_PATH }}/css/poole.css">
+  <link rel="stylesheet" href="{{ ASSET_PATH }}/css/syntax.css">
+  <link rel="stylesheet" href="{{ ASSET_PATH }}/css/{{ THEME_NAME }}.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
 
-  <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ site.baseurl }}/public/apple-touch-icon-precomposed.png">
-  <link rel="shortcut icon" href="{{ site.baseurl }}/public/favicon.ico">
+  <link rel="stylesheet" href="{{ BASE_PATH }}/assets/css/style.css">
+  <!--[if lt IE 9]>
+  <script src="{{ ASSET_PATH }}/resources/respond/Respond.min.js"></script>
+  <![endif]-->
 
-  <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+  <link href="{{ BASE_PATH }}{{ site.JB.atom_path }}" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="{{ BASE_PATH }}/assets/img/incognito_t.ico">
 </head>
