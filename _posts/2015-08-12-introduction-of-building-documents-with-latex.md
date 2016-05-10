@@ -16,11 +16,23 @@ lang: en
 >
 > This article is mainly written in Chinese.
 >
-> If you want to know the KaTex with Jekyll,
+> If you want to know the KaTeX with Jekyll,
 > you can reach [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 > A `LaTeX` template will be provided.
 
 <!--more-->
+
+# KaTeX, not MathJax
+
+The render speed of `MathJax` is too slow,
+while the `KaTeX` from [Khan Acedemy](https://khan.github.io/KaTeX/) team,
+will render all equation with pure `CSS`, and it will render your `LaTeX`
+equation as fast as you can imagine.
+
+$$e^x = \lim_{n\rightarrow \infty} \sum_{t=0}^{n} ( \frac{1}{t!}\cdot x^t )= \sum_{t=0}^{\infty} (1 + x + \frac{1}{2!}x^2+\frac{1}{3!}x^3+ ... + \frac{1}{t!}\cdot x^t)$$
+
+If you want to know more details with KaTeX for Jekyll,
+you can read [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 
 # A Sample of LaTeX Template
 
