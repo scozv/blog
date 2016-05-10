@@ -23,8 +23,6 @@ lang: en
 
 The Low Coupling Architecture can be explained as below (drawn in [ASCIIFlow Infinity](http://asciiflow.com/)):
 
-<div class="force-850px">
-{% highlight sh %}
     ####################################  scenario 01, entire node
 
     +------------+              +-----------------+
@@ -140,5 +138,3 @@ The Low Coupling Architecture can be explained as below (drawn in [ASCIIFlow Inf
                                                                           |                     |
                                                                           |                     |
                                                                           +---------------------+
-{% endhighlight %}
-</div>
