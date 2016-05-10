@@ -242,7 +242,7 @@ Wes Dyer在他的文章中简述了Monad的历史[^WD08]。他指出，Monad这�
 
 这样一来，使得我们一说到Moand就和函数编程扯上关系。就好比面向对象、UML的特性容易表达设计模式那样，我们常常一说到设计模式，就往OOP上面靠[^CH13]。
 
-要知道，函数编程里面的匿名函数λ表达式，也是从理论数学中发展过来的[^WL14]。Eric也多次提及LINQ的设计者之一Erik Meijer正式Haskell的设计参与者，比如他在StackOverflow上对LINQ与Haskell关系的回答[^EL11]。
+要知道，函数编程里面的匿名函数λ表达式，也是从理论数学中发展过来的[^WL14]。Eric也多次提及LINQ的设计者之一Erik Meijer正是Haskell的设计参与者，比如他在StackOverflow上对LINQ与Haskell关系的回答[^EL11]。
 
 # Monad的性质
 Eric指出Monad是类型（Type）的一种设计模式，是对现有Type的能力的一种放大（amplifier），或者是对T的一种wrapper，借助之前提到的几个M<T\>，我们很容易地设计出一种“asynchronously-computed sequence of nullable bytes”[^EL13-2]类型：
