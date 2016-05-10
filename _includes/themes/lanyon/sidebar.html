@@ -35,12 +35,16 @@
     {% endfor %}
   </nav>
 
+  {% assign tongue = site.i18n["alt_lang"][site.active_lang] %}
   <div class="sidebar-item">
     <span class="force-mono-font">&copy;</span> {{ site.time | date: '%Y' }} &middot;
     <a href="https://github.com/scotv">{{ site.author.name }}</a> &middot;
-
     <a href="{{ BASE_PATH }}{{ LANG_PATH }}/credits">
       {{ site.i18n["credits"][site.active_lang] | default: "Credits" }}
+    </a> |
+    <a style="font-weight: bold;"
+      href="{% if tongue == site.default_lang %}{{BASE_PATH}}{{page.url}}{% else %}{{BASE_PATH}}/{{ tongue }}{{page.url}}{% endif %}">
+        {{ site.i18n[tongue][tongue] | default: tongue }}
     </a>
   </div>
 </div>

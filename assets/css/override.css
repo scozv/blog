@@ -233,7 +233,6 @@ div.force-zero-padding figure {
   margin-left: 0px;
 }
 
-@media (min-width: 48em)
 .sidebar-nav-item {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
