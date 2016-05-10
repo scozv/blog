@@ -271,3 +271,7 @@ div.force-zero-padding figure {
   padding-left: 0px;
   margin-left: 0px;
 }
+
+div.post div.highlighter-rouge {
+  width: 850px;
+}

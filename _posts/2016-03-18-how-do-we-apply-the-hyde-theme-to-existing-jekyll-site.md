@@ -9,7 +9,6 @@ lang: en
 {% include JB/setup %}
 
 
-
 # Abstract
 {:.no_toc}
 
