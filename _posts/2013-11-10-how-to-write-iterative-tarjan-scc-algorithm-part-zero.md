@@ -13,9 +13,6 @@ lang: en
 > * Part I: Iterative BFS and DFS algorithm on graph;
 > * [Part II] [4]: Iterative topological sort and Kosaraju SCC algorithm on graph;
 > * Part III: Iterative Tarjan SCC algorithm on graph.
->
->
-> 上个月我完成了迭代版的Tarjan强连通算法（参见 [Algo.js] [1] ） 。这一个系列的文章将解释这一过程和相关代码——包括迭代图遍历、迭代拓扑排序和Kosaraju强连通算法以及最后的迭代Tarjan算法三部分。本文先讲迭代图遍历。
 
 <!--more-->
 
@@ -123,24 +120,6 @@ $$T=O(1)+O(n)+O(m)=O(n+m)$$
 Read code in `graph.search.js` on [Algo.js] [1], and reference [this series of posts] [2] by Tom Moertel for more details on _Recursive to Iterative_.
 
 [Next] [4] part of this series, I am going to describe some ideas on iterative topological order algorithm which can be applied on Kosaraju SCC algorithm.
-
-<div class="post-content lang zh-cn">
-
-递归在某些程度上来说，很适合理解（只要找出递推公式），写起来也简单（因为它是递归）。我看过Erlang的一些介绍，这门函数式编程语言，在编译器的支持与优化下，很适合用递归。
-<br />
-<br />
-递归的调用需要栈（Call Stack）来维护。碰到一些栈上有容量限制的语言，比如Python、JavaScript等，要么扩大栈的容量，或者如本系列文章这样，尝试将递归转化成迭代。
-<br />
-<br />
-上面提到的深度优先查找（DFS），转化起来比较容易；而在我们第三部分将要提到的Tarjan强连通算法，转化起来就费了不少的心思（参见 <a href="https://github.com/scotv/algo-js/issues/14" target="_blank">issue #14</a>）。
-<br />
-<br />
-当然，我认为，能够用递归的地方应该尽量用，尤其在函数式编程语言中。本系列的递归到迭代的转化，一来解决JavaScript的函数栈的容量问题，二来可以帮助我理解强连通算法。
-<br />
-<br />
-下一篇我会整理一下拓扑排序的迭代转化，并将其应用到Kosaraju强连通算法中。
-
-</div>
 
 <br />
 
