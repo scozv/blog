@@ -5,26 +5,32 @@
 
   <body>
 
-    {% include themes/{{ THEME_NAME }}/sidebar.html %}
+    {% if page.categories contains 'slides' %}
+      <div class="content">
+        {{ content }}
+      </div>
+    {% else %}
+      {% include themes/{{ THEME_NAME }}/sidebar.html %}
 
-    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
-         content to avoid any CSS collisions with our real content. -->
-    <div class="wrap">
-      <div class="masthead">
-        <div class="container">
-          <h3 class="masthead-title">
-            <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
-            <small>{{ site.tagline }}</small>
-          </h3>
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+              <small>{{ site.tagline }}</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          {{ content }}
         </div>
       </div>
 
-      <div class="container content">
-        {{ content }}
-      </div>
-    </div>
-
-    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    {% endif %}
 
     <script>
       (function(document) {
@@ -43,5 +49,7 @@
         }, false);
       })(document);
     </script>
+    {% include JB/analytics %}
+    <script src="{{ BASE_PATH }}/assets/jquery/jquery.min.js"></script>
   </body>
 </html>
