@@ -6,12 +6,17 @@
   {% assign HOME_PATH = "/" %}
 {% endif %}
 
+{% if site.JB.THEME_NAME %}
+  {% assign THEME_NAME = site.JB.THEME_NAME %}
+{% else %}
+  {% capture THEME_NAME %}{{ layout.theme.name }}{% endcapture %}
+{% endif %}
+
 {% if site.JB.ASSET_PATH %}
   {% assign ASSET_PATH = site.JB.ASSET_PATH %}
 {% else %}
   {% capture ASSET_PATH %}{{ BASE_PATH }}/assets/themes/{{ layout.theme.name }}{% endcapture %}
 {% endif %}
-
 
 {% if site.active_lang == site.default_lang %}
   {% assign LANG_PATH = "" %}
