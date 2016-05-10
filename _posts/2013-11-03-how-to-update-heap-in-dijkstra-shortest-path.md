@@ -15,9 +15,6 @@ lang: en
 >
 > *	know how to wirte Dijkstra algorithm with $$O(nm)$$ running time, and
 > *	know how to use heap.
->
->
-> 为了将Dijkstra最短路径算法的时间复杂度从 $$O(nm)$$ 降低到 $$O(n \ln m)$$ ，我们可以使用 __heap__ 。不过迭代中的每一次更新heap的过程，我们需要一些技巧来保持heap的有序性。本文就会指出该技巧，并且解释我在算法代码中的一些[变动] [3]。
 
 <!--more-->
 
@@ -93,12 +90,6 @@ var updated = frontier.__id__.some(function(x, k){
     })(), true);
 });
 {% endhighlight %}
-
-<div class="post-content lang zh-cn">
-
-简言之，算法的每次迭代，都是用较小的值去更新原来的heap，所以我们应该调用 <code>heap.swim()</code> 来维持heap的有序性。
-
-</div>
 
 <br />
 

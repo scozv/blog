@@ -1,6 +1,5 @@
 <div id="disqus_thread"></div>
 <script type="text/javascript">
-    var disqus_shortname = '{{ site.JB.comments.disqus.short_name }}';
     var disqus_config = function () {
       this.page.url = '{{ site.production_url }}{{ LANG_PATH }}{{ page.url }}';
       this.page.identifier = '{{ page.url }}';
@@ -9,7 +8,7 @@
     (function() {
       var d = document;
       var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
-      s.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+      s.src = 'https://{{ site.JB.comments.disqus.short_name }}.disqus.com/embed.js';
       s.setAttribute('data-timestamp', +new Date());
       (d.head || d.body).appendChild(s);
     })();
