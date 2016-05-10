@@ -206,3 +206,6 @@ i18n:
   more:
     zh: "详细内容……"
     en: "Read more ..."
+  related_posts:
+    zh: "您也许还想读……"
+    en: "Similar Posts"
