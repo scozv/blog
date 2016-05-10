@@ -3,8 +3,9 @@ layout: page
 title: "About"
 alias: "?"
 description: "About me"
-group: !navigation
+group: navigation
 i18n: about
+weight: 100
 ---
 {% include JB/setup %}
 

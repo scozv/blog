@@ -6,8 +6,8 @@
 .container-narrow > hr {
   margin: 30px 0; }
 
-.navbar .nav {
-  float: right; }
+/*.navbar .nav {
+  float: right; }*/
 
 /* posts index */
 .post > h3.title {
@@ -28,54 +28,15 @@
   margin-bottom: 20px;
   font-weight: bold; }
 
-/* tag_box */
-/*
-.tag_box {
-  list-style: none;
-  margin: 0;
-  overflow: hidden; }
-
-.tag_box li {
-  line-height: 28px; }
-
-.tag_box li i {
-  margin-right: 5px;
-}
-
-.tag_box.inline li {"Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace
-  float: left; }
-
-.tag_box a {
-  padding: 3px 6px;
-  margin: 2px;
-  background: #eee;
-  color: #555;
-  border-radius: 3px;
-  text-decoration: none;
-  border: 1px dashed #cccccc; }
-
-.tag_box a span {
-  vertical-align: super;
-  font-size: 0.8em; }
-
-.tag_box a:hover {
-  background-color: #e5e5e5; }
-
-.tag_box a.active {
-  background: #57A957;
-  border: 1px solid #4c964d;
-  color: #FFF; }
-*/
-
 /* following css should be seperated out from this file */
 /* nav anchor */
-.navbar .navbar-header {
+/*.navbar .navbar-header {
     font-size: 1.1em;
     font-weight: bolder;
 }
 
 .navbar .navbar-nav>li>a {
-}
+}*/
 
 i.glyphicon {
     -webkit-transform:scale(0.9);
@@ -236,9 +197,9 @@ div.row table:not(.lines) tr:nth-child(2n) {
   max-width: 47rem;
 }
 
-@media (min-width: 48em) {
-  .content {
-    max-width: 47rem;
+@media (min-width: 56em) {
+  .container {
+    max-width: 51rem;
   }
 }
 
@@ -272,6 +233,9 @@ div.force-zero-padding figure {
   margin-left: 0px;
 }
 
-div.post div.highlighter-rouge {
-  width: 850px;
+.sidebar-nav-item {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 1.1rem;
+  align-content: center;
 }
