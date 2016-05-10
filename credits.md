@@ -10,17 +10,17 @@ Less|More
 :---|:--------
 [Jekyll Bootstrap] [1] | _The Definitive Jekyll Blogging Framework_
 [Jekyll Bootstrap 3] [6] | _The Quickest Way to Blog on GitHub Pages, Now with Power of Bootstrap 3_
+[Lanyon] [9] | _Lanyon is a brazen two-column [Jekyll](http://jekyllrb.com/) theme that pairs a prominent sidebar with uncomplicated content. It's based on [Poole](http://getpoole.com/), the Jekyll butler._
+[Polyglot] [10] | _A i18n support plugin for Jekyll that makes multi-language support fast and intuitive, for blogs big and small. Made by [@untra](https://github.com/untra)._
 [Bootstrap] [2] | _The most popular front-end framework for developing responsive, mobile first projects on the web._
 [Impress.js] [5] | _A presentation framework based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com._
 [codeitpretty.com] [4] | Suggestions on `font`
 [kendraschaefer.com] [3] | Suggestion on `font-family`
 [xuc.me] [7] | Rendering LaTeX using KaTeX and Jekyll
 [kersulis.github.io](http://kersulis.github.io/2015/10/31/jekyll-3/) | Guide for upgrading to Jekyll 3.0
-[Hyde] [9] | _Hyde is a brazen two-column [Jekyll](http://jekyllrb.com/) theme that pairs a prominent sidebar with uncomplicated content. It's based on [Poole](http://getpoole.com/), the Jekyll butler._
 [`related_posts`] [8] | A enhanced `related_posts` by [@Ovilia](https://github.com/Ovilia)
 `tags_list` | A enhanced `tags_list` from [kelsin.github.io](https://github.com/kelsin/kelsin.github.io) and [codeofclimber.ru](http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/)
 favicon | A favicon made from Chrome incognito mode `BASE64` image string with [GIMP](https://www.gimp.org/)
-[Polyglot] [10] | _A i18n support plugin for Jekyll that makes multi-language support fast and intuitive, for blogs big and small. Made by [@untra](https://github.com/untra)._
 
 
 
@@ -32,5 +32,5 @@ favicon | A favicon made from Chrome incognito mode `BASE64` image string with [
 [6]: http://jekyllbootstrap3.tk/    "Jekyll Bootstrap 3"
 [7]: http://xuc.me/blog/KaTeX-and-Jekyll/ "KaTeX for Jekyll"
 [8]: http://zhangwenli.com/blog/2014/07/15/jekyll-related-posts-without-plugin/ "related_posts"
-[9]: http://hyde.getpoole.com/ "Hyde for Jekyll"
+[9]: http://lanyon.getpoole.com/ "Lanyon for Jekyll"
 [10]: http://untra.github.io/polyglot "Ployglot for Jekyll"
