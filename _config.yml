@@ -161,6 +161,9 @@ exclude_from_localization: ["assets", "img", "css"]
 parallel_localization: true
 
 i18n:
+  alt_lang:
+    zh: en
+    en: zh
   zh:
     zh: "中文"
     en: "中文"
