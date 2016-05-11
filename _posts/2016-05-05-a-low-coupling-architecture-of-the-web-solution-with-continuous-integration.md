@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Low Coupling Architecture of the Web Solution with Continuous Integration"
+title: "A Loose Coupling Architecture of the Web Solution with Continuous Integration"
 description: ""
 category: "pattern"
 tags: ["CI", "project"]
@@ -12,16 +12,17 @@ lang: en
 {:.no_toc}
 
 > This article will discuss two core ideas for a Architecture of the Web Solution,
-> that are Low Coupling and Continuous Integration.
+> that are Loose Coupling and Continuous Integration.
 >
 > The article is mainly written in Chinese, while the
 > English post has not been started yet.
-> However, I provide a drawing for indicating the Low Coupling Architecture.
+> However, I provide a drawing for indicating the Loose Coupling Architecture.
 
 <!--more-->
 
 
-The Low Coupling Architecture can be explained as below (drawn in [ASCIIFlow Infinity](http://asciiflow.com/)):
+The Loose Coupling Architecture can be explained as below
+(drawn with [ASCIIFlow Infinity](http://asciiflow.com/)):
 
     ####################################  scenario 01, entire node
 
