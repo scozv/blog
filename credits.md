@@ -20,8 +20,7 @@ Less|More
 [kersulis.github.io](http://kersulis.github.io/2015/10/31/jekyll-3/) | Guide for upgrading to Jekyll 3.0
 [`related_posts`] [8] | A enhanced `related_posts` by [@Ovilia](https://github.com/Ovilia)
 `tags_list` | A enhanced `tags_list` from [kelsin.github.io](https://github.com/kelsin/kelsin.github.io) and [codeofclimber.ru](http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/)
-favicon | A favicon made from Chrome incognito mode `BASE64` image string with [GIMP](https://www.gimp.org/)
-
+favicon | A favicon made from Chrome incognito mode `BASE64` image string with [LICENSE] [11] and [FAQ](https://productforums.google.com/forum/#!topic/chrome/IRU02OLJ4Dg;context-place=topicsearchin/chrome/base64)
 
 
 [1]: http://jekyllbootstrap.com/            "Jekyll Bootstrap"
@@ -34,3 +33,4 @@ favicon | A favicon made from Chrome incognito mode `BASE64` image string with [
 [8]: http://zhangwenli.com/blog/2014/07/15/jekyll-related-posts-without-plugin/ "related_posts"
 [9]: http://lanyon.getpoole.com/ "Lanyon for Jekyll"
 [10]: http://untra.github.io/polyglot "Ployglot for Jekyll"
+[11]: {{ BASE_PATH }}{{LANG_PATH}}/LICENSE/chromium.txt  "Chromium LICENSE"
