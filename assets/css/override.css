@@ -239,3 +239,8 @@ div.force-zero-padding figure {
   font-size: 1.1rem;
   align-content: center;
 }
+
+#sidebar-checkbox:checked+.sidebar {
+    z-index: 10;
+    visibility: visible;
+}
