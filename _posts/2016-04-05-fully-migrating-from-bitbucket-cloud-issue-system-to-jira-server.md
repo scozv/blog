@@ -32,10 +32,10 @@ lang: en
 
 # Core Ideas of My Understanding of a Project
 
-__Low Coupling__ and __CI__ are two core ideas of my understanding
+__Loose Coupling__ and __CI__ are two core ideas of my understanding
 of a project.
 
-## Low Coupling
+## Loose Coupling
 
 * A project MUST be separated into a series of INDEPENDENT modules,
 * Each module will be a code repository,
@@ -109,7 +109,7 @@ The limitation of Bitbucket Cloud build-in Issue System is:
 
 * Not a central issue system,
 * Have to grant access right of `ls-core-restful` to other committers.
-  This has been violating the __Low Coupling__ principle, cause we just need
+  This has been violating the __Loose Coupling__ principle, cause we just need
   to expose an API docs of `ls-core-restful`
   to committers of other repositories,
 * The commit history of "Login page implementation" has to be
