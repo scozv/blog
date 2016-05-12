@@ -155,6 +155,15 @@ JB :
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
 
+compress_html:
+  clippings: all
+  comments: ["<!-- ", " -->"]
+  endings: all
+  ignore:
+    envs: [local]
+  blanklines: false
+  startings: [html, head, body]
+
 languages: ["zh", "en"]
 default_lang: "en"
 exclude_from_localization: ["assets", "img", "css"]
