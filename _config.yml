@@ -1,5 +1,5 @@
 # Jekyll 3
-gems: [jekyll-paginate, jekyll-gist]
+gems: [jekyll-paginate, jekyll-gist, jekyll-assets]
 
 # This is the default format.
 # For more see: http://jekyllrb.com/docs/permalinks/
@@ -31,11 +31,7 @@ author :
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt
 # Most places will/should use BASE_PATH to make the urls
-#
-# If you have set a CNAME (pages.github.com) set your custom domain here.
-# Else if you are pushing to username.github.io, replace with your username.
-# Finally if you are pushing to a GitHub project page, include the project name at the end.
-#
+
 production_url : https://scotv.github.io/blog
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
@@ -43,38 +39,12 @@ production_url : https://scotv.github.io/blog
 JB :
   version : 0.3.0
 
-  # All links will be namespaced by BASE_PATH if defined.
-  # Links in your website should always be prefixed with {{BASE_PATH}}
-  # however this value will be dynamically changed depending on your deployment situation.
-  #
-  # CNAME (http://yourcustomdomain.com)
-  #   DO NOT SET BASE_PATH
-  #   (urls will be prefixed with "/" and work relatively)
-  #
-  # GitHub Pages (http://username.github.io)
-  #   DO NOT SET BASE_PATH
-  #   (urls will be prefixed with "/" and work relatively)
-  #
   # GitHub Project Pages (http://username.github.io/project-name)
   #
   #   A GitHub Project site exists in the `gh-pages` branch of one of your repositories.
   #  REQUIRED! Set BASE_PATH to: http://username.github.io/project-name
-  #
-  # CAUTION:
-  #   - When in Localhost, your site will run from root "/" regardless of BASE_PATH
-  #   - Only the following values are falsy: ["", null, false]
-  #   - When setting BASE_PATH it must be a valid url.
-  #     This means always setting the protocol (http|https) or prefixing with "/"
-  BASE_PATH : https://scotv.github.io/blog
 
-  # By default, the asset_path is automatically defined relative to BASE_PATH plus the enabled theme.
-  # ex: [BASE_PATH]/assets/themes/[THEME-NAME]
-  #
-  # Override this by defining an absolute path to assets here.
-  # ex:
-  #   http://s3.amazonaws.com/yoursite/themes/watermelon
-  #   /assets
-  #
+  BASE_PATH : https://scotv.github.io/blog
   THEME_NAME : lanyon
   ASSET_PATH : /assets/themes/lanyon
 
@@ -95,15 +65,6 @@ JB :
     provider : disqus
     disqus :
       short_name : scotv
-#    livefyre :
-#      site_id : 123
-#    intensedebate :
-#      account : 123abc
-#    facebook :
-#      appid : 123
-#      num_posts: 5
-#      width: 580
-#      colorscheme: light
 
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
@@ -113,21 +74,7 @@ JB :
     provider : yandex
     yandex :
        tracking_id : '25680314'
-#   google :
-#       tracking_id : 'UA-***'
-#    googleUA :
-#        tracking_id : 'UA-35340941-5'
-#        property_name: 'scotv.github.io'
-#    getclicky :
-#      site_id :
-#    mixpanel :
-#        token : '_MIXPANEL_TOKEN_'
-#    piwik :
-#        baseURL : 'myserver.tld/piwik' # Piwik installation address (without protocol)
-#        idsite : '1'                   # the id of the site on Piwik
 
-  # Settings for sharing helper.
-  # Sharing is for things like tweet, plusone, like, reddit buttons etc.
   # Set 'provider' to the sharing provider you want to use.
   # Set 'provider' to false to turn sharing off globally.
   #
@@ -144,17 +91,31 @@ JB :
   pages_list:
     provider : custom
 
-  # Settings for all other include helpers can be defined by creating
-  # a hash with key named for the given helper. ex:
-  #
-  #   pages_list :
-  #     provider : "custom"
-  #
-  # Setting any helper's provider to 'custom' will bypass the helper code
-  # and include your custom code. Your custom file must be defined at:
-  #   ./_includes/custom/[HELPER]
-  # where [HELPER] is the name of the helper you are overriding.
 
+# jeykll-assets
+assets:
+  compress:
+    css: default
+    js: default
+  #
+  autowrite: true
+  prefix: "/assets"
+
+  #
+  assets:
+    - "*.png"
+    - "bundle.css"
+
+  #
+  sources:
+    - assets/css
+    - assets/img
+    - assets/impress
+    - assets/jquery
+    - assets/katex
+    - assets/themes
+
+# jekyll-polyglot
 languages: ["zh", "en"]
 default_lang: "en"
 exclude_from_localization: ["assets", "img", "css"]
