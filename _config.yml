@@ -112,7 +112,7 @@ JB :
   analytics :
     provider : yandex
     yandex :
-       tracking_id : '25680314'
+       tracking_id : '37468300'
 #   google :
 #       tracking_id : 'UA-***'
 #    googleUA :
