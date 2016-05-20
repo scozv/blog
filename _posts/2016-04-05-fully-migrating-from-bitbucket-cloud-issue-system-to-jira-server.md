@@ -201,7 +201,7 @@ Adding a JIRA link in repository setting will satisfy our request.
 
 * Go to repository setting, find the Integrations - Links:
 {% highlight html %}
-https://bitbucket.org/scotv/ls-core-restful/admin/links
+https://bitbucket.org/scozv/ls-core-restful/admin/links
 {% endhighlight %}
 
 * Click the JIRA icon,
@@ -253,7 +253,7 @@ Here is the script:
 {% highlight sh %}
 # The `sha1` of all commits will be rewritten (changed) in the step below;
 # Make backup and decision.
-git clone --no-hardlinks git@bitbucket.org:scotv/ls-core-restful.git
+git clone --no-hardlinks git@bitbucket.org:scozv/ls-core-restful.git
 git filter-branch -f --msg-filter \
     'sed "s/#\([0-9][0-9]*\)/LS-\1/g"'
 git reset --hard
