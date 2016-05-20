@@ -406,9 +406,9 @@ xelatex index.tex
 {% highlight tex %}
 \documentclass[a4paper]{book}
 
-% shortcut for scotv's github homepage
+% shortcut for scozv's github homepage
 \usepackage{hyperref}
-\newcommand{\scotv}{https://github.com/scotv}
+\newcommand{\scozv}{https://github.com/scozv}
 
 % shortcut for \ding{213}
 \newcommand{\To}{\ding{213}}

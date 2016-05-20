@@ -42,9 +42,9 @@ Node.js下面，全局变量叫`global` ，我们可以赋值（参考 [`./qunit
 
 更多内容，请参考英文版本。
 
-[1]: https://github.com/scotv/algo-js/issues/18 "issue #18"
-[2]: https://github.com/scotv/algo-js "Algo.js"
-[3]: https://github.com/scotv/algo-js/blob/master/qunit/q.js "a file named q.js"
+[1]: https://github.com/scozv/algo-js/issues/18 "issue #18"
+[2]: https://github.com/scozv/algo-js "Algo.js"
+[3]: https://github.com/scozv/algo-js/blob/master/qunit/q.js "a file named q.js"
 [4]: https://github.com/kof/node-qunit "node-qunit, Port of QUnit unit testing framework to nodejs"
 [5]: http://gruntjs.com/getting-started#package.json "grunt configuration on package.json"
 [6]: https://npmjs.org/package/grunt-node-qunit "Grunt task running node-qnuit"

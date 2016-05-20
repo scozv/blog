@@ -123,7 +123,7 @@ Read code in `graph.search.js` on [Algo.js] [1], and reference [this series of p
 
 <br />
 
-[1]: https://github.com/scotv/algo-js											"Algo.js"
+[1]: https://github.com/scozv/algo-js											"Algo.js"
 [2]: http://blog.moertel.com/posts/2013-05-11-recursive-to-iterative.html		"Recursive to Iterative by Tom Moertel"
-[3]: https://github.com/scotv/algo-js/issues/8						"Issue 8"
+[3]: https://github.com/scozv/algo-js/issues/8						"Issue 8"
 [4]: {% post_url 2013-11-23-how-to-write-iterative-tarjan-scc-algorithm-part-one %} "Tarjan, Part II"

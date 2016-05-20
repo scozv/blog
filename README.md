@@ -1,5 +1,5 @@
-[![Build Status](https://drone.io/github.com/scotv/blog/status.png)](https://drone.io/github.com/scotv/blog/latest)
+[![Build Status](https://drone.io/github.com/scozv/blog/status.png)](https://drone.io/github.com/scozv/blog/latest)
 
-https://scotv.github.io/blog/
+https://scozv.github.io/blog/
 
 Read the blog, not me.
