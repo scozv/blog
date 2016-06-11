@@ -27,3 +27,26 @@ ncu -u
 -- keep graphql as v0.5.0
 
 # Write the .gitlab-ci.yml
+
+# Debug in WebStorm
+
+MUST use node 5
+MUST use WebStorm 2016.1
+MUST read http://richb-hanover.com/debugging-webpack-apps-with-webstorm-2016-1/
+SET `--expose_debug_as=v8debug` from https://github.com/nodejs/node/issues/7102
+
+
+https://github.com/nodejs/node/issues/7102
+https://blog.jetbrains.com/webstorm/2015/09/debugging-webpack-applications-in-webstorm/
+
+# Read docs
+https://github.com/kriasoft/react-starter-kit/tree/feature/redux/docs
+
+# Write our mui 0.15.0 component
+
+MUST read http://www.material-ui.com/#/get-started/usage
+
+# GraphQL and mock
+
+MUST pass into the valid query string in `fetch()`
+SHOULD read http://graphql.org/blog/mocking-with-graphql/
