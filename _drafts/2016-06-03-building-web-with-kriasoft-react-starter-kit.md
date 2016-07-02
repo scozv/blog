@@ -7,6 +7,18 @@ tags: []
 ---
 {% include JB/setup %}
 
+# 摘要
+{:.no_toc}
+
+> 本文首先抛开具体的技术，描述了我对“登录”的理解。之后会介绍基于`Token`的认证方式
+>
+> This article will talk about what the LOGIN really is. And,
+> introduce the Token Based Authentication
+
+<!--more-->
+
+* Will be replaced with the ToC, excluding the "Contents" header
+{:toc}
 
 # Start with the feature/redux branch
 
