@@ -1,20 +1,24 @@
 ---
 layout: post
-title: "A Linear Branch Management with Git"
+title: "一套简洁的基于Git的线性分支管理工作流"
 description: ""
 category: "pattern"
-tags: ["Git","branch",""]
-lang: "zh"
+tags: ["Git","branch","rebase","merge","version"]
+lang: "en"
 ---
 {% include JB/setup %}
 
-# 摘要
+# Abstract
 {:.no_toc}
 
-> 本文首先抛开具体的技术，描述了我对“登录”的理解。之后会介绍基于`Token`的认证方式
 >
-> This article will talk about what the LOGIN really is. And,
-> introduce the Token Based Authentication
+> This article raises a Git branch management workflow, that is brief and linear,
+> inspired by `GitFlow` [^gitflow] and `Anti-GitFlow` [^gitflow_anti_01] [^gitflow_anti_02].
+>
+> The `gitl`, that has not been implemented yet, is not just interface-simplified,
+> but also manages the underlying branches simply.
+>
+> This article is mainly
 
 <!--more-->
 
@@ -23,24 +27,72 @@ lang: "zh"
 
 # 总体原则
 
-* 简单
+* 工作流背后的分支管理简洁明了
 * 设计一个可在团队中使用的tool或者命令行
-* 类似`git flow publish`那样，是`publish`到`remote`中，与`fork`与否无关
+* 该命令行的接口简单
 * 文章中提到的release，不包括release的配置文件
+* 该工作流包含了一套默认的版本命名规则，这样命令行的接口不需要手动指定版本
 
-# 还没有考虑的部分
+# 分支的最终效果图
 
-* 微服务架构下面，各个服务节点都这样控制分支和版本吗，是否繁琐？
-* 本文在未来的实践过程中，可能会更改
+我们想实现的版本管理效果如图，右边同步的一个分支`/release/3.2.0`叫做`sprint release`
+（见 **术语** 中对此的解释），
+在将来的讨论中，可能会取消这个分支：
 
-# 术语
+{% highlight raw %}
 
-## center-repo
+                             ^
+                             |
+                             |
+                             |                    
+                             |
+                             |                                                ^
+      ^   OR abort feature   |                                                |
+      | XXXXXXXXXXXXXXXXXXX> |                                                |
+      |                      |                                                |
+      |                      |  /release/3.0.0                                |
+      |                      +------------------->                            |
+      |                      |                                                |
+      |                      |                                                |
+      |  /feature/JIRA-404   |                                                |
+      +----------------------+                                                |
+                             |                                                |
+                             |             /release/2.0.1                     |
+                             |                   ^                            |
+                             |                   |                            |
+                             |                   |                            |
+                             |                   |                            |
+                             |                   | bugfix                     |
+                             |                   | on /2.0.0                  |
+      ^   accept feature     |                   | release                    |
+      | +------------------> |                   |                            |
+      |                      |  /release/2.0.0   |                            |
+      |                      +-------------------+                            |
+      |                      |                                                |
+      |  /feature/JIRA-200   |                                                |
+      +----------------------+                                                |
+                             |                                                |
+                             |                                                |
+                             |                                                |
+                             |                                                |
+                             |  /release/1.0.0                                |
+                             +-------------------+                            +
+
+                          /master                                 /release/3.2.0
+                                                            [will explain later]
+{% endhighlight %}
+
+
+# 不同的场景
+
+## 术语
+
+### center-repo
 
 用作发布的中心源代码库，一般会被`fork`。
 中心库的管理比较严格，通常不接受代码提交，只接受代码的合并（PR Merge）。
 
-## fork-repo
+### fork-repo
 
 每一个开发人员从中心库`center-repo`那边`fork`代码。
 
@@ -49,7 +101,7 @@ lang: "zh"
 * `origin`，默认的`fork-repo`地址；
 * `center`，中心库的地址，用于将中心库的更新`rebase`到开发人员的`fork-repo`上面
 
-## 三种release
+### 三种release
 
 可能采取的版本管理（三位版本），从左到右：
 
@@ -72,21 +124,15 @@ lang: "zh"
 * bugfix release，对应末位版本号，基于某一个特定地public release的后续发布，
   将版本号作为新的`branch`名称，删除上一个`public release`的分支，同时记录`tags`
 
-# 想要实现的效果
-
-见图
+## 场景解释
 
 具体而言，有如下的几个场景：
 
-## 使用tags标记版本
-
-通常每一个release都会有对应的`tag`与之对应。
-
-## 在master上面常规开发
+### 在master上面常规开发
 
 * 开发人员在各自的`fork－repo`上面提交代码，关联JIRA ticket
 
-## 开启实验性质的feature分支
+### 开启实验性质的feature分支
 
 * 默认基于`master`
 * 在`center-repo`上开启分支，可用`feature/JIRA-404`命名，或者
@@ -107,16 +153,12 @@ lang: "zh"
 * 合并节点标记`tag`，同`branch`名称一致
 * `center-repo`删除当前分支
 
-## 在master上面处理常规的bugfix
+### 在master上面处理常规的bugfix
 
 * 默认基于`master`
 * 某位开发在自己的`fork-repo`上面开启bugfix分支，以`bugfix/JIRA-404`格式命名
 * 完成修复之后
 * 合并bugfix分支到`fork-repo`的master上面， 删除本地的 bugfix分支
-
-## 准备release
-
-如下，介绍三种release的git工作流
 
 ### public release
 
@@ -166,17 +208,19 @@ sprint release分支，是分别命名，还是统一命名为`release/sprint`�
 * 删除`release/n.0.k`分支
 * 保留`release/n.0.k+1`分支
 
-## 特定版本的bugfix应用到master上面
+### 特定版本的bugfix应用到master上面
 
 需要考虑是通过patch的方式，还是rebase的方式将bugfix应用到master上面。
 
-# 使用GitFlow实现上述场景
+## GitFlow or Anti-GitFlow
 
-# 为什么不使用GitFlow
+### 使用GitFlow实现上述场景
 
-# Pure Git
+### 为什么不使用GitFlow
 
-## 在master上面常规开发
+## 不同场景的原始Git命令
+
+### 在master上面常规开发
 
 {% highlight bash %}
 git checkout master
@@ -185,7 +229,7 @@ git commit -avm 'JIRA-404 regular development'
 git push
 {% endhighlight %}
 
-## 开启实验性质的feature分支
+### 开启实验性质的feature分支
 
 {% highlight bash %}
 git checkout master
@@ -217,7 +261,7 @@ git branch -d feature/JIRA-404
 git push origin :feature/JIRA-404
 {% endhighlight %}
 
-## 在master上面处理常规的bugfix
+### 在master上面处理常规的bugfix
 
 {% highlight bash %}
 # 默认基于`master`
@@ -225,8 +269,6 @@ git push origin :feature/JIRA-404
 # 完成修复之后
 # 合并bugfix分支到`fork-repo`的master上面， 删除本地的bugfix分支
 {% endhighlight %}
-
-## 准备release
 
 ### public release
 
@@ -288,17 +330,71 @@ git branch -d release/n.0.k
 git push origin :release/n.0.k
 {% endhighlight %}
 
-## 特定版本的bugfix应用到master上面
+### 特定版本的bugfix应用到master上面
 
 需要考虑是通过patch的方式，还是rebase的方式将bugfix应用到master上面。
 
-# 以gitl为名封装此套工作流
+# 以`gitl`为名封装此套工作流
 
-计划用gitl命名上述工作流，接口如下：
+计划用gitl命名上述工作流，接口如下，参考了`GitFlow`的接口风格。
 
+未来实现该接口之后，将会开源。
+
+## `gitl develop` 在master上面常规开发
+
+{% highlight bash %}
+gitl develop { nil | start }
+{% endhighlight %}
+
+## `gitl feature` 处理实验性质的feature分支
+
+定义了开始、放弃和接受feature。
+
+{% highlight bash %}
+gitl feature start [feature_name] { master | [branch_based_on] }
+gitl feature abort [feature_name]
+gitl feature finish [feature_name]
+{% endhighlight %}
+
+## `gitl bugfix` 在master或release分支上处理bugfix
+
+{% highlight bash %}
+gitl bugfix start [bugfix_name] { master | [branch_based_on] }
+gitl bugfix abort [bugfix_name]
+gitl bugfix finish [bugfix_name]
+{% endhighlight %}
+
+## `gitl release` 准备release
+
+该接口需要控制权限。
+
+如果`[release_number]`为空，则基于默认的版本命名规则。
+
+不建议传递版本编号，建议使用默认的版本命名规则。
+
+{% highlight bash %}
+gitl release { -P | -S | -B } start { [release_number] }
+gitl release { -P | -S | -B } abort { [release_number] }
+gitl release { -P | -S | -B } finish { [release_number] }
+{% endhighlight %}
 
 # 和CI集成
+
 ## 提交并测试
+
 ## 提交并发布
 
 # 总结
+
+这些问题还需要继续思考：
+
+* 微服务架构下面，各个服务节点都这样控制分支和版本吗，是否繁琐？
+* 本文在未来的实践过程中，可能会更改。
+* 本文提到的工作流，是否和`fork`冲突，参考Atlassian的 _Comparing Workflows_ [^atl_comp_workf] ？
+
+# 参考文献
+
+[^gitflow]: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/) by Vincent Driessen, Jan 05, 2010
+[^gitflow_anti_01]: [http://endoflineblog.com/gitflow-considered-harmful](http://endoflineblog.com/gitflow-considered-harmful) by Adam Ruka, May 03, 2015
+[^gitflow_anti_02]: [Follow-up to 'GitFlow considered harmful'](http://endoflineblog.com/follow-up-to-gitflow-considered-harmful) by Adam Ruka, Jun 20, 2015
+[^atl_comp_workf]: [Comparing Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows/) by Atlassian
