@@ -394,6 +394,6 @@ gitl release { -P | -S | -B } finish { [release_number] }
 # 参考文献
 
 [^gitflow]: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/) by Vincent Driessen, Jan 05, 2010
-[^gitflow_anti_01]: [http://endoflineblog.com/gitflow-considered-harmful](http://endoflineblog.com/gitflow-considered-harmful) by Adam Ruka, May 03, 2015
+[^gitflow_anti_01]: [GitFlow considered harmful](http://endoflineblog.com/gitflow-considered-harmful) by Adam Ruka, May 03, 2015
 [^gitflow_anti_02]: [Follow-up to 'GitFlow considered harmful'](http://endoflineblog.com/follow-up-to-gitflow-considered-harmful) by Adam Ruka, Jun 20, 2015
 [^atl_comp_workf]: [Comparing Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows/) by Atlassian
