@@ -95,7 +95,7 @@ the `_layout` folder is used for:
 Read the source code of any `html` file in `_layout` folder, and notice that:
 
 * a variable named `layout.theme.name` has been defined in these `html` files, and it may be used for Jekyll 3.
-  see [issue #15](https://github.com/scotv/scotv.github.com/issues/15#issuecomment-195689664),
+  see [issue #15](https://github.com/scozv/scozv.github.com/issues/15#issuecomment-195689664),
 * make sure the path correct in `{ % include % }`.
 
 ### `./_includes/JB/*`, the Utilities Scripts as the HTML Rendering Helper
@@ -125,19 +125,19 @@ to install. The steps below based on my previous site.
 0. put `hyde/public` into your `./assets/themes/hyde/`,
 0. put `hyde/_layout` into your `./_includes/themes/hyde/`,
 0. also put `hyde/_includes` into your `./_includes/themes/hyde/`,
-0. see commit [235f6f6b3039](https://github.com/scotv/scotv.github.com/commit/235f6f6b303988a2208404ea071c9b2c05a97031?diff=split)
+0. see commit [235f6f6b3039](https://github.com/scozv/scozv.github.com/commit/235f6f6b303988a2208404ea071c9b2c05a97031?diff=split)
    for files including,
 0. compare the existing theme folder with `hyde` to determine the changes on `hyde` layout, for me,
    I compared `./_includes/theme/bootstrap` with `./_includes/theme/hyde`,
 0. do a code review of `./_includes/theme/hyde` based on your comparasion, make sure you merge the existing layout and
    correct path into `Hyde` theme, see my commit
-   [1b2f41a3](https://github.com/scotv/scotv.github.com/commit/1b2f41a34f3a81e7789a4dcaf4750163ef7fda28),
+   [1b2f41a3](https://github.com/scozv/scozv.github.com/commit/1b2f41a34f3a81e7789a4dcaf4750163ef7fda28),
 0. change the theme name in `_config.yml`, see my commit
-   [4743d50a](https://github.com/scotv/scotv.github.com/commit/4743d50aa0a04456005b1ced9c480880e342dd69),
+   [4743d50a](https://github.com/scozv/scozv.github.com/commit/4743d50aa0a04456005b1ced9c480880e342dd69),
 0. customize your site, see
-   * git commit -m '[change on footer](https://github.com/scotv/scotv.github.com/commit/b3c26850d164f77485e1c3cd041a61680cffc92c)',
-   * git commit -m '[enhanced related_posts](https://github.com/scotv/scotv.github.com/commit/4291fdc0dc42ad18d5fd72c1fbf2fd92d6a60fd9)',
-   * git commit -m '[tags and about](https://github.com/scotv/scotv.github.com/commit/89e9d8fdd22780d714f5fe12ae2180be0e5c1074)'.
+   * git commit -m '[change on footer](https://github.com/scozv/scozv.github.com/commit/b3c26850d164f77485e1c3cd041a61680cffc92c)',
+   * git commit -m '[enhanced related_posts](https://github.com/scozv/scozv.github.com/commit/4291fdc0dc42ad18d5fd72c1fbf2fd92d6a60fd9)',
+   * git commit -m '[tags and about](https://github.com/scozv/scozv.github.com/commit/89e9d8fdd22780d714f5fe12ae2180be0e5c1074)'.
 0. test and release.
 
 # Conclusions

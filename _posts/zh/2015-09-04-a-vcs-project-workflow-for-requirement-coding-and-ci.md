@@ -213,7 +213,7 @@ https://c9.io
   * 必要的会议记录
   * 所有的需求文档
   * 其它
-* 有能力的团队，可以使用`LaTeX`来编写文档，参考[此处](http://scotv.github.io/help/2015/08/12/introduction-of-building-documents-with-latex)
+* 有能力的团队，可以使用`LaTeX`来编写文档，参考[此处](http://scozv.github.io/help/2015/08/12/introduction-of-building-documents-with-latex)
 * 所有的源代码
 * 必要的配置文件，注意区分开发环境和生产环境，同时，注意生产配置的保密
 

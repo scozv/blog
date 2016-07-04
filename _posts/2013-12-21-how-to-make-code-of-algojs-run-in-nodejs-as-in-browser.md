@@ -118,7 +118,7 @@ A little attention we should pay on is we may face an error on ubuntu says:
 See [here] [8] to fix it.
 
 ## Drone.io
-[![Build Status](https://drone.io/github.com/scotv/algo-js/status.png)](https://drone.io/github.com/scotv/algo-js/latest)
+[![Build Status](https://drone.io/github.com/scozv/algo-js/status.png)](https://drone.io/github.com/scozv/algo-js/latest)
 
 The web [drone.io] [7] is an online CI service. There are other options of online CI.
 Some advantages of drone.io are:
@@ -137,9 +137,9 @@ I am going to fix [issue #18] [1].
 
 <br />
 
-[1]: https://github.com/scotv/algo-js/issues/18 "issue #18"
-[2]: https://github.com/scotv/algo-js "Algo.js"
-[3]: https://github.com/scotv/algo-js/blob/master/qunit/q.js "a file named q.js"
+[1]: https://github.com/scozv/algo-js/issues/18 "issue #18"
+[2]: https://github.com/scozv/algo-js "Algo.js"
+[3]: https://github.com/scozv/algo-js/blob/master/qunit/q.js "a file named q.js"
 [4]: https://github.com/kof/node-qunit "node-qunit, Port of QUnit unit testing framework to nodejs"
 [5]: http://gruntjs.com/getting-started#package.json "grunt configuration on package.json"
 [6]: https://npmjs.org/package/grunt-node-qunit "Grunt task running node-qnuit"

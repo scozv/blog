@@ -23,8 +23,8 @@ tagline: Any Thoughts During Code this
 # description:
 author :
   name : "Scott"
-  email : scotv@yandex.com
-  github : https://github.com/scotv
+  email : scozv@yandex.com
+  github : https://github.com/scozv
 #  twitter : username
 #  feedburner : feedname
 
@@ -36,7 +36,7 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : https://scotv.github.io/blog
+production_url : https://scozv.github.io/blog
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
@@ -65,7 +65,7 @@ JB :
   #   - Only the following values are falsy: ["", null, false]
   #   - When setting BASE_PATH it must be a valid url.
   #     This means always setting the protocol (http|https) or prefixing with "/"
-  BASE_PATH : https://scotv.github.io/blog
+  BASE_PATH : https://scozv.github.io/blog
 
   # By default, the asset_path is automatically defined relative to BASE_PATH plus the enabled theme.
   # ex: [BASE_PATH]/assets/themes/[THEME-NAME]
@@ -94,7 +94,7 @@ JB :
   comments :
     provider : disqus
     disqus :
-      short_name : scotv
+      short_name : scozv
 #    livefyre :
 #      site_id : 123
 #    intensedebate :
@@ -112,12 +112,12 @@ JB :
   analytics :
     provider : yandex
     yandex :
-       tracking_id : '25680314'
+       tracking_id : '37468300'
 #   google :
 #       tracking_id : 'UA-***'
 #    googleUA :
 #        tracking_id : 'UA-35340941-5'
-#        property_name: 'scotv.github.io'
+#        property_name: 'scozv.github.io'
 #    getclicky :
 #      site_id :
 #    mixpanel :

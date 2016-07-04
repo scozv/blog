@@ -209,14 +209,13 @@ div.post > h1[id] {
 }
 
 div.post > h2[id] {
-  font-size: 1.01rem;
+  font-size: 1.27rem;
   font-weight: 11;
-  font-style: italic;
 }
 
 div.post > h3[id] {
   font-size: 1.01rem;
-  font-weight:100;
+  font-weight:bold;
   font-style:italic;
 }
 
