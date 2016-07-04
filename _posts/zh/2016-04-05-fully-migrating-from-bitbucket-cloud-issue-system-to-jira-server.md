@@ -73,7 +73,7 @@ lang: zh
 # 警告：如下的代码将会重写所有的历史commits信息
 # 警告：如下的代码将会重写所有的历史commits信息
 # 警告：如下的代码将会重写所有的历史commits信息
-git clone --no-hardlinks git@bitbucket.org:scotv/ls-core-restful.git
+git clone --no-hardlinks git@bitbucket.org:scozv/ls-core-restful.git
 git filter-branch -f --msg-filter \
     'sed "s/#\([0-9][0-9]*\)/LS-\1/g"'
 git reset --hard
