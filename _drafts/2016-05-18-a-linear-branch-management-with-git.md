@@ -31,6 +31,7 @@ lang: "zh"
 # 还没有考虑的部分
 
 * 微服务架构下面，各个服务节点都这样控制分支和版本吗，是否繁琐？
+* 本文在未来的实践过程中，可能会更改
 
 # 术语
 
@@ -64,7 +65,7 @@ lang: "zh"
 * bugfix release，对应末位版本号，基于某一个特定地public release的后续发布，
   将版本号作为新的`branch`名称，删除上一个`public release`的分支，同时记录`tags`
 
-对于各自的分支而言：
+对于各自的分支而言（待完善，通过图形来表示，见笔记本）：
 
 * public release，源代码中保留`branch`，不合并到`master`，该分支只保留bump version等信息
 * sprint release，源代码中只保留一个sprint release分支，master的迭代更改，将`rebase`到这个分支上面
@@ -106,7 +107,7 @@ lang: "zh"
 * 合并节点标记`tag`，同`branch`名称一致
 * `center-repo`删除当前分支
 
-### 在master上面处理常规的bugfix
+## 在master上面处理常规的bugfix
 
 * 默认基于`master`
 * 某位开发在自己的`fork-repo`上面开启bugfix分支，以`bugfix/JIRA-404`格式命名
@@ -119,18 +120,36 @@ lang: "zh"
 
 ### public release
 
+我们保留每一个public release的分支，具体步骤为：
+
 * 默认基于`master`
 * 在`center-repo`上开启分支，以待发布版本编号命名分支
 * bump version，更新ChangeLog
 * 发布，并测试
-* `center-repo`合并当前release到`master`
-* 在合并节点，使用tag标记版本，以版本编号为tag命名
-* 如果是public release，保留该分支，以便未来基于该分支，作特定版本的bugfix修改
-* 如果仅仅是迭代release，删除该分支
+* 使用tag标记版本，以版本编号为tag命名
+* `center-repo`将当前release更改rebase到`master`
+* 保留release分支
 
-## 在release的版本上做特定的bugfix
+### sprint release
 
-* 默认基于特定的`release`分支
+我们只保留一个sprint release的分支，具体步骤为：
+
+* 将master的更改rebase到上一个sprint release分支，比如release/n.m.0
+* 基于release/n.m.0，创建分支release/n.m+1.0
+* 在新分支上面，bump version等
+* 发布，并测试
+* 使用tag标记版本，以版本编号为tag命名
+* `center-repo`将当前release更改rebase到`master`
+* 删除`release/n.m.0`分支
+* 保留`release/n.m+1.0`分支
+
+sprint release分支，是分别命名，还是统一命名为`release/sprint`——待定。
+
+### bugfix release
+
+仅在public release的版本上做特定的bugfix，具体步骤为：
+
+* 默认基于特定的public release分支
 * 在`center-repo`上开启bugfix分支，以JIRA编号命名分支，比如`bugfix/JIRA-404`
 * 测试，并确认bugfix状态
 * 合并bugfix分支到特定的`release`分支， 删除bugfix分支
@@ -142,8 +161,8 @@ lang: "zh"
 * 基于原有的release，创建下一个发布的分支，比如`release/n.0.k+1`
 * bump version，更新ChangeLog
 * 发布，并测试
-* `center-repo`合并当前`release/n.0.k+1`到`release/n.0.k`
-* 在合并节点，使用tag标记版本，以版本编号（vn.0.k+1）为tag命名
+* 使用tag标记版本，以版本编号为tag命名
+* `center-repo`将当前release更改rebase到`master`
 * 删除`release/n.0.k`分支
 * 保留`release/n.0.k+1`分支
 
@@ -207,7 +226,9 @@ git push origin :feature/JIRA-404
 # 合并bugfix分支到`fork-repo`的master上面， 删除本地的bugfix分支
 {% endhighlight %}
 
-## 开始准备release
+## 准备release
+
+### public release
 
 {% highlight bash %}
 git checkout master
@@ -216,22 +237,36 @@ git checkout release/n.m.0
 # bump version, update ChangeLog
 # publi.sh
 git commit -avm 'JIRA-404 description of n.m.0'
-git checkout master
-git merge release/n.m.0
 git tag -a n.m.0 -m 'JIRA-404 release of n.m.0'
-# delete release branch when it is the sprint release
+git checkout master
+git rebase release/n.m.0
+{% endhighlight %}
+
+###  sprint release
+
+{% highlight bash %}
+git checkout release/n.m.0
+git rebase master
+git branch release/n.m+1.0
+git checkout release/n.m+1.0
+# bump version, update ChangeLog
+# publi.sh
+git commit -avm 'JIRA-404 description of n.m+1.0'
+git tag -a n.m+1.0 -m 'JIRA-404 release of n.m.0'
+git checkout master
+git rebase release/n.m+1.0
 git branch -d release/n.m.0
 git push origin :release/n.m.0
 {% endhighlight %}
 
-## 在release的版本上做特定的bugfix
+### bugfix release
 
 {% highlight bash %}
 git checkout release/n.m.k
 git branch bugfix/JIRA-404
-git checkout bugfix/JIRA-404z
+git checkout bugfix/JIRA-404
 # fix and test
-git checkout checkout release/n.m.k
+git checkout release/n.m.k
 git merge bugfix/JIRA-404
 git branch -d bugfix/JIRA-404
 git push origin :bugfix/JIRA-404
@@ -243,29 +278,26 @@ git push origin :bugfix/JIRA-404
 git checkout release/n.0.k
 git branch release/n.0.k+1
 git checkout release/n.0.k+1
-# bump version，更新ChangeLog
-# 发布，并测试
-
+# bump version, update ChangeLog
+# publi.sh
+git commit -avm 'JIRA-404 description of n.0.k+1'
+git tag -a n.0.k+1 -m 'JIRA-404 release of n.0.k+1'
+git checkout master
+git rebase release/n.0.k+1
+git branch -d release/n.0.k
+git push origin :release/n.0.k
 {% endhighlight %}
-
-* 切换到特定的release版本，令其为`release/n.0.k`
-* 注意：此时的release的`HEAD`已经包含了，该特定分支上作过的bugfix了
-* 基于原有的release，创建下一个发布的分支，比如`release/n.0.k+1`
-* bump version，更新ChangeLog
-* 发布，并测试
-* `center-repo`合并当前`release/n.0.k+1`到`release/n.0.k`
-* 在合并节点，使用tag标记版本，以版本编号（vn.0.k+1）为tag命名
-* 删除`release/n.0.k`分支
-* 保留`release/n.0.k+1`分支
 
 ## 特定版本的bugfix应用到master上面
 
 需要考虑是通过patch的方式，还是rebase的方式将bugfix应用到master上面。
 
-# 封装，取名叫gitl
+# 以gitl为名封装此套工作流
+
+计划用gitl命名上述工作流，接口如下：
+
 
 # 和CI集成
-
 ## 提交并测试
 ## 提交并发布
 
