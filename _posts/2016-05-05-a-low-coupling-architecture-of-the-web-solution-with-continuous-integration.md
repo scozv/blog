@@ -21,8 +21,7 @@ lang: en
 <!--more-->
 
 
-The Loose Coupling Architecture can be explained as below
-(drawn with [ASCIIFlow Infinity](http://asciiflow.com/)):
+The Loose Coupling Architecture can be explained as below:
 
     ####################################  scenario 01, entire node
 
