@@ -3,7 +3,7 @@ layout: post
 title: "一套简洁的基于Git的线性分支管理工作流"
 description: ""
 category: "pattern"
-tags: ["Git","branch","rebase","merge","version"]
+tags: ["git","branch","rebase","merge","version"]
 lang: "zh"
 ---
 {% include JB/setup %}
@@ -81,17 +81,60 @@ lang: "zh"
                                                             [will explain later]
 {% endhighlight %}
 
+# `gitl`，基于该工作流的接口设计
 
-# 不同的场景
+计划用gitl命名上述工作流，接口如下，参考了`GitFlow`的接口风格。
 
-## 术语
+未来实现该接口之后，将会开源。
 
-### center-repo
+## `gitl develop` 在master上面常规开发
+
+{% highlight bash %}
+gitl develop { nil | start }
+{% endhighlight %}
+
+## `gitl feature` 处理实验性质的feature分支
+
+定义了开始、放弃和接受feature。
+
+{% highlight bash %}
+gitl feature start [feature_name] { master | [branch_based_on] }
+gitl feature abort [feature_name]
+gitl feature finish [feature_name]
+{% endhighlight %}
+
+## `gitl bugfix` 在master或release分支上处理bugfix
+
+{% highlight bash %}
+gitl bugfix start [bugfix_name] { master | [branch_based_on] }
+gitl bugfix abort [bugfix_name]
+gitl bugfix finish [bugfix_name]
+{% endhighlight %}
+
+## `gitl release` 准备release
+
+该接口需要控制权限。
+
+如果`[release_number]`为空，则基于默认的版本命名规则。
+
+不建议传递版本编号，建议使用默认的版本命名规则。
+
+{% highlight bash %}
+gitl release { -P | -S | -B } start { [release_number] }
+gitl release { -P | -S | -B } abort { [release_number] }
+gitl release { -P | -S | -B } finish { [release_number] }
+{% endhighlight %}
+
+# 基于Git版本管理的几个开发场景
+
+## 术语表
+
+**center-repo**
 
 用作发布的中心源代码库，一般会被`fork`。
 中心库的管理比较严格，通常不接受代码提交，只接受代码的合并（PR Merge）。
 
-### fork-repo
+**fork-repo**
 
 每一个开发人员从中心库`center-repo`那边`fork`代码。
 
@@ -100,7 +143,7 @@ lang: "zh"
 * `origin`，默认的`fork-repo`地址；
 * `center`，中心库的地址，用于将中心库的更新`rebase`到开发人员的`fork-repo`上面
 
-### 三种release
+**三种release**
 
 可能采取的版本管理（三位版本），从左到右：
 
@@ -123,7 +166,7 @@ lang: "zh"
 * bugfix release，对应末位版本号，基于某一个特定地public release的后续发布，
   将版本号作为新的`branch`名称，删除上一个`public release`的分支，同时记录`tags`
 
-## 场景解释
+## 场景描述
 
 具体而言，有如下的几个场景：
 
@@ -161,6 +204,40 @@ lang: "zh"
 
 ### public release
 
+{% highlight raw %}
+  step 1                                  step 2
+
+    ^                                       ^
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       | rebase back
+    |             ^                         | to master   ^
+    |             |                         | <-----------# tag n.0.0
+    |             # release                 |             |
+    |             |                         |             |
+    |             |                         |             |
+    |             |                         |             |
+    |             # bump version            |             # bump version
+    |             |                         |             |
+    |             |                         |             |
+    +-------------+                         +-------------+
+    |                                       |
+    |      /release/n.0.0                   |      /release/n.0.0
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    +                                       +
+
+ /master                                 /master
+
+{% endhighlight %}
+
 我们保留每一个public release的分支，具体步骤为：
 
 * 默认基于`master`
@@ -172,6 +249,41 @@ lang: "zh"
 * 保留release分支
 
 ### sprint release
+
+{% highlight raw %}
+
+step 1                 step 2                 step 3
+
+  ^                      ^                      ^
+  |                      |                      | rebase back
+  |                      |             ^        | to master   ^
+  |                      |             |        | <-----------# tag n. m+1 .0
+  |                      |             |        |             |
+  | rebase to            |             # bump   |             # bump version
+  | sprint release       |             |        |             |
+  |             ^        |  ^          |        |             |
+  | +---------> |        |  +----------+        |             |
+  |             |        |  | /release/n.m+1.0  |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  +-------------+        +--+                   +-------------+
+  |  /release/n.m.0      | /n.m.0               |     /release/n. m+1 .0
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  +                      +                      +
+
+/master                /master                /master
+
+{% endhighlight %}
 
 我们只保留一个sprint release的分支，具体步骤为：
 
@@ -187,6 +299,41 @@ lang: "zh"
 sprint release分支，是分别命名，还是统一命名为`release/sprint`——待定。
 
 ### bugfix release
+
+{% highlight raw %}
+
+step 1                 step 2                 step 3
+
+  ^                      ^                      ^
+  |                      |                      | rebase back
+  |                      |             ^        | to master   ^
+  |                      |             |        | <-----------# tag n.0.k+1
+  | bugfix release       |             |        |             |
+  | is ONLY for          |             # bump   |             # bump version
+  | public release       |             |        |             |
+  |             ^        |  ^          |        |             |
+  | +---------> |        |  +----------+        |             |
+  |             |        |  | /release/n.0.k+1  |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  # bugfix 2          |             # bugfix 2
+  |             |        |  |                   |             |
+  |             |        |  # bugfix 1          |             # bugfix 1
+  |             |        |  |                   |             |
+  +-------------+        +--+                   +-------------+
+  |  /release/n.0.k      | /n.0.k               |     /release/n.0.k+1
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  +                      +                      +
+
+/master                /master                /master
+
+{% endhighlight %}
 
 仅在public release的版本上做特定的bugfix，具体步骤为：
 
@@ -210,12 +357,6 @@ sprint release分支，是分别命名，还是统一命名为`release/sprint`�
 ### 特定版本的bugfix应用到master上面
 
 需要考虑是通过patch的方式，还是rebase的方式将bugfix应用到master上面。
-
-## GitFlow or Anti-GitFlow
-
-### 使用GitFlow实现上述场景
-
-### 为什么不使用GitFlow
 
 ## 不同场景的原始Git命令
 
@@ -333,49 +474,12 @@ git push origin :release/n.0.k
 
 需要考虑是通过patch的方式，还是rebase的方式将bugfix应用到master上面。
 
-# 以`gitl`为名封装此套工作流
 
-计划用gitl命名上述工作流，接口如下，参考了`GitFlow`的接口风格。
+# GitFlow or Anti-GitFlow
 
-未来实现该接口之后，将会开源。
+## 使用GitFlow实现上述场景
 
-## `gitl develop` 在master上面常规开发
-
-{% highlight bash %}
-gitl develop { nil | start }
-{% endhighlight %}
-
-## `gitl feature` 处理实验性质的feature分支
-
-定义了开始、放弃和接受feature。
-
-{% highlight bash %}
-gitl feature start [feature_name] { master | [branch_based_on] }
-gitl feature abort [feature_name]
-gitl feature finish [feature_name]
-{% endhighlight %}
-
-## `gitl bugfix` 在master或release分支上处理bugfix
-
-{% highlight bash %}
-gitl bugfix start [bugfix_name] { master | [branch_based_on] }
-gitl bugfix abort [bugfix_name]
-gitl bugfix finish [bugfix_name]
-{% endhighlight %}
-
-## `gitl release` 准备release
-
-该接口需要控制权限。
-
-如果`[release_number]`为空，则基于默认的版本命名规则。
-
-不建议传递版本编号，建议使用默认的版本命名规则。
-
-{% highlight bash %}
-gitl release { -P | -S | -B } start { [release_number] }
-gitl release { -P | -S | -B } abort { [release_number] }
-gitl release { -P | -S | -B } finish { [release_number] }
-{% endhighlight %}
+## 为什么不使用GitFlow
 
 # 和CI集成
 
@@ -383,7 +487,7 @@ gitl release { -P | -S | -B } finish { [release_number] }
 
 ## 提交并发布
 
-# 总结
+# 后续
 
 这些问题还需要继续思考：
 

@@ -3,7 +3,7 @@ layout: post
 title: "A Linear Branch Management With Git"
 description: ""
 category: "pattern"
-tags: ["Git","branch","rebase","merge","version"]
+tags: ["git","branch","rebase","merge","version"]
 lang: "en"
 ---
 {% include JB/setup %}
@@ -86,56 +86,178 @@ This kind of release may be removed in practice.
 {% endhighlight %}
 
 
+# `gitl`, An Interface for Linear GitFlow Workflow
+
+This interface has not implemented yet, and the specification of this interface
+is inspired by `GitFlow`.
+
+## `gitl develop`, Developing in `master`
+
+{% highlight bash %}
+gitl develop { nil | start }
+{% endhighlight %}
+
+## `gitl feature` , Handling the `feature`
+
+定义了开始、放弃和接受feature。
+
+{% highlight bash %}
+gitl feature start [feature_name] { master | [branch_based_on] }
+gitl feature abort [feature_name]
+gitl feature finish [feature_name]
+{% endhighlight %}
+
+## `gitl bugfix` , Fixing Bug in `bugfix`
+
+{% highlight bash %}
+gitl bugfix start [bugfix_name] { master | [branch_based_on] }
+gitl bugfix abort [bugfix_name]
+gitl bugfix finish [bugfix_name]
+{% endhighlight %}
+
+## `gitl release` , For Our Three Kind of `release`
+
+该接口需要控制权限。
+
+如果`[release_number]`为空，则基于默认的版本命名规则。
+
+不建议传递版本编号，建议使用默认的版本命名规则。
+
+{% highlight bash %}
+gitl release { -P | -S | -B } start { [release_number] }
+gitl release { -P | -S | -B } abort { [release_number] }
+gitl release { -P | -S | -B } finish { [release_number] }
+{% endhighlight %}
+
 # Scenario that need different branches
 
-## Term
+## Branch Management for 3 Kind of Releases
 
-We name our version as n.m.k, where:
+We name our version as `n.m.k`, where:
 
-* n, indicates the public release,
-* m, for sprint release, and
-* k, for bugfix release
+* `n`, indicates the public release,
+* `m`, for sprint release, and
+* `k`, for bugfix release, that is only applied for previous public release.
 
 ### Public Release
 
 After one or two mouth, we release to public.
 
+
+{% highlight raw %}
+  step 1                                  step 2
+
+    ^                                       ^
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       | rebase back
+    |             ^                         | to master   ^
+    |             |                         | <-----------# tag n.0.0
+    |             # release                 |             |
+    |             |                         |             |
+    |             |                         |             |
+    |             |                         |             |
+    |             # bump version            |             # bump version
+    |             |                         |             |
+    |             |                         |             |
+    +-------------+                         +-------------+
+    |                                       |
+    |      /release/n.0.0                   |      /release/n.0.0
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    |                                       |
+    +                                       +
+
+ /master                                 /master
+
+{% endhighlight %}
+
 ### Sprint Release
 
 At each end of sprint, we release the sprint for internal demo.
+
+
+{% highlight raw %}
+
+step 1                 step 2                 step 3
+
+  ^                      ^                      ^
+  |                      |                      | rebase back
+  |                      |             ^        | to master   ^
+  |                      |             |        | <-----------# tag n. m+1 .0
+  |                      |             |        |             |
+  | rebase to            |             # bump   |             # bump version
+  | sprint release       |             |        |             |
+  |             ^        |  ^          |        |             |
+  | +---------> |        |  +----------+        |             |
+  |             |        |  | /release/n.m+1.0  |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  +-------------+        +--+                   +-------------+
+  |  /release/n.m.0      | /n.m.0               |     /release/n. m+1 .0
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  +                      +                      +
+
+/master                /master                /master
+
+{% endhighlight %}
 
 ### Bugfix Release
 
 Will fix some bug in specific public release.
 
-### 三种release
+{% highlight raw %}
 
+step 1                 step 2                 step 3
+
+  ^                      ^                      ^
+  |                      |                      | rebase back
+  |                      |             ^        | to master   ^
+  |                      |             |        | <-----------# tag n.0.k+1
+  | bugfix release       |             |        |             |
+  | is ONLY for          |             # bump   |             # bump version
+  | public release       |             |        |             |
+  |             ^        |  ^          |        |             |
+  | +---------> |        |  +----------+        |             |
+  |             |        |  | /release/n.0.k+1  |             |
+  |             |        |  |                   |             |
+  |             |        |  |                   |             |
+  |             |        |  # bugfix 2          |             # bugfix 2
+  |             |        |  |                   |             |
+  |             |        |  # bugfix 1          |             # bugfix 1
+  |             |        |  |                   |             |
+  +-------------+        +--+                   +-------------+
+  |  /release/n.0.k      | /n.0.k               |     /release/n.0.k+1
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  |                      |                      |
+  +                      +                      +
+
+/master                /master                /master
+
+{% endhighlight %}
 
 ## Scenario
-
-具体而言，有如下的几个场景：
-
-### Regular Developing in `master`
-
-### Open the `feature` for experiment
-
-### Doing `bugfix` in `master`
-
-### public release
-
-### sprint release
-
-### bugfix release
-
-### Apply `bugfix` to `master`
-
-## GitFlow or Anti-GitFlow
-
-### Using GitFlow for Each Scenario
-
-### The Reason I Don't Use Gitflow
-
-## Pure Git Commands for Each Scenario
 
 ### Regular Developing in `master`
 
@@ -146,7 +268,7 @@ git commit -avm 'JIRA-404 regular development'
 git push
 {% endhighlight %}
 
-### Open the `feature` for experiment
+### Opening a `feature` for experiment
 
 {% highlight bash %}
 git checkout master
@@ -251,48 +373,6 @@ git push origin :release/n.0.k
 
 需要考虑是通过patch的方式，还是rebase的方式将bugfix应用到master上面。
 
-# `gitl`, An Interface for Linear GitFlow Workflow
-
-This interface has not implemented yet, and the specification of this interface
-is inspired by `GitFlow`.
-
-## `gitl develop`, Developing in `master`
-
-{% highlight bash %}
-gitl develop { nil | start }
-{% endhighlight %}
-
-## `gitl feature` , Handling the `feature`
-
-定义了开始、放弃和接受feature。
-
-{% highlight bash %}
-gitl feature start [feature_name] { master | [branch_based_on] }
-gitl feature abort [feature_name]
-gitl feature finish [feature_name]
-{% endhighlight %}
-
-## `gitl bugfix` , Fixing Bug in `bugfix`
-
-{% highlight bash %}
-gitl bugfix start [bugfix_name] { master | [branch_based_on] }
-gitl bugfix abort [bugfix_name]
-gitl bugfix finish [bugfix_name]
-{% endhighlight %}
-
-## `gitl release` , For Our Three Kind of `release`
-
-该接口需要控制权限。
-
-如果`[release_number]`为空，则基于默认的版本命名规则。
-
-不建议传递版本编号，建议使用默认的版本命名规则。
-
-{% highlight bash %}
-gitl release { -P | -S | -B } start { [release_number] }
-gitl release { -P | -S | -B } abort { [release_number] }
-gitl release { -P | -S | -B } finish { [release_number] }
-{% endhighlight %}
 
 # Linear Git Workflow with CI
 
@@ -305,7 +385,7 @@ gitl release { -P | -S | -B } finish { [release_number] }
 These problems need to be fix：
 
 * Is `gitl` complicated under Microservices ?
-* Is `gitl` comflicated with git fork, see Atlassian's _Comparing Workflows_ [^atl_comp_workf] ？
+* Is `gitl` conflicted with git fork, see Atlassian's _Comparing Workflows_ [^atl_comp_workf] ？
 
 # References
 
