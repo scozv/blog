@@ -21,6 +21,7 @@ Less|More
 [`related_posts`] [8] | A enhanced `related_posts` by [@Ovilia](https://github.com/Ovilia)
 `tags_list` | A enhanced `tags_list` from [kelsin.github.io](https://github.com/kelsin/kelsin.github.io) and [codeofclimber.ru](http://www.codeofclimber.ru/2015/sorting-site-tags-in-jekyll/)
 favicon | A favicon made from Chrome incognito mode `BASE64` image string with [LICENSE] [11] and [FAQ](https://productforums.google.com/forum/#!topic/chrome/IRU02OLJ4Dg;context-place=topicsearchin/chrome/base64)
+[ASCIIFlow Infinity](http://asciiflow.com/) | Powerful In-Browser ASCII Art Editor
 
 
 [1]: http://jekyllbootstrap.com/            "Jekyll Bootstrap"
