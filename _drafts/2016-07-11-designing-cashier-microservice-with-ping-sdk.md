@@ -129,10 +129,10 @@ lang: "zh"
 
 +------------------------------------------+----------------+
 |                                          |                |
-|    step 1                                |   Client Side  |
+|    STEP 1                                |   Client Side  |
 |    put product into cart                 |                |
 |                                          +----------------+
-|    step 4                             step 7              | step 8
+|    STEP 4                             STEP 7              | STEP 8
 |                                       (Ping++ Client SDK) |         +--------+
 |    use Order data                                         | finish  |        |
 |    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
@@ -140,7 +140,7 @@ lang: "zh"
 +-----------------------------------------------------------+         +--------+
   + ^                  + ^
   | |                  | |
-  | | step 2 & 3       | | step 4                step 5
+  | | STEP 2 & 3       | | STEP 4                STEP 5
   | |                  | |                       (Ping++ Server SDK)
   | | apply an order   | | apply for Charge
   | |                  | |
@@ -149,12 +149,12 @@ lang: "zh"
   | |                  | |                           +
   v +                  v +                           |
 +-------------------------------------+              |     +--------+
-|                                     | step 5       |     |        |
-|                  step 6             | +------------+---> |        |
+|                                     | STEP 5       |     |        |
+|                  STEP 6             | +------------+---> |        |
 |                                     | <----------------+ |        |
 |                  get Charge data    |                    |        |
 |                  from Ping++ Server | <----------------+ | Ping++ |
-+---------------+                     | step 9             | Server |
++---------------+                     | STEP 9             | Server |
 |               |  RESPONSE to View   | (Async)            |        |
 | RESTful Sever |                     |                    |        |
 |               |                     | Webhook            |        |
@@ -229,8 +229,8 @@ singleItemOrder.cart shoule be size(1)
 |  Static data           |          |  Order system         |
 +------------------------+          +-----------------------+
  +                                   +  ^
- |                                   |  | step 2 & 3
- | step 1                            |  |
+ |                                   |  | STEP 2 & 3
+ | STEP 1                            |  |
  | put product into cart             |  | apply an order
  |                                   |  |
  |                                   |  | RESPONSE the
@@ -240,27 +240,27 @@ singleItemOrder.cart shoule be size(1)
 |                                          |   Client Side  |
 |                                          |                |
 |                                          +----------------+
-|    step 4                             step 7              | step 8
+|    STEP 4                             STEP 7              | STEP 8
 |                                       (Ping++ Client SDK) |         +--------+
 |    use Order data                                         | finish  |        |
 |    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
 |                                       request a payment   | +-----> |        |
 +-----------------------------------------------------------+         +--------+
-  +  step 4              ^
+  +  STEP 4              ^
   |                      |
   |  apply for Charge    |
-  |                      |             step 5
+  |                      |             STEP 5
   |  payload with        |             (Ping++ Server SDK)
   |  previous Order data |
   v                      +             apply for Charge
                                        from Ping++ Server
 +-------------------------------------+                    +--------+
 |                                     | +----------------> |        |
-|                  step 6             | <----------------+ |        |
+|                  STEP 6             | <----------------+ |        |
 |                                     |                    |        |
 |                  get Charge data    |                    |        |
 |                  from Ping++ Server | <----------------+ | Ping++ |
-+---------------+                     | step 9             | Server |
++---------------+                     | STEP 9             | Server |
 |               |  RESPONSE to View   | (Async)            |        |
 | RESTful Sever |                     |                    |        |
 |               |                     | Webhook            |        |
@@ -280,8 +280,8 @@ singleItemOrder.cart shoule be size(1)
 |  Static data           |          |  Order system         |
 +------------------------+          +-----------------------+
    +                                   +  ^
-   |                                   |  | step 2 & 3
-   | step 1                            |  |
+   |                                   |  | STEP 2 & 3
+   | STEP 1                            |  |
    | put product into cart             |  | apply an order
    |                                   |  |
    |                                   |  | RESPONSE the
@@ -291,27 +291,27 @@ singleItemOrder.cart shoule be size(1)
  |                                          |   Client Side  |
  |                                          |                |
  |                                          +----------------+
- |    step 4                             step 7              | step 8
+ |    STEP 4                             STEP 7              | STEP 8
  |                                       (Ping++ Client SDK) |         +--------+
  |    use Order data                                         | finish  |        |
  |    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
  |                                       request a payment   | +-----> |        |
  +-----------------------------------------------------------+         +--------+
-  +  step 4              ^
+  +  STEP 4              ^
   |                      |
   |  apply for Charge    |
-  |                      |             step 5
+  |                      |             STEP 5
   |  payload with        |             (Ping++ Server SDK)
   |  previous Order data |
   v                      +             apply for Charge
                                        from Ping++ Server
 +-------------------------------------+                    +--------+
 |                                     | +----------------> |        |
-|                  step 6             | <----------------+ |        |
+|                  STEP 6             | <----------------+ |        |
 |                                     |                    |        |
 |                  get Charge data    |                    |        |
 |                  from Ping++ Server | <----------------+ | Ping++ |
-+---------------+                     | step 9             | Server |
++---------------+                     | STEP 9             | Server |
 |               |  RESPONSE to View   | (Async)            |        |
 | RESTful Sever |                     |                    |        |
 |               |                     | Webhook            |        |
