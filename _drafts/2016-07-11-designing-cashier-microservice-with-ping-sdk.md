@@ -338,6 +338,19 @@ v  +                            v  +
 
 {% highlight scala %}
 
+// STEP 4 apply for Charge data
+POST /cashier/charge
 
+payload: {
+  order: Order { _id, ...}
+}
+
+// STEP 6
+RESPONSE: {
+  data: Ping++ Charge data
+}
+
+// STEP 9
+POST /cashier/webhook
 
 {% endhighlight %}
