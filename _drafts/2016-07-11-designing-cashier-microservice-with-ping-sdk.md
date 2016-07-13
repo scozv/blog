@@ -126,62 +126,42 @@ lang: "zh"
 0. RESTful Server接收到这个Webhook之后，修改订单的支付状态
 
 {% highlight raw %}
+
 +------------------------------------------+----------------+
 |                                          |                |
-|                                          |   Client Side  |
-|    step 1                                |                |
-|    put product into cart                 +----------------+
-|                                                           |
-|                                                           |
-|    step 4                             step 7              |
-|                                       (Ping++ Client SDK) | step 8         +--------+
-|    use Order data                                         |                |        |
-|    to apply Ping++ Charge data        use Charge data     | finish payment | AnyPay |
-|                                       request a payment   | +------------> |        |
-+-----------------------------------------------------------+                +--------+
+|    step 1                                |   Client Side  |
+|    put product into cart                 |                |
+|                                          +----------------+
+|    step 4                             step 7              | step 8
+|                                       (Ping++ Client SDK) |         +--------+
+|    use Order data                                         | finish  |        |
+|    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
+|                                       request a payment   | +-----> |        |
++-----------------------------------------------------------+         +--------+
+  + ^                  + ^
+  | |                  | |
+  | | step 2 & 3       | | step 4                step 5
+  | |                  | |                       (Ping++ Server SDK)
+  | | apply an order   | | apply for Charge
+  | |                  | |
+  | | RESPONSE the     | | payload with          apply for Charge
+  | | Order {_id, ...} | | previous Order data   from Ping++ Server
+  | |                  | |                           +
+  v +                  v +                           |
++-------------------------------------+              |     +--------+
+|                                     | step 5       |     |        |
+|                  step 6             | +------------+---> |        |
+|                                     | <----------------+ |        |
+|                  get Charge data    |                    |        |
+|                  from Ping++ Server | <----------------+ | Ping++ |
++---------------+                     | step 9             | Server |
+|               |  RESPONSE to View   | (Async)            |        |
+| RESTful Sever |                     |                    |        |
+|               |                     | Webhook            |        |
+| Cashier       |                     | POST notification  |        |
+|               |                     | to RESTful server  |        |
++---------------+---------------------+                    +--------+
 
-  |  ^                     |                      ^
-  |  |                     |                      |
-  |  | step 2 & 3          | step 4               |
-  |  |                     |                      |
-  |  | apply an order      | apply for Charge     |
-  |  |                     |                      |
-  |  | RESPONSE the        | payload with         |
-  |  | Order {_id, ...}    | previous Order data  |
-  |  |                     |                      |
-  |  |                     |                      |
-  v  |                     v                      |
-
- +----------------------------------------------------------+
- |                                                          |
- |                                      step 6              |
- |                                                          |
- |                                      get Charge data     |
- +---------------------+                from Ping++ Server  |
- |                     |                                    |
- |                     |                RESPONSE to View    |
- |    RESTful Server   |                                    |
- |                     |                                    |
- +---------------------+------------------------------------+
-
-                           |                      ^        ^
-                           |                      |        |
-                           |                      |        |
-                           | step 5               |        | step 9
-                           | (Ping++ Server SDK)  |        | (Async)
-                           |                      |        |
-                           | apply for Charge     |        | Webhook
-                           | from Ping++ Server   |        | POST notification
-                           |                      |        | to RESTful server
-                           |                      |        |
-                           v                      |        |
-
- +----------------------------------------------------------------+
- |                                                                |
- |                         Ping++ Server                          |
- |                                                                |
- |                                                                |
- +----------------------------------------------------------------+
 
 {% endhighlight %}
 
@@ -239,82 +219,125 @@ singleItemOrder.cart shoule be size(1)
 
 ## 收银中心的微服务设计
 
-### 使用多个微服务代替原来的`RESTful Server`
-
+### 将原来的一个`RESTful Server`拆分成多个微服务
 
 {% highlight raw %}
-
-****************************************
-****************************************
-|          RESTful Server              |
-|                                      |
-|          Static data                 |
-****************************************
-
-  |
-  | step 1
-  | put product into cart
-  v
-
++------------------------+          +-----------------------+
+|                        |          |                       |
+|  RESTful Server        |          |  RESTful Server       |
+|                        |          |                       |
+|  Static data           |          |  Order system         |
++------------------------+          +-----------------------+
+ +                                   +  ^
+ |                                   |  | step 2 & 3
+ | step 1                            |  |
+ | put product into cart             |  | apply an order
+ |                                   |  |
+ |                                   |  | RESPONSE the
+ v                                   v  + Order {_id, ...}
 +------------------------------------------+----------------+
 |                                          |                |
 |                                          |   Client Side  |
 |                                          |                |
 |                                          +----------------+
-|                                                           |
-|                                                           |
-|    step 3                             step 7              |
-|                                       (Ping++ Client SDK) | step 8         +--------+
-|    use Order data                                         |                |        |
-|    to apply Ping++ Charge data        use Charge data     | finish payment | AnyPay |
-|                                       request a payment   | +------------> |        |
-+-----------------------------------------------------------+                +--------+
+|    step 4                             step 7              | step 8
+|                                       (Ping++ Client SDK) |         +--------+
+|    use Order data                                         | finish  |        |
+|    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
+|                                       request a payment   | +-----> |        |
++-----------------------------------------------------------+         +--------+
+  +  step 4              ^
+  |                      |
+  |  apply for Charge    |
+  |                      |             step 5
+  |  payload with        |             (Ping++ Server SDK)
+  |  previous Order data |
+  v                      +             apply for Charge
+                                       from Ping++ Server
++-------------------------------------+                    +--------+
+|                                     | +----------------> |        |
+|                  step 6             | <----------------+ |        |
+|                                     |                    |        |
+|                  get Charge data    |                    |        |
+|                  from Ping++ Server | <----------------+ | Ping++ |
++---------------+                     | step 9             | Server |
+|               |  RESPONSE to View   | (Async)            |        |
+| RESTful Sever |                     |                    |        |
+|               |                     | Webhook            |        |
+| Cashier       |                     | POST notification  |        |
+|               |                     | to RESTful server  |        |
++---------------+---------------------+                    +--------+
 
-  |  ^                     |                      ^
-  |  |                     |                      |
-  |  | step 2              | step 4               |
-  |  |                     |                      |
-  |  | apply an order      | apply for Charge     |
-  |  |                     |                      |
-  |  | RESPONSE the        | payload with         |
-  |  | Order {_id, ...}    | previous Order data  |
-  |  |                     |                      |
-  |  |                     |                      |
-  v  |                     v                      |
+{% endhighlight %}
 
- **************          ************************************
- **************          ************************************
- |            |          |              step 6              |
- |RESTful Svr |          |                                  |
- |            |          +-----------+  get Charge data     |
- |Order system|          |           |  from Ping++ Server  |
- |            |          |RESTful Svr|                      |
- |            |          |           |  RESPONSE to View    |
- |            |          |Cashier    |                      |
- |            |          |           |                      |
- **************          ************************************
+### 集中收银台的设计图
 
-                           |                      ^        ^
-                           |                      |        |
-                           |                      |        |
-                           | step 5               |        | step 9
-                           | (Ping++ Server SDK)  |        | (Async)
-                           |                      |        |
-                           | apply for Charge     |        | Webhook
-                           | from Ping++ Server   |        | POST notification
-                           |                      |        | to RESTful server
-                           |                      |        |
-                           v                      |        |
-
- +----------------------------------------------------------------+
- |                                                                |
- |                         Ping++ Server                          |
- |                                                                |
- |                                                                |
- +----------------------------------------------------------------+
-
+{% highlight raw %}
++------------------------+          +-----------------------+
+|                        |          |                       |
+|  RESTful Server        |          |  RESTful Server       |
+|                        |          |                       |
+|  Static data           |          |  Order system         |
++------------------------+          +-----------------------+
+   +                                   +  ^
+   |                                   |  | step 2 & 3
+   | step 1                            |  |
+   | put product into cart             |  | apply an order
+   |                                   |  |
+   |                                   |  | RESPONSE the
+   v                                   v  + Order {_id, ...}
+ +------------------------------------------+----------------+
+ |                                          |                |
+ |                                          |   Client Side  |
+ |                                          |                |
+ |                                          +----------------+
+ |    step 4                             step 7              | step 8
+ |                                       (Ping++ Client SDK) |         +--------+
+ |    use Order data                                         | finish  |        |
+ |    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
+ |                                       request a payment   | +-----> |        |
+ +-----------------------------------------------------------+         +--------+
+  +  step 4              ^
+  |                      |
+  |  apply for Charge    |
+  |                      |             step 5
+  |  payload with        |             (Ping++ Server SDK)
+  |  previous Order data |
+  v                      +             apply for Charge
+                                       from Ping++ Server
++-------------------------------------+                    +--------+
+|                                     | +----------------> |        |
+|                  step 6             | <----------------+ |        |
+|                                     |                    |        |
+|                  get Charge data    |                    |        |
+|                  from Ping++ Server | <----------------+ | Ping++ |
++---------------+                     | step 9             | Server |
+|               |  RESPONSE to View   | (Async)            |        |
+| RESTful Sever |                     |                    |        |
+|               |                     | Webhook            |        |
+| Cashier       |                     | POST notification  |        |
+|               |                     | to RESTful server  |        |
++---------------+---------------------+                    +--------+
++  ^                            +  ^
+|  |  apply for Charge          |  |  apply for Charge
+|  |                            |  |
+|  |  payload with              |  |  payload with
+|  |  GenericOrder data         |  |  GenericOrder data
+|  |                            |  |
+v  +                            v  +
++---------+     +---------+     +---------+
+|         |     |         |     |         |
+| App 1   |     | App 2   |     | App 3   |
+|         |     |         |     |         |
++---------+     +---------+     +---------+
 
 {% endhighlight %}
 
 
-### `RESTful API`接口设计
+### 收银台服务的`RESTful API`设计
+
+{% highlight scala %}
+
+
+
+{% endhighlight %}
