@@ -182,39 +182,37 @@ After one or two mouth, we release to public.
 
 At each end of sprint, we release the sprint for internal demo.
 
-
 {% highlight raw %}
+step 1                       step 2                       step 3
 
-step 1                 step 2                 step 3
+  ^                            ^                            ^
+  |                            |                            | rebase back
+  |                            |             ^              | to master   ^
+  |                            |             |              | <----------+# tag n. m+1 .0
+  |                            |             |              |             |
+  | rebase to                  |             # bump         |             # bump version
+  | sprint release             |             |              |             |
+  |             ^              |  ^          |              |             |
+  | +---------> |              |  +----------+              |             |
+  |             |              |  | /release/n.m+1.0        |             |
+  |             |              |  |                         |             |
+  |             |              |  |                         |             |
+  |             |              |  |                         |             |
+  |             |              |  |                         |             |
+  |             |              |  |                         |             |
+  |             |              |  |                         |             |
+  +-------------+              +--+                         +-------------+
+  |  /release/n.m.0            | /n.m.0                     |     /release/n. m+1 .0
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  +                            +                            +
 
-  ^                      ^                      ^
-  |                      |                      | rebase back
-  |                      |             ^        | to master   ^
-  |                      |             |        | <-----------# tag n. m+1 .0
-  |                      |             |        |             |
-  | rebase to            |             # bump   |             # bump version
-  | sprint release       |             |        |             |
-  |             ^        |  ^          |        |             |
-  | +---------> |        |  +----------+        |             |
-  |             |        |  | /release/n.m+1.0  |             |
-  |             |        |  |                   |             |
-  |             |        |  |                   |             |
-  |             |        |  |                   |             |
-  |             |        |  |                   |             |
-  |             |        |  |                   |             |
-  |             |        |  |                   |             |
-  +-------------+        +--+                   +-------------+
-  |  /release/n.m.0      | /n.m.0               |     /release/n. m+1 .0
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  +                      +                      +
-
-/master                /master                /master
+/master                      /master                      /master
 
 {% endhighlight %}
 
@@ -223,37 +221,36 @@ step 1                 step 2                 step 3
 Will fix some bug in specific public release.
 
 {% highlight raw %}
+step 1                       step 2                       step 3
 
-step 1                 step 2                 step 3
+  ^                            ^                            ^
+  |                            |                            | rebase back
+  |                            |             ^              | to master   ^
+  |                            |             |              | <----------+# tag n.0.k+1
+  | bugfix release             |             |              |             |
+  | is ONLY for                |             # bump         |             # bump version
+  | public release             |             |              |             |
+  |             ^              |  ^          |              |             |
+  | +---------> |              |  +----------+              |             |
+  |             |              |  | /release/n.0.k+1        |             |
+  |             |              |  |                         |             |
+  |             |              |  |                         |             |
+  |             |              |  # bugfix 2                |             # bugfix 2
+  |             |              |  |                         |             |
+  |             |              |  # bugfix 1                |             # bugfix 1
+  |             |              |  |                         |             |
+  +-------------+              +--+                         +-------------+
+  |  /release/n.0.k            | /n.0.k                     |     /release/n.0.k+1
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  |                            |                            |
+  +                            +                            +
 
-  ^                      ^                      ^
-  |                      |                      | rebase back
-  |                      |             ^        | to master   ^
-  |                      |             |        | <-----------# tag n.0.k+1
-  | bugfix release       |             |        |             |
-  | is ONLY for          |             # bump   |             # bump version
-  | public release       |             |        |             |
-  |             ^        |  ^          |        |             |
-  | +---------> |        |  +----------+        |             |
-  |             |        |  | /release/n.0.k+1  |             |
-  |             |        |  |                   |             |
-  |             |        |  |                   |             |
-  |             |        |  # bugfix 2          |             # bugfix 2
-  |             |        |  |                   |             |
-  |             |        |  # bugfix 1          |             # bugfix 1
-  |             |        |  |                   |             |
-  +-------------+        +--+                   +-------------+
-  |  /release/n.0.k      | /n.0.k               |     /release/n.0.k+1
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  |                      |                      |
-  +                      +                      +
-
-/master                /master                /master
+/master                      /master                      /master
 
 {% endhighlight %}
 
