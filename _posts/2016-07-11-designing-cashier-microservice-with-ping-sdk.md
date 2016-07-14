@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Designing a Cashier Microservice with Ping++ SDK"
+title: "Design a Cashier Microservice with Ping++ SDK"
 description: ""
 category: "pattern"
 tags: ["ping++","microservice","scala","restful"]
