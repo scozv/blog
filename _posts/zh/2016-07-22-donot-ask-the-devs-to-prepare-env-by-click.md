@@ -147,7 +147,7 @@ wget -qO- https://raw.githubusercontent.com/scozv/dotfiles/master/os/ubuntu-desk
 
 ## `publi.sh`——让开发人员执行最少的命令
 
-除了将`installation.sh`部署到公共的Git Server上面之气，也可以将其部署到CDN上面。
+除了将`installation.sh`部署到公共的Git Server上面之外，也可以将其部署到CDN上面。
 
 很多时候，我们的环境脚本要能在新安装的系统上运行，此时，`git`和`ssh`都还没有配置。
 我们的脚本运行不能依赖于`git clone`。
