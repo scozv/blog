@@ -95,6 +95,17 @@ else
 fi
 {% endhighlight %}
 
+## 兼容新旧环境
+
+可以通过，如下两个命令，判断某一个包是否已经安装成功：
+
+{% highlight bash %}
+command -v "$1" > /dev/null 2>&1
+[ -d "$1" ]
+{% endhighlight %}
+
+更详细的代码可以参考[此处`diff`](https://github.com/scozv/dotfiles/commit/94f984ac1c23b2bbebea03e6b21b79748dc441c9#diff-dc9087fc5f049f9e1d8e365374bcc630R1)
+
 ## 区分Server脚本和Desktop脚本
 
 很多可视化的工具都不需要在`Server`上运行，比如IDE工具等。所以`installation.sh`应该
@@ -138,16 +149,18 @@ wget -qO- https://raw.githubusercontent.com/scozv/dotfiles/master/os/ubuntu-desk
 
 在`installation.sh`脚本中，可以控制版本，参考`nodejs-5.sh`（[链接](https://github.com/scozv/dotfiles/blob/master/os/src/10/nodejs-5.sh)）。
 
-## 使用镜像提高下载速度
+## 提高下载速度
 
-有些时候，软件包的源地址的访问速度较慢，可以尝试更换较快的镜像。
+可以使用镜像提高下载速度。有些时候，软件包的源地址的访问速度较慢，可以尝试更换较快的镜像。
 
 `npm`、`ruby`以及`scala`等包管理的源地址都有较快的镜像站点。
 源代码中列出了一些镜像地址。
 
+另外，可以使用`sha1sum`对下载的文件做校验（参考[此处`diff`](https://github.com/scozv/dotfiles/commit/94f984ac1c23b2bbebea03e6b21b79748dc441c9#diff-64ce3c35164131101fa3be487e13c7efL47)）。
+
 ## `publi.sh`——让开发人员执行最少的命令
 
-除了将`installation.sh`部署到公共的Git Server上面之外，也可以将其部署到CDN上面。
+除了将`installation.sh`部署到公共的Git Server上面以外，也可以将其部署到CDN上面。
 
 很多时候，我们的环境脚本要能在新安装的系统上运行，此时，`git`和`ssh`都还没有配置。
 我们的脚本运行不能依赖于`git clone`。
