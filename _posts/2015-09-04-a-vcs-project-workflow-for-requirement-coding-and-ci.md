@@ -3,7 +3,7 @@ layout: post
 title: "A Version Controlled Project Workflow for Requirement, Coding and Continuous Integration"
 description: ""
 category: "pattern"
-tags: ["latex","markdown","CI","git", "JIRA","project"]
+tags: ["latex","markdown","ci","git", "jira","project"]
 lang: en
 ---
 {% include JB/setup %}
