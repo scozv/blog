@@ -3,7 +3,7 @@ layout: post
 title: "A Loose Coupling Architecture of the Web Solution with Continuous Integration"
 description: ""
 category: "pattern"
-tags: ["CI", "project"]
+tags: ["ci", "project","architecture"]
 lang: en
 ---
 {% include JB/setup %}

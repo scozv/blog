@@ -3,7 +3,7 @@ layout: post
 title: "基于低耦合和持续集成的Web架构"
 description: ""
 category: "pattern"
-tags: ["CI", "project"]
+tags: ["ci", "project","architecture"]
 lang: zh
 ---
 {% include JB/setup %}

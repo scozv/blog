@@ -3,7 +3,7 @@ layout: post
 title: "将网页版的QUnit.js测试移植到Node.js"
 description: ""
 category: "guide"
-tags: ["CI", "unit", "grunt"]
+tags: ["ci", "unit", "grunt"]
 lang: zh
 ---
 {% include JB/setup %}

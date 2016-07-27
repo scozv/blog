@@ -3,7 +3,7 @@ layout: post
 title: "使用Heap数据结构将Dijkstra最短路算法的时间复杂度降到O(n ln m)"
 description: ""
 category : "algo"
-tags: ["algorithm", "graph", "Dijkstra", "heap"]
+tags: ["algorithm", "graph", "dijkstra", "heap"]
 lang: zh
 ---
 {% include JB/setup %}
