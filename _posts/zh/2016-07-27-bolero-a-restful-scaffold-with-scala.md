@@ -1,23 +1,24 @@
 ---
 layout: post
-title: "Bolero——基于Scala、Play!和ReactMongo的RESTful代码模板"
+title: "Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板"
 description: ""
 category: "guide"
 tags: ["scala","scaffold","project","architecture","restful"]
+lang: "zh"
 ---
 {% include JB/setup %}
 
 # 摘要
 {:.no_toc}
 
-> 本文介绍一套`RESTful`的代码模板（代号：`Bolero`）——使用`Scala`语言，基于`Play!`库以及`ReactMongo`。
+> 本文介绍一套`RESTful`的代码模板（代号：`Bolero`）——使用`Scala`语言，基于`Play!`库以及`ReactiveMongo`。
 >
 > 除了基本的HTTP Request和Response处理、MongoDB的异步读写之外，`Bolero`还包含如下功能：
 >
 > * `Model`的几个建议；
 > * `RESTful API`设计的几个建议；
 > * `CORS`跨域配置；
-> * 基于`Token`认证的Request处理；
+> * 基于Token认证的Request处理；
 > * 全局范围内设计的一套Monad规则：`EitherOrError`；
 > * 接收Webhook；
 > * 基于`Specs2`的`FakeApplication`集成测试；
