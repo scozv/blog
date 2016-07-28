@@ -237,6 +237,15 @@ CORS（Cross Origin Resource Sharing）[^mdn_cors]
 └── build.sbt
 {% endhighlight %}
 
+## `models`中的几个`trait`解释
+
+### `CanBeHierarchic`，层级类
+
+层级类表示一系列有关联的类。使用并查集的算法，也就是：
+
+* 根节点的`rootId`为其本身；
+* 任意两个实例，如果两者的`rootId`相等，则表示这两者是相互关联的。
+
 ## 基于Token的用户认证
 
 `Bolero`的所有接口都是无状态的，识别用户的方式，就是通过Authentication Token。
