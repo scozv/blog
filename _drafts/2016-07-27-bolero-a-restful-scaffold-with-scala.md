@@ -18,7 +18,7 @@ tags: ["scala","scaffold","project","architecture","restful"]
 > * `RESTful API`设计的几个建议；
 > * `CORS`跨域配置；
 > * 基于`Token`认证的Request处理；
-> * 全局范围内设计的一套Monad规则：`HTTPResponseOrError`；
+> * 全局范围内设计的一套Monad规则：`EitherOrError`；
 > * 接收Webhook；
 > * 基于`Specs2`的`FakeApplication`集成测试；
 > * 基于`sbt-native`的发布脚本。
@@ -255,7 +255,46 @@ CORS（Cross Origin Resource Sharing）[^mdn_cors]
 `Bolero`在将数据Response给前端的时候，有些敏感字段，是不应该返回出去的，比如用户`_id`，
 或者商品的成本价格。使用`CanBeMasked`接口，在Action那边，统一调用`T.asMasked()`，将敏感信息抹除。
 
-Mask这个命名，受Oracle Data Masking [^oracle_mask]的启发。
+Mask这个命名，受Oracle Data Masking [^oracle_mask] 的启发。
+
+## `OrderOrError`——基于Monad设计的全局规则校验
+
+就拿创建订单来看，通常订单的创建，会有一系列的规则需要校验：
+
+* 该用户是否有权限创建订单；
+* 订单中的商品数量是否满足库存；
+* 订单中的商品价格是否不小于当前价格；
+* 是否满足订单中列明的优惠；
+* 等等等等。
+
+`OrderOrError`的思路就是，对于任何一条规则，我们保证校验的结果：
+
+* 要么是原来的订单`order`，当此订单通过了校验；
+* 要么是`error`信息
+
+此处，借用了`Scala`对`Try` [^scala_try] 的设计：
+
+{% highlight scala %}
+
+type OrderOrError = Either[Order, Error]
+
+def genericValidation(order: Order, db: DB): Future[OrderOrError] = {
+  ???
+  /*
+  * we connect DB and validate the order,
+  * so a Future[T] will be returned
+  * */
+}
+
+def genericRule
+(order: Future[OrderOrError], db: => DB)
+(implicit ec: ExecutionContext): Future[OrderOrError] =
+  order.flatMap {
+    case Right(e) => Future.successful(Right(e))
+    case Left(o) => genericValidation(o, db)
+  }
+{% endhighlight %}
+
 
 ## 基于Token的用户认证
 
@@ -296,3 +335,4 @@ Mask这个命名，受Oracle Data Masking [^oracle_mask]的启发。
 [^auth0_token]: [Cookies vs Tokens. Getting auth right with Angular.JS](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
 [^scozv_blog_auth_token]: [对登录和基于Token的认证机制的理解（草稿）](https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md)
 [^oracle_mask]: [Oracle Data Masking and Subsetting Pack](http://www.oracle.com/technetwork/database/options/data-masking-subsetting/overview/index.html)
+[^scala_try]: [`scala.util.Try`](http://www.scala-lang.org/api/2.9.3/scala/util/Try.html)
