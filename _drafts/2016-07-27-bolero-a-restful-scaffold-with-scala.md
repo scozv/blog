@@ -295,6 +295,37 @@ def genericRule
   }
 {% endhighlight %}
 
+## `CanCrossOrigin`——处理`OPTION`以应对跨域
+
+跨域的处理有两个地方，需要实现：
+
+* 定义`OPTION`路由；
+* 处理`OPTION`，返回`HTTP 200`。
+
+{% highlight scala %}
+// routes
+// OPTIONS       /*path        controllers.CORSController.preFlight(path)
+// controllers
+class CORSController
+  extends Controller
+  with CanCrossOrigin {
+  def preFlight(path: String) = Action { request =>
+    corsOPTION(path)
+  }
+}
+
+// CanCrossOrigin
+trait CanCrossOrigin {
+  self: Controller =>
+
+  def corsOPTION(from: String = "..."): Result = {
+    ???
+    // add Access-Control-Allow-Origin to header
+  }
+}
+
+{% endhighlight %}
+
 
 ## 基于Token的用户认证
 
