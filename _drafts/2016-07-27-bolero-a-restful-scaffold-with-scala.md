@@ -246,6 +246,17 @@ CORS（Cross Origin Resource Sharing）[^mdn_cors]
 * 根节点的`rootId`为其本身；
 * 任意两个实例，如果两者的`rootId`相等，则表示这两者是相互关联的。
 
+### `CanBeJsonfied`，`Reads`和`Writes`的通用处理
+
+（等待源代码，解释多态遇到的问题）
+
+### `CanBeMasked`，敏感字段的掩盖
+
+`Bolero`在将数据Response给前端的时候，有些敏感字段，是不应该返回出去的，比如用户`_id`，
+或者商品的成本价格。使用`CanBeMasked`接口，在Action那边，统一调用`T.asMasked()`，将敏感信息抹除。
+
+Mask这个命名，受Oracle Data Masking [^oracle_mask]的启发。
+
 ## 基于Token的用户认证
 
 `Bolero`的所有接口都是无状态的，识别用户的方式，就是通过Authentication Token。
@@ -284,3 +295,4 @@ CORS（Cross Origin Resource Sharing）[^mdn_cors]
 [^play_rqst_header]: [`play.api.mvc.RequestHeader`](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.RequestHeader)
 [^auth0_token]: [Cookies vs Tokens. Getting auth right with Angular.JS](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
 [^scozv_blog_auth_token]: [对登录和基于Token的认证机制的理解（草稿）](https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md)
+[^oracle_mask]: [Oracle Data Masking and Subsetting Pack](http://www.oracle.com/technetwork/database/options/data-masking-subsetting/overview/index.html)
