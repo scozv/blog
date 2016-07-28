@@ -346,18 +346,38 @@ Action composition [^play_composition] 来完成Token认证。
 
 # 测试代码详解
 
+**测试非常重要 [^scozv_blog_jira]，完备的测试是重构和持续集成的基础。**
+
+**测试非常重要，完备的测试是重构和持续集成的基础。**
+
+**测试非常重要，完备的测试是重构和持续集成的基础。**
+
+测试的源代码见`test`目录。
 
 ## 测试的无状态
 
-在任何库上都能通过，当然，这和测试用例有关。
+测试的脚本，要保证在任何库上都能通过，当然，这和测试用例的设计有关。
 
-清理测试数据。
+通常，我们在测试开始时，准备数据，在测试完成是，清理测试数据。
+
+## `FakeApplication`——不依赖任何客户端的`RESTful`测试
+
+基于松耦合的原则，`RESTful`服务的开发流程中，不应该依赖前端View的开发进程。
+所以，我们使用`FakeApplication`模拟HTTP Request。
 
 # 发布和部署介绍
 
-## 生产环境的配置对开发者不可见
+使用`Bolero`的一个生产环境目前部署在`Ubuntu 14.04`上面。
 
-目前的`repo`架构通常是：
+部署脚本，可以参考`deploy.sh`，最好在`Ubuntu 14.04`上运行。该脚本
+使用了`sbt-native-packager` [^scala_sbt_native] 作常驻发布。
+
+另外，在实际的使用中`Bolero`的生产配置对开发是不可见的。
+我通常会使用多个`git repo`来托管源代码：
+
+{% highlight bash %}
+
+{% endhighlight %}
 
 # 参考文献
 
@@ -373,3 +393,5 @@ Action composition [^play_composition] 来完成Token认证。
 [^oracle_mask]: [Oracle Data Masking and Subsetting Pack](http://www.oracle.com/technetwork/database/options/data-masking-subsetting/overview/index.html)
 [^scala_try]: [`scala.util.Try`](http://www.scala-lang.org/api/2.9.3/scala/util/Try.html)
 [^play_composition]: [`Play!` Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition)
+[^scozv_blog_jira]: [Bitbucket Cloud的Issue至JIRA Server的完全迁移指南](https://scozv.github.io/blog/zh/guide/2016/04/05/fully-migrating-from-bitbucket-cloud-issue-system-to-jira-server)
+[^scala_sbt_native]: [Debian Plugin]([^scala_sbt_native])
