@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Bolero——基于Scala、Play!、ReactMongo的RESTful代码模板"
+title: "Bolero——基于Scala、Play!和ReactMongo的RESTful代码模板"
 description: ""
 category: "guide"
 tags: ["scala","scaffold","project","architecture","restful"]
@@ -85,19 +85,170 @@ https://github.com/scozv/bolero
 `Play!`中提供了`Reads`和`Writes`模块 [^play_json]，用来处理对象类和`JSON`之间
 的转换：类到`JSON`我们用`Writes`，表示“写”；`JSON`到类，我们用`Reads`，表明“读”。
 
+`Play!`中也提供了用于automated mapping的`JSON`读写 [^play_json_auto]：
+
+{% highlight scala %}
+import play.api.libs.json._
+
+implicit val autoReads = Json.reads[T]
+implicit val autoWrites = Json.writes[T]
+
+// format = reads + writes
+implicit val autoFormat = Json.format[T]
+{% endhighlight %}
+
+此处有建议：
+
+> 尽管`Play!`提供了automated mapping，但是对于`models`比较复杂的
+> 系统，我建议手动配置`Reads`和`Writes`（**前提是，要有完备的读写测试来覆盖代码**）：
+>
+> * 当任何一层的建模，发生更改的时候，我们必须手动去对应地修改`Reads`和`Writes`，
+>   否则将会收到如下异常，此举，可以保证我们代码的质量：
+>
+>        play.api.libs.json.JsResultException: "obj.field_name":{"msg":["error.path.missing"]
+> * 手动配置`Reads`和`Writes`的另一个原因就是，可以更加自由地处理`JSON`的序列化：
+>   * `Option[T]`为`None`时，可以不用`Writes`；
+>   * 可以兼容`Scala`建模用驼峰、`MongoDB`建模用下划线的情况。
+
+目前系统的建模，通常离不开继承和多态，使用`Reads`和`Writes`时，可能会遇到如下异常：
+
+{% highlight scala %}
+ambiguous reference to overloaded definition
+{% endhighlight %}
+
+表明某一个类的`Reads`或者`Writes`有重复定义的情况。我之前花了9个`git commits`来处理这个问题。
+你可以参考`Bolero`的源代码，或者给我看看错误信息。
 
 ## `RESTful API`设计的几个建议
 
+再次强调，`Bolero`只提供`RESTful`的服务，不提供View渲染。所有的
+`RESTful API`返回的都是`JSON`对象。
+
 ### `RESTful API`的几个要素
+
+通常而言，`RESTful`接口在设计的时候，需要考虑这些要素：
+
+* HTTP Method：`GET`、`POST`、`PUT`等 [^rest_http_method]；
+* 资源路径，比如`/user/:id/profile`，可以在路径加入适当的参数，用来排序、分页或者筛选；
+* `payload`数据，传递给`RSETful`服务的`JSON`数据；
+* HTTP Header：可以为当前的HTTP Request添加一些元数据，比如Token认证过程中的用户身份Token；
+* HTTP Response：服务传递回来的`JSON`结果。
+
 ### 一致的Payload和Response设计
 
-受到`Scala.map()`的启发
+如果你经常使用`Scala`中的`map()`，你就会发现如下的一致性原则：
+
+{% highlight scala %}
+T.map(): T
+// such as
+List[A].map(): List[B]
+Future[A].map(): Future[B]
+{% endhighlight %}
+
+受这一原则的启发，我在`Bolero`的`RESTful API`设计中，很多时候
+`payload`和HTTP Response的数据结构都是一样的，比如，
+如下是购物车页面，提交，生成（返回）带`_id`的订单的`RESTful`接口：
+
+{% highlight HTML %}
+POST /checkout
+
+// Request
+// header: Token for authentication
+payload: "Bolero.models.Order"
+
+// Response
+data: "Bolero.models.Order"
+{% endhighlight %}
+
+这样的设计，让接口的使用变得更简单——只需要记住一个数据结构。
 
 ### 限制跨域还是开放跨域
 
-### 名词、排序以及单复数
+CORS（Cross Origin Resource Sharing）[^mdn_cors]
+
+最初在设计`Bolero`的时候，我是限制跨域的，我只希望某一个指定的`IP`客户端，才能访问`Bolero`接口。
+但是，当我后来需要接入Ping++支付的Webhook的时候，限制跨域就不能同时满足客户端和Ping++的访问了。
+
+因为，`Access-Control-Allow-Origin`
+并不支持多域（multiple origin）同时跨域访问 [^w3_cors_multi_issue]：
+
+> In practice the `origin-list-or-null` production is more constrained.
+> Rather than allowing a space-separated list of origins,
+> **it is either a single origin or the string "null"**.
+
+另外，面对松耦合和多个客户端的实例部署，限制跨域不是一个通用的选择。
+
+如果真的想控制跨域，或者统计HTTP Request的来源，可以选择：
+
+* 在`Bolero`中，使用`Play!`的`Filters`[^play_filter]，
+  从HTTP Request中的`origin`信息[^play_rqst_header] 来控制访问源（目前`Bolero`并没有这么做）；
+* 在客户端的Ｗeb Server层面，控制访问源，也就是，对于一些异常的高频访问，Web Server
+  都不会将该HTTP Request发送给`Bolero`服务。
+
+### 名词、单复数以及排序
+
+`Bolero`在设计`RESTful API`的时候，还有如下几个原则：
+
+* 资源地址（`URL`）中只使用名词，最好使用简单名词，
+  不应该出现除反斜线（`/`）以外的其它字符，也不能采用驼峰的命名风格；
+* 资源地址（`URL`）中的名词，统一使用单数，就算是返回一个数组，也应该使用单数，比如：
+
+      // get the list of user
+      GET /user
+      // get a user with specific id
+      GET /user/:id
+
+  我们将单个的用户看作一个文件（`:id`），将这些文件都放进一个叫`user`的目录。我们拿单个的文件，或者
+  取整个文件夹，都会经过`/user`这个路径，不会一个用`/user`；整体用`/users`。
+  所以我们的`URL`中的名词也按照这个原则设计；
+* 如果HTTP Response的是一个数组，那么我们是否需要将该数组排序？`Bolero`的HTTP Response排序原则是：
+    * 如果HTTP Request指定了排序规则，则按照该规则排序；
+    * 如果该接口对应的业务有默认的排序规则，则按照该规则排序；
+    * 其它情况，`Bolero`并不保证HTTP Response的有序性。
 
 # 开发代码详解
+
+`Bolero`的源代码见：[https://github.com/scozv/bolero]　。
+
+该源代码的文件结构为：
+
+{% highlight sh %}
+.
+├── app
+|   ├── base                // API中的辅助类
+|   ├── biz                 // 业务处理，仅仅在这一层做数据库的读写
+|   ├── contollers          // MVC 中的控制器
+|   └── models              // Scala建模
+|       ├── interop         // 第三方接口的models
+|       └── model.scala
+|
+├── conf                    // Play!的配置文件
+|   ├── application.conf
+|   ├── play.plugins
+|   ├── release.conf
+|   └── routes
+|
+├── project                  // 项目编译配置
+|   ├── build.properties
+|   └── plugin.sbt
+|
+├── test                     // 测试脚本
+|
+└── build.sbt
+{% endhighlight %}
+
+## 基于Token的用户认证
+
+`Bolero`的所有接口都是无状态的，识别用户的方式，就是通过Authentication Token。
+在Google中搜索该名词，可以了解更多，也可以找到`auth0`的帖子 [^auth0_token]。
+
+我正在写一篇关于Token认证的帖子[^scozv_blog_auth_token]，
+目前还没有完成，你可以在参考文献中找到该帖子的草稿。
+
+此处有提醒：
+
+> 我对安全认证这一领域，还是很多不了解的地方。`Bolero`对Token认证的实现不能保证100%
+> 安全，我还在不断地改进中。
 
 # 测试代码详解
 
@@ -115,4 +266,12 @@ https://github.com/scozv/bolero
 
 # 参考文献
 
-[^play_json]: [JSON Reads/Writes/Format Combinators](https://www.playframework.com/documentation/2.6.x/ScalaJsonCombinators)
+[^play_json]: [JSON Reads/Writes/Format Combinators](https://www.playframework.com/documentation/2.5.x/ScalaJsonCombinators)
+[^play_json_auto]: [JSON automated mapping](https://www.playframework.com/documentation/2.5.x/ScalaJsonAutomated)
+[^rest_http_method]: [Using HTTP Methods for RESTful Services](http://www.restapitutorial.com/lessons/httpmethods.html)
+[^mdn_cors]: [HTTP access control (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)
+[^w3_cors_multi_issue]: [5.1 Access-Control-Allow-Origin Response Header](https://www.w3.org/TR/cors/#access-control-allow-origin-response-header) from w3.org
+[^play_filter]: [Filters](https://www.playframework.com/documentation/2.5.x/ScalaHttpFilters)
+[^play_rqst_header]: [`play.api.mvc.RequestHeader`](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.RequestHeader)
+[^auth0_token]: [Cookies vs Tokens. Getting auth right with Angular.JS](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
+[^scozv_blog_auth_token]: [对登录和基于Token的认证机制的理解（草稿）](https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md)
