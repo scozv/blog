@@ -29,7 +29,7 @@ tags: ["scala","scaffold","project","architecture","restful"]
 > `Bolero`目前主要基于`Play!`框架，但是不包含任何View的部分，所有的Action都返回`JSON`对象。
 > 我计划用`Spary.io`代替`Play!`。
 >
-> `Bolero`的源代码参见 https://github.com/scozv/bolero
+> `Bolero`的源代码参见 [scozv/bolero](https://github.com/scozv/bolero)。
 
 <!--more-->
 
@@ -41,7 +41,7 @@ tags: ["scala","scaffold","project","architecture","restful"]
 本文介绍的这一套`RESTful`的代码模板，代号为`Bolero`，以下就将该套模板
 称为`Bolero`。`Bolero`的源代码参见：
 
-https://github.com/scozv/bolero
+[https://github.com/scozv/bolero](https://github.com/scozv/bolero)
 
 先来看`Bolero`设计的一些基本理念。
 
@@ -117,7 +117,7 @@ ambiguous reference to overloaded definition
 {% endhighlight %}
 
 表明某一个类的`Reads`或者`Writes`有重复定义的情况。我之前花了9个`git commits`来处理这个问题。
-你可以参考`Bolero`的源代码，或者给我看看错误信息。
+你可以参考`Bolero`的[源代码](https://github.com/scozv/bolero)，或者给我看看错误信息。
 
 ## `RESTful API`设计的几个建议
 
@@ -208,7 +208,7 @@ CORS（Cross Origin Resource Sharing）[^mdn_cors]
 
 # 开发代码详解
 
-`Bolero`的源代码见：[https://github.com/scozv/bolero]　。
+`Bolero`的源代码见：[scozv/bolero](https://github.com/scozv/bolero)　。
 
 该源代码的文件结构为：
 
@@ -248,7 +248,7 @@ CORS（Cross Origin Resource Sharing）[^mdn_cors]
 
 ### `CanBeJsonfied`，`Reads`和`Writes`的通用处理
 
-（等待源代码，解释多态遇到的问题）
+参考`models.Goods`中使用`CanBeJsonfied`的方式 [^scozv_git_goods]。
 
 ### `CanBeMasked`，敏感字段的掩盖
 
@@ -352,7 +352,7 @@ Action composition [^play_composition] 来完成Token认证。
 
 **测试非常重要，完备的测试是重构和持续集成的基础。**
 
-测试的源代码见`test`目录。
+测试的[源代码](https://github.com/scozv/bolero)见`test`目录。
 
 ## 测试的无状态
 
@@ -402,3 +402,4 @@ pj-data                 # 生产环境的数据备份，对开发不可见
 [^play_composition]: [`Play!` Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition)
 [^scozv_blog_jira]: [Bitbucket Cloud的Issue至JIRA Server的完全迁移指南](https://scozv.github.io/blog/zh/guide/2016/04/05/fully-migrating-from-bitbucket-cloud-issue-system-to-jira-server)
 [^scala_sbt_native]: [Debian Plugin]([^scala_sbt_native])
+[^scozv_git_goods]: [`models.Goods`](https://github.com/scozv/bolero/blob/master/app/models/Goods.scala#L28)
