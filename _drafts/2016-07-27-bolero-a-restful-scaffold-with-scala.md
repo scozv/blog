@@ -326,7 +326,6 @@ trait CanCrossOrigin {
 
 {% endhighlight %}
 
-
 ## 基于Token的用户认证
 
 `Bolero`的所有接口都是无状态的，识别用户的方式，就是通过Authentication Token。
@@ -340,7 +339,13 @@ trait CanCrossOrigin {
 > 我对安全认证这一领域，还是很多不了解的地方。`Bolero`对Token认证的实现不能保证100%
 > 安全，我还在不断地改进中。
 
+在`Bolero`里面，使用了`Play!`提供的
+Action composition [^play_composition] 来完成Token认证。
+
+具体的实现，参考`controllers.CanAuthenticate.scala`。
+
 # 测试代码详解
+
 
 ## 测试的无状态
 
@@ -356,14 +361,15 @@ trait CanCrossOrigin {
 
 # 参考文献
 
-[^play_json]: [JSON Reads/Writes/Format Combinators](https://www.playframework.com/documentation/2.5.x/ScalaJsonCombinators)
-[^play_json_auto]: [JSON automated mapping](https://www.playframework.com/documentation/2.5.x/ScalaJsonAutomated)
+[^play_json]: [`Play!` JSON Reads/Writes/Format Combinators](https://www.playframework.com/documentation/2.5.x/ScalaJsonCombinators)
+[^play_json_auto]: [`Play!` JSON automated mapping](https://www.playframework.com/documentation/2.5.x/ScalaJsonAutomated)
 [^rest_http_method]: [Using HTTP Methods for RESTful Services](http://www.restapitutorial.com/lessons/httpmethods.html)
 [^mdn_cors]: [HTTP access control (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)
 [^w3_cors_multi_issue]: [5.1 Access-Control-Allow-Origin Response Header](https://www.w3.org/TR/cors/#access-control-allow-origin-response-header) from w3.org
-[^play_filter]: [Filters](https://www.playframework.com/documentation/2.5.x/ScalaHttpFilters)
+[^play_filter]: [`Play!` Filters](https://www.playframework.com/documentation/2.5.x/ScalaHttpFilters)
 [^play_rqst_header]: [`play.api.mvc.RequestHeader`](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.RequestHeader)
 [^auth0_token]: [Cookies vs Tokens. Getting auth right with Angular.JS](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
 [^scozv_blog_auth_token]: [对登录和基于Token的认证机制的理解（草稿）](https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md)
 [^oracle_mask]: [Oracle Data Masking and Subsetting Pack](http://www.oracle.com/technetwork/database/options/data-masking-subsetting/overview/index.html)
 [^scala_try]: [`scala.util.Try`](http://www.scala-lang.org/api/2.9.3/scala/util/Try.html)
+[^play_composition]: [`Play!` Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition)
