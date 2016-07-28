@@ -3,7 +3,7 @@ layout: post
 title: "Bitbucket Cloud的Issue至JIRA Server的完全迁移指南"
 description: ""
 category: "guide"
-tags: ["markdown","CI","git", "JIRA", "project"]
+tags: ["markdown","ci","git", "jira", "project"]
 lang: zh
 ---
 {% include JB/setup %}

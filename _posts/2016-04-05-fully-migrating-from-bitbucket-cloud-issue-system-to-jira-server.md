@@ -3,7 +3,7 @@ layout: post
 title: "Fully Migrating from Bitbucket Cloud Issue System to JIRA Server"
 description: ""
 category: "guide"
-tags: ["markdown","CI","git", "JIRA", "project"]
+tags: ["markdown","ci","git", "jira", "project"]
 lang: en
 ---
 {% include JB/setup %}

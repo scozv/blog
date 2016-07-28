@@ -3,7 +3,7 @@ layout: post
 title: "迭代版本的Tarjan强连通算法（二）"
 description: ""
 category: "algo"
-tags: ["algorithm", "graph", "SCC"]
+tags: ["algorithm", "graph", "scc"]
 lang: zh
 ---
 {% include JB/setup %}

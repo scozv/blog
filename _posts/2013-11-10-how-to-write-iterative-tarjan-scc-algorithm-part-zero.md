@@ -3,7 +3,7 @@ layout: post
 title: "How to Write Iterative Tarjan SCC Algorithm, Part I"
 description: ""
 category : "algo"
-tags: ["algorithm", "graph", "DFS"]
+tags: ["algorithm", "graph", "dfs"]
 lang: en
 ---
 {% include JB/setup %}

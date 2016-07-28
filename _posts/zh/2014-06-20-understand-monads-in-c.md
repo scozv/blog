@@ -3,7 +3,7 @@ layout: post
 title: "对Eric Lippert所著的Monads系列文章的综述"
 description: "An Short Literature Review on Monads in C#"
 category: "pattern"
-tags: ["LINQ", "monad", "Scala"]
+tags: ["linq", "monad", "scala"]
 lang: zh
 ---
 
