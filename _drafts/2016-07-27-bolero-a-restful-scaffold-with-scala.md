@@ -373,10 +373,17 @@ Action composition [^play_composition] 来完成Token认证。
 使用了`sbt-native-packager` [^scala_sbt_native] 作常驻发布。
 
 另外，在实际的使用中`Bolero`的生产配置对开发是不可见的。
-我通常会使用多个`git repo`来托管源代码：
+我通常会使用多个`git repo`来托管源代码（假定项目代号为`PJ`）：
 
 {% highlight bash %}
-
+pj-docs                 # 文档中心，使用`Markdown`来写项目的所有文档
+pj-core-restful         # 本文的主要内容，使用`Bolero`代码模板
+pj-core-web             # 核心的Web建模，使用`TypeScript`建模
+pj-client-web           # View层，通用的用户访问页面，使用`pj-core-web`
+pj-client-device        # View层，App客户端
+pj-client-console       # View层，系统的后台管理平台，使用`pj-core-web`
+pj-deploy               # 以上所有`repo`的发布配置脚本，对开发不可见
+pj-data                 # 生产环境的数据备份，对开发不可见
 {% endhighlight %}
 
 # 参考文献
