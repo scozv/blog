@@ -3,7 +3,7 @@ layout: post
 title: "迭代版本的Tarjan强连通算法（一）"
 description: ""
 category : "algo"
-tags: ["algorithm", "graph", "DFS"]
+tags: ["algorithm", "graph", "dfs"]
 lang: zh
 ---
 {% include JB/setup %}

@@ -3,7 +3,7 @@ layout: post
 title: "Design a Cashier Microservice with Ping++ SDK"
 description: ""
 category: "pattern"
-tags: ["ping++","microservice","scala","restful"]
+tags: ["ping++","microservice","scala","restful","payment"]
 lang: "en"
 ---
 {% include JB/setup %}
