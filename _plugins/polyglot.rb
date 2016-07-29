@@ -1,4 +1,4 @@
-# Jekyll Polyglot v1.2.0
+# Jekyll Polyglot v1.2.2
 # https://github.com/untra/polyglot/issues/2
 # Fast, painless, open source i18n plugin for Jekyll 3.0 Blogs.
 #   author: Samuel Volin (@untra)
@@ -16,11 +16,11 @@ module Jekyll
 
     def prepare
       @file_langs = {}
-      @default_lang = config['default_lang'] || 'en'
-      @languages = config['languages'] || ['en']
-      @parallel_localization = config['parallel_localization'] || true
+      @default_lang = config.fetch('default_lang', 'en')
+      @languages = config.fetch('languages', ['en'])
+      @parallel_localization = config.fetch('parallel_localization', true)
       (@keep_files << @languages - [@default_lang]).flatten!
-      @exclude_from_localization = config['exclude_from_localization'] || []
+      @exclude_from_localization = config.fetch('exclude_from_localization', [])
       @active_lang = @default_lang
     end
 
@@ -68,9 +68,14 @@ module Jekyll
     end
 
     def process_active_language
+      old_dest = @dest
+      old_exclude = @exclude
+      @file_langs = {}
       @dest = @dest + '/' + @active_lang
       @exclude += @exclude_from_localization
       process_orig
+      @dest = old_dest
+      @exclude = old_exclude
     end
 
     # assigns natural permalinks to documents and prioritizes documents with
@@ -117,7 +122,7 @@ module Jekyll
         regex += "(?!#{x}\/)"
       end
       # regex that looks for all relative urls except for excluded files
-      %r{href=\"#{@baseurl}\/((?:#{regex}[^,'\"\s\/?\.#-]+\.?)*(?:\/[^\]\[\)\(\"\'\s]*)?)\"}
+      %r{href=\"#{@baseurl}\/((?:#{regex}[^,'\"\s\/?\.#]+\.?)*(?:\/[^\]\[\)\(\"\'\s]*)?)\"}
     end
 
     def relativize_urls(doc)
