@@ -20,6 +20,7 @@ kramdown:
 #
 title : Code this.
 tagline: Any Thoughts in Programming
+paginate: 3
 # description:
 author :
   name : "Scott"
@@ -209,3 +210,9 @@ i18n:
   related_posts:
     zh: "您也许还想读……"
     en: "Similar Posts"
+  page_older:
+    zh: "早些时候的文章"
+    en: "Older"
+  page_newer:
+    zh: "之后更新的文章"
+    en: "Newer"
