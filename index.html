@@ -1,0 +1,60 @@
+---
+layout: page
+---
+{% include JB/setup %}
+
+<div class="posts">
+
+{% for post in paginator.posts %}
+  {% if post.categories contains 'slides' %}
+  {% else%}
+  <div class="summary-title"> {{ post.title }} </div>
+  <div class="summary-time"> {{ post.date | date: "%b %d, %Y" }} </div>
+  <div class="summary-content">
+  {% if post.content contains '<!--more-->' %}
+    {{ post.content | split:'<!--more-->' | first }}
+
+    {% comment %}
+    {% assign post_less =  post.content | split:'<!--more-->' | first | replace_first:'Abstract', '' | replace_first:'摘要', '' %}
+    {{ post_less }}
+    {% endcomment %}
+
+  {% else %}
+    {{ post.content }}
+  {% endif %}
+
+  <a href="{{ BASE_PATH }}{{ LANG_PATH }}{{ post.url }}"><span class="read-more">{{ site.i18n["more"][site.active_lang] }}</span></a>
+  </div>
+
+  <br />
+  {% endif %}
+{% endfor %}
+
+</div>
+
+{% assign PAGE_OLDER = site.i18n["page_older"][site.active_lang] %}
+{% assign PAGE_NEWER = site.i18n["page_newer"][site.active_lang] %}
+
+
+<div class="pagination">
+  {% if paginator.next_page %}
+    <a class="pagination-item older" href="{{ BASE_PATH }}{{ LANG_PATH }}/page{{paginator.next_page}}">
+      {{ PAGE_OLDER | default: "Older" }}
+    </a>
+  {% else %}
+    <span class="pagination-item older">{{ PAGE_OLDER | default: "Older" }}</span>
+  {% endif %}
+  {% if paginator.previous_page %}
+    {% if paginator.page == 2 %}
+      <a class="pagination-item newer" href="{{ BASE_PATH }}{{ LANG_PATH }}/">
+        {{ PAGE_NEWER | default: "Newer" }}
+      </a>
+    {% else %}
+      <a class="pagination-item newer" href="{{ BASE_PATH }}{{ LANG_PATH }}/page{{paginator.previous_page}}">
+        {{ PAGE_NEWER | default: "Newer" }}
+      </a>
+    {% endif %}
+  {% else %}
+    <span class="pagination-item newer">{{ PAGE_NEWER | default: "Newer" }}</span>
+  {% endif %}
+</div>
