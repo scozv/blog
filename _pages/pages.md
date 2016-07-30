@@ -6,6 +6,7 @@ header: Pages
 description: "More pages"
 group: navigation
 i18n: pages
+permalink: pages/
 ---
 {% include JB/setup %}
 

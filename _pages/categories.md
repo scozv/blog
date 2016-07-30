@@ -4,6 +4,7 @@ title: Categories
 header: Posts By Category
 group: navigation
 i18n: categories
+permalink: categories/
 ---
 {% include JB/setup %}
 

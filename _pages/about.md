@@ -6,6 +6,7 @@ description: "About me"
 group: navigation
 i18n: about
 weight: 100
+permalink: about/
 ---
 {% include JB/setup %}
 
