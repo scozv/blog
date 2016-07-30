@@ -3,6 +3,7 @@ layout: page
 title: "Credits"
 description: ""
 i18n: credits
+permalink: credits/
 ---
 {% include JB/setup %}
 
