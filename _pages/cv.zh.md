@@ -3,11 +3,15 @@ layout: page
 title: "简历"
 permalink: cv/
 lang: zh
+group: navigation
+weight: 200
 ---
 {% include JB/setup %}
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}
+
+## [English Resume](https://scozv.github.io/blog/cv/)
 
 ## TL;DR
 
@@ -20,22 +24,59 @@ lang: zh
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">最近更新</td>
-      <td style="text-align: left">2016年7月29日</td>
+      <td style="text-align: left">最后更新</td>
+      <td style="text-align: left">2016年7月31日</td>
     </tr>
     <tr>
-      <td style="text-align: left">github</td>
-      <td style="text-align: left"><a href="https://github.com/scozv">@scozv</a></td>
+      <td style="text-align: left">链接</td>
+      <td style="text-align: left">
+        <div class="tech-list">
+          <div class="tag"><a href="https://github.com/scozv">scozv@github</a></div>
+          <div class="tag"><a href="/">Blog</a></div>
+          <div class="tag"><a href="https://scozv.github.io/blog/cv/">Resume</a></div>
+        </div>
+      </td>
     </tr>
     <tr>
       <td style="text-align: left">标签</td>
-      <td style="text-align: left"><div class="tech-list">
-      <div class="tag">软件工程硕士（在读）</div>
-      <div class="tag">6年</div>
-      <div class="tag">带领团队（架构）</div>
-      <div class="tag">期望岗位：Scala工程师, 架构师</div>
-      <div class="tag">Functional Programming</div>
-      <div class="tag">Scala</div><div class="tag">RESTful</div><div class="tag">Play! Framework</div><div class="tag">JavaScript</div><div class="tag">ECMAScript 6</div><div class="tag">Oracle</div><div class="tag">Git</div><div class="tag">Algorithm</div><div class="tag">Markdown</div><div class="tag">LaTeX</div><div class="tag">Linux</div><div class="tag">Bash</div><div class="tag">Ubuntu</div><div class="tag">MongoDB</div><div class="tag">Azure</div><div class="tag">React.js</div><div class="tag">CI</div><div class="tag">JIRA</div><div class="tag">Continuous Integration</div></div></div></td>
+      <td style="text-align: left">
+        <div class="tech-list">
+          <div class="tag">上海交通大学</div>
+          <div class="tag">软件工程硕士（在读）</div>
+          <div class="tag">6年</div>
+          <div class="tag">带领团队（架构）</div>
+          <div class="tag">期望岗位：Scala工程师, 架构师</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">技能</td>
+      <td style="text-align: left">
+        <div class="tech-list">
+          <div class="tag">Functional Programming</div>
+          <div class="tag">Scala</div>
+          <div class="tag">RESTful</div>
+          <div class="tag">Play! Framework</div>
+          <div class="tag">JavaScript</div>
+          <div class="tag">ECMAScript 6</div>
+          <div class="tag">Oracle</div>
+          <div class="tag">Git</div>
+          <div class="tag">Algorithm</div>
+          <div class="tag">Markdown</div>
+          <div class="tag">LaTeX</div>
+          <div class="tag">Linux</div>
+          <div class="tag">Bash</div>
+          <div class="tag">Ubuntu</div>
+          <div class="tag">MongoDB</div>
+          <div class="tag">Azure</div>
+          <div class="tag">React.js</div>
+          <div class="tag">Redux</div>
+          <div class="tag">GraphQL</div>
+          <div class="tag">CI</div>
+          <div class="tag">JIRA</div>
+          <div class="tag">Continuous Integration</div>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -196,7 +237,7 @@ meta  | data
 
 .tech-list .tag {
   float: left;
-  font-size: 12px;
+  font-size: 16px;
   padding: 3px 8px;
   background-color: #BEBEBE;
   border-radius: 5px;
