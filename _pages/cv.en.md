@@ -32,7 +32,7 @@ weight: 200
       <td style="text-align: left">
         <div class="tech-list">
           <div class="tag"><a href="https://github.com/scozv">scozv@github</a></div>
-          <div class="tag"><a href="/">Blog</a></div>
+          <div class="tag"><a href="https://scozv.github.io/blog">Blog</a></div>
           <div class="tag"><a href="https://scozv.github.io/blog/zh/cv/">简历</a></div>
         </div>
       </td>
