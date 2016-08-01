@@ -3,7 +3,7 @@ layout: page
 title: "Resume"
 permalink: cv/
 lang: en
-group: navigation
+group: _navigation
 weight: 200
 ---
 {% include JB/setup %}
@@ -25,7 +25,7 @@ weight: 200
   <tbody>
     <tr>
       <td style="text-align: left">Latest updated</td>
-      <td style="text-align: left">July, 31, 2016</td>
+      <td style="text-align: left">Aug, 1st, 2016</td>
     </tr>
     <tr>
       <td style="text-align: left">Links</td>
@@ -34,6 +34,7 @@ weight: 200
           <div class="tag"><a href="https://github.com/scozv">scozv@github</a></div>
           <div class="tag"><a href="https://scozv.github.io/blog">Blog</a></div>
           <div class="tag"><a href="https://scozv.github.io/blog/zh/cv/">简历</a></div>
+          <div class="tag"><a href="https://scozv.github.io/algo-wiki/en/">Algo-wiki</a></div>
         </div>
       </td>
     </tr>
