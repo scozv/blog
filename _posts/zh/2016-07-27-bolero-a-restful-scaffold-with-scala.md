@@ -54,7 +54,7 @@ lang: "zh"
 * 作为后台服务，`Bolero`保证所有的HTTP Response都是`JSON`格式，都使用`RESTful`的方式呈现。
 
 可以使用`Bolero`创建多个服务，不过目前，`Bolero`并不是一个Microservices的框架。
-关于微服务，可以关注Lightbend推出的`Lagom`框架，`Lagom`的`Scala`版本正在进行中（参考）。
+关于微服务，可以关注Lightbend推出的`Lagom`框架，`Lagom`的`Scala`版本正在进行中 [^lagom_issue1]。
 
 ## 建模中的一些问题：命名、多态和序列化
 
@@ -296,6 +296,16 @@ def genericRule
   }
 {% endhighlight %}
 
+此处有备注：
+
+> 严格意义上讲，上述的设计并不是Monad模式，因为，它没有实现两个关键的方法 [^scozv_bolero_issue1]：
+>
+>       ModelOrError[A].map(A => B): ModelOrError[B]
+>       ModelOrError[A].flatMap(A => ModelOrError[B]): ModelOrError[B]
+>
+> 我正在考虑和设计。
+
+
 ## `CanCrossOrigin`——处理`OPTION`以应对跨域
 
 跨域的处理有两个地方，需要实现：
@@ -404,3 +414,5 @@ pj-data                 # 生产环境的数据备份，对开发不可见
 [^scozv_blog_jira]: [Bitbucket Cloud的Issue至JIRA Server的完全迁移指南](https://scozv.github.io/blog/zh/guide/2016/04/05/fully-migrating-from-bitbucket-cloud-issue-system-to-jira-server)
 [^scala_sbt_native]: [Debian Plugin]([^scala_sbt_native])
 [^scozv_git_goods]: [`models.Goods`](https://github.com/scozv/bolero/blob/master/app/models/Goods.scala#L28)
+[^lagom_issue1]: [`Lagom` issue #1 Add Scala API](https://github.com/lagom/lagom/issues/1)
+[^scozv_bolero_issue1]: [`Bolero` issue #1 monad ModelOrError needed](https://github.com/scozv/bolero/issues/1)

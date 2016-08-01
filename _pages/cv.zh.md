@@ -3,7 +3,7 @@ layout: page
 title: "简历"
 permalink: cv/
 lang: zh
-group: navigation
+group: _navigation
 weight: 200
 ---
 {% include JB/setup %}
@@ -25,7 +25,7 @@ weight: 200
   <tbody>
     <tr>
       <td style="text-align: left">最后更新</td>
-      <td style="text-align: left">2016年7月31日</td>
+      <td style="text-align: left">2016年8月1日</td>
     </tr>
     <tr>
       <td style="text-align: left">链接</td>
@@ -34,6 +34,7 @@ weight: 200
           <div class="tag"><a href="https://github.com/scozv">scozv@github</a></div>
           <div class="tag"><a href="https://scozv.github.io/blog/zh">Blog</a></div>
           <div class="tag"><a href="https://scozv.github.io/blog/cv/">Resume</a></div>
+          <div class="tag"><a href="https://scozv.github.io/algo-wiki/zh-cn/">Algo-wiki</a></div>
         </div>
       </td>
     </tr>
