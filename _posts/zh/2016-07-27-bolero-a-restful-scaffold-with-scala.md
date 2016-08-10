@@ -27,7 +27,7 @@ lang: "zh"
 > 本文（尤其是阅读源代码）需要有一定的`Scala`语言基础，需要对Monad有初步的理解。
 > 最好能够（熟练地）使用`Future[T]`。
 >
-> `Bolero`目前主要基于`Play!`框架，但是不包含任何View的部分，所有的Action都返回`JSON`对象。
+> `Bolero`目前主要基于`Play!`框架（`2.4`），但是不包含任何View的部分，所有的Action都返回`JSON`对象。
 > 我计划用`Spary.io`代替`Play!`。
 >
 > `Bolero`的源代码参见 [scozv/bolero](https://github.com/scozv/bolero)。
@@ -357,13 +357,26 @@ Action composition [^play_composition] 来完成Token认证。
 
 # 测试代码详解
 
-**测试非常重要 [^scozv_blog_jira]，完备的测试是重构和持续集成的基础。**
-
-**测试非常重要，完备的测试是重构和持续集成的基础。**
-
-**测试非常重要，完备的测试是重构和持续集成的基础。**
+> **测试非常重要 [^scozv_blog_jira]，完备的测试是重构和持续集成的基础。**
+>
+> **测试非常重要，完备的测试是重构和持续集成的基础。**
+>
+> **测试非常重要，完备的测试是重构和持续集成的基础。**
 
 测试的[源代码](https://github.com/scozv/bolero)见`test`目录。
+
+## 测试文件的结构
+
+
+{% highlight sh %}
+.
+├── test
+|   ├── WithApplication.scala         // 升级至Play 2.4之后，使用旧版的WithApplication
+|   ├── CanConnectDB.scala            // 连接到测试数据库
+|   ├── CanFakeHTTP.scala             // 伪造HTTP Request
+|   └── BoleroApplicationSpec.scala   // 具体的测试脚本，可以将不同的测试逻辑分割成不同的文件
+
+{% endhighlight %}
 
 ## 测试的无状态
 
@@ -371,10 +384,10 @@ Action composition [^play_composition] 来完成Token认证。
 
 通常，我们在测试开始时，准备数据，在测试完成是，清理测试数据。
 
-## `FakeApplication`——不依赖任何客户端的`RESTful`测试
+## `CanFakeHTTP`——不依赖任何客户端的`RESTful`测试
 
 基于松耦合的原则，`RESTful`服务的开发流程中，不应该依赖前端View的开发进程。
-所以，我们使用`FakeApplication`模拟HTTP Request。
+所以，我们使用`CanFakeHTTP`模拟HTTP Request。
 
 # 发布和部署介绍
 
