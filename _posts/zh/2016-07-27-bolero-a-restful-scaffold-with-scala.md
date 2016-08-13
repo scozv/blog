@@ -48,7 +48,7 @@ lang: "zh"
 
 ## 松耦合的架构思想
 
-`Bolero`基于松耦合（参考）的思想，就前后端分离而言：
+`Bolero`基于松耦合 [^scozv_blog_archi] 的思想，就前后端分离而言：
 
 * `Bolero`只负责后端，我没有使用`Play!`提供的`View`引擎，并且计划使用`Spary.io`代替`Play!`；
 * 作为后台服务，`Bolero`保证所有的HTTP Response都是`JSON`格式，都使用`RESTful`的方式呈现。
@@ -421,6 +421,8 @@ pj-data                 # 生产环境的数据备份，对开发不可见
 [^play_rqst_header]: [`play.api.mvc.RequestHeader`](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.RequestHeader)
 [^auth0_token]: [Cookies vs Tokens. Getting auth right with Angular.JS](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
 [^scozv_blog_auth_token]: [对登录和基于Token的认证机制的理解（草稿）](https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md)
+[^scozv_blog_archi]: [基于低耦合和持续集成的Web架构
+](https://scozv.github.io/blog/zh/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration)
 [^oracle_mask]: [Oracle Data Masking and Subsetting Pack](http://www.oracle.com/technetwork/database/options/data-masking-subsetting/overview/index.html)
 [^scala_try]: [`scala.util.Try`](http://www.scala-lang.org/api/2.9.3/scala/util/Try.html)
 [^play_composition]: [`Play!` Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition)
