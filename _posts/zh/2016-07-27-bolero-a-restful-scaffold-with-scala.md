@@ -337,6 +337,13 @@ trait CanCrossOrigin {
 
 {% endhighlight %}
 
+## `CanConnectDB2[T]`——统一处理数据的读写
+
+`CanConnectDB2[T]`是对原先的`CanConnectDB`的改写。
+主要的意图是，让开发人员尽可能地少写重复的代码。
+
+具体的代码变更，参考`biz.Can.scala`，也可以访问[代码变更记录](https://github.com/scozv/bolero/commit/b0a5fd3c3ab58159305711e6e0f742786fccc30b)。
+
 ## 基于Token的用户认证
 
 `Bolero`的所有接口都是无状态的，识别用户的方式，就是通过Authentication Token。
