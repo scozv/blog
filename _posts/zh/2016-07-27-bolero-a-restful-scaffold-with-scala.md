@@ -344,6 +344,27 @@ trait CanCrossOrigin {
 
 具体的代码变更，参考`biz.Can.scala`，也可以访问[代码变更记录](https://github.com/scozv/bolero/commit/b0a5fd3c3ab58159305711e6e0f742786fccc30b)。
 
+目前提供如下的接口实现：
+
+{% highlight scala %}
+trait CanConnectDB2[T] {
+  // 查询所有的T
+  def list(db: DB): Future[Seq[T]] = ???
+  // 查询一个指定_id的T
+  def one(db: DB, id: String): Future[Option[T]] = ???
+  // 查询指定_id的T的一个字段
+  def field[B](db: DB, id: String, fieldName: String): Future[Option[B]] = ???
+  // 查询一系列T的指定字段的所有值
+  def sequence(db: DB, selector: JsObject, fieldName: String): Future[Seq[B]] = ???
+  // 插入一条T
+  def insert(db: DB, document: T): Future[WriteResult] = ???
+  // 更新符合selector条件的一系列T
+  def update(db: DB, selector: JsObject, update: T): Future[UpdateWriteResult] = ???
+  // 更新指定_id的T
+  def edit(db: DB, id: String, update: T):Future[UpdateWriteResult] = ???
+}
+{% endhighlight %}
+
 ## 基于Token的用户认证
 
 `Bolero`的所有接口都是无状态的，识别用户的方式，就是通过Authentication Token。
