@@ -25,16 +25,17 @@ weight: 200
   <tbody>
     <tr>
       <td style="text-align: left">Latest updated</td>
-      <td style="text-align: left">Aug, 1st, 2016</td>
+      <td style="text-align: left">Aug, 2016</td>
     </tr>
     <tr>
       <td style="text-align: left">Links</td>
       <td style="text-align: left">
         <div class="tech-list">
-          <div class="tag"><a href="https://github.com/scozv">scozv@github</a></div>
-          <div class="tag"><a href="https://scozv.github.io/blog">Blog</a></div>
-          <div class="tag"><a href="https://scozv.github.io/blog/zh/cv/">简历</a></div>
-          <div class="tag"><a href="https://scozv.github.io/algo-wiki/en/">Algo-wiki</a></div>
+        <div class="tag"><a href="https://github.com/scozv">scozv@github</a></div>          
+        <div class="tag"><a href="https://github.com/scozv/algo-js">algo-js</a></div>
+        <div class="tag"><a href="https://scozv.github.io/algo-wiki/en/">algo-wiki</a></div>
+        <div class="tag"><a href="https://scozv.github.io/blog/zh">Blog</a></div>
+        <div class="tag"><a href="https://scozv.github.io/blog/zh/cv/">中文简历</a></div>
         </div>
       </td>
     </tr>
@@ -46,7 +47,7 @@ weight: 200
           <div class="tag">MSE</div>
           <div class="tag">6 years</div>
           <div class="tag">Tech Leader</div>
-          <div class="tag">Looking for: Scala Programmer, Architect</div>
+          <div class="tag">Looking for: Java Developer, Node.js Developer</div>
         </div>
       </td>
     </tr>
@@ -54,11 +55,12 @@ weight: 200
       <td style="text-align: left">Tech</td>
       <td style="text-align: left">
         <div class="tech-list">
-          <div class="tag">Functional Programming</div>
+          <div class="tag">React.js</div>
+          <div class="tag">Redux</div>
+          <div class="tag">Node.js</div>
           <div class="tag">Scala</div>
           <div class="tag">RESTful</div>
-          <div class="tag">Play! Framework</div>
-          <div class="tag">JavaScript</div>
+          <div class="tag">Play!</div>
           <div class="tag">ECMAScript 6</div>
           <div class="tag">Oracle</div>
           <div class="tag">Git</div>
@@ -66,14 +68,9 @@ weight: 200
           <div class="tag">Markdown</div>
           <div class="tag">LaTeX</div>
           <div class="tag">Linux</div>
-          <div class="tag">Bash</div>
-          <div class="tag">Ubuntu</div>
           <div class="tag">MongoDB</div>
           <div class="tag">Azure</div>
-          <div class="tag">React.js</div>
-          <div class="tag">Redux</div>
           <div class="tag">GraphQL</div>
-          <div class="tag">CI</div>
           <div class="tag">JIRA</div>
           <div class="tag">Continuous Integration</div>
         </div>
@@ -112,6 +109,15 @@ Server and the View have been deployed on different VMs, under Ubuntu Server 14.
 The `RESTful Server` is based on `Play! Framework` with `Scala` Programming.
 And, switching to `Spray.io` is on the schedule.
 
+Feature in View, the Web page:
+
+* is rendered with `React.js`, and `React Native`,
+* is NOT two-way data binding,
+* is written with `ECMAScript 6`, interpreted with `Babel 6`,
+* uses `Redux`, for the `Flux`,
+* will use `GraphQL` and the `Relay`,
+* is hosted with `Node.js` and `Webpack` as the HTTP Server.
+
 Features in `RESTful Server`:
 
 * `Async` I/O with `MongoDB` based on `ReactiveMongo`,
@@ -121,22 +127,13 @@ Features in `RESTful Server`:
 * Token authentication,
 * Automatic test and deployment scripts.
 
-Feature in View, the Web page:
-
-* `React.js`, and `React Native`,
-* NO two-way data binding,
-* Upgrading the `JavaScript` to `ECMAScript 6`, interpreted with `Babel 6`,
-* `Redux`, for the `Flux`,
-* `GraphQL` and the `Relay` is on the schedule,
-* `Yaws` for static page hosting, and `Node.js` for comming Server Rendering plan.
-
 ### Q Treasury Solution Project (as a Sr. Developer)
 
 meta  | data
 :-----|:-----
 Employer | SunGard China
 Time | June, 2013 ~ Now
-Summary | Be responsible to implementation of `Fees` calculation API. Mainly using ASP .NET and the AOP conception for data validation.
+Summary | Be responsible to implementation of `Fees` calculation API. Mainly using `ASP .NET MVC` and the AOP conception for data validation.
 
 ### Y Vehicle Accident Claim Center Project (as a Developer)
 
@@ -156,7 +153,7 @@ Summary | Involved into the deployment and the `PL/SQL` reporting implementation
 
 ## Candidate Introduction
 
-### A few words on me
+### Profile
 
 I am not able to interact with any person I just meet. However, after a period of
 team work, the members in the team will consider me as a person who are able to **be on focus**.
@@ -166,7 +163,7 @@ I passed **CFA Level 1** Exam, and entered into SJTU for MSE degree.
 
 I have a more than **5 years experiences on English reading and writing**.
 
-### In the weekend
+### In the Weekend
 
 In the weekend, I started to write this [blog](/) about what I thought of what I have done.
 And I also learn from [Coursera](https://www.coursera.org/), on Algorithm, Data Analysis and the
@@ -174,11 +171,12 @@ Financial courses.
 
 I swim, I play tennis and take traveling for freshing ideas.
 
-### Last year
+### Last Year
 
 I leaded a 6 members team (including myself) and **be a architect**.
 I archived:
 
+* rendering the web page with `React.js` and `Webpack`,
 * more than 600 `git commit`s,
 * solving 60% of 115 issues,
 * design of 127 test cases with code coverage of 90%.
@@ -196,7 +194,7 @@ including:
 * Markdown documentation system,
 * Working on Ubuntu.
 
-### Team and Next
+### As a Team Lead
 
 The 6 members team (including myself) are build with 4 developers, 1 product manager
 and 1 marketing.
@@ -206,17 +204,22 @@ to prepare a outline before meeting.
 
 We may argue with different solutions, but will NOT prejudge others.
 
-**For the coming new position, I still prefer a tech leader and architect.**
-I believe a team that is full of guru may NOT be efficient than
-a team that each member:
+As the Team and Tech Lead, I:
 
-* is **executive**,
-* is willing to involve,
-* and has **passion** on learning.
+* manage the project with JIRA (CI),
+* build the [Code Template] [1] and the [Environment Script] [2],
+* prefer to working with a member who is full of passion.
 
-So I prefer the next team that is **younger** and have potential ability to grow up.
+### The Next Career Plan
 
-As for the domain, a **financial** project will be matched my domain basic knowledge.
+For the coming new position, I am looking for a full-stack development:
+
+* Architect is based on `RESTful API` and Loose Coupling,
+* Web page is rendered with `React.js` and `Node.js`,
+* `RESTful` Server is developed in Java Eco-system, hosted in `Linux` (Cloud).
+
+I believe the ability of a team is more powerful than the ability of individual.
+So I am looking forward for growing up with team members.
 
 <style>
 .clear {
@@ -230,7 +233,7 @@ As for the domain, a **financial** project will be matched my domain basic knowl
 
 .tech-list .tag {
   float: left;
-  font-size: 16px;
+  font-size: 18px;
   padding: 3px 8px;
   background-color: #BEBEBE;
   border-radius: 5px;
@@ -243,3 +246,6 @@ tr td:first-child {
 }
 
 </style>
+
+[1]: https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala  "Blog Bolero"
+[2]: https://scozv.github.io/blog/pattern/2016/07/22/donot-ask-the-devs-to-prepare-env-by-click "Blog installation.sh"
