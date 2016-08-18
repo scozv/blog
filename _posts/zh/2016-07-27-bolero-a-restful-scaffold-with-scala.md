@@ -27,7 +27,7 @@ lang: "zh"
 > 本文（尤其是阅读源代码）需要有一定的`Scala`语言基础，需要对Monad有初步的理解。
 > 最好能够（熟练地）使用`Future[T]`。
 >
-> `Bolero`目前主要基于`Play!`框架，但是不包含任何View的部分，所有的Action都返回`JSON`对象。
+> `Bolero`目前主要基于`Play!`框架（`2.4`），但是不包含任何View的部分，所有的Action都返回`JSON`对象。
 > 我计划用`Spary.io`代替`Play!`。
 >
 > `Bolero`的源代码参见 [scozv/bolero](https://github.com/scozv/bolero)。
@@ -48,13 +48,13 @@ lang: "zh"
 
 ## 松耦合的架构思想
 
-`Bolero`基于松耦合（参考）的思想，就前后端分离而言：
+`Bolero`基于松耦合 [^scozv_blog_archi] 的思想，就前后端分离而言：
 
 * `Bolero`只负责后端，我没有使用`Play!`提供的`View`引擎，并且计划使用`Spary.io`代替`Play!`；
 * 作为后台服务，`Bolero`保证所有的HTTP Response都是`JSON`格式，都使用`RESTful`的方式呈现。
 
 可以使用`Bolero`创建多个服务，不过目前，`Bolero`并不是一个Microservices的框架。
-关于微服务，可以关注Lightbend推出的`Lagom`框架，`Lagom`的`Scala`版本正在进行中（参考）。
+关于微服务，可以关注Lightbend推出的`Lagom`框架，`Lagom`的`Scala`版本正在进行中 [^lagom_issue1]。
 
 ## 建模中的一些问题：命名、多态和序列化
 
@@ -296,6 +296,16 @@ def genericRule
   }
 {% endhighlight %}
 
+此处有备注：
+
+> 严格意义上讲，上述的设计并不是Monad模式，因为，它没有实现两个关键的方法 [^scozv_bolero_issue1]：
+>
+>       ModelOrError[A].map(A => B): ModelOrError[B]
+>       ModelOrError[A].flatMap(A => ModelOrError[B]): ModelOrError[B]
+>
+> 我正在考虑和设计。
+
+
 ## `CanCrossOrigin`——处理`OPTION`以应对跨域
 
 跨域的处理有两个地方，需要实现：
@@ -327,6 +337,34 @@ trait CanCrossOrigin {
 
 {% endhighlight %}
 
+## `CanConnectDB2[T]`——统一处理数据的读写
+
+`CanConnectDB2[T]`是对原先的`CanConnectDB`的改写。
+主要的意图是，让开发人员尽可能地少写重复的代码。
+
+具体的代码变更，参考`biz.Can.scala`，也可以访问[代码变更记录](https://github.com/scozv/bolero/commit/b0a5fd3c3ab58159305711e6e0f742786fccc30b)。
+
+目前提供如下的接口实现：
+
+{% highlight scala %}
+trait CanConnectDB2[T] {
+  // 查询所有的T
+  def list(db: DB): Future[Seq[T]] = ???
+  // 查询一个指定_id的T
+  def one(db: DB, id: String): Future[Option[T]] = ???
+  // 查询指定_id的T的一个字段
+  def field[B](db: DB, id: String, fieldName: String): Future[Option[B]] = ???
+  // 查询一系列T的指定字段的所有值
+  def sequence(db: DB, selector: JsObject, fieldName: String): Future[Seq[B]] = ???
+  // 插入一条T
+  def insert(db: DB, document: T): Future[WriteResult] = ???
+  // 更新符合selector条件的一系列T
+  def update(db: DB, selector: JsObject, update: T): Future[UpdateWriteResult] = ???
+  // 更新指定_id的T
+  def edit(db: DB, id: String, update: T):Future[UpdateWriteResult] = ???
+}
+{% endhighlight %}
+
 ## 基于Token的用户认证
 
 `Bolero`的所有接口都是无状态的，识别用户的方式，就是通过Authentication Token。
@@ -347,13 +385,26 @@ Action composition [^play_composition] 来完成Token认证。
 
 # 测试代码详解
 
-**测试非常重要 [^scozv_blog_jira]，完备的测试是重构和持续集成的基础。**
-
-**测试非常重要，完备的测试是重构和持续集成的基础。**
-
-**测试非常重要，完备的测试是重构和持续集成的基础。**
+> **测试非常重要 [^scozv_blog_jira]，完备的测试是重构和持续集成的基础。**
+>
+> **测试非常重要，完备的测试是重构和持续集成的基础。**
+>
+> **测试非常重要，完备的测试是重构和持续集成的基础。**
 
 测试的[源代码](https://github.com/scozv/bolero)见`test`目录。
+
+## 测试文件的结构
+
+
+{% highlight sh %}
+.
+├── test
+|   ├── WithApplication.scala         // 升级至Play 2.4之后，使用旧版的WithApplication
+|   ├── CanConnectDB.scala            // 连接到测试数据库
+|   ├── CanFakeHTTP.scala             // 伪造HTTP Request
+|   └── BoleroApplicationSpec.scala   // 具体的测试脚本，可以将不同的测试逻辑分割成不同的文件
+
+{% endhighlight %}
 
 ## 测试的无状态
 
@@ -361,10 +412,10 @@ Action composition [^play_composition] 来完成Token认证。
 
 通常，我们在测试开始时，准备数据，在测试完成是，清理测试数据。
 
-## `FakeApplication`——不依赖任何客户端的`RESTful`测试
+## `CanFakeHTTP`——不依赖任何客户端的`RESTful`测试
 
 基于松耦合的原则，`RESTful`服务的开发流程中，不应该依赖前端View的开发进程。
-所以，我们使用`FakeApplication`模拟HTTP Request。
+所以，我们使用`CanFakeHTTP`模拟HTTP Request。
 
 # 发布和部署介绍
 
@@ -398,9 +449,13 @@ pj-data                 # 生产环境的数据备份，对开发不可见
 [^play_rqst_header]: [`play.api.mvc.RequestHeader`](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.RequestHeader)
 [^auth0_token]: [Cookies vs Tokens. Getting auth right with Angular.JS](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
 [^scozv_blog_auth_token]: [对登录和基于Token的认证机制的理解（草稿）](https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md)
+[^scozv_blog_archi]: [基于低耦合和持续集成的Web架构
+](https://scozv.github.io/blog/zh/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration)
 [^oracle_mask]: [Oracle Data Masking and Subsetting Pack](http://www.oracle.com/technetwork/database/options/data-masking-subsetting/overview/index.html)
 [^scala_try]: [`scala.util.Try`](http://www.scala-lang.org/api/2.9.3/scala/util/Try.html)
 [^play_composition]: [`Play!` Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition)
 [^scozv_blog_jira]: [Bitbucket Cloud的Issue至JIRA Server的完全迁移指南](https://scozv.github.io/blog/zh/guide/2016/04/05/fully-migrating-from-bitbucket-cloud-issue-system-to-jira-server)
 [^scala_sbt_native]: [Debian Plugin]([^scala_sbt_native])
 [^scozv_git_goods]: [`models.Goods`](https://github.com/scozv/bolero/blob/master/app/models/Goods.scala#L28)
+[^lagom_issue1]: [`Lagom` issue #1 Add Scala API](https://github.com/lagom/lagom/issues/1)
+[^scozv_bolero_issue1]: [`Bolero` issue #1 monad ModelOrError needed](https://github.com/scozv/bolero/issues/1)

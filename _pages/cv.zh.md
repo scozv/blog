@@ -3,11 +3,15 @@ layout: page
 title: "简历"
 permalink: cv/
 lang: zh
+group: _navigation
+weight: 200
 ---
 {% include JB/setup %}
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}
+
+## [English Resume](https://scozv.github.io/blog/cv/)
 
 ## TL;DR
 
@@ -20,22 +24,57 @@ lang: zh
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">最近更新</td>
-      <td style="text-align: left">2016年7月29日</td>
+      <td style="text-align: left">最后更新</td>
+      <td style="text-align: left">2016年8月</td>
     </tr>
     <tr>
-      <td style="text-align: left">github</td>
-      <td style="text-align: left"><a href="https://github.com/scozv">@scozv</a></td>
+      <td style="text-align: left">链接</td>
+      <td style="text-align: left">
+        <div class="tech-list">
+          <div class="tag"><a href="https://github.com/scozv">scozv@github</a></div>          
+          <div class="tag"><a href="https://github.com/scozv/algo-js/blob/master/DUWO.md">algo-js</a></div>
+          <div class="tag"><a href="https://scozv.github.io/algo-wiki/zh-cn/">algo-wiki</a></div>
+          <div class="tag"><a href="https://scozv.github.io/blog/zh">Blog</a></div>
+          <div class="tag"><a href="https://scozv.github.io/blog/cv/">English Resume</a></div>
+        </div>
+      </td>
     </tr>
     <tr>
       <td style="text-align: left">标签</td>
-      <td style="text-align: left"><div class="tech-list">
-      <div class="tag">软件工程硕士（在读）</div>
-      <div class="tag">6年</div>
-      <div class="tag">带领团队（架构）</div>
-      <div class="tag">期望岗位：Scala工程师, 架构师</div>
-      <div class="tag">Functional Programming</div>
-      <div class="tag">Scala</div><div class="tag">RESTful</div><div class="tag">Play! Framework</div><div class="tag">JavaScript</div><div class="tag">ECMAScript 6</div><div class="tag">Oracle</div><div class="tag">Git</div><div class="tag">Algorithm</div><div class="tag">Markdown</div><div class="tag">LaTeX</div><div class="tag">Linux</div><div class="tag">Bash</div><div class="tag">Ubuntu</div><div class="tag">MongoDB</div><div class="tag">Azure</div><div class="tag">React.js</div><div class="tag">CI</div><div class="tag">JIRA</div><div class="tag">Continuous Integration</div></div></div></td>
+      <td style="text-align: left">
+        <div class="tech-list">
+          <div class="tag">上海交通大学</div>
+          <div class="tag">软件工程硕士（在读）</div>
+          <div class="tag">6年</div>
+          <div class="tag">带领团队（架构）</div>
+          <div class="tag">期望岗位：Java工程师, Node.js开发</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">技能</td>
+      <td style="text-align: left">
+        <div class="tech-list">        
+          <div class="tag">React.js</div>
+          <div class="tag">Redux</div>
+          <div class="tag">Node.js</div>
+          <div class="tag">Scala</div>
+          <div class="tag">RESTful</div>
+          <div class="tag">Play!</div>
+          <div class="tag">ECMAScript 6</div>
+          <div class="tag">Oracle</div>
+          <div class="tag">Git</div>
+          <div class="tag">Algorithm</div>
+          <div class="tag">Markdown</div>
+          <div class="tag">LaTeX</div>
+          <div class="tag">Linux</div>
+          <div class="tag">MongoDB</div>
+          <div class="tag">Azure</div>
+          <div class="tag">GraphQL</div>
+          <div class="tag">JIRA</div>
+          <div class="tag">Continuous Integration</div>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -64,6 +103,14 @@ meta  | data
 
 宏观上，实现了前后台的完全分离，并顺利地将多个节点部署到云虚机（`Ubuntu 14.04`）上。
 
+前台使用了`React.js`，正在尝试`React Native`：
+
+* 数据流是单向的，不使用双向绑定；
+* 所有代码都使用了`ECMAScript 6`的语法，使用`Babel 6`编译；
+* 使用`Redux`作为`Flux`的实现；
+* 正在尝试`GraphQL`、`Relay`；
+* 使用`Node.js`和`Webpack`作包管理以及HTTP Server发布。
+
 后台服务通过`Scala`实现，
 基于`Play! Framework`（计划迁移到`Spray.io`）实现的`RESTful API`：
 
@@ -74,22 +121,14 @@ meta  | data
 * 实现了基于Token的用户认证；
 * 创建了发布脚本和数据备份脚本。
 
-前台使用了`React.js`，正在尝试`React Native`：
-
-* 数据流是单向的，不使用双向绑定；
-* 所有代码都使用了`ECMAScript 6`的语法，使用`Babel 6`编译；
-* 使用`Redux`作为`Flux`的实现；
-* 正在尝试`GraphQL`、`Relay`；
-* 使用`Yaws`托管静态网页，计划以后端渲染的方式部署（`Node.js`）。
-
 ### 某大型资产管理系统（高级开发工程师）
 
 meta  | data
 :-----|:-----
 就职公司 | SunGard China
 在职时间 | 2013.06 ~ 现在
-职责范围 | 高级开发工程师，独立负责Fees计算模块API部分的研发
-简略介绍 | 主要使用了`ASP .NET`，抽象了不同级别的基类。使用AOP控制赋值的有效性。
+职责范围 | 高级开发工程师，独立负责Fees计算模块的全栈开发
+简略介绍 | 主要使用了`ASP .NET MVC`。使用AOP控制赋值的有效性。使用`Razor`引擎绘制View。
 
 ### 某大型车险理赔系统（中级开发工程师）
 
@@ -135,6 +174,7 @@ meta  | data
 在过去的这一年里，我带领了一个六人团队（包括我）。
 作为**技术架构的负责人**，也是开发的主力：
 
+* 完成了React.js的代码并使用Webpack打包发布；
 * 完成了600多次`git commit`；
 * 提出了115个issue，并完成了其中的60%；
 * 设计了127个测试用例，覆盖了90%的`API`。
@@ -168,20 +208,14 @@ meta  | data
 
 ### 对未来的规划
 
-下一份工作，我希望继续带领开发组，承担架构的角色。
-我关注`Scala`，并希望能往微服务方向，部署后台`RESTful API`。
+下一份工作，我希望可以承担全栈开发的工作：
 
-**我不认为**，由各个领域的大牛组成的团队，就一定能合作愉快。
-从之前的经验来看，如果团队要顺利地完成任务，团队里面的每一个人：
+* 基于`RESTful API`的前后端分离；
+* 前端页面可以使用`React.js`系列框架进行渲染和数据绑定；
+* 后端服务在Java生态圈中开发，部署至Linux（云平台）。
 
-* 需要具备一定的**执行力**；
-* 可以**主动**地参与到项目中；
-* 愿意**学习**。
-
-所以我希望未来的团队稍微年轻一些，就算是刚毕业的同学，
-我也有能力去培养（新人往往**可塑性**高），带领着团队一起成长。
-
-就行业而言，**我很乐意看到项目与金融行业相关**。
+从之前的经验来看，团队的力量远远大于个人，
+所以很期待加入开放、热情的团队，和团队成员们一起成长。
 
 
 <style>
@@ -196,7 +230,7 @@ meta  | data
 
 .tech-list .tag {
   float: left;
-  font-size: 12px;
+  font-size: 18px;
   padding: 3px 8px;
   background-color: #BEBEBE;
   border-radius: 5px;
