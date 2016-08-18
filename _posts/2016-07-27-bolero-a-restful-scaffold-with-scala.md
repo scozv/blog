@@ -33,13 +33,101 @@ lang: "en"
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}
 
-# `Bolero` Basic Principles
+# Principles of `Bolero`
+
+I will introduce a `RESTful` Server code scaffold named `Bolero`.
+The source code of it can be checked in [github](https://github.com/scozv/bolero).
+
+Let's look at the principles of `Bolero`.
 
 ## Loose Coupling
 
-## Model, the Name, and the JSON
+Loose Coupling is a very important idea of `Bolero`, I develop and deploy the
+View (web page) and `RESTful` Server individually:
 
-## `RESTful API` Designing
+* `Bolero` only provides the `RESTful` Server, the view engine of `Play !` is
+  not used in `Bolero`. I am planning to replace `Play!` with `Spary.io`,
+* As the `RESTful` Server, `Bolero` ensures that all data returned is `JSON` format.
+
+We can apply `Bolero` for multiple `RESTful` Server, however, `Bolero` is NOT
+a Microservices Framework. Currently, the `Scala` version of `Lagom` Framework
+provided by Lightbend
+is under development [^lagom_issue1].
+
+## Modeling, the Name, Polymorphism, and the JSON Formats
+
+Data (`models`) has two paths of transferring in `Bolero`.
+
+One path is that HTTP Request sends
+data contained in `payload` to `models` in `Scala`,
+and finally persists the data into `MongoDB`.
+
+Another path is from `MongoDB` to `models`, and then to `JSON` in web page.
+
+So we need to build the model in 3 places:
+
+* `JSON` model in web page, `TypeScript` is recommanded for `JSON` modeling,
+* `Scala` model in `RESTful` Server, `trait` or `case`,
+* `JSON` model in `MongoDB`.
+
+In order to keep consistency in 3 places, the naming convention is:
+
+* `_id` is used for all primary fields,
+* `NameOfModel` is camel-casing, with initial letter Uppercase,
+* `propertyOfModel` is camel-casing, with initial letter lowercase.
+
+> Attentions:
+>
+> The naming conventions above is not a best practice.
+> And, I am considering to convert the camel-case to underline_case in `JSON` and `MongoDB`.
+> Considering means just-considering, NOT decided-yet.
+
+`Play!` provides `Reads` and `Writes` [^play_json] for
+`JSON` serialization and deserialization:
+
+* It `Writes` code model to `JSON`, while,
+* `Reads` data as strong-typed model from `JSON`.
+
+Also, `Play!` contains `Formats` for `JSON` automated mapping [^play_json_auto].
+
+{% highlight scala %}
+import play.api.libs.json._
+
+implicit val autoReads = Json.reads[T]
+implicit val autoWrites = Json.writes[T]
+
+// format = reads + writes
+implicit val autoFormat = Json.format[T]
+{% endhighlight %}
+
+> Tips:
+>
+> `Play!` provides automated mapping, however, using `Reads` and `Writes`
+> is recommanded, especially for complex `models`, assuming we have the
+> high percentage of APIs test coverage.
+>
+> The reason of NOT using `Formats[T]` is:
+>
+> * When any changes happen in any places, we have to update the code of `Reads` and `Writes`,
+>   otherwise, an error will be thrown:
+>   
+>        play.api.libs.json.JsResultException: "obj.field_name":{"msg":["error.path.missing"]
+> * `JSON` formatting will be more flexible, such as `Writing` empty when `Option[T]` is `None`,
+> * We can use different naming conventions in different places.
+
+Polymorphism is the core idea of OOP, when using the `Reads` and `Writes`,
+we may encounter the compile error saying:
+
+{% highlight scala %}
+ambiguous reference to overloaded definition
+{% endhighlight %}
+
+That means code has the conflict overrides,
+if you have the same issue,
+please read the source code of [`Bolero`]((https://github.com/scozv/bolero)),
+or drop me a message.
+
+## Tips on `RESTful API` Design
 
 ### Factors in `RESTful API`
 
