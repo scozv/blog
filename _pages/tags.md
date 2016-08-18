@@ -4,6 +4,7 @@ title: Tags
 header: Posts By Tag
 group: navigation
 i18n: tags
+permalink: tags/
 ---
 {% include JB/setup %}
 

@@ -4,6 +4,7 @@ title : Archive
 header: Post Archive
 group : navigation
 i18n: archive
+permalink: archive/
 ---
 {% include JB/setup %}
 
