@@ -8,7 +8,7 @@ permalink: /:categories/:year/:month/:day/:title
 include: ["_pages"]
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md",
   "0.sh", "build.sh", "katex.sh", "publi.sh", "History.markdown",
-  "Gemfile", "Gemfile.lock"]
+  "_sh", "Gemfile", "Gemfile.lock"]
 highlighter: rouge
 
 # https://help.github.com/articles/migrating-your-pages-site-from-maruku
