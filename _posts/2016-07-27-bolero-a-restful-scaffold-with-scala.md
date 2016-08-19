@@ -129,15 +129,131 @@ or drop me a message.
 
 ## Tips on `RESTful API` Design
 
+`Bolero` only provides the `RESTful` Server returning the `JSON` data,
+will NOT provide the View page.
+
 ### Factors in `RESTful API`
+
+Generally, factors below should be considered during the `RESTful API` design:
+
+* HTTP Method, such as `GET`, `POST`, `PUT`, etc [^rest_http_method],
+* `URI`, like `/user/:id/profile`, parameters can be used for sorting, pagination or filtering,
+* `payload` data that is usually used in `POST` or `PUT`, it will be transferred to `RESTful` Server from Client side,
+* HTTP Header, metadata of HTTP Request, we can add authentication token in Header,
+* HTTP Response data, the returning value of `RESTful API`.
 
 ### Consistency in payload and Response
 
+Consistency is not a new idea, especially, when you
+are familier with `map()` in `Scala`:
+
+{% highlight scala %}
+T.map(): T
+// such as
+List[A].map(): List[B]
+Future[A].map(): Future[B]
+{% endhighlight %}
+
+According to this consistency principle,
+the data structure of HTTP Response data is same as
+the data structure of `payload` in Request:
+
+{% highlight HTML %}
+POST /checkout
+
+// Request
+// header: Token for authentication
+payload: "Bolero.models.Order"
+
+// Response
+data: "Bolero.models.Order"
+{% endhighlight %}
+
+Consistency principle of Request and Response
+makes the API easy to remember and invoke.
+
 ### Be CORS or NOT
+
+CORS stands for Cross Origin Resource Sharing [^mdn_cors].
+
+At the very beginning of `Bolero`, I restricted the
+access origin of `RESTful API`, and I allowed only one
+specific client (web page server) to access the `RESTful` Server.
+
+However, restricting of access origin is helpless for a `RESTful` Server,
+especially, when we need to interact with 3rd party Server.
+For instance, the `Bolero` Server receives the Webhook from Ping++ payment server,
+which is a `POST` request actually, so that it need to open its access origin.
+
+Attention, `Access-Control-Allow-Origin` doesn't support
+the so-called _multipal origin_ [^w3_cors_multi_issue],
+we need to open our access origin wildly (`*`):
+
+> In practice the `origin-list-or-null` production is more constrained.
+> Rather than allowing a space-separated list of origins,
+> **it is either a single origin or the string "null"**.
+
+Also, restriction of access origin is NOT appropriate
+under Loose Coupling principle and multiple instance deployment.
+
+And, If we need the access origin control, or to monitor the
+HTTP Request, we can:
+
+* use `Filters` of `Play!` [^play_filter],
+* use `origin` of HTTP Request to restrict origin source,
+* limit the abnormal high frequency sending of HTTP Request in client side.
 
 ### URI, the Plurals, and the Order
 
-# Deep in Code
+`Bolero` has the naming conventions of `URI` below:
+
+* using simple nouns in `URI`,
+* NOT using any symbol except the `/`,
+* NOT using camel-case,
+* using ONLY singular form of nouns in `URI`, even the Response data is `List`:
+
+      // get the list of user
+      GET /user
+      // get a user with specific id
+      GET /user/:id
+
+  If we treat a user as a file named `:id`, we also treat the `List[user]` as the folder
+  named `user`, when we need a file, or need to access the entire folder, we will access
+  the path named `/user`, we don't access the file using `/user`, and access the folder
+  using path named `/users` at same time.
+
+# Details in Codes
+
+The source code of `Bolero` is hosted as open source
+in [github](https://github.com/scozv/bolero).
+
+The brief structure of `Bolero` code is:
+
+
+{% highlight sh %}
+.
+├── app
+|   ├── base                // utils function
+|   ├── biz                 // business implement, ONLY access MongoDB here
+|   ├── contollers          // controll of MVC
+|   └── models              
+|       ├── interop         // models used for interact with 3rd party API
+|       └── model.scala     // modeling data in Scala
+|
+├── conf                    // Play! configuration
+|   ├── application.conf
+|   ├── play.plugins
+|   ├── release.conf
+|   └── routes
+|
+├── project                  // project configuration
+|   ├── build.properties
+|   └── plugin.sbt
+|
+├── test                     // test case
+|
+└── build.sbt
+{% endhighlight %}
 
 ## Ability of Model
 
