@@ -395,7 +395,6 @@ Action composition [^play_composition] 来完成Token认证。
 
 ## 测试文件的结构
 
-
 {% highlight sh %}
 .
 ├── test
@@ -410,7 +409,7 @@ Action composition [^play_composition] 来完成Token认证。
 
 测试的脚本，要保证在任何库上都能通过，当然，这和测试用例的设计有关。
 
-通常，我们在测试开始时，准备数据，在测试完成是，清理测试数据。
+通常，我们在测试开始时，准备数据，在测试完成之后，清理测试数据。
 
 ## `CanFakeHTTP`——不依赖任何客户端的`RESTful`测试
 

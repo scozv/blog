@@ -187,7 +187,7 @@ which is a `POST` request actually, so that it need to open its access origin.
 
 Attention, `Access-Control-Allow-Origin` doesn't support
 the so-called _multipal origin_ [^w3_cors_multi_issue],
-we need to open our access origin wildly (`*`):
+we need to open our access origin widely (`*`):
 
 > In practice the `origin-list-or-null` production is more constrained.
 > Rather than allowing a space-separated list of origins,
@@ -218,9 +218,9 @@ HTTP Request, we can:
       GET /user/:id
 
   If we treat a user as a file named `:id`, we also treat the `List[user]` as the folder
-  named `user`, when we need a file, or need to access the entire folder, we will access
-  the path named `/user`, we don't access the file using `/user`, and access the folder
-  using path named `/users` at same time.
+  named `user`, when we need a file, or need to access the entire folder, we will also access
+  the path named `/user`. We don't use path `/user` for a single user,
+  and use path `/users` for a gourp of user at same time.
 
 # Details in Codes
 
@@ -228,7 +228,6 @@ The source code of `Bolero` is hosted as open source
 in [github](https://github.com/scozv/bolero).
 
 The brief structure of `Bolero` code is:
-
 
 {% highlight sh %}
 .
@@ -257,13 +256,48 @@ The brief structure of `Bolero` code is:
 
 ## Ability of Model
 
-### `CanBeHierarchic`
+In `Scala`, `trait` means an ability,
+`Bolero` names `trait` as `CanHaveSpecificAbility`.
 
-### `CanBeJsonfied`
+### `CanBeHierarchic`, building the hierarchical model(s)
 
-### `CanBeMasked`
+Hierarchical model(s) is (are) conntected with each other.
+We can use `union-find` to maintain the relationship:
 
-## `OrderOrError`, a Monad for Global Rules Validation
+* the `rootId` of root object is its own `_id`,
+* for any two instances, if they have the same `rootId`, they are connected.
+
+### `CanBeJsonfied`, reading and writing `JSON`
+
+Please read the source code of `CanBeJsonfied` [^scozv_git_goods].
+
+### `CanBeMasked`, removing the sensitive data
+
+`Bolero` will put a mask on the sensitive data, such as
+underlying unique `_id`, cost of a product.
+
+Then, using `T.asMasked()` will be remove the sensitive data.
+
+Naming as `Mask`, is inspired from Oracle Data Masking [^oracle_mask].
+
+## `OrderOrError`, a Monad Pattern for Global Validation
+
+Before creating an `Order`, we need validate a serial of rules on this `Order`:
+
+* does the user have the privilege of creating order,
+* is there enough inventory for this order,
+* is price valid,
+* is the coupon of order valid,
+* etc.
+
+`Bolero` provides a Monad Pattern named `OrderOrError`,
+it accepts an `OrderOrError`, and will
+
+* return `Order`, if previous order valid, otherwise,
+* return `Error`.
+
+Learning from the `Try` of `Scala` [^scala_try] , I designed
+`OrderOrError` as below:
 
 {% highlight scala %}
 
@@ -286,7 +320,21 @@ def genericRule
   }
 {% endhighlight %}
 
-## `CanCrossOrigin`
+> Attention:
+>
+> Strictly speaking, `OrderOrError` above is not a Monad.
+> Two primary methods haven't been implemented [^scozv_bolero_issue1]:
+>
+>       ModelOrError[A].map(A => B): ModelOrError[B]
+>       ModelOrError[A].flatMap(A => ModelOrError[B]): ModelOrError[B]
+
+
+## `CanCrossOrigin`, handling the `OPTION` Request
+
+`OPTION` Request is used for `POST` or `PUT` of CORS, we need to:
+
+* define the `OPTION` router, and,
+* return `HTTP 200` after accepting the `OPTION` Request.
 
 {% highlight scala %}
 // routes
@@ -309,16 +357,89 @@ trait CanCrossOrigin {
     // add Access-Control-Allow-Origin to header
   }
 }
+{% endhighlight %}
 
+## `CanConnectDB2[T]`, making code easy to I/O `MongoDB`
+
+`CanConnectDB2[T]` will replace the original `CanConnectDB` soon.
+It will make code easy to read and write `MongoDB`.
+
+The code changes
+could be found at
+[git diff](https://github.com/scozv/bolero/commit/b0a5fd3c3ab58159305711e6e0f742786fccc30b).
+
+Currently, methods below are provided:
+
+{% highlight scala %}
+trait CanConnectDB2[T] {
+  // Lists all T
+  def list(db: DB): Future[Seq[T]] = ???
+  // Quereis one T with specific _id
+  def one(db: DB, id: String): Future[Option[T]] = ???
+  // Gets the value of specific field of one T
+  def field[B](db: DB, id: String, fieldName: String): Future[Option[B]] = ???
+  // Lists the specific field values
+  def sequence(db: DB, selector: JsObject, fieldName: String): Future[Seq[B]] = ???
+  // Inserts one T
+  def insert(db: DB, document: T): Future[WriteResult] = ???
+  // Updates T(s) when selector holds
+  def update(db: DB, selector: JsObject, update: T): Future[UpdateWriteResult] = ???
+  // Edits one T with specific _id
+  def edit(db: DB, id: String, update: T):Future[UpdateWriteResult] = ???
+}
 {% endhighlight %}
 
 ## Token Based Authentication
 
+All `RESTful` API are stateless in `Bolero`.
+Token based authentication can be used for
+user identification. A post [^auth0_token] from `auth0`
+is recommanded.
+
+Also, I am writing a post on token authentication,
+the source code of this draft is in github [^scozv_blog_auth_token].
+
+> Attention:
+>
+> I am not a expert on Web Security.
+> `Bolero` cannot ensure the 100% security of authentication.
+> I am still improving it.
+
+Currently, `Bolero` uses Action composition [^play_composition]
+for authentication.
+You can read the source code of `controllers.CanAuthenticate.scala`.
+
 # Test, Refactor and CI
+
+> **Test is very important [^scozv_blog_jira], it is key to Refactor and CI.**
+>
+> **Test is very important [^scozv_blog_jira], it is key to Refactor and CI.**
+>
+> **Test is very important [^scozv_blog_jira], it is key to Refactor and CI.**
+
+The source code of `test`
+is located in [`test`](https://github.com/scozv/bolero/tree/master/test) folder.
+
+## The Structure of Test
+
+{% highlight sh %}
+.
+├── test
+|   ├── WithApplication.scala         // still use previous release instead Play! 2.4
+|   ├── CanConnectDB.scala            // connect to test database
+|   ├── CanFakeHTTP.scala             // fake HTTP Request
+|   └── BoleroApplicationSpec.scala   // test files
+
+{% endhighlight %}
 
 ## Begin and End of Test
 
-## `FakeApplication`, HTTP Request Mocking
+In order to keep independency of database,
+`Bolero` will prepare data before test, and clean up data after test.
+
+## `CanFakeHTTP`, HTTP Request Mocking
+
+Based on the 
 
 # Deployment
 
@@ -354,3 +475,4 @@ pj-data                 # production data backup, NOT open to developers
 [^scozv_blog_jira]: [Fully Migrating from Bitbucket Cloud Issue System to JIRA Server](https://scozv.github.io/blog/guide/2016/04/05/fully-migrating-from-bitbucket-cloud-issue-system-to-jira-server)
 [^scala_sbt_native]: [Debian Plugin]([^scala_sbt_native])
 [^scozv_git_goods]: [`models.Goods`](https://github.com/scozv/bolero/blob/master/app/models/Goods.scala#L28)
+[^scozv_bolero_issue1]: [`Bolero` issue #1 monad ModelOrError needed](https://github.com/scozv/bolero/issues/1)
