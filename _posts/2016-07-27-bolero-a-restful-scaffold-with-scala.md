@@ -25,7 +25,6 @@ lang: "en"
 > * `FakeApplication` for HTTP Request mock,
 > * Deploy with `sbt-native`.
 >
-> This article, currently, is written in Chinese, and will be in English soon.
 > You may find the source code of `Bolero` on [scozv/bolero](https://github.com/scozv/bolero).
 
 <!--more-->
@@ -220,7 +219,11 @@ HTTP Request, we can:
   If we treat a user as a file named `:id`, we also treat the `List[user]` as the folder
   named `user`, when we need a file, or need to access the entire folder, we will also access
   the path named `/user`. We don't use path `/user` for a single user,
-  and use path `/users` for a gourp of user at same time.
+  and use path `/users` for a gourp of user at same time,
+* the sorting rules of `Bolero`'s HTTP Response data:
+    * returning sorted data if HTTP Request has the specific sorting rule,
+    * returning sorted data if the biz requirement needs,
+    * otherwise, `Bolero` will not ensure the order of list.
 
 # Details in Codes
 
@@ -413,9 +416,9 @@ You can read the source code of `controllers.CanAuthenticate.scala`.
 
 > **Test is very important [^scozv_blog_jira], it is key to Refactor and CI.**
 >
-> **Test is very important [^scozv_blog_jira], it is key to Refactor and CI.**
+> **Test is very important, it is key to Refactor and CI.**
 >
-> **Test is very important [^scozv_blog_jira], it is key to Refactor and CI.**
+> **Test is very important, it is key to Refactor and CI.**
 
 The source code of `test`
 is located in [`test`](https://github.com/scozv/bolero/tree/master/test) folder.
@@ -439,11 +442,21 @@ In order to keep independency of database,
 
 ## `CanFakeHTTP`, HTTP Request Mocking
 
-Based on the 
+Based on the Loose Coupling principle,
+the development process of `RESTful` Server
+should be independent with the development process
+of web page. So that `Bolero` use `CanFakeHTTP`
+to mock the HTTP Request.
 
 # Deployment
 
-DO NOT host the deployment script or production configuration in development code.
+I use `Bolero` and host the project on `Ubuntu 14.04`.
+
+For deployment, you can read the `deploy.sh`, which uses
+`sbt-native-packager` [^scala_sbt_native] for packaging.
+
+DO NOT host the deployment script or
+production configuration in development code.
 
 Supposing we have a huge project (codename: PJ):
 
