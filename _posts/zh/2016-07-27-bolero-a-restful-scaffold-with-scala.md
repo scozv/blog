@@ -165,7 +165,7 @@ data: "Bolero.models.Order"
 
 ### 限制跨域还是开放跨域
 
-CORS（Cross Origin Resource Sharing）[^mdn_cors]
+CORS是Cross Origin Resource Sharing [^mdn_cors] 的简写。
 
 最初在设计`Bolero`的时候，我是限制跨域的，我只希望某一个指定的`IP`客户端，才能访问`Bolero`接口。
 但是，当我后来需要接入Ping++支付的Webhook的时候，限制跨域就不能同时满足客户端和Ping++的访问了。
@@ -219,9 +219,9 @@ CORS（Cross Origin Resource Sharing）[^mdn_cors]
 |   ├── base                // API中的辅助类
 |   ├── biz                 // 业务处理，仅仅在这一层做数据库的读写
 |   ├── contollers          // MVC 中的控制器
-|   └── models              // Scala建模
+|   └── models              
 |       ├── interop         // 第三方接口的models
-|       └── model.scala
+|       └── model.scala     // Scala建模
 |
 ├── conf                    // Play!的配置文件
 |   ├── application.conf
