@@ -3,7 +3,7 @@ layout: page
 title: "Resume"
 permalink: cv/
 lang: en
-group: _navigation
+group: navigation
 weight: 200
 ---
 {% include JB/setup %}
