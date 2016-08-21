@@ -428,10 +428,11 @@ is located in [`test`](https://github.com/scozv/bolero/tree/master/test) folder.
 {% highlight sh %}
 .
 ├── test
-|   ├── WithApplication.scala         // still use previous release instead Play! 2.4
-|   ├── CanConnectDB.scala            // connect to test database
-|   ├── CanFakeHTTP.scala             // fake HTTP Request
-|   └── BoleroApplicationSpec.scala   // test files
+|   |                               // still use previous release file,
+|   ├── WithApplication.scala       //   instead of WithApplication from Play! 2.4
+|   ├── CanConnectDB.scala          // connect to test database
+|   ├── CanFakeHTTP.scala           // fake HTTP Request
+|   └── BoleroApplicationSpec.scala // test files, can be separated
 
 {% endhighlight %}
 
@@ -458,7 +459,8 @@ For deployment, you can read the `deploy.sh`, which uses
 DO NOT host the deployment script or
 production configuration in development code.
 
-Supposing we have a huge project (codename: PJ):
+Supposing we have a huge project (codename: PJ), and we separate
+this project into different code repositories:
 
 {% highlight bash %}
 pj-docs                 # documentation center, using Markdown
@@ -481,7 +483,7 @@ pj-data                 # production data backup, NOT open to developers
 [^play_filter]: [`Play!` Filters](https://www.playframework.com/documentation/2.5.x/ScalaHttpFilters)
 [^play_rqst_header]: [`play.api.mvc.RequestHeader`](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.RequestHeader)
 [^auth0_token]: [Cookies vs Tokens. Getting auth right with Angular.JS](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
-[^scozv_blog_auth_token]: [对登录和基于Token的认证机制的理解（草稿）](https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md)
+[^scozv_blog_auth_token]: [Understanding of Token Authentication (Draft, in Chinese)](https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md)
 [^oracle_mask]: [Oracle Data Masking and Subsetting Pack](http://www.oracle.com/technetwork/database/options/data-masking-subsetting/overview/index.html)
 [^scala_try]: [`scala.util.Try`](http://www.scala-lang.org/api/2.9.3/scala/util/Try.html)
 [^play_composition]: [`Play!` Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition)
