@@ -165,7 +165,7 @@ data: "Bolero.models.Order"
 
 ### 限制跨域还是开放跨域
 
-CORS（Cross Origin Resource Sharing）[^mdn_cors]
+CORS是Cross Origin Resource Sharing [^mdn_cors] 的简写。
 
 最初在设计`Bolero`的时候，我是限制跨域的，我只希望某一个指定的`IP`客户端，才能访问`Bolero`接口。
 但是，当我后来需要接入Ping++支付的Webhook的时候，限制跨域就不能同时满足客户端和Ping++的访问了。
@@ -219,9 +219,9 @@ CORS（Cross Origin Resource Sharing）[^mdn_cors]
 |   ├── base                // API中的辅助类
 |   ├── biz                 // 业务处理，仅仅在这一层做数据库的读写
 |   ├── contollers          // MVC 中的控制器
-|   └── models              // Scala建模
+|   └── models              
 |       ├── interop         // 第三方接口的models
-|       └── model.scala
+|       └── model.scala     // Scala建模
 |
 ├── conf                    // Play!的配置文件
 |   ├── application.conf
@@ -355,7 +355,7 @@ trait CanConnectDB2[T] {
   // 查询指定_id的T的一个字段
   def field[B](db: DB, id: String, fieldName: String): Future[Option[B]] = ???
   // 查询一系列T的指定字段的所有值
-  def sequence(db: DB, selector: JsObject, fieldName: String): Future[Seq[B]] = ???
+  def sequence[B](db: DB, selector: JsObject, fieldName: String): Future[Seq[B]] = ???
   // 插入一条T
   def insert(db: DB, document: T): Future[WriteResult] = ???
   // 更新符合selector条件的一系列T
@@ -395,7 +395,6 @@ Action composition [^play_composition] 来完成Token认证。
 
 ## 测试文件的结构
 
-
 {% highlight sh %}
 .
 ├── test
@@ -410,7 +409,7 @@ Action composition [^play_composition] 来完成Token认证。
 
 测试的脚本，要保证在任何库上都能通过，当然，这和测试用例的设计有关。
 
-通常，我们在测试开始时，准备数据，在测试完成是，清理测试数据。
+通常，我们在测试开始时，准备数据，在测试完成之后，清理测试数据。
 
 ## `CanFakeHTTP`——不依赖任何客户端的`RESTful`测试
 
@@ -449,8 +448,7 @@ pj-data                 # 生产环境的数据备份，对开发不可见
 [^play_rqst_header]: [`play.api.mvc.RequestHeader`](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.RequestHeader)
 [^auth0_token]: [Cookies vs Tokens. Getting auth right with Angular.JS](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
 [^scozv_blog_auth_token]: [对登录和基于Token的认证机制的理解（草稿）](https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md)
-[^scozv_blog_archi]: [基于低耦合和持续集成的Web架构
-](https://scozv.github.io/blog/zh/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration)
+[^scozv_blog_archi]: [基于低耦合和持续集成的Web架构](https://scozv.github.io/blog/zh/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration)
 [^oracle_mask]: [Oracle Data Masking and Subsetting Pack](http://www.oracle.com/technetwork/database/options/data-masking-subsetting/overview/index.html)
 [^scala_try]: [`scala.util.Try`](http://www.scala-lang.org/api/2.9.3/scala/util/Try.html)
 [^play_composition]: [`Play!` Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition)

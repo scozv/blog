@@ -12,3 +12,10 @@ Thumbs.db
 *.lock
 *.zip
 *.tar.gz
+
+# meld
+*.md.orig
+*_BASE_*
+*_BACKUP_*
+*_LOCAL_*
+*_REMOTE_*
