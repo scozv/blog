@@ -64,7 +64,7 @@ lang: zh
 
 ## 命令式和声明式
 
-我们通常把编程 Paradime 分成如下两种（参考C#讲座的PPT，公开课提到了三种）：
+我们通常把编程 Paradigm 分成如下两种（参考C#讲座[^c9_lang_future]，公开课提到了三种）：
 
 命令式 | 声明式
 :-----|:-----
@@ -788,6 +788,7 @@ $$\Lambda_{\text{CBN}}\left( g[1, f(0)]\right) = 1$$，但是$$\overline{\Lambda
 
 # 参考文献
 
+[^c9_lang_future]: [TechDays 2010 Keynote by Anders Hejlsberg: Trends and future directions in programming languages](https://channel9.msdn.com/blogs/adebruyn/techdays-2010-developer-keynote-by-anders-hejlsberg)
 [^blog_bolero]: [Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板](https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala)
 [^github_bolero]: [Bolero, 源代码](https://github.com/scozv/bolero)
 [^open_progfun1]: [Functional Programming Principles in Scala](https://www.coursera.org/learn/progfun1) from École Polytechnique Fédérale de Lausanne
