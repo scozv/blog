@@ -613,12 +613,12 @@ scala> sumBy(1, 2, f)
 res38: Int = 5
 {% endhighlight %}
 
-我们将类型匹配的函数调用，称为合法的函数调用。
+我们将参数列表数量相同，并且类型匹配的函数调用，称为合法的函数调用。
 
 ## 函数的返回值不要过度依赖类型推断
 
 不要过度依赖类型推断，在设计复杂类（尤其存在泛型）的时候，显式地定义函数返回类型，
-可以保证函数的逻辑正确，如果不显式定义返回类型的话， `Bolero`中如下的类型，很容易混淆：
+可以保证函数的逻辑正确，如果不显式定义返回类型的话， `Bolero`中常用的如下的类型，很容易混淆：
 
 {% highlight Scala %}
 Future[T]
@@ -626,12 +626,12 @@ Future[Option[T]]
 Future[Future[T]]
 Future[Seq[T]]
 Seq[Future[T]]
-// ...
+// 未来的章节，会提到这些类型
 {% endhighlight %}
 
 ## `Scala`语言中如何定义Call By-Value
 
-使用`val`可以定义一个CBV的表达式，在定义的地方做Evaluate。
+使用`val`可以定义一个CBV的表达式，在定义的那一刻就完成Evaluation。
 
 ## `Scala`语言中如何定义Call By-Name
 
