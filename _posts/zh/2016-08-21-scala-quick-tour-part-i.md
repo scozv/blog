@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Scala函数编程、一"
+title: "Scala函数编程（一）"
 description: ""
 category: "guide"
 tags: ["scala"]
@@ -658,6 +658,16 @@ def f(x: Int, y: () => Int) =
 
 ## 根据函数定义，写出它们对应的函数类型
 
+举例：
+
+{% highlight Scala %}
+def f(x: Int): Int = x + 1
+// 对应的函数类型为：Int => Int
+{% endhighlight %}
+
+
+题目：
+
 {% highlight Scala %}
 def f(x: Int, y: Int, z: Int): Int = x + y - z
 def f(x: Int, y: Int, z: Int) = x * (y / z)
@@ -682,11 +692,25 @@ def f(x: Int, y: () => Int) = x + (() => y())()
 
 ## 判断下列的函数定义，是否合法
 
+举例：
+
+{% highlight Scala %}
+def f(x: Int): Int = x + 1
+// 该函数定义合法，因为当x是整数的时候，(x + 1) 也是一个整数；
+// 类型推断符合函数返回类型
+
+def f(x: Int): String = x + 1
+// 该函数定义不合法，因为(x + 1)是一个整数，但是函数需要一个String作返回值；
+// 类型推断不符合函数的返回类型
+{% endhighlight %}
+
+题目：
+
 {% highlight Scala %}
 def f(x: Int): Int = x
 def f(x: Int): Double = x
 def f(x: Int): Double = x + 0.0
-使用
+
 def f(x: Int, y: Double, z: String): Int = x + y - z.length
 def f(x: Int, y: Double, z: String): Int = z
 
@@ -698,6 +722,17 @@ def f(x: Int, y: Int => Int): Int = (z: Int) => y(x) + z
 {% endhighlight %}
 
 ## 判断下列的函数调用，是否合法
+
+举例：
+
+{% highlight Scala %}
+def f(x: Double): Double = x + 1.0
+f()         // 调用不合法，因为参数列表的数量不匹配
+f(1.0)      // 调用合法，参数列表的数量、类型都匹配
+f(1)        // 调用合法，参数列表的数量相同，Int类型可以隐式转换为Double类型
+{% endhighlight %}
+
+题目：
 
 {% highlight Scala %}
 def f(x: Int, y: Double, z: String): Int = x + y - z.length
@@ -727,6 +762,18 @@ f(1, (x: Int, y: Int) => x)
 
 尽量使用匿名表达式定义如下函数。
 
+举例：
+
+{% highlight Scala %}
+// 对于函数类型：Int => Double，可定义
+def f(x: Int) = x * 1.0
+// 对应的匿名表达式为
+(x: Int) => x * 1.0
+{% endhighlight %}
+
+
+题目：
+
 {% highlight Scala %}
 () => Int
 Int => Int
@@ -745,6 +792,10 @@ Int => (Int => Int) => Int
 {% endhighlight %}
 
 ## 将包含CBN参数的函数，改写成类似的普通函数
+
+举例参考正文中的例子。
+
+题目：
 
 {% highlight Scala %}
 def f(x: Int, y: => Int) = x + y
