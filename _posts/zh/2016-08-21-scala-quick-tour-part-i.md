@@ -826,7 +826,7 @@ $$f(x) = x + (x+1) + (x+2) + \ldots + \infty = \sum_{t=x}^{\infty} t$$
 
 函数二，有条件地返回第一个参数：
 
-$$g(x, y) =  (x > 0) ? x : y $$
+$$g(x, y) =  (x > 0) \; ? \;x : y $$
 
 则：
 
@@ -834,6 +834,46 @@ $$\Lambda_{\text{CBN}}\left( g[1, f(0)]\right) = 1$$，但是$$\overline{\Lambda
 
 
 ## 基于一阶谓词逻辑的命题定义的证明过程
+
+题目：
+
+> 基于一阶谓词逻辑的命题定义，证明：$$\Lambda_{\text{CBV}}(A) \rightarrow \Lambda_{\text{CBN}}(A)$$
+
+证明：
+
+根据一阶谓词逻辑下，对“命题”的递归定义，使用归纳法证明：
+
+首先考虑命题$$A$$、$$B$$是一个简单句，此时$$\Lambda_{\text{CBV}}(A)$$等同于$$\Lambda_{\text{CBN}}(A)$$。
+
+于是不难证明，当$$A$$是一个简单句时：
+
+* (1)，$$\Lambda_{\text{CBV}}(A) \rightarrow \Lambda_{\text{CBN}}(A)$$；
+* (2)，$$\Lambda_{\text{CBV}}(\neg A) \rightarrow \Lambda_{\text{CBN}}(\neg A)$$，该结论使用反证法可得；
+* (3)，$$\Lambda_{\text{CBV}}[(A)] \rightarrow \Lambda_{\text{CBN}}[(A)]$$，该结论使用反证法可得；
+
+下面证明，当命题$$A$$、$$B$$是一个简单句，对于任意的二元操作符$$\otimes$$，同样满足：
+
+$$\Lambda_{\text{CBV}}(A \otimes B) \rightarrow \Lambda_{\text{CBN}}(A \otimes B) $$
+
+先看蕴含式的左边，我们可得：
+
+$$\Lambda_{\text{CBV}}(A \otimes B) \rightarrow \Lambda_{\text{CBV}}(A) \wedge \Lambda_{\text{CBV}}(B) $$
+
+因为（反证法），在CBV的情况下，若$$A$$和$$B$$中存在任意一个无法Evaluation的情况，二元操作符$$\otimes$$都不能执行，最终
+导致$$\overline{\Lambda_{\text{CBV}}(A \otimes B)}$$，和题目本意矛盾。
+
+于是，我们证明了，当命题$$A$$、$$B$$是一个简单句，对于任意的二元操作符$$\otimes$$，如果
+$$\Lambda_{\text{CBV}}(A \otimes B)$$，则在有限的时间内：
+
+* (4)，$$\exists a \rightarrow \Lambda_{\text{CBV}}(A) = a$$；
+* (5)，$$\exists b \rightarrow \Lambda_{\text{CBV}}(B) = b$$；
+
+进而，
+
+$$\Lambda_{\text{CBN}}(A \otimes B)  \;{\tiny\begin{matrix}\\ \normalsize = \\ ^{\scriptsize (4)}\end{matrix}}\; \Lambda_{\text{CBN}}(a \otimes B)  \;{\tiny\begin{matrix}\\ \normalsize = \\ ^{\scriptsize (5)}\end{matrix}}\; \Lambda_{\text{CBN}}(a \otimes b) = a\otimes b$$
+
+之后，使用递归，对复杂命题同理证明。
+
 
 （略）
 
