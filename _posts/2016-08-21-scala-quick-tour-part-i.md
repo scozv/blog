@@ -18,7 +18,7 @@ lang: en
 > In the serial of _Scala Quick Tour_, I would like to give you:
 >
 > * Part 1, Basis, Functional Type and Type Inference
-> * Part 2, Tail Recursion and `List`
+> * Part 2, Tail Recursion and `List[T]`
 > * Part 3, OOP in `Scala`
 > * Part 4, Pattern Match
 > * Part 5, Collections
