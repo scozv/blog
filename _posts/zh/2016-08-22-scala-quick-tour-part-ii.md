@@ -204,7 +204,11 @@ def f(x: Int): Int =
 
 所以使用递归面临的最大问题就是，Call Stack过长。
 
-## 尾递归（Tail Recursion）初览
+# 尾递归（Tail Recursion）
+
+下面我们来看尾递归（Tail Recursion），这是一个非常重要的概念。
+
+## 尾递归初览
 
 我们首先给出尾递归的阶乘实现：
 
@@ -310,6 +314,57 @@ function f(xs) {
 这将导致整个递归的时间复杂度为$$O(\sum_{i=0}^{n} i) = O(\frac{n(n+1)}{2})=O(n^2)$$。
 
 实际情况是，我们期望的数组求和的时间复杂度必须为$$O(n)$$。
+
+# `List[T]`
+
+## 泛型简介（Type Parameterization）
+
+泛型在某些语言中（比如`C#`）称为“Generic Type”，
+在`Scala`的参考书《Programming in Scala》[^scala_progfun_2nd]（Chapter 19 Type Parameterization）中，使用的是“Type Parameterization”。
+
+前者说，泛型是一种“通用”的类型，后者表示泛型是指“一种参数化的类型”。
+
+本文使用中文“泛型”，如果涉及到英文，我将采用 “Type Parameterization”。
+
+和大多数语言的泛型定义一样：
+
+* 需要在类或者方法上，声明一个或多个类型参数（Type Parameter）名称，比如
+
+      class Traversable[T] {}
+      def field[T](query: String, fieldName: String): T = ???
+* 和普通的参数一样，类型参数的名称可以
+
+## `List[T]`的递归定义和设计
+
+## `Scala`中的`List[T]`
+
+## 模式匹配简介
+
+## 使用模式匹配和尾递归，实现`List[Int]`的求和
+
+## 其它`List[T]`方法的实现
+
+## `map`和`reduce`
+
+## `map`和`flatMap`
+
+## 阅读`Scala`的`List[T]`接口文档
+
+# 综合练习
+
+## 使用指定的一系列函数定义，完成函数的实现
+
+举例：
+
+{% highlight Scala %}
+// 已知
+def f0(x: Int): Int = ???
+def f1(x: Int, y: Int) = ???
+// 实现
+def f(x: Int): Int = ???
+// 参考答案
+def f(x: Int): Int = f1(x, f0(x))
+{% endhighlight %}
 
 # 练习题参考答案
 

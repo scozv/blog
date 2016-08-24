@@ -12,7 +12,7 @@ lang: zh
 {:.no_toc}
 
 > 接下来的一系列《Scala函数编程》，得益于公开课《Functional Programming Principles in Scala》[^open_progfun1]。
-> 我整理了函数编程中的重要概念，并加入了我两年Scala开发的心得体会 [^blog_bolero]。
+> 我整理了函数编程中的重要概念，并加入了我两年`Scala`开发的心得体会 [^blog_bolero]。
 >
 > 为了便于理解，部分名词、专有术语，我直接使用英文，不作任何翻译。
 >
@@ -23,7 +23,7 @@ lang: zh
 > 这一系列的文章，将按照如下顺序来写：
 >
 > * 一、函数编程的基本概念、函数类型和类型推断
-> * 二、尾递归（Tail Recursion）和`List`
+> * 二、尾递归（Tail Recursion）和`List[T]`
 > * 三、OOP在`Scala`中的体现
 > * 四、模式匹配
 > * 五、其它线性数据结构类型介绍
