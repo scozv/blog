@@ -13,8 +13,8 @@ lang: en
 {:.no_toc}
 
 > This is the second part of _Scala Quick Tour_,
-> in the [previous part](/guide/2016/08/22/scala-quick-tour-part-ii), we talked about
-> Functional Programming Basis, Functional Type and the Type Inference.
+> in the [previous part](https://scozv.github.io/blog/guide/2016/08/21/scala-quick-tour-part-i),
+> we talked about Functional Programming Basis, Functional Type and the Type Inference.
 >
 > In this article, I will give you a precise introduction of **Tail Recursion**,
 > which is a very important conception of Functional Programming.

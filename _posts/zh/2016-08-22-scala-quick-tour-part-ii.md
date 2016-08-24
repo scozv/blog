@@ -11,7 +11,7 @@ lang: zh
 # 摘要
 {:.no_toc}
 
-> 本文是《Scala函数编程》系列的第二部分，[第一部分](/guide/2016/08/22/scala-quick-tour-part-ii)
+> 本文是《Scala函数编程》系列的第二部分，[第一部分](https://scozv.github.io/blog/zh/guide/2016/08/21/scala-quick-tour-part-i)
 > 介绍了函数编程（FP）的基本概念、函数分别可以作为参数和返回值。
 >
 > 在第二个部分里面，我们将介绍一个非常重要的设计模式——尾递归（Tail Recursion）。之后
@@ -306,8 +306,8 @@ function f(xs) {
 }
 {% endhighlight %}
 
-需要注意的是，上述`subArray`的时间复杂度为$$O(n)$$，
-这将导致整个递归的时间复杂度为$$O(n^2)$$。
+需要注意的是，上述`subArray`的时间复杂度为$$O_{i\in [1,n]}(i)$$，
+这将导致整个递归的时间复杂度为$$O(\sum_{i=0}^{n} i) = O(\frac{n(n+1)}{2})=O(n^2)$$。
 
 实际情况是，我们期望的数组求和的时间复杂度必须为$$O(n)$$。
 
