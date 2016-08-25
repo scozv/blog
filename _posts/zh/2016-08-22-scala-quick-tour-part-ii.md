@@ -20,12 +20,13 @@ lang: zh
 > * 迭代和递归的相互转化；
 > * 递归和尾递归的区别；
 > * `Scala`中的泛型简介；
-> * 使用递归的方式构造一个`List[Int]`（未完成）；
+> * 使用递归的方式构造一个`List[Int]`；
 > * 模式匹配简介（未完成）；
 > * `head`、`tail`等方法的尾递归实现（未完成）；
 > * `take`、`reverse`等方法的尾递归实现（未完成）；
 > * `append`、`prepend`等方法的尾递归实现（未完成）；
-> * 遍历映射（`map`）和`reduce`的尾递归实现（未完成）。
+> * 遍历映射（`map`）和`reduce`的尾递归实现（未完成）;
+> * `Scala`中的`List[T]`源代码分析（未完成）。
 >
 > 为了便于理解，部分名词、专有术语，我直接使用英文，不作任何翻译。
 >
@@ -322,7 +323,7 @@ function f(xs) {
 泛型在某些语言中（比如`C#`）称为“Generic Type”，
 在`Scala`的参考书《Programming in Scala》[^scala_progfun_2nd]（Chapter 19 Type Parameterization）中，使用的是“Type Parameterization”。
 
-前者说，泛型是一种“通用”的类型，后者表示泛型是指“一种参数化的类型”。
+前者说，泛型是一种“通用”的类型，后者表示泛型是“一种参数化的类型”。
 
 本文使用中文“泛型”，如果涉及到英文，我将采用 “Type Parameterization”。
 
@@ -332,9 +333,113 @@ function f(xs) {
 
       class Traversable[T] {}
       def field[T](query: String, fieldName: String): T = ???
-* 和普通的参数一样，类型参数的名称可以
+* 和普通的参数一样，类型参数的名称可以任取，比如：
 
-## `List[T]`的递归定义和设计
+      class Dictionary[KeyType,ValueType] {}
+      def insert[IndexType, ItemType]: List[ItemType] = ???
+
+* 但是，从`Scala`的接口文档[^scala_api_doc]和源代码[^github_scala]可以看出，
+  因为是“泛”型，我们的参数类型名称不应该被限定，所以，
+  可以使用如下的风格定义参数类型：
+
+      class List[A] {}
+      class Map[A, B]{}
+
+## `List[T]`的递归定义
+
+我们按照如下的递归方式，定义一个`List[T]`：
+
+* `List[T]`可以为空，我们称其为`Nil`；
+* 任意一个元素`x: T`，可以和任意一个`xs: List[T]`，组成一个新的`List[T]`，我们称
+  这个组合动作（function）为`cons`——取"construction"的前四个字母。
+
+## `List[T]`的递归实现
+
+这一小节，我们使用递归定义，实现`List[T]`。
+如果有语法上，不明白的地方，请自行搜索相关资料。
+
+有关OOP的内容，我会在之后的部分中重新讲。
+
+建议阅读`List[T]`的`Scala`的源代码 [^github_scala_list_t]。
+
+为了不和`Scala`中的`List[T]`和`Nil`冲突，以下的实现
+有意更换了名称。
+
+{% highlight Scala %}
+trait GenericList[+T] {
+  val isEmpty: Boolean
+  def size: Int
+
+  def head: T
+  def tail: GenericList[T]
+}
+
+case object EmptyList extends GenericList[Nothing] {
+  val isEmpty = true
+  def size = 0
+
+  def head = throw new NoSuchElementException("head of empty list")
+  def tail = throw new UnsupportedOperationException("tail of empty list")
+}
+
+case class NonEmptyList[T](head: T, tail: GenericList[T]) extends GenericList[T] {
+  def this(x: T) = this(x, EmptyList)
+
+  val isEmpty = false
+  def size: Int = {
+    def g(acc: Int, xs: GenericList[T]): Int = xs match {
+      case EmptyList => acc
+      case NonEmptyList(_, ys) => g(acc + 1, ys)
+    }
+
+    g(0, this)
+  }
+}
+
+case object GenericList {
+  def apply(): GenericList[Nothing] = EmptyList
+  def apply[T](x: T): GenericList[T] = NonEmptyList(x, EmptyList)
+  def apply[T](x1: T, x2: T): GenericList[T] = NonEmptyList(x1, GenericList(x2))
+  def apply[T](x1: T, x2: T, x3: T): GenericList[T] = NonEmptyList(x1, GenericList(x2, x3))
+}
+
+val xs0 = GenericList()
+xs0.size
+xs0.isEmpty
+GenericList("Apple")
+GenericList(1.2, 3.5)
+val xs1 = GenericList(1, 2, 3)
+xs1.size
+xs1.isEmpty
+{% endhighlight %}
+
+以上的实现，使用了“单向链式列表”这一数据结构，
+我认为这些基础的数据结果，是程序员的基本修养，请
+自行查阅相关资料。
+
+
+
+思考：
+
+> 0. 为什么`head`和`tail`的声明是`def`而不是`val`？
+> 0. 为什么`Nil`的继承来自`ListLike[Nothing]`，而非`ListLike[T]`?
+> 0. 如果去掉`trait GenericList[+T]`中的`+`号，是否能够编译通过？
+> 0. 请问如下代码的输出结果为：
+>
+        val xs0 = GenericList()
+        xs0.size
+        xs0.isEmpty
+        GenericList("Apple")
+        GenericList(1.2, 3.5)
+        val xs1 = GenericList(1, 2, 3)
+        xs1.size
+        xs1.isEmpty
+> 0. 请问如下代码的输出结果（请仔细思考）：
+>
+>
+        val xs2 = GenericList(1, 2, 3, 4)
+        xs2.size
+        xs2.isEmpty      
 
 ## `Scala`中的`List[T]`
 
@@ -342,13 +447,18 @@ function f(xs) {
 
 ## 使用模式匹配和尾递归，实现`List[Int]`的求和
 
+## `map`和`foreach`
+
 ## 其它`List[T]`方法的实现
 
 ## `map`和`reduce`
 
 ## `map`和`flatMap`
 
-## 阅读`Scala`的`List[T]`接口文档
+# `List[T]`接口文档和源代码分析
+
+实际上`List[T]`的很多实现并没有使用递归，而是使用的迭代。
+因为迭代的效率和性能高。
 
 # 综合练习
 
@@ -425,3 +535,6 @@ def f[ItemType, AccumulatorType](x: ItemType): AccumulatorType = {
 
 [^open_progfun1]: [Functional Programming Principles in Scala](https://www.coursera.org/learn/progfun1) from École Polytechnique Fédérale de Lausanne
 [^scala_progfun_2nd]: Martin Odersky, Lex Spoon, Bill Venners. Programming in Scala (Second Edition), Artima Press
+[^scala_api_doc]: [Scala API Documentation](http://www.scala-lang.org/api/current/index.html)
+[^github_scala]: [Scala on Github](https://github.com/scala/scala)
+[^github_scala_list_t]: [`List.scala` Source Code on Github](https://github.com/scala/scala/blob/v2.11.8/src/library/scala/collection/immutable/List.scala)
