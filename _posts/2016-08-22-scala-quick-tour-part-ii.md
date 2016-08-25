@@ -30,7 +30,9 @@ lang: en
 > * `head` and `tail`,
 > * `take` and `reverse`,
 > * `append` and `prepend`,
-> * `map` and `reduce` !
+> * `map` and `foreach`,
+> * `map` and `reduce`,
+> * Read the Source of `List.scala`. 
 >
 > Currently, This article (Part II) is only written in Chinese.
 
