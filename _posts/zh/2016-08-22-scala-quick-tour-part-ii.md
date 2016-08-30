@@ -365,6 +365,12 @@ function f(xs) {
 为了不和`Scala`中的`List[T]`和`Nil`冲突，以下的实现
 有意更换了名称。
 
+### 实现一个泛型链表
+
+### 使用`#:`右关联操作符
+
+### 模式匹配
+
 {% highlight Scala %}
 trait GenericList[+T] {
   val isEmpty: Boolean
@@ -414,9 +420,8 @@ xs1.isEmpty
 {% endhighlight %}
 
 以上的实现，使用了“单向链式列表”这一数据结构，
-我认为这些基础的数据结果，是程序员的基本修养，请
+我认为这些基础的数据结构，是程序员的基本修养，请
 自行查阅相关资料。
-
 
 
 思考：
@@ -526,9 +531,6 @@ def f[ItemType, AccumulatorType](x: ItemType): AccumulatorType = {
   g(init(), x)
 }
 {% endhighlight %}
-
-
-
 
 
 # 参考文献
