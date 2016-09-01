@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Scala函数编程、一"
+title: "Scala函数编程（一）"
 description: ""
 category: "guide"
 tags: ["scala"]
@@ -12,7 +12,7 @@ lang: zh
 {:.no_toc}
 
 > 接下来的一系列《Scala函数编程》，得益于公开课《Functional Programming Principles in Scala》[^open_progfun1]。
-> 我整理了函数编程中的重要概念，并加入了我两年Scala开发的心得体会 [^blog_bolero]。
+> 我整理了函数编程中的重要概念，并加入了我两年`Scala`开发的心得体会 [^blog_bolero]。
 >
 > 为了便于理解，部分名词、专有术语，我直接使用英文，不作任何翻译。
 >
@@ -23,7 +23,7 @@ lang: zh
 > 这一系列的文章，将按照如下顺序来写：
 >
 > * 一、函数编程的基本概念、函数类型和类型推断
-> * 二、尾递归（Tail Recursion）和`List`
+> * 二、尾递归（Tail Recursion）和`List[T]`
 > * 三、OOP在`Scala`中的体现
 > * 四、模式匹配
 > * 五、其它线性数据结构类型介绍
@@ -64,7 +64,7 @@ lang: zh
 
 ## 命令式和声明式
 
-我们通常把编程 Paradime 分成如下两种（参考C#讲座的PPT，公开课提到了三种）：
+我们通常把编程 Paradigm 分成如下两种（参考C#讲座[^c9_lang_future]，公开课提到了三种）：
 
 命令式 | 声明式
 :-----|:-----
@@ -613,12 +613,12 @@ scala> sumBy(1, 2, f)
 res38: Int = 5
 {% endhighlight %}
 
-我们将类型匹配的函数调用，称为合法的函数调用。
+我们将参数列表数量相同，并且类型匹配的函数调用，称为合法的函数调用。
 
 ## 函数的返回值不要过度依赖类型推断
 
 不要过度依赖类型推断，在设计复杂类（尤其存在泛型）的时候，显式地定义函数返回类型，
-可以保证函数的逻辑正确，如果不显式定义返回类型的话， `Bolero`中如下的类型，很容易混淆：
+可以保证函数的逻辑正确，如果不显式定义返回类型的话， `Bolero`中常用的如下的类型，很容易混淆：
 
 {% highlight Scala %}
 Future[T]
@@ -626,12 +626,12 @@ Future[Option[T]]
 Future[Future[T]]
 Future[Seq[T]]
 Seq[Future[T]]
-// ...
+// 未来的章节，会提到这些类型
 {% endhighlight %}
 
 ## `Scala`语言中如何定义Call By-Value
 
-使用`val`可以定义一个CBV的表达式，在定义的地方做Evaluate。
+使用`val`可以定义一个CBV的表达式，在定义的那一刻就完成Evaluation。
 
 ## `Scala`语言中如何定义Call By-Name
 
@@ -658,6 +658,16 @@ def f(x: Int, y: () => Int) =
 
 ## 根据函数定义，写出它们对应的函数类型
 
+举例：
+
+{% highlight Scala %}
+def f(x: Int): Int = x + 1
+// 对应的函数类型为：Int => Int
+{% endhighlight %}
+
+
+题目：
+
 {% highlight Scala %}
 def f(x: Int, y: Int, z: Int): Int = x + y - z
 def f(x: Int, y: Int, z: Int) = x * (y / z)
@@ -682,11 +692,25 @@ def f(x: Int, y: () => Int) = x + (() => y())()
 
 ## 判断下列的函数定义，是否合法
 
+举例：
+
+{% highlight Scala %}
+def f(x: Int): Int = x + 1
+// 该函数定义合法，因为当x是整数的时候，(x + 1) 也是一个整数；
+// 类型推断符合函数返回类型
+
+def f(x: Int): String = x + 1
+// 该函数定义不合法，因为(x + 1)是一个整数，但是函数需要一个String作返回值；
+// 类型推断不符合函数的返回类型
+{% endhighlight %}
+
+题目：
+
 {% highlight Scala %}
 def f(x: Int): Int = x
 def f(x: Int): Double = x
 def f(x: Int): Double = x + 0.0
-使用
+
 def f(x: Int, y: Double, z: String): Int = x + y - z.length
 def f(x: Int, y: Double, z: String): Int = z
 
@@ -698,6 +722,17 @@ def f(x: Int, y: Int => Int): Int = (z: Int) => y(x) + z
 {% endhighlight %}
 
 ## 判断下列的函数调用，是否合法
+
+举例：
+
+{% highlight Scala %}
+def f(x: Double): Double = x + 1.0
+f()         // 调用不合法，因为参数列表的数量不匹配
+f(1.0)      // 调用合法，参数列表的数量、类型都匹配
+f(1)        // 调用合法，参数列表的数量相同，Int类型可以隐式转换为Double类型
+{% endhighlight %}
+
+题目：
 
 {% highlight Scala %}
 def f(x: Int, y: Double, z: String): Int = x + y - z.length
@@ -727,6 +762,18 @@ f(1, (x: Int, y: Int) => x)
 
 尽量使用匿名表达式定义如下函数。
 
+举例：
+
+{% highlight Scala %}
+// 对于函数类型：Int => Double，可定义
+def f(x: Int) = x * 1.0
+// 对应的匿名表达式为
+(x: Int) => x * 1.0
+{% endhighlight %}
+
+
+题目：
+
 {% highlight Scala %}
 () => Int
 Int => Int
@@ -745,6 +792,10 @@ Int => (Int => Int) => Int
 {% endhighlight %}
 
 ## 将包含CBN参数的函数，改写成类似的普通函数
+
+举例参考正文中的例子。
+
+题目：
 
 {% highlight Scala %}
 def f(x: Int, y: => Int) = x + y
@@ -775,7 +826,7 @@ $$f(x) = x + (x+1) + (x+2) + \ldots + \infty = \sum_{t=x}^{\infty} t$$
 
 函数二，有条件地返回第一个参数：
 
-$$g(x, y) =  (x > 0) ? x : y $$
+$$g(x, y) =  (x > 0) \; ? \;x : y $$
 
 则：
 
@@ -784,10 +835,51 @@ $$\Lambda_{\text{CBN}}\left( g[1, f(0)]\right) = 1$$，但是$$\overline{\Lambda
 
 ## 基于一阶谓词逻辑的命题定义的证明过程
 
+题目：
+
+> 基于一阶谓词逻辑的命题定义，证明：$$\Lambda_{\text{CBV}}(A) \rightarrow \Lambda_{\text{CBN}}(A)$$
+
+证明：
+
+根据一阶谓词逻辑下，对“命题”的递归定义，使用归纳法证明：
+
+首先考虑命题$$A$$、$$B$$是一个简单句，此时$$\Lambda_{\text{CBV}}(A)$$等同于$$\Lambda_{\text{CBN}}(A)$$。
+
+于是不难证明，当$$A$$是一个简单句时：
+
+* (1)，$$\Lambda_{\text{CBV}}(A) \rightarrow \Lambda_{\text{CBN}}(A)$$；
+* (2)，$$\Lambda_{\text{CBV}}(\neg A) \rightarrow \Lambda_{\text{CBN}}(\neg A)$$，该结论使用反证法可得；
+* (3)，$$\Lambda_{\text{CBV}}[(A)] \rightarrow \Lambda_{\text{CBN}}[(A)]$$，该结论使用反证法可得；
+
+下面证明，当命题$$A$$、$$B$$是一个简单句，对于任意的二元操作符$$\otimes$$，同样满足：
+
+$$\Lambda_{\text{CBV}}(A \otimes B) \rightarrow \Lambda_{\text{CBN}}(A \otimes B) $$
+
+先看蕴含式的左边，我们可得：
+
+$$\Lambda_{\text{CBV}}(A \otimes B) \rightarrow \Lambda_{\text{CBV}}(A) \wedge \Lambda_{\text{CBV}}(B) $$
+
+因为（反证法），在CBV的情况下，若$$A$$和$$B$$中存在任意一个无法Evaluation的情况，二元操作符$$\otimes$$都不能执行，最终
+导致$$\overline{\Lambda_{\text{CBV}}(A \otimes B)}$$，和题目本意矛盾。
+
+于是，我们证明了，当命题$$A$$、$$B$$是一个简单句，对于任意的二元操作符$$\otimes$$，如果
+$$\Lambda_{\text{CBV}}(A \otimes B)$$，则在有限的时间内：
+
+* (4)，$$\exists a \rightarrow \Lambda_{\text{CBV}}(A) = a$$；
+* (5)，$$\exists b \rightarrow \Lambda_{\text{CBV}}(B) = b$$；
+
+进而，
+
+$$\Lambda_{\text{CBN}}(A \otimes B)  \;{\tiny\begin{matrix}\\ \normalsize = \\ ^{\scriptsize (4)}\end{matrix}}\; \Lambda_{\text{CBN}}(a \otimes B)  \;{\tiny\begin{matrix}\\ \normalsize = \\ ^{\scriptsize (5)}\end{matrix}}\; \Lambda_{\text{CBN}}(a \otimes b) = a\otimes b$$
+
+之后，使用递归，对复杂命题同理证明。
+
+
 （略）
 
 # 参考文献
 
+[^c9_lang_future]: [TechDays 2010 Keynote by Anders Hejlsberg: Trends and future directions in programming languages](https://channel9.msdn.com/blogs/adebruyn/techdays-2010-developer-keynote-by-anders-hejlsberg)
 [^blog_bolero]: [Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板](https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala)
 [^github_bolero]: [Bolero, 源代码](https://github.com/scozv/bolero)
 [^open_progfun1]: [Functional Programming Principles in Scala](https://www.coursera.org/learn/progfun1) from École Polytechnique Fédérale de Lausanne

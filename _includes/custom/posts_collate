@@ -38,11 +38,13 @@ http://stackoverflow.com/a/28157613
         <ul>
       {% endif %}
 
-      {% if post.lang ==  site.active_lang %}<li>
-        <span class="force-mono-font small">{{ post.date | date: "%b %d" }}</span>
-        &middot;
-        <a href="{{ BASE_PATH }}{{ LANG_PATH }}{{post.url}}">{{post.title}}</a>
-      {% endif %}</li>
+      {% if post.lang ==  site.active_lang %}
+        <li>
+          <span class="force-mono-font small">{{ post.date | date: "%b %d" }}</span>
+          &middot;
+          <a href="{{ BASE_PATH }}{{ LANG_PATH }}{{post.url}}">{{post.title}}</a>
+        </li>
+      {% endif %}
 
       {% if forloop.last %}
         </ul></div>
