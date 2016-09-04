@@ -30,6 +30,39 @@ The conventions or rules in `Bolero` may not be the best practice:
 * `interop` directory was used for inter-operating between 3rd party API, at beginning,
 * `_id` means primary key, and it is `String`.
 
+## Uniform HTTP Response
+
+All HTTP Response return uniform `JSON` as below:
+
+{% highlight raw %}
+{
+  ok: Boolean,
+  data: T,
+  error: String
+}
+{% endhighlight %}
+
+## Consistency in payload and Response
+
+Inspired by `map()`, `Bolero` keeps consistence between `payload`
+and Response data.
+
+For instance:
+
+{% highlight raw %}
+PUT /transaction
+
+// Request
+// header: Token for authentication
+payload: "Bolero.models.Transaction"
+
+// Response
+data: "Bolero.models.Transaction"
+{% endhighlight %}
+
+Only difference is `_id` in `payload` is empty, while `_id` in Response
+will be generated.
+
 # Refactor and Enhancement
 
 ## `CanConnectDB2`

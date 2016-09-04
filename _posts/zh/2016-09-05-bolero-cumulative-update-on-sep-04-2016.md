@@ -30,6 +30,25 @@ lang: "zh"
 * `interop`文件夹最初用来存放一些用于第三方交互的类，目前这个含义已经有些淡化了；
 * `_id`表示主键，并使用`String`类型
 
+## 统一的HTTP Response
+
+所有的HTTP Response都返回如下统一的格式：
+
+{% highlight raw %}
+{
+  ok: Boolean,
+  data: T,
+  error: String
+}
+{% endhighlight %}
+
+## Payload和Respose的一致性
+
+为了便于接口的方便使用，受`map()`的启发，Payload的数据格式，
+和Response的返回格式，保持一致。
+
+允许字段不一样，比如`_id`在Payload为空，在Response中会被赋予新的编号。
+
 # 几处重构和增强
 
 ## 升级的`CanConnectDB2`
