@@ -3,7 +3,7 @@ layout: page
 title: "About"
 alias: "?"
 description: "About me"
-group: _navigation
+group: navigation
 i18n: about
 weight: 100
 permalink: about/
@@ -13,7 +13,8 @@ permalink: about/
 <div class="force-zero-padding">
 {% highlight tex %}
 \documentclass[a4paper]
-\newcommand{\a}{https://github.com/scozv/algo-js}
+\newcommand{\a}{\footnote{https://github.com/scozv/algo-js}}
+\newcommand{\b}{\footnote{https://github.com/scozv/bolero}}
 
 \begin{document}
 \author{@scozv}
@@ -23,7 +24,7 @@ permalink: about/
 
 
 
-I read and code \footnote{\a{}}   ::
+I read and code \a{} \b{}         ::
 I \LaTeX{}                        ::
 I <React />                       ::
 and                               ::
