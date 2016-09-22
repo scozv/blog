@@ -9,7 +9,7 @@ lang: zh
 {% include JB/setup %}
 
 >  本文描述了我让代码在浏览器和Node.js两边都能运行的过程，略属娱乐。
-> 因为就项目 [Algo.js] [2] 而言，我认为，重点在算法（ *Algo*rithm ）。
+> 因为就项目 [Tango.js] [2] 而言，我认为，重点在算法（ *Algo*rithm ）。
 > 至于引入大文本输入测试（参见 [issue #18] [1] ），是为了保证算法的正确和高效，以及今后的重构，
 > 当然这也很重要。引入持续集成，是尽可能想让一切都是自动化。
 >
@@ -43,7 +43,7 @@ Node.js下面，全局变量叫`global` ，我们可以赋值（参考 [`./qunit
 更多内容，请参考英文版本。
 
 [1]: https://github.com/scozv/algo-js/issues/18 "issue #18"
-[2]: https://github.com/scozv/algo-js "Algo.js"
+[2]: https://github.com/scozv/tango "Tango.js"
 [3]: https://github.com/scozv/algo-js/blob/master/qunit/q.js "a file named q.js"
 [4]: https://github.com/kof/node-qunit "node-qunit, Port of QUnit unit testing framework to nodejs"
 [5]: http://gruntjs.com/getting-started#package.json "grunt configuration on package.json"

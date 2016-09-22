@@ -155,11 +155,11 @@ Roughly speaking, the running time of iterarive topological sort is same as time
 The time of Kosaraju SCC which runs DFS twice, is still $$O(m+n)$$.
 
 ## Next
-See code on details in `graph.search.js` of [Algo.js] [3]. And next post, I am going to explain iterative Tarjan SCC algorithm, which cost me a few time.
+See code on details in `graph.search.js` of [Tango.js] [3]. And next post, I am going to explain iterative Tarjan SCC algorithm, which cost me a few time.
 
 <br />
 
 [1]: https://www.coursera.org/course/algo          "Online course by Tim Roughgarden"
 [2]: https://github.com/scozv/algo-js/issues/20        "Issue 20"
-[3]: https://github.com/scozv/algo-js            "Algo.js"
+[3]: https://github.com/scozv/tango  "Tango.js"
 [4]: {% post_url 2013-11-10-how-to-write-iterative-tarjan-scc-algorithm-part-zero %} "Tarjan, Part I"

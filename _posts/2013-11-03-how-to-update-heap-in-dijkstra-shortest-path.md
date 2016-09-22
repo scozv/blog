@@ -48,7 +48,7 @@ function dijstra(graph, s) {
 }
 {% endhighlight %}
 
-It sounds easy, however the 1st revision of `dijkstra()` in Algo.js is failed to update heap correctly, where I just update the value of one vertex without keeping heap order.
+It sounds easy, however the 1st revision of `dijkstra()` in Tango.js is failed to update heap correctly, where I just update the value of one vertex without keeping heap order.
 
 {% highlight js %}
 if (g.__labelAt__(v[0]) === -1){
@@ -95,4 +95,4 @@ var updated = frontier.__id__.some(function(x, k){
 
 [1]: http://en.wikipedia.org/wiki/Heap_(data_structure)#Applications	"Wikipedia"
 [2]: https://www.coursera.org/course/algo 								"Algorithms: Design and Analysis, Part 1"
-[3]: https://goo.gl/NssHNy                                              "Diff of Algo.js"
+[3]: https://goo.gl/NssHNy                                              "Diff of Tango.js"

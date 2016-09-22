@@ -8,7 +8,7 @@ lang: en
 ---
 {% include JB/setup %}
 
-> During the work on [Algo.js] [1], I found there is a limitation on recursive stack size of JavaScript. This series posts describe the way to convert recursive Tarjan SCC algorithm to iterative one, containing:
+> During the work on [Tango.js] [1], I found there is a limitation on recursive stack size of JavaScript. This series posts describe the way to convert recursive Tarjan SCC algorithm to iterative one, containing:
 >
 > * Part I: Iterative BFS and DFS algorithm on graph;
 > * [Part II] [4]: Iterative topological sort and Kosaraju SCC algorithm on graph;
@@ -117,13 +117,13 @@ $$T=O(1)+O(n)+O(m)=O(n+m)$$
 
 ## Next
 
-Read code in `graph.search.js` on [Algo.js] [1], and reference [this series of posts] [2] by Tom Moertel for more details on _Recursive to Iterative_.
+Read code in `graph.search.js` on [Tango.js] [1], and reference [this series of posts] [2] by Tom Moertel for more details on _Recursive to Iterative_.
 
 [Next] [4] part of this series, I am going to describe some ideas on iterative topological order algorithm which can be applied on Kosaraju SCC algorithm.
 
 <br />
 
-[1]: https://github.com/scozv/algo-js											"Algo.js"
+[1]: https://github.com/scozv/tango	"Tango.js"
 [2]: http://blog.moertel.com/posts/2013-05-11-recursive-to-iterative.html		"Recursive to Iterative by Tom Moertel"
 [3]: https://github.com/scozv/algo-js/issues/8						"Issue 8"
 [4]: {% post_url 2013-11-23-how-to-write-iterative-tarjan-scc-algorithm-part-one %} "Tarjan, Part II"
