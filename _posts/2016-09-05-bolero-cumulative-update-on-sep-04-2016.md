@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Bolero, Cumulative Update (Sep, 04 2016)"
+title: "Bolero, Cumulative Update (Sep 04, 2016)"
 description: ""
 category: "guide"
 tags: ["scala","scaffold","project","architecture","restful"]
