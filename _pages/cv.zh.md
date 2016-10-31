@@ -25,7 +25,7 @@ weight: 200
   <tbody>
     <tr>
       <td style="text-align: left">最后更新</td>
-      <td style="text-align: left">2016年8月</td>
+      <td style="text-align: left">2016年10月</td>
     </tr>
     <tr>
       <td style="text-align: left">链接</td>
@@ -45,9 +45,8 @@ weight: 200
         <div class="tech-list">
           <div class="tag">上海交通大学</div>
           <div class="tag">软件工程硕士（在读）</div>
-          <div class="tag">6年</div>
+          <div class="tag">7年</div>
           <div class="tag">带领团队（架构）</div>
-          <div class="tag">期望岗位：Java工程师, Node.js开发</div>
         </div>
       </td>
     </tr>
@@ -63,6 +62,7 @@ weight: 200
           <div class="tag">Play!</div>
           <div class="tag">ECMAScript 6</div>
           <div class="tag">Oracle</div>
+          <div class="tag">Golang</div>
           <div class="tag">Git</div>
           <div class="tag">Algorithm</div>
           <div class="tag">Markdown</div>
@@ -90,12 +90,24 @@ weight: 200
 
 ## 项目经历
 
-### 上海交通大学研究生期间的项目（技术架构师）
+### 某分布式文件管理系统（高级开发工程师）
 
 meta  | data
 :-----|:-----
+就职公司 | 沪江
+项目内容 | 基于第三方云存储开发的文件管理系统（基础服务）
+项目时间 | 2016.09 ~ 2016.10
+职责范围 | `Golang`语言开发
+简略介绍 | 使用`Golang`开发，提供基础的RESTful API纵向部门使用。同时梳理发布流程和可持续化的第二阶段（自动代替手动）。
+
+
+### 某O2O在线销售平台（技术负责人）
+
+meta  | data
+:-----|:-----
+就职公司 | 上海交通大学研究生期间的项目
 项目内容 | 基于微信浏览器运行的水果销售平台
-项目时间 | 2015.08 ~ 现在
+项目时间 | 2015.08 ~ 2016.04
 职责范围 | 技术架构和生产部署
 备注  | 有关该项目的心得，可以参考 [这里](https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala)、[这里](https://scozv.github.io/blog/zh/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration)或者[这里](https://scozv.github.io/blog/zh/pattern/2016/05/18/a-linear-branch-management-with-git)
 
@@ -125,8 +137,8 @@ meta  | data
 
 meta  | data
 :-----|:-----
-就职公司 | SunGard China
-在职时间 | 2013.06 ~ 现在
+就职公司 | SunGard
+在职时间 | 2013.06 ~ 2016.08
 职责范围 | 高级开发工程师，独立负责Fees计算模块的全栈开发
 简略介绍 | 主要使用了`ASP .NET MVC`。使用AOP控制赋值的有效性。使用`Razor`引擎绘制View。
 
@@ -147,6 +159,15 @@ meta  | data
 在职时间 | 2010.04 ~ 2011.10
 职责范围 | 初级开发工程师，负责实施和报表的开发
 简略介绍 | 参与了`Oracle`数据库的建表和部分`PL/SQL`的实现。参与了完整的项目部署，设计并实现将时间序列做为主键。
+
+### 某HR简历信息系统（实习开发工程师）
+
+meta  | data
+:-----|:-----
+就职公司 | 宁波北欧工业园区管理有限公司
+在职时间 | 2009.07 ~ 2010.04
+职责范围 | 实习开发工程师，负责HR部门的简历信息系统的开发和交付
+简略介绍 | 独自完成了简历管理信息系统的设计和部署。
 
 
 ## 个人介绍
@@ -208,14 +229,13 @@ meta  | data
 
 ### 对未来的规划
 
-下一份工作，我希望可以承担全栈开发的工作：
+我计划承担全栈开发的工作：
 
 * 基于`RESTful API`的前后端分离；
 * 前端页面可以使用`React.js`系列框架进行渲染和数据绑定；
 * 后端服务在Java生态圈中开发，部署至Linux（云平台）。
 
-从之前的经验来看，团队的力量远远大于个人，
-所以很期待加入开放、热情的团队，和团队成员们一起成长。
+从之前的经验来看，团队的力量远远大于个人，愿意和团队成员们一起成长。
 
 
 <style>
