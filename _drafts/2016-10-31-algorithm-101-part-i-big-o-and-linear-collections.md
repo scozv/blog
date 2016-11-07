@@ -77,7 +77,7 @@ lang: "zh"
 问题描述如下。
 
 * 输入：一个数组`xs`，一个整数`T`
-* 输出：数组`xs`中的两个元素`x`、`y`，满足，$$ x + y  = T $$
+* 输出：数组`xs`中的两个元素`x`、`y`，满足，$$ x + y= T $$
 
 仅上面的条件，还会带来一些极端的情况，比如：
 
@@ -93,12 +93,13 @@ lang: "zh"
 我们可以枚举`xs`中所有的二元序列 $$(x, y)$$，然后遍历这些枚举值，看看哪一组满足
 $$x+y=T$$。
 
-{% highlight JavaScript linenos%}
+{% highlight JavaScript %}
 for (i=0;i<len(xs);i++) {
-  for (j=i;j<len(xs);j++) {
-    if (xs[i] + xs[j] == T)
-      return [xs[i], xs[j]]
-  }
+  for (j=i;j<len(xs);j++) {
+    if (xs[i] + xs[j] == T) {
+      return [xs[i], xs[j]];
+    }
+  }
 }
 {% endhighlight %}
 
@@ -137,6 +138,30 @@ $$\exists M > 0, x_0 > 0, \forall x \geq x_0 \rightarrow |f(x)| \leq M |g(x)|$$
 * 证明  $$T(n)=O(\lambda_0 n^2) \Rightarrow T(n)=O(n^2)$$
 * 证明  $$T(n)=O(n^2), G(n)=O(n \ln n) \Rightarrow \exists M > 0, n_0 > 0, \forall n \geq n_0 \rightarrow T(n) \geq M \cdot G(n)$$
 
+下面证明2-Sum问题的时间复杂度：
+
+$$T(n)=\frac{n(n-1)}{2}t + C=\frac{t}{2}n^2 - \frac{t}{2}n + C$$
+
+首先：
+
+$$ T(n)=\frac{t}{2} n^2 - \frac{t}{2}n + C \leq \frac{t}{2} n^2 + C $$
+
+为了找到一个$$M$$，使得：
+
+$$\frac{t}{2}n^2 + C \leq M \cdot n^2 $$
+
+求解该不等式，可得：
+
+$$ n^2 \geq \frac{C}{M-\frac{t}{2}} $$
+
+不妨令$$M=t$$，我们得到$$ n_0^2 = \frac{C}{t-\frac{t}{2}}=\frac{2C}{t} $$：
+
+$$\exists M = t > 0, n_0 = \sqrt{\frac{2C}{t}} > 0, \forall n \geq n_0 \rightarrow |T(n)| \leq M |n^2|$$
+
+所以：$$T(n)=O(n^2)$$
+
+证明完毕。
+
 需要注意的是，第三个证明题，实际上是不成立的。
 
 我们来看看第三个证明题的证明过程，可以根据定义得到：
@@ -160,10 +185,9 @@ $$f(x)=\Theta(g(x))$$
 $$\exists M_1, M_2 > 0, x_0 > 0, \forall x \geq x_0 \rightarrow M_1 |g(x)| \leq |f(x)| \leq M_2 |g(x)|$$
 
 
-
 根据这样的定义，我们可以证明刚才的第三个命题：
 
-  $$T(n)=\Theta(n^2), G(n)=\Theta(n \ln n) \Rightarrow \exists M > 0, n_0 > 0, \forall n \geq n_0 \rightarrow T(n) \geq M \cdot G(n)$$
+$$T(n)=\Theta(n^2), G(n)=\Theta(n \ln n) \Rightarrow \exists M > 0, n_0 > 0, \forall n \geq n_0 \rightarrow T(n) \geq M \cdot G(n)$$
 
 
 
@@ -173,6 +197,7 @@ $$\exists M_1, M_2 > 0, x_0 > 0, \forall x \geq x_0 \rightarrow M_1 |g(x)| \leq 
 
 * $$g(x)=O(f(x)) , T(x)=\Theta[f(x)+g(x)] \rightarrow T(x)=\Theta(f(x))$$
 * $$T(x)=\Theta(f(x)+C) \rightarrow T(x)=\Theta(f(x))$$
+* $$T(x)=\Theta(\lambda \cdot f(x)) \rightarrow T(x)=\Theta(f(x))$$
 * $$T(x)=\Theta(\log_2 x)=\Theta(\frac{\ln x}{\ln 2}) \rightarrow T(x)=\Theta(\ln x)$$
 
 ## 算法分析中的Big O
@@ -182,30 +207,18 @@ $$\exists M_1, M_2 > 0, x_0 > 0, \forall x \geq x_0 \rightarrow M_1 |g(x)| \leq 
 **如果没有特殊说明，本站点所有Big O都表示上下限。**
 
 
-
 ## 几个常见的Big O的差异
 
 常见的Big O如下（从上往下，时间复杂度越小）：
 
-
-
 时间复杂度 | 算法举例
-
 :---------------:|:-----------
-
 $$O(n^3)$$ | 矩阵乘法、线性相关系数计算
-
 $$O(n^2)$$ | 冒泡排序、插入排序
-
 $$O(n\ln n)$$ | 比较排序的下限
-
 $$O(n)$$ |  线性查找，找出$$K$$大的元素
-
 $$O(\ln n)$$ | 二分查找、堆（Heap）的操作
-
 $$O(1)$$ | 普通运算，比如整数的加减乘除
-
-
 
 # Two Sum问题的改进算法
 
@@ -276,4 +289,3 @@ Hash我们会在第三节课讲，它的目的是把一个空间缩小，并映�
 *  堆（优先队列）
 
 二元堆是一个可以用线性列表表示的树状结构，在Dijkstra最短路径算法中可以显著地提高效率。
-
