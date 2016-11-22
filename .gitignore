@@ -19,3 +19,4 @@ Thumbs.db
 *_BACKUP_*
 *_LOCAL_*
 *_REMOTE_*
+.rake_tasks~
