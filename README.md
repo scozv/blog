@@ -1,4 +1,4 @@
-[![Build Status](https://drone.io/github.com/scozv/blog/status.png)](https://drone.io/github.com/scozv/blog/latest)
+[![Build Status](https://travis-ci.org/scozv/blog.svg?branch=master)](https://travis-ci.org/scozv/blog)
 
 https://scozv.github.io/blog/
 
