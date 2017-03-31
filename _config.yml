@@ -114,7 +114,7 @@ JB :
   analytics :
     provider : yandex
     yandex :
-       tracking_id : '37468300'
+       tracking_id : '43762899'
 #   google :
 #       tracking_id : 'UA-***'
 #    googleUA :
@@ -215,5 +215,5 @@ i18n:
     zh: "早些时候的文章"
     en: "Older"
   page_newer:
-    zh: "之后更新的文章"
+    zh: "最近几天的文章"
     en: "Newer"

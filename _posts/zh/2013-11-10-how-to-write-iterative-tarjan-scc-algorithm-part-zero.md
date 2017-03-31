@@ -8,7 +8,7 @@ lang: zh
 ---
 {% include JB/setup %}
 
-> 上个月我完成了迭代版的Tarjan强连通算法（参见 [Algo.js] [1] ） 。这一个系列的文章将解释这一过程和相关代码——包括迭代图遍历、迭代拓扑排序和Kosaraju强连通算法以及最后的迭代Tarjan算法三部分。本文先讲迭代图遍历。
+> 上个月我完成了迭代版的Tarjan强连通算法（参见 [Tango.js] [1] ） 。这一个系列的文章将解释这一过程和相关代码——包括迭代图遍历、迭代拓扑排序和Kosaraju强连通算法以及最后的迭代Tarjan算法三部分。本文先讲迭代图遍历。
 >
 > 本文大部分的解释（以及伪代码）需要阅读英文版本。
 
@@ -38,7 +38,7 @@ lang: zh
 
 <br />
 
-[1]: https://github.com/scozv/algo-js											"Algo.js"
+[1]: https://github.com/scozv/tango	"Tango.js"
 [2]: http://blog.moertel.com/posts/2013-05-11-recursive-to-iterative.html		"Recursive to Iterative by Tom Moertel"
 [3]: https://github.com/scozv/algo-js/issues/8						"Issue 8"
 [4]: {% post_url 2013-11-23-how-to-write-iterative-tarjan-scc-algorithm-part-one %} "Tarjan, Part II"

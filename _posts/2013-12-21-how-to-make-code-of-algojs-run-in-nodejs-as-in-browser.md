@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Make Code of Algo.js Run in Node.js as in Browser"
+title: "How to Make Code of Tango.js Run in Node.js as in Browser"
 description: ""
 category: "guide"
 tags: ["ci", "unit", "grunt"]
@@ -22,7 +22,7 @@ lang: en
 </a>
 
 ## window and global
-In browser, we have the global variable named `window` , `Array` is `window.Array`, and `Math` is `window.Math`, etc. The __Algo.js__ also plugs object into `window`:
+In browser, we have the global variable named `window` , `Array` is `window.Array`, and `Math` is `window.Math`, etc. The __Tango.js__ also plugs object into `window`:
 
     (function (sorting, undefined) {
         sorting.mergeSort = function () {};
@@ -32,14 +32,14 @@ So that we can sort an array in browser using the script below:
 
     Sorting.mergeSort(3, 1, 4, 1, 5, 9, 2, 6);
 
-More than that, in Algo.js, I extend `Array` and `Math` directly:
+More than that, in Tango.js, I extend `Array` and `Math` directly:
 
     (function (array, undefined) {
         array.zip = function (a, b) {};
         array.prototype.clone = function () {};
     })(window.Array = window.Array || {})
 
-It is not a good practice that we change the object in `window` directly. But in my opinion, __the most important part in Algo.js is Algo(rithm), not js.__ So I just want to use a simple way, instead of introducing a global module named like `Algo` which we have to write like this:
+It is not a good practice that we change the object in `window` directly. But in my opinion, __the most important part in Tango.js is Algo(rithm), not js.__ So I just want to use a simple way, instead of introducing a global module named like `Algo` which we have to write like this:
 
     Algo.Sorting.mergeSort();
     Algo.Array.zip();
@@ -55,7 +55,7 @@ Following this idea of simplification, I load the code of algorithm into the glo
 
 Look, we give the `global` an alias name at first, so that we do not need to change any codes of algorithm. Again, my idea of simplification is that:
 
-> It is not a good practice that we change the object in `global` directly. But the most important part in Algo.js is Algo(rithm), not js.
+> It is not a good practice that we change the object in `global` directly. But the most important part in Tango.js is Algo(rithm), not js.
 
 <br />
 
@@ -126,7 +126,7 @@ Some advantages of drone.io are:
 * CI for Github, Google Code and Bitbucket
 * CI command is hosted in drone.io, instead of a file in our project folder
 
-The CI command for Algo.js is:
+The CI command for Tango.js is:
 
     npm -d install
     npm install -g grunt-cli
@@ -138,7 +138,7 @@ I am going to fix [issue #18] [1].
 <br />
 
 [1]: https://github.com/scozv/algo-js/issues/18 "issue #18"
-[2]: https://github.com/scozv/algo-js "Algo.js"
+[2]: https://github.com/scozv/tango "Tango.js"
 [3]: https://github.com/scozv/algo-js/blob/master/qunit/q.js "a file named q.js"
 [4]: https://github.com/kof/node-qunit "node-qunit, Port of QUnit unit testing framework to nodejs"
 [5]: http://gruntjs.com/getting-started#package.json "grunt configuration on package.json"
