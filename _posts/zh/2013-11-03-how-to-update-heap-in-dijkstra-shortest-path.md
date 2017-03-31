@@ -30,4 +30,4 @@ lang: zh
 
 [1]: http://en.wikipedia.org/wiki/Heap_(data_structure)#Applications	"Wikipedia"
 [2]: https://www.coursera.org/course/algo 								"Algorithms: Design and Analysis, Part 1"
-[3]: https://goo.gl/NssHNy                                              "Diff of Algo.js"
+[3]: https://goo.gl/NssHNy                                              "Diff of Tango.js"

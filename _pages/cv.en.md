@@ -3,7 +3,7 @@ layout: page
 title: "Resume"
 permalink: cv/
 lang: en
-group: navigation
+group: _navigation
 weight: 200
 ---
 {% include JB/setup %}
@@ -25,7 +25,7 @@ weight: 200
   <tbody>
     <tr>
       <td style="text-align: left">Latest updated</td>
-      <td style="text-align: left">Aug, 2016</td>
+      <td style="text-align: left">Oct, 2016</td>
     </tr>
     <tr>
       <td style="text-align: left">Links</td>
@@ -45,9 +45,8 @@ weight: 200
         <div class="tech-list">
           <div class="tag">SJTU</div>
           <div class="tag">MSE</div>
-          <div class="tag">6 years</div>
+          <div class="tag">7 years</div>
           <div class="tag">Tech Leader</div>
-          <div class="tag">Looking for: Java Developer, Node.js Developer</div>
         </div>
       </td>
     </tr>
@@ -55,24 +54,25 @@ weight: 200
       <td style="text-align: left">Tech</td>
       <td style="text-align: left">
         <div class="tech-list">
-          <div class="tag">React.js</div>
-          <div class="tag">Redux</div>
-          <div class="tag">Node.js</div>
-          <div class="tag">Scala</div>
-          <div class="tag">RESTful</div>
-          <div class="tag">Play!</div>
-          <div class="tag">ECMAScript 6</div>
-          <div class="tag">Oracle</div>
-          <div class="tag">Git</div>
-          <div class="tag">Algorithm</div>
-          <div class="tag">Markdown</div>
-          <div class="tag">LaTeX</div>
-          <div class="tag">Linux</div>
-          <div class="tag">MongoDB</div>
-          <div class="tag">Azure</div>
-          <div class="tag">GraphQL</div>
-          <div class="tag">JIRA</div>
-          <div class="tag">Continuous Integration</div>
+        <div class="tag">React.js</div>
+        <div class="tag">Redux</div>
+        <div class="tag">Node.js</div>
+        <div class="tag">Scala</div>
+        <div class="tag">RESTful</div>
+        <div class="tag">Play!</div>
+        <div class="tag">ECMAScript 6</div>
+        <div class="tag">Oracle</div>
+        <div class="tag">Golang</div>
+        <div class="tag">Git</div>
+        <div class="tag">Algorithm</div>
+        <div class="tag">Markdown</div>
+        <div class="tag">LaTeX</div>
+        <div class="tag">Linux</div>
+        <div class="tag">MongoDB</div>
+        <div class="tag">Azure</div>
+        <div class="tag">GraphQL</div>
+        <div class="tag">JIRA</div>
+        <div class="tag">Continuous Integration</div>
         </div>
       </td>
     </tr>
@@ -90,12 +90,24 @@ weight: 200
 
 ## Working Experience
 
-### Project in SJTU (as the Tech Leader)
+### T Distributed File System (as Sr. Software Development Engineer)
 
 meta  | data
 :-----|:-----
+Employer | Hujiang Education & Technology
+Project | DFS RESTful API for Production Line
+Time | Sept, 2016 ~ Oct, 2016
+Role | `Golang` development
+Notes | Providing the RESTful API for production line. Meanwhile lead 6 members delivery team, build the continuous delivery process cross over the entire development group, communicate with cross departments to get resources and support.
+
+
+###  S O2O Online Selling Platform (as the Tech Leader)
+
+meta  | data
+:-----|:-----
+Employer | Project in SJTU
 Project | O2O Online Fruits Selling Based on WeChat Eco-system
-Time | Aug, 2015 ~ Now
+Time | Aug, 2015 ~ Apr, 2016
 Role | Tech Leader, Architect and Deployment Manager
 Notes  | I have written some posts on the ideas of this project, which are located in [here](https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala), [here](https://scozv.github.io/blog/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration), and [here](https://scozv.github.io/blog/pattern/2016/05/18/a-linear-branch-management-with-git)
 
@@ -127,12 +139,12 @@ Features in `RESTful Server`:
 * Token authentication,
 * Automatic test and deployment scripts.
 
-### Q Treasury Solution Project (as a Sr. Developer)
+### Q Treasury Solution Project (as a Sr. Product Development Engineer)
 
 meta  | data
 :-----|:-----
 Employer | SunGard China
-Time | June, 2013 ~ Now
+Time | June, 2013 ~ Aug, 2016
 Summary | Be responsible to implementation of `Fees` calculation API. Mainly using `ASP .NET MVC` and the AOP conception for data validation.
 
 ### Y Vehicle Accident Claim Center Project (as a Developer)
@@ -150,6 +162,15 @@ meta  | data
 Employer | Ningbo KingT Software Company
 Time | April, 2010 ~ Oct, 2011
 Summary | Involved into the deployment and the `PL/SQL` reporting implementation.
+
+### N HR Resume Management System (as an Intern Developer)
+
+meta  | data
+:-----|:-----
+Employer | Nordic Industrial Park (Ningbo) Co., Ltd.
+Time | Sept, 2009 ~ April, 2010
+Summary | Delivery a Resume information system to collection the resumes and candidates information.
+
 
 ## Candidate Introduction
 
@@ -212,14 +233,13 @@ As the Team and Tech Lead, I:
 
 ### The Next Career Plan
 
-For the coming new position, I am looking for a full-stack development:
+I plan the career path of full-stack development:
 
 * Architect is based on `RESTful API` and Loose Coupling,
 * Web page is rendered with `React.js` and `Node.js`,
 * `RESTful` Server is developed in Java Eco-system, hosted in `Linux` (Cloud).
 
 I believe the ability of a team is more powerful than the ability of individual.
-So I am looking forward for growing up with team members.
 
 <style>
 .clear {
