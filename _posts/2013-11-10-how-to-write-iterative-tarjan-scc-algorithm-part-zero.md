@@ -126,4 +126,4 @@ Read code in `graph.search.js` on [Tango.js] [1], and reference [this series of 
 [1]: https://github.com/scozv/tango	"Tango.js"
 [2]: http://blog.moertel.com/posts/2013-05-11-recursive-to-iterative.html		"Recursive to Iterative by Tom Moertel"
 [3]: https://github.com/scozv/algo-js/issues/8						"Issue 8"
-[4]: {% post_url 2013-11-23-how-to-write-iterative-tarjan-scc-algorithm-part-one %} "Tarjan, Part II"
+[4]: {{ BASE_PATH }}{{ LANG_PATH }}{% post_url 2013-11-23-how-to-write-iterative-tarjan-scc-algorithm-part-one %} "Tarjan, Part II"

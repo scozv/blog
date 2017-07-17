@@ -13,12 +13,12 @@ permalink: about/
 <div class="force-zero-padding">
 {% highlight tex %}
 \documentclass[a4paper]
-\newcommand{\a}{\footnote{https://github.com/scozv/algo-js}}
+\newcommand{\a}{\footnote{https://github.com/scozv/tango}}
 \newcommand{\b}{\footnote{https://github.com/scozv/bolero}}
 
 \begin{document}
 \author{@scozv}
-\date{May, 07, 2016}
+\date{July, 17, 2017}
 \maketitle
 
 
