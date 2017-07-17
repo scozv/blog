@@ -20,3 +20,7 @@ Thumbs.db
 *_LOCAL_*
 *_REMOTE_*
 .rake_tasks~
+
+
+db.json
+node_modules

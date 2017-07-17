@@ -162,4 +162,4 @@ See code on details in `graph.search.js` of [Tango.js] [3]. And next post, I am 
 [1]: https://www.coursera.org/course/algo          "Online course by Tim Roughgarden"
 [2]: https://github.com/scozv/algo-js/issues/20        "Issue 20"
 [3]: https://github.com/scozv/tango  "Tango.js"
-[4]: {% post_url 2013-11-10-how-to-write-iterative-tarjan-scc-algorithm-part-zero %} "Tarjan, Part I"
+[4]: {{ BASE_PATH }}{{ LANG_PATH }}{% post_url 2013-11-10-how-to-write-iterative-tarjan-scc-algorithm-part-zero %} "Tarjan, Part I"
