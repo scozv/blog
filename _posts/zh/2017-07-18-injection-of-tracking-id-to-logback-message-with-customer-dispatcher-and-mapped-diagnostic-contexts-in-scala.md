@@ -77,12 +77,7 @@ lang: "zh"
 
 ## Tracking Id的方案设计
 
-一个完整的Tracking Id方案最好能形成一个闭环，从客户端的发起、到网络中的
-反向代理（Nginx日志），传递到服务端进行后台处理，包括返回的最终结果，每一个节点都能记录
-唯一的`trackingId`。在这种方案中，通常由客户端生成`trackingId`，传递给系统
-的其它节点使用，并最终送回给客户端。
-
-本文简化了这个流程，并在Play 2.6下实现了服务端的`trackingId`生成：
+本文在Play 2.6下实现了服务端`trackingId`的生成和记录：
 
 0. 服务端接收到请求（HTTP Request）；
 0. 利用`HttpFilter`为每一个请求赋予一个唯一`trackingId`；
@@ -119,7 +114,7 @@ David Budworth指出“Java下MDC所依赖的线程存储（Thread Local Storage
 type RequestContext struct {
   *gin.Context
 
-  TrackingId        string
+  TrackingId    string
 }
 
 func newContext(c *gin.Context) *RequestContext {
@@ -238,20 +233,160 @@ def execute(runnable: Runnable): Unit = self.execute(() => {
 相关实现的代码量并不大，并且自定义Akka Dispatcher的代码量相较第二种
 方法，代码量更少。
 
-使用Play 2.6的话，需要保持代码的可注入特性。`HttpFilter`
+使用Play 2.6的话，需要保持代码的可注入特性，`TrackingFilter`就是一个依赖
+注入的例子。但使用的时候，需要同时配置`play.http.filters`参数[^_play_http_filters]。
+
+如果自定义了`play.http.filters`参数，在Play的启动日志中可以发现，框架默认开启了四个`HttpFilter`：
+
+{% highlight bash %}
+[info] [-] p.a.h.EnabledFilters - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+    play.filters.cors.CORSFilter
+
+[info] [-] play.api.Play - Application started (Dev)
+
+{% endhighlight %}
+
+如果收到了“Host not allowed: server-name”的问题，需要配置
+Host的白名单[^_play_host_allowed]。另外，一些云IaaS平台提供
+的Load Balance还会使用Private IP进行健康检查，日志中也可能出现
+“Host not allowed: private-ip”的问题，白名单配置中也需要处理。
+
+如果白名单失效的话，最快的办法是移除`AllowedHostsFilter`的加载：
+
+{% highlight scala %}
+class Filters @Inject() (
+  defaultFilters: EnabledFilters,
+  tracking: TrackingFilter
+) extends DefaultHttpFilters(defaultFilters.filters.filter {
+  case f: AllowedHostsFilter => false
+  case _ => true
+} :+ tracking: _*)
+{% endhighlight %}
 
 
-# 解决Tracking Id未能添加到日志消息的问题
+另一个需要注意的是，自定义的Dispatcher需要配置在`akka.actor`节点之下，
+Yann Simon文中配置节点为`play.akka.actor`，在实践过程中，可以通过运行时检验两种
+配置的结果。
+
+# 解决Tracking Id未能添加到日志的问题
 
 ## 问题表述
 
-## 解决思路和问题定位
+完成代码实现之后，发现大部分的日志没有Tracking Id：
 
-## 停用Scala自带ExecutionContext
+{% highlight bash %}
+[info] [-] play.api.Play - Application started (Dev)
+[warn] [-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
+[debug] [-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector(security, profile)
+[debug] [-] c.l.p.a.v.g.ActivityApi - start the get last message
+[debug] [-] c.l.p.n.d.ReactiveMongoManager$ -  <:> Connecting reactive driver
+{% endhighlight %}
 
-## 解决过程总结
+在`TrackingFilter`中加入日志之后，
+进而发现，在生成`trackingId`之后，日志上有编号，但是之后的日志却没有：
 
-# 本文总结
+{% highlight bash %}
+[info] [-] play.api.Play - Application started (Dev)
+[debug] [3734068e-f354-4de4-a9e7-25fc6ed9a1cb] c.l.TrackingFilter -  <:> trackingId generated: 3734068e-f354-4de4-a9e7-25fc6ed9a1cb
+[warn] [-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
+[debug] [-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector(security, profile)
+{% endhighlight %}
+
+进一步地，在自定义的`MDCPropagatingDispatcher`里添加日志，可以看到类似如下的结果：
+{% highlight bash %}
+[info] [-] play.api.Play - Application started (Dev)
+[debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] c.l.TrackingFilter -  <:> trackingId generated: a5a7cbab-6ee4-4dd8-b54e-64217dc7357e
+[debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] old context: null
+[debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] new context: {trackingId=a5a7cbab-6ee4-4dd8-b54e-64217dc7357e}
+# many log skipped  ...
+[debug] [-] old context: null
+[debug] [-] new context: null
+[debug] [-] old context: {}
+[debug] [-] new context: null
+{% endhighlight %}
+
+## 解决思路
+
+上面最后一则日志中可以看出：
+
+* 自定义的Dispatcher生效了，因为日志中含有Dispather的日志；
+* 线程可能在不停地切换，因为出现了多则`old / new context`的日志，而且相应的日志内容还不同。
+
+因此，待解决的问题归纳为：为什么多个线程之间，MDC信息没有相互传递。
+既然已经意识到了是多线程的问题，不妨在日志中输出线程名称：
+
+{% highlight bash %}
+# Log format
+# <pattern>%coloredLevel [%mdc{trackingId:--}] [%thread] %logger{15} - %message%n%xException{10}</pattern>
+
+[info] [-] [scala-execution-context-global-80] play.api.Play - Application started (Dev)
+[debug] [006bc4df-0310-4793-a88d-923dfde227d9] [play-dev-mode-akka.actor.default-dispatcher-2] c.l.TrackingFilter -  <:> trackingId generated: 006bc4df-0310-4793-a88d-923dfde227d9
+[debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - old context: null
+[debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - new context: {trackingId=006bc4df-0310-4793-a88d-923dfde227d9}
+[warn] [-] [scala-execution-context-global-80] - ['token': 'fd'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
+
+{% endhighlight %}
+
+留意到最后两条日志，一条带Tracking Id，另一条没有：
+
+{% highlight bash %}
+[debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - new context: {trackingId=006bc4df-0....
+[warn] [-] [scala-execution-context-global-80] - ['token': '404'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
+
+{% endhighlight %}
+
+从线程的名称可以看到两条日志使用的线程是不同对象创建的：
+前者使用的是`akka.actor.default-dispatcher`，后者
+从名称（`scala-execution-context-global-80`）推断，应该和`scala.concurrent.ExecutionContext.global`有关。
+
+Play 2.6提倡使用依赖注入，所以使用全局`ExecutionContext.global`
+不是一种好的实践方式[^_play_ec_deprected]。
+
+## 停用Scala自带ExecutionContext.global
+
+通过上面的分析，尝试在代码中查找`ExecutionContext.global`的`implicit`引用，
+并使用依赖注入的方式替代`ExecutionContext.global`，一种修改方案是：
+
+{% highlight scala %}
+class Security @Inject() (
++  implicit ec: ExecutionContext,
+  membersDao: MembersDao,
+  userApiToken: UserApiTokenDao,
+  enforceHttpsAction: EnforceHttpsAction
+) {
+
+-  implicit val ec = scala.concurrent.ExecutionContext.global
+
+}
+{% endhighlight %}
+
+修改之后，重新启动服务，可以看到日志信息中已经包含了Tracking Id：
+{% highlight bash %}
+[debug] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] -  <:> trackingId generated: f6ab38a5-1461-44c9-a5f8-ce7764025fad
+[warn] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] - ['token': '404'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
+{% endhighlight %}
+
+
+# Tracking Id设计的改进
+
+Tracking Id的重要性不必多说，本文的实践只是完成了服务端的Tracking Id 处理。
+
+一个完整的Tracking Id方案最好能形成一个闭环，从客户端的发起、到网络中的
+反向代理（Nginx日志），传递到服务端进行后台处理，包括返回的最终结果，每一个节点都能记录
+唯一的`trackingId`。在这种方案中，通常由客户端生成`trackingId`，传递给系统
+的其它节点使用，并最终送回给客户端。因此使用Ngnix的系统
+最好在Access Log里面也加入Tracking Id，通过使用`condition`配置[^_ngix_condition_log]，可以对
+HTTP `4xx`的Response做相应的记录，从而通过Tracking Id，可以：
+
+* 在Ngnix日志中找到对应的HTTP完整信息；
+* 在后端日志中找到相应的步骤日志
+
+这样，系统出现异常时，前端只需要回报Tracking Id，开发人员便可以
+方面的了解该异常的背景信息了。
 
 # 参考文献
 
@@ -263,3 +398,11 @@ def execute(runnable: Runnable): Unit = self.execute(() => {
 [^_sf_david_bud_mdc_java_go]: [_"Java MDC relies on thread local storage, Go does not have"_ by David Budworth's reply on Stackoverflow](https://stackoverflow.com/a/41049394)
 
 [^_note_where_go_code_from]: 这段代码中的`RequestContext`来自沪江工作期间，原同事的Golang代码，我在其基础上增加了`TrackingId`变量，并完成了日志中写入`TrackingId`的代码
+
+[^_play_http_filters]: [Using Filters in Play 2.6](https://www.playframework.com/documentation/2.6.x/ScalaHttpFilters#Using-filters)
+
+[^_play_host_allowed]: [Configure Allowed Hosts](https://www.playframework.com/documentation/2.6.x/AllowedHostsFilter#Configuring-allowed-hosts)
+
+[^_play_ec_deprected]: [`play.api.libs.concurrent.Execution` is deprecated](https://playframework.com/documentation/2.6.x/Migration26#play.api.libs.concurrent.Execution-is-deprecated)
+
+[^_ngix_condition_log]: [Module ngx_http_log_module](http://nginx.org/en/docs/http/ngx_http_log_module.html)
