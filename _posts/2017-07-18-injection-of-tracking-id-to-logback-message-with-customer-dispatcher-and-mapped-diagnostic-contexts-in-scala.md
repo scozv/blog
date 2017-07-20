@@ -24,7 +24,12 @@ lang: "en"
 > and a similiar issue is also mention in Github[^_github_rishabh9_issue1].
 >
 > Logging the thread name is useful for locating the reason of issue.
-> According to thread name, a solution or fix that replacing `scala.concurrent.ExecutionContext` with injected one has been found
+> According to thread information of log messages, a solution or fix that
+>
+> * changing the configuration name `play.akka.actor` to `akka.actor`, and
+> * replacing `scala.concurrent.ExecutionContext` with injected object
+>
+> has been found
 and applied.
 
 <!--more-->
@@ -439,7 +444,7 @@ No need of reading and searching word by word in large log file.
 
 [^_sf_david_bud_mdc_java_go]: [_"Java MDC relies on thread local storage, Go does not have"_ by David Budworth's reply on Stackoverflow](https://stackoverflow.com/a/41049394)
 
-[^_note_where_go_code_from]: The `RequestContext` originally come from the Golang code of my colleague in Hujiang. Basing on that, I added the `TrackingId` and wrote it to log.
+[^_note_where_go_code_from]: The `RequestContext` originally comes from the Golang code of my colleague in Hujiang. Basing on that, I added the `TrackingId` and wrote it to log.
 
 [^_play_http_filters]: [Using Filters in Play 2.6](https://www.playframework.com/documentation/2.6.x/ScalaHttpFilters#Using-filters)
 
