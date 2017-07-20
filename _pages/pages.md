@@ -4,7 +4,7 @@ title: "Pages"
 alias: "..."
 header: Pages
 description: "More pages"
-group: navigation
+group: _navigation
 i18n: pages
 permalink: pages/
 ---
