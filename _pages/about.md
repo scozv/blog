@@ -25,6 +25,7 @@ permalink: about/
 
 
 I read and code \a{} \b{}         ::
+I understand and solve            ::
 I \LaTeX{}                        ::
 I <React />                       ::
 and                               ::
