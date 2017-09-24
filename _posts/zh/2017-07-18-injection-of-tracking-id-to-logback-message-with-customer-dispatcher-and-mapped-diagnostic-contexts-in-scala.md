@@ -18,7 +18,7 @@ lang: "zh"
 > 中遇到的问题。其中一个主要的问题是，
 > 部分日志没有Tracking Id（同样的问题在Github上也被提到 [^_github_rishabh9_issue1]）。
 > 本文通过在日志中输出了线程信息和Dispatcher的名称，发现`scala.concurrent.ExecutionContext`
-> 下的所有日志，都没有Tracking Id，最终通过替换该`ExecutionContext`的方式
+> 下的所有日志，都没有Tracking Id，最终通过修改配置节点`play.akka.actor`至`akka.actor`，同时替换该`ExecutionContext`的方式
 > 解决了日志中无Tracking Id的问题。
 
 <!--more-->
