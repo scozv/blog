@@ -29,8 +29,7 @@ lang: "en"
 > * changing the configuration name `play.akka.actor` to `akka.actor`, and
 > * replacing `scala.concurrent.ExecutionContext` with injected object
 >
-> has been found
-and applied.
+> has been found and applied.
 
 <!--more-->
 

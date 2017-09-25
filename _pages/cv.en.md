@@ -3,7 +3,7 @@ layout: page
 title: "Resume"
 permalink: cv/
 lang: en
-group: _navigation
+group: navigation
 weight: 200
 ---
 {% include JB/setup %}
@@ -83,21 +83,27 @@ weight: 200
 
 ## Working Experience (`Scala` Related)
 
-### G Product Core Data Analysis System
+### G Product Core Data Analysis System (as the Project Owner)
 
 Company | LeadIQ
 :-----|:-----
 Project | Data Analysis System Based on Play 2.6 and Akka 2.5
 Time | 2017.06 ~ Now
 
+As the owner of this project, I am not just finishing my development task,
+but also taking charge of Version Control, Release, Roadmap Planning, and using the
+[Linear Git Management Mechanism (`x.y.z`)](https://scozv.github.io/blog/pattern/2016/05/18/a-linear-branch-management-with-git)
+to manage the version and the rolling back of failed release.
+
 Achievement:
-* 80% committed code on August 2017.
+
+* 80% committed code.
 * Data I/O with Mongo, Redis and Postgres based on Dependencies Injection.
-* Isolated threads for 3rd API server and data query with separating `dispatcher`.
+* Isolated threads for third party API server and data query with separating `dispatcher`.
 * Log message `TrackingId` with `CUID` and integrated with Graylog.
-* Design and implementation the activities report based on Graph, improve the query time complexity from  $$O(n\cdot m)$$ down to $$O(\log n)$$.
+* Design and implementation of the activities report based on Graph, improve of the query time complexity from  $$O(n\cdot m)$$ down to $$O(\log n)$$.
 * Deployment with AWS EC and LB.
-* Throttle implementation for 3rd API request with Akka Stream.
+* Throttle implementation for third party API request with Akka Stream.
 * Lite admin page with `dva`, `antd` and `React.js`.
 
 ### L Product Core Data Category System
@@ -109,9 +115,9 @@ Time | Sept, 2016 ~ Now
 
 Achievement:
 
-* 800+ commits from January to August 2017, 300 commits more than next developer.
+* 800+ commits from January to August 2017, that is 300 commits more than next developer.
 * Implementation of 3 business modules.
-* Integration with 2 3rd party services.
+* Integration with 2 third party services.
 * Implementation of Akka Work Pulling Pattern and customized `dispatcher`.
 * Implementation of TrackingId.
 * Post with title [_Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6_](https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala).
@@ -128,7 +134,7 @@ Achievement:
 
 * Isolation between Frontend and Backend.
 * `Async` I/O with `MongoDB` based on `ReactiveMongo`.
-* Mocking the HTTP Request with `FakeApplication`.
+* HTTP Request mocking with `FakeApplication`.
 * A global business validation design with Monad principle.
 * Multiple payment channel integration with Ping++ SDK.
 * Token authentication.
@@ -142,14 +148,27 @@ Achievement:
 
 ## Working Experience (`Golang`, `.NET` Related)
 
-### D DFS RESTful API for Production Line (as a Sr. Product Development Engineer)
+### D Distributed File System API Server (as a Software Engineer in Infrastructure Architect Group)
 
 Company | Hujiang Education & Technology
 :-------|:-----------
 Project | DFS RESTful API for Production Line based on Golang
 Time | Sept, 2016 ~ Oct, 2016
-Role | `Golang` development
-Notes | Provide the RESTful API for production line using Golang and Gin Web Framework. Meanwhile lead 6 members delivery team, build the continuous delivery process cross over the entire development group, communicate with cross departments to get resources and support.
+Role | `Golang` development and the owner of Delivery Team
+
+As the owner of the Distributed File System, I took charge of Requirement Analysis, Golang development, Version Control and Release.
+
+Achievement of DFS:
+
+* Improved the unit tests and release script for Golang system.
+* Released 3 new RESTful API as the request from production department.
+* Fixed 1 runtime error due to the unmerged branch.
+* Collaborated with the development team of the IaaS provider for specific feature.
+* Created 27 Gitlab issues and finished 19 issues of them.
+
+As a member of Infrastructure Architect Group, I delivered 5 training sessions of _Algorithm 101_, including the Big O, Fundamental Data Structures, Tail Recursion and Sorting.
+
+Meanwhile I led 6 members delivery team, building the continuous delivery process cross over the entire development group, communicating with cross departments to get resources and support.
 
 
 ### Q Treasury Solution Project (as a Sr. Product Development Engineer)
@@ -157,7 +176,7 @@ Notes | Provide the RESTful API for production line using Golang and Gin Web Fra
 Company | SunGard
 :-------|:------------
 Time | June, 2013 ~ Aug, 2016
-Summary | Be responsible to implementation of `Fees` calculation API. Mainly using `ASP .NET MVC` and the AOP conception for data validation.
+Summary | Worked in Q V6 project, a web solution for Treasury Software & Management System. In these 3 years, collaborated with 10+ members team on Equity, Fees and Accounting modules. Mainly using `ASP .NET MVC` and the AOP conception for data validation.
 
 ### Y Vehicle Accident Claim Center Project (as a Developer)
 
@@ -168,7 +187,7 @@ Summary | Be responsible to call center implementation, and the workflow impleme
 
 ### K Hospital Information System (as a Developer)
 
-Company| Ningbo KingT Software Company
+Company| Ningbo KingT Software
 :-------|:------------
 Time | April, 2010 ~ Oct, 2011
 Summary | Be involved into the deployment and the `PL/SQL` reporting implementation.
@@ -178,72 +197,84 @@ Summary | Be involved into the deployment and the `PL/SQL` reporting implementat
 Company | Nordic Industrial Park (Ningbo) Co., Ltd.
 :-------|:------------
 Time | Sept, 2009 ~ April, 2010
-Summary | Delivery a Resume information system to collection the resumes and candidates information.
+Summary | Delivery a Resume information system to collect the resumes and candidates information.
 
 
 ## Candidate Overview
 
 ### Working Experiences in Last Two Years
 
-I grew fast in last two years, I delivered
+I grew fast in the last two years, I delivered
 a small online shopping project with 6 members team
 during 2015 to 2016 when I was studying in SJTU
 for Master of Software Engineering.
 
 As the Tech Lead, I improved a lot from the stage that
 only gross requirement was available to the stage that
-all features has been delivered, calling this as a _Zero to One_.
+all features had been delivered, calling this as the _Zero to One_.
 
-In recent 1 year, I moved to Singapore, kept learning and writing on React, Scala, and most important, delivered the solutions.
+I led 3 small teams in recent two years, I learn the collaboration,
+the communication, how to choose the team member, and
+how to get support resources from other team.
 
-I led 3 small teams in past two years, I learn the collaboration,
-the communication, and how to choose the team member,
-how to get support from other team.
+In recent 1 year, I moved to Singapore, kept learning and writing on React, Scala, and most important,
+on delivering the solutions.
 
-I read and I learn. I already passed the Level I exam of CFA.
+I read and I learn. I have already passed the Level I exam of CFA.
 I have submitted the Master Degree graduation paper on June, which
 has addressed the Loose Coupling architecture and the application
 in Financial Information System.
 
 
-### Three Stages for Last 8 Years of Software Engineering
+### Three Stages of 8 Years on Software Engineering
 
-I consider my last 8 years of software engineering experiences
-as three stages.
+I consider the 8 years of software engineering experiences
+as three stages below.
 
-The first stage is from 2009 when I graduated to 2014, I worked
+The first stage was from the 2009 when I just graduated from University to the 2014. I worked
 in Healthcare, Insurance project. I learnt the information is
-much more the raw data, the data query optimization. I read a lot
-from MSDN. However I was working as a team member in that period.
+much more valuable than the raw data, and also learnt the skill of
+the data query optimization. I read MSDN articles, improved my English reading and writing.
+However in that period, I was just working as a team member.
 
 
-The second stage is from 2014 when I enrolled the SJTU with
-full score on  entrance exam of specialized course to 2016.
-I worked in a complicated Financial Information System, the CI platform, and I passed the CFA Level I exam.
-I realized the difference between being the team developer
-and being Team Lead. Then I delivered a online shopping system
-with 6 team member, improved my architect ability. However, I had
+The second stage was from the 2014 when I was enrolled into the SJTU with
+full score on entrance exam of specialized course to the the 2016.
+I worked in a Corporate Liquidation System, the CI platform, and I passed the CFA Level I exam.
+I realized the difference between being a team developer
+and being the Team Lead. Then I delivered a online shopping system
+with 6 members team, improved my architecture ability. However, in these 2 years,
+I realized that I had
 limited conception on engineering practice.
 
 
-The third stage is from September 2016 when I joined the
-Fundamental Architect Group of Hujiang to January 2017
-when I moved to working in Singapore and to now. I understand
-the programming language is the expression of requirement.
-No much more effect needed for comparing the programming languages,
-since besides of different languages, instead, many software engineering topics are mandatory, deployment, monitor, log system, Health Check,
-and metrics. Also a lot of conception on architect design, such
-as concurrent, reliablity, throughput. I practice not only the delivery of code, but also the engineering ability.
+The third stage was from September 2016 when I joined the
+Infrastructure Architect Group of Hujiang to January 2017
+when I moved to working in Singapore and to now. I understand that
+a programming language is the expression of requirement.
+No need to spend too much energy on comparing the different programming languages,
+instead, software engineering is much more important,
+such as deployment, monitoring, log system, Health Check,
+and metrics, also including the conceptions of architecture design, such
+as concurrent, reliablity, throughput. Besides, a project owner needs to understand
+and plan the roadmap, resources (internal or external) of project.
+In recent 1 year, I practiced not just the delivery of code,
+but also the engineering ability and being the owner of project.
 
-I make the requirement happen, and I ensure the system keeping running.
+I make the requirement happening, and I ensure the system keeping running.
 
 ### Next Plan
 
-I have great passion on what I am doing, I believe that team work is not
-full of individual of elite, it is collaboration and delivery on time.
+I have great passion on what I am doing now, and I also believe that team working is not
+a collection of elite individual, it is also about the collaboration, the prioritising
+and delivery on time.
 
-I will stay on Team Lead path, that picking the appropriate tools
-for the final solution, working with team for the last delivery.
+I am still interested in Finance, I believe the level of my finance domain knowledge
+is higher than the average level of knowledges that many programmers have, these domain knowledges
+are essential to understand and delivery the high quality solutions.
+
+I will stay on Team Lead path, picking the appropriate tools
+for the solution, working with the team for the final delivery.
 
 
 <style>
