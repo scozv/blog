@@ -3,7 +3,7 @@ layout: page
 title: "About"
 alias: "?"
 description: "About me"
-group: _navigation
+group: navigation
 i18n: about
 weight: 100
 permalink: about/
