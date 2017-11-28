@@ -3,7 +3,7 @@ layout: page
 title: "简历"
 permalink: cv/
 lang: zh
-group: navigation
+group: _navigation
 weight: 200
 ---
 {% include JB/setup %}

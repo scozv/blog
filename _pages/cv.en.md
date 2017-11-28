@@ -3,7 +3,7 @@ layout: page
 title: "Resume"
 permalink: cv/
 lang: en
-group: navigation
+group: _navigation
 weight: 200
 ---
 {% include JB/setup %}
@@ -76,7 +76,8 @@ weight: 200
 
 * **Shanghai Jiaotong University** _2013 ~ Now_
 
-  Master of Software Engineering (Financial Information System, Part time), Master Degree
+Part-time programme for Master of Software Engineering. My graduation paper addressing the loose coupling architecture and its application on financial system has been submitted at June 2017. The certification of MSE Degree will be delivered in November 2017 according to the recent SJTU notification.
+
 * **Ningbo University** _2005 ~ 2009_
 
   Information System and Information Management, Bachelor Degree
@@ -104,6 +105,7 @@ Achievement:
 * Design and implementation of the activities report based on Graph, improve of the query time complexity from  $$O(n\cdot m)$$ down to $$O(\log n)$$.
 * Deployment with AWS EC and LB.
 * Throttle implementation for third party API request with Akka Stream.
+* Kafka producer and consumer implementation for 3 use cases.
 * Lite admin page with `dva`, `antd` and `React.js`.
 
 ### L Product Core Data Category System
@@ -122,11 +124,11 @@ Achievement:
 * Implementation of TrackingId.
 * Post with title [_Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6_](https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala).
 
-###  S O2O Online Selling Platform (as the Tech Leader)
+###  S O2O Online Shopping Platform (as the Tech Leader)
 
 Company | Project in SJTU
 :------|:----------
-Project | O2O Online Fruits Selling Based on WeChat Eco-system
+Project | O2O Online Fruits Shopping Based on WeChat Eco-system
 Time | Aug, 2015 ~ Apr, 2016
 Role | Tech Leader, Architect and Deployment Manager
 
@@ -256,7 +258,7 @@ No need to spend too much energy on comparing the different programming language
 instead, software engineering is much more important,
 such as deployment, monitoring, log system, Health Check,
 and metrics, also including the conceptions of architecture design, such
-as concurrent, reliablity, throughput. Besides, a project owner needs to understand
+as concurrent, reliability, throughput. Besides, a project owner needs to understand
 and plan the roadmap, resources (internal or external) of project.
 In recent 1 year, I practiced not just the delivery of code,
 but also the engineering ability and being the owner of project.
@@ -266,7 +268,7 @@ I make the requirement happening, and I ensure the system keeping running.
 ### Next Plan
 
 I have great passion on what I am doing now, and I also believe that team working is not
-a collection of elite individual, it is also about the collaboration, the prioritising
+a collection of elite individual, it is also about the collaboration, the prioritizing
 and delivery on time.
 
 I am still interested in Finance, I believe the level of my finance domain knowledge
