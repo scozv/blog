@@ -76,15 +76,15 @@ weight: 200
 
 * **Shanghai Jiaotong University** _2013 ~ Now_
 
-Part-time programme for Master of Software Engineering. My graduation paper addressing the loose coupling architecture and its application on financial system has been submitted at June 2017. The certification of MSE Degree will be delivered in November 2017 according to the recent SJTU notification.
+Part-time programme for Master of Software Engineering. My graduation paper addressing the loose coupling architecture and its application on financial system has been submitted at June 2017. The certification of MSE Degree has been approved in November 2017.
 
 * **Ningbo University** _2005 ~ 2009_
 
-  Information System and Information Management, Bachelor Degree
+Information System and Information Management, Bachelor Degree
 
 ## Working Experience (`Scala` Related)
 
-### G Product Core Data Analysis System (as the Project Owner)
+### G Product Core Data Analysis System (Project Owner)
 
 Company | LeadIQ
 :-----|:-----
@@ -124,7 +124,7 @@ Achievement:
 * Implementation of TrackingId.
 * Post with title [_Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6_](https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala).
 
-###  S O2O Online Shopping Platform (as the Tech Leader)
+###  S O2O Online Shopping Platform (Tech Lead)
 
 Company | Project in SJTU
 :------|:----------
@@ -150,7 +150,7 @@ Achievement:
 
 ## Working Experience (`Golang`, `.NET` Related)
 
-### D Distributed File System API Server (as a Software Engineer in Infrastructure Architect Group)
+### D Distributed File System API Server (Senior Software Engineer in Infrastructure Architect Group)
 
 Company | Hujiang Education & Technology
 :-------|:-----------
@@ -173,28 +173,28 @@ As a member of Infrastructure Architect Group, I delivered 5 training sessions o
 Meanwhile I led 6 members delivery team, building the continuous delivery process cross over the entire development group, communicating with cross departments to get resources and support.
 
 
-### Q Treasury Solution Project (as a Sr. Product Development Engineer)
+### Q Treasury Solution Project (Senior Product Development Engineer)
 
 Company | SunGard
 :-------|:------------
 Time | June, 2013 ~ Aug, 2016
 Summary | Worked in Q V6 project, a web solution for Treasury Software & Management System. In these 3 years, collaborated with 10+ members team on Equity, Fees and Accounting modules. Mainly using `ASP .NET MVC` and the AOP conception for data validation.
 
-### Y Vehicle Accident Claim Center Project (as a Developer)
+### Y Vehicle Accident Claim Center Project
 
 Company | Cognizant
 :-------|:------------
 Time | Oct, 2011 ~ June, 2013
 Summary | Be responsible to call center implementation, and the workflow implementation of orders.
 
-### K Hospital Information System (as a Developer)
+### K Hospital Information System
 
 Company| Ningbo KingT Software
 :-------|:------------
 Time | April, 2010 ~ Oct, 2011
 Summary | Be involved into the deployment and the `PL/SQL` reporting implementation.
 
-### N HR Resume Management System (as an Intern Developer)
+### N HR Resume Management System (Intern)
 
 Company | Nordic Industrial Park (Ningbo) Co., Ltd.
 :-------|:------------
