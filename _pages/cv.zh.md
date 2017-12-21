@@ -19,7 +19,7 @@ weight: 200
   <tbody>
     <tr>
       <td style="text-align: left">最后更新</td>
-      <td style="text-align: left">2017年09月</td>
+      <td style="text-align: left">2017年12月</td>
     </tr>
     <tr>
       <td style="text-align: left">链接</td>
@@ -75,7 +75,7 @@ weight: 200
 
 ## 教育背景
 
-* **上海交通大学** _2013 ~ 现在_
+* **上海交通大学** _2013 ~ 2017_
 
   软件工程硕士（金融信息化、在职）， 硕士
 * **宁波大学** _2005 ~ 2009_

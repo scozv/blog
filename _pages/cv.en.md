@@ -19,7 +19,7 @@ weight: 200
   <tbody>
     <tr>
       <td style="text-align: left">Latest updated</td>
-      <td style="text-align: left">September, 2017</td>
+      <td style="text-align: left">December, 2017</td>
     </tr>
     <tr>
       <td style="text-align: left">Links</td>
@@ -74,9 +74,9 @@ weight: 200
 
 ## Education
 
-* **Shanghai Jiaotong University** _2013 ~ Now_
+* **Shanghai Jiaotong University** _2013 ~ 2017_
 
-Part-time programme for Master of Software Engineering. My graduation paper addressing the loose coupling architecture and its application on financial system has been submitted at June 2017. The certification of MSE Degree has been approved in November 2017.
+Part-time programme for Master of Software Engineering. My graduation paper addressing the loose coupling architecture and its application on financial system has been submitted at June 2017. The certification of MSE Degree has been issued in November 2017.
 
 * **Ningbo University** _2005 ~ 2009_
 
@@ -98,7 +98,7 @@ to manage the version and the rolling back of failed release.
 
 Achievement:
 
-* 80% committed code.
+* 80% committed code. 52 DONE of 72 issues.
 * Data I/O with Mongo, Redis and Postgres based on Dependencies Injection.
 * Isolated threads for third party API server and data query with separating `dispatcher`.
 * Log message `TrackingId` with `CUID` and integrated with Graylog.
@@ -106,7 +106,7 @@ Achievement:
 * Deployment with AWS EC and LB.
 * Throttle implementation for third party API request with Akka Stream.
 * Kafka producer and consumer implementation for 3 use cases.
-* Lite admin page with `dva`, `antd` and `React.js`.
+* Lightweight admin page with `dva`, `antd` and `React.js` (plan).
 
 ### L Product Core Data Category System
 
@@ -117,7 +117,7 @@ Time | Sept, 2016 ~ Now
 
 Achievement:
 
-* 800+ commits from January to August 2017, that is 300 commits more than next developer.
+* 800+ commits from January to August 2017.
 * Implementation of 3 business modules.
 * Integration with 2 third party services.
 * Implementation of Akka Work Pulling Pattern and customized `dispatcher`.
@@ -278,6 +278,45 @@ are essential to understand and delivery the high quality solutions.
 I will stay on Team Lead path, picking the appropriate tools
 for the solution, working with the team for the final delivery.
 
+## Cover Letter
+
+Dear Sir / Madam,
+
+Thanks for considering me as a potential candidate. I want to share more information about me.
+
+**First**, as a passionate software engineer, I am 80 ~ 90% confident in:
+
+* Scala programming, Play 2.6 with DI and ScalaTest (4 years project experiences)
+* Akka Stream, Kafka, Hostedgraphite, Graylog (I delivered some solution base on that recently)
+* Basic Golang Programming with Gin Framework (4 months of project owner in Hujiang, Shanghai)
+* Reactjs (1 year project experience) and dva.js
+* MongoDB, PostgreSQL, Oracle, SQL Server, Redis
+* AWS infrastructure: deployment with LB, EC2
+* GitHub, Bitbucket, Travis CI, JIRA and Agile software development (solid experiences)
+
+**Second**, I always keep strong passion on learning.
+
+I started to know the Functional Programming conception from F# and Erlang, and then I learned Scala from the Courseas.org. I believe learning is not just reading, but also applying what you have learned on the project. So I chose Scala and Play! for a online shopping platform project. And I also use Scala for my Master degree graduation project.
+
+Meanwhile, I understand that a programming language is just a expression of requirement, software engineering is much more important.
+So I spend 3+ years on learning and using the software engineering, such as deployment, monitoring, log system, health check, metrics, and also including the conceptions of architecture design, such as concurrent, reliability, throughput.
+
+**Third**, I believe team collaboration is important. I built up 5-members part time team for the online shopping project from 2015 to 2016, and we delivered this project integrated with WeChat payment. I also led a 6-members team when I was working in Hujiang for building the continuous delivery process.
+
+I will be glad to learn from the team, and I can also help our team grow up together. For instance, I delivered the training sessions below when I was working in Shanghai:
+
+* Functional programming and fundamental Scala
+* Algorithm 101, see the recommandation from my previous manager in LinkedIn
+
+I dedicate my skills and passion to the project , working with team. I committed 800+ commits in 2017. I delivered one new project this year with 3 new features, 2 new third-party services integration, and I introduced 2 new ideas on software engineering for our project.
+
+And I consider the schedule or deadline of project is of high priority, instead of building 100% prefect technical solution. Many developers spent a lot of time on specific programming languages, but I also pay attention on problem solving and software engineering. Since the software technique is changing so fast, we need ensure the project delivery and the solution reliability.
+
+**One last point**, I want to go back to the financial or banking projects. I worked in insurance, and Corporate Liquidation projects before. I passed CFA Level I exam, I think I can understand the financial requirement better. My graduation paper of Master degree is about personal financial system including accounting, cash liquidation. I think I can learn a lot from financial project, and I will also dedicate my ideas to the project.
+
+Regards
+
+Scott
 
 <style>
 .clear {
