@@ -18,7 +18,7 @@ weight: 200
 <table>
   <tbody>
     <tr>
-      <td style="text-align: left">Latest updated</td>
+      <td style="text-align: left">Updated on</td>
       <td style="text-align: left">June, 2018</td>
     </tr>
     <tr>
@@ -45,7 +45,7 @@ weight: 200
       </td>
     </tr>
     <tr>
-      <td style="text-align: left">Tech</td>
+      <td style="text-align: left">Skills</td>
       <td style="text-align: left">
         <div class="tech-list">
           <div class="tag">Scala</div>
@@ -81,7 +81,7 @@ Part-time programme for Master of Software Engineering. The graduation paper add
 
 Information System and Information Management, Bachelor Degree
 
-## Working Experience (`Scala` Related)
+## Working Experiences (`Scala` Related)
 
 ### P Investment Advisory System
 
@@ -100,12 +100,12 @@ Company | LeadIQ
 Product | Data Analysis System with Play 2.6 and Akka 2.5
 Time | Sept, 2016 ~ Dec, 2017
 
-* Designed entire architect for this backend RESTful server with Play!, Akka, Kafka, Redis and MongoDB.
+* Designed entire architecture for the backend RESTful server with Play!, Akka, Kafka, Redis and MongoDB.
 * Integrated with Google API, including Gmail API, Drive API, Cloud Pub/Sub.
 * Integrated with Hostedgraphite for production metrics, Ansible for AWS (DevOps).
 * Contributed 81% of backend Scala code.
 * Collaborated with frontend team based on the RESTful specification.
-* Managing version and release.
+* Managing version and release. Making the decision and taking the responsibility.
 
 ###  S O2O Online Shopping Platform (Tech Lead)
 
@@ -118,15 +118,15 @@ Role | Tech Leader, Architect and Deployment Manager
 * Started up the initial project with the Business and Product Design Manager.
 * Built the part time development team for the backend and frontend.
 * Planned the regular technical training session.
-* Designed entire architect for RESTful server and React.js frontend application.
+* Designed entire architecture for RESTful server and React.js frontend application.
 * Contributed 63% of backend Scala code.
-* Integrated with WeChat, and Ping++ API for payment functionality.
+* Integrated with WeChat, and Ping++ API for order payment.
 * Integrated the essential DevOps with Azure.
-* Delivered beta version on Dec 31st, 2015 with order payment.
+* Delivered beta version on Dec 31st, 2015 with payment service integrated.
 
 ## Working Experience (`Golang`, `.NET` Related)
 
-### D Distributed File System API Server (Senior Software Engineer in Infrastructure Architect Group)
+### D Distributed File System API (Senior Software Engineer in Infrastructure Architect Group)
 
 Company | Hujiang Education & Technology
 :-------|:-----------
@@ -192,21 +192,23 @@ only gross requirement was available to the stage that
 all features had been delivered, calling this as the _Zero to One_.
 
 I led 3 small teams in recent two years, I learn the collaboration,
-the communication, how to choose the team member, and
-how to get support resources from other team.
+the communication, how to build the initial development team, and
+how to get support resources from outside scope. And I also made the decisions
+on the product I owned.
 
-In recent 1 year, I moved to Singapore, kept learning and writing on React, Scala, and most important,
+I moved to Singapore from January of 2017, learning and writing on React, Scala, and most important,
 on delivering the solutions.
 
 I read and I learn. I have already passed the Level I exam of CFA.
-I have submitted the Master Degree graduation paper on June, which
+My Master degree graduation paper submitted on June 2017, which
 has addressed the Loose Coupling architecture and the application
-in Financial Information System.
+in Financial Information System, has been accepted for the degree certification issued
+on November 2017.
 
 
-### Three Stages of 8 Years on Software Engineering
+### Three Stages of 9 Years on Software Engineering
 
-I consider the 8 years of software engineering experiences
+I consider the 9 years of software engineering experiences
 as three stages below.
 
 The first stage was from the 2009 when I just graduated from University to the 2014. I worked
@@ -239,60 +241,12 @@ and plan the roadmap, resources (internal or external) of project.
 In recent 1 year, I practiced not just the delivery of code,
 but also the engineering ability and being the owner of project.
 
-I make the requirement happening, and I ensure the system keeping running.
+I delivery the solution on time, and I ensure the system keeping running.
 
 ### Next Plan
 
-I have great passion on what I am doing now, and I also believe that team working is not
-a collection of elite individual, it is also about the collaboration, the prioritizing
-and delivery on time.
-
-I am still interested in Finance, I believe the level of my finance domain knowledge
-is higher than the average level of knowledges that many programmers have, these domain knowledges
-are essential to understand and delivery the high quality solutions.
-
-I will stay on Team Lead path, picking the appropriate tools
-for the solution, working with the team for the final delivery.
-
-## Cover Letter
-
-Dear Sir / Madam,
-
-Thanks for considering me as a potential candidate. I want to share more information about me.
-
-**First**, as a passionate software engineer, I am 80 ~ 90% confident in:
-
-* Scala programming, Play 2.6 with DI and ScalaTest (4 years project experiences)
-* Akka Stream, Kafka, Hostedgraphite, Graylog (I delivered some solution base on that recently)
-* Basic Golang Programming with Gin Framework (4 months of project owner in Hujiang, Shanghai)
-* Reactjs (1 year project experience) and dva.js
-* MongoDB, PostgreSQL, Oracle, SQL Server, Redis
-* AWS infrastructure: deployment with LB, EC2
-* GitHub, Bitbucket, Travis CI, JIRA and Agile software development (solid experiences)
-
-**Second**, I always keep strong passion on learning.
-
-I started to know the Functional Programming conception from F# and Erlang, and then I learned Scala from the Courseas.org. I believe learning is not just reading, but also applying what you have learned on the project. So I chose Scala and Play! for a online shopping platform project. And I also use Scala for my Master degree graduation project.
-
-Meanwhile, I understand that a programming language is just a expression of requirement, software engineering is much more important.
-So I spend 3+ years on learning and using the software engineering, such as deployment, monitoring, log system, health check, metrics, and also including the conceptions of architecture design, such as concurrent, reliability, throughput.
-
-**Third**, I believe team collaboration is important. I built up 5-members part time team for the online shopping project from 2015 to 2016, and we delivered this project integrated with WeChat payment. I also led a 6-members team when I was working in Hujiang for building the continuous delivery process.
-
-I will be glad to learn from the team, and I can also help our team grow up together. For instance, I delivered the training sessions below when I was working in Shanghai:
-
-* Functional programming and fundamental Scala
-* Algorithm 101, see the recommandation from my previous manager in LinkedIn
-
-I dedicate my skills and passion to the project , working with team. I committed 800+ commits in 2017. I delivered one new project this year with 3 new features, 2 new third-party services integration, and I introduced 2 new ideas on software engineering for our project.
-
-And I consider the schedule or deadline of project is of high priority, instead of building 100% prefect technical solution. Many developers spent a lot of time on specific programming languages, but I also pay attention on problem solving and software engineering. Since the software technique is changing so fast, we need ensure the project delivery and the solution reliability.
-
-**One last point**, I want to go back to the financial or banking projects. I worked in insurance, and Corporate Liquidation projects before. I passed CFA Level I exam, I think I can understand the financial requirement better. My graduation paper of Master degree is about personal financial system including accounting, cash liquidation. I think I can learn a lot from financial project, and I will also dedicate my ideas to the project.
-
-Regards
-
-Scott
+I am pushing myself to be an Architect or Leading role in Software Engineering now,
+since I've already prepared a lot for this in recent 4 ~ 5 years.
 
 <style>
 .clear {
