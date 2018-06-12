@@ -19,7 +19,7 @@ weight: 200
   <tbody>
     <tr>
       <td style="text-align: left">Latest updated</td>
-      <td style="text-align: left">December, 2017</td>
+      <td style="text-align: left">June, 2018</td>
     </tr>
     <tr>
       <td style="text-align: left">Links</td>
@@ -39,7 +39,7 @@ weight: 200
         <div class="tech-list">
           <div class="tag">SJTU</div>
           <div class="tag">MSE</div>
-          <div class="tag">8 years</div>
+          <div class="tag">9 years</div>
           <div class="tag">Tech Lead</div>
         </div>
       </td>
@@ -49,11 +49,10 @@ weight: 200
       <td style="text-align: left">
         <div class="tech-list">
           <div class="tag">Scala</div>
+          <div class="tag">RESTful</div>
           <div class="tag">Akka</div>       
           <div class="tag">React.js</div>
-          <div class="tag">Redux</div>
-          <div class="tag">Node.js</div>
-          <div class="tag">RESTful</div>
+          <div class="tag">Redis</div>
           <div class="tag">Play!</div>
           <div class="tag">ECMAScript 6</div>
           <div class="tag">Oracle</div>
@@ -62,10 +61,10 @@ weight: 200
           <div class="tag">LaTeX</div>
           <div class="tag">Linux</div>
           <div class="tag">MongoDB</div>
-          <div class="tag">Azure</div>
+          <div class="tag">StatsD</div>
           <div class="tag">Docker</div>
-          <div class="tag">AWS</div>
-          <div class="tag">JIRA</div>
+          <div class="tag">DevOps</div>
+          <div class="tag">Agile</div>
         </div>
       </td>
     </tr>
@@ -76,7 +75,7 @@ weight: 200
 
 * **Shanghai Jiaotong University** _2013 ~ 2017_
 
-Part-time programme for Master of Software Engineering. My graduation paper addressing the loose coupling architecture and its application on financial system has been submitted at June 2017. The certification of MSE Degree has been issued in November 2017.
+Part-time programme for Master of Software Engineering. The graduation paper addressing the loose coupling architecture and its application on financial system has been submitted in June 2017. The certification of MSE Degree has been issued in November 2017.
 
 * **Ningbo University** _2005 ~ 2009_
 
@@ -84,45 +83,29 @@ Information System and Information Management, Bachelor Degree
 
 ## Working Experience (`Scala` Related)
 
-### G Product Core Data Analysis System (Project Owner)
+### P Investment Advisory System
+
+Company | Standard Chartered Singapore
+:-----|:-----
+Product | Investment Advisory System with Scala, Kotlin and OpenShift
+Time | Feb, 2018 ~ Now
+
+* Integrated new essential data source (RESTful API) with Scala.
+* Contributing architecture design idea after new data integrated.
+
+### G Product Core Data Analysis System (Product Owner since June, 2017)
 
 Company | LeadIQ
 :-----|:-----
-Project | Data Analysis System Based on Play 2.6 and Akka 2.5
-Time | 2017.06 ~ Now
+Product | Data Analysis System with Play 2.6 and Akka 2.5
+Time | Sept, 2016 ~ Dec, 2017
 
-As the owner of this project, I am not just finishing my development task,
-but also taking charge of Version Control, Release, Roadmap Planning, and using the
-[Linear Git Management Mechanism (`x.y.z`)](https://scozv.github.io/blog/pattern/2016/05/18/a-linear-branch-management-with-git)
-to manage the version and the rolling back of failed release.
-
-Achievement:
-
-* 80% committed code. 52 DONE of 72 issues.
-* Data I/O with Mongo, Redis and Postgres based on Dependencies Injection.
-* Isolated threads for third party API server and data query with separating `dispatcher`.
-* Log message `TrackingId` with `CUID` and integrated with Graylog.
-* Design and implementation of the activities report based on Graph, improve of the query time complexity from  $$O(n\cdot m)$$ down to $$O(\log n)$$.
-* Deployment with AWS EC and LB.
-* Throttle implementation for third party API request with Akka Stream.
-* Kafka producer and consumer implementation for 3 use cases.
-* Lightweight admin page with `dva`, `antd` and `React.js` (plan).
-
-### L Product Core Data Category System
-
-Company | LeadIQ
-:-------|:---------
-Project | Data Category System on Play 2.3 and Akka 2.3
-Time | Sept, 2016 ~ Now
-
-Achievement:
-
-* 800+ commits from January to August 2017.
-* Implementation of 3 business modules.
-* Integration with 2 third party services.
-* Implementation of Akka Work Pulling Pattern and customized `dispatcher`.
-* Implementation of TrackingId.
-* Post with title [_Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6_](https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala).
+* Designed entire architect for this backend RESTful server with Play!, Akka, Kafka, Redis and MongoDB.
+* Integrated with Google API, including Gmail API, Drive API, Cloud Pub/Sub.
+* Integrated with Hostedgraphite for production metrics, Ansible for AWS (DevOps).
+* Contributed 81% of backend Scala code.
+* Collaborated with frontend team based on the RESTful specification.
+* Managing version and release.
 
 ###  S O2O Online Shopping Platform (Tech Lead)
 
@@ -132,21 +115,14 @@ Project | O2O Online Fruits Shopping Based on WeChat Eco-system
 Time | Aug, 2015 ~ Apr, 2016
 Role | Tech Leader, Architect and Deployment Manager
 
-Achievement:
-
-* Isolation between Frontend and Backend.
-* `Async` I/O with `MongoDB` based on `ReactiveMongo`.
-* HTTP Request mocking with `FakeApplication`.
-* A global business validation design with Monad principle.
-* Multiple payment channel integration with Ping++ SDK.
-* Token authentication.
-* Automatic test and deployment scripts.
-* `React.js` webpage.
-* 3 posts on this project:
-  - [_Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo_](https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala)
-  - [_A Loose Coupling Architecture of the Web Solution with Continuous Integration_](https://scozv.github.io/blog/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration)
-  - [_A Linear Branch Management With Git_](https://scozv.github.io/blog/pattern/2016/05/18/a-linear-branch-management-with-git)
-
+* Started up the initial project with the Business and Product Design Manager.
+* Built the part time development team for the backend and frontend.
+* Planned the regular technical training session.
+* Designed entire architect for RESTful server and React.js frontend application.
+* Contributed 63% of backend Scala code.
+* Integrated with WeChat, and Ping++ API for payment functionality.
+* Integrated the essential DevOps with Azure.
+* Delivered beta version on Dec 31st, 2015 with order payment.
 
 ## Working Experience (`Golang`, `.NET` Related)
 
@@ -168,9 +144,9 @@ Achievement of DFS:
 * Collaborated with the development team of the IaaS provider for specific feature.
 * Created 27 Gitlab issues and finished 19 issues of them.
 
-As a member of Infrastructure Architect Group, I delivered 5 training sessions of _Algorithm 101_, including the Big O, Fundamental Data Structures, Tail Recursion and Sorting.
+As a member of Infrastructure Architect Group, delivered 5 training sessions of _Algorithm 101_, including the Big O, Fundamental Data Structures, Tail Recursion and Sorting.
 
-Meanwhile I led 6 members delivery team, building the continuous delivery process cross over the entire development group, communicating with cross departments to get resources and support.
+Meanwhile led 6 members delivery team, building the continuous delivery process cross over the entire development group, communicating with cross departments to get resources and support.
 
 
 ### Q Treasury Solution Project (Senior Product Development Engineer)
