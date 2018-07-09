@@ -88,7 +88,7 @@ Information System and Information Management, Bachelor Degree
 Company | Standard Chartered Singapore
 :-----|:-----
 Product | Investment Advisory System with Scala, Kotlin and OpenShift
-Time | Feb, 2018 ~ Now
+Time | Feb, 2018 ~ Present
 
 * Integrated new essential data source (RESTful API) with Scala.
 * Contributing architecture design idea after new data integrated.
@@ -103,8 +103,8 @@ Time | Sept, 2016 ~ Dec, 2017
 * Designed entire architecture for the backend RESTful server with Play!, Akka, Kafka, Redis and MongoDB.
 * Integrated with Google API, including Gmail API, Drive API, Cloud Pub/Sub.
 * Integrated with Hostedgraphite for production metrics, Ansible for AWS (DevOps).
-* Contributed 81% of backend Scala code.
-* Collaborated with frontend team based on the RESTful specification.
+* Contributed 81% of the backend Scala code.
+* Collaborated with the frontend team based on the RESTful specification.
 * Managing version and release. Making the decision and taking the responsibility.
 
 ###  S O2O Online Shopping Platform (Tech Lead)
@@ -117,16 +117,16 @@ Role | Tech Leader, Architect and Deployment Manager
 
 * Started up the initial project with the Business and Product Design Manager.
 * Built the part time development team for the backend and frontend.
-* Planned the regular technical training session.
-* Designed entire architecture for RESTful server and React.js frontend application.
-* Contributed 63% of backend Scala code.
+* Planned regular technical training session.
+* Designed entire architecture for the RESTful server and React.js frontend application.
+* Contributed 63% of the backend Scala code.
 * Integrated with WeChat, and Ping++ API for order payment.
 * Integrated the essential DevOps with Azure.
 * Delivered beta version on Dec 31st, 2015 with payment service integrated.
 
 ## Working Experience (`Golang`, `.NET` Related)
 
-### D Distributed File System API (Senior Software Engineer in Infrastructure Architect Group)
+### D Distributed File System API (Sr. Software Engineer in Infrastructure Architecture Group)
 
 Company | Hujiang Education & Technology
 :-------|:-----------
@@ -146,10 +146,10 @@ Achievement of DFS:
 
 As a member of Infrastructure Architect Group, delivered 5 training sessions of _Algorithm 101_, including the Big O, Fundamental Data Structures, Tail Recursion and Sorting.
 
-Meanwhile led 6 members delivery team, building the continuous delivery process cross over the entire development group, communicating with cross departments to get resources and support.
+Meanwhile I led 6 members delivery team, building the continuous delivery process cross over the entire development group, communicating with cross departments to get resources and support.
 
 
-### Q Treasury Solution Project (Senior Product Development Engineer)
+### Q Treasury Solution Project (Sr. Product Development Engineer)
 
 Company | SunGard
 :-------|:------------
@@ -180,73 +180,51 @@ Summary | Delivery a Resume information system to collect the resumes and candid
 
 ## Candidate Overview
 
-### Working Experiences in Last Two Years
+### Three Phases of 9 Years on Software Engineering
 
-I grew fast in the last two years, I delivered
-a small online shopping project with 6 members team
-during 2015 to 2016 when I was studying in SJTU
-for Master of Software Engineering.
+I consider 9 years of my software engineering experiences
+as three phases below.
 
-As the Tech Lead, I improved a lot from the stage that
-only gross requirement was available to the stage that
-all features had been delivered, calling this as the _Zero to One_.
+The first phase was from 2009 when I just graduated from university to 2014. I worked
+in Healthcare, Insurance project. I learnt querying the information
+form the raw data, and also learnt the skill of
+the data query optimization.
 
-I led 3 small teams in recent two years, I learn the collaboration,
-the communication, how to build the initial development team, and
-how to get support resources from outside scope. And I also made the decisions
-on the product I owned.
-
-I moved to Singapore from January of 2017, learning and writing on React, Scala, and most important,
-on delivering the solutions.
-
-I read and I learn. I have already passed the Level I exam of CFA.
-My Master degree graduation paper submitted on June 2017, which
-has addressed the Loose Coupling architecture and the application
-in Financial Information System, has been accepted for the degree certification issued
-on November 2017.
-
-
-### Three Stages of 9 Years on Software Engineering
-
-I consider the 9 years of software engineering experiences
-as three stages below.
-
-The first stage was from the 2009 when I just graduated from University to the 2014. I worked
-in Healthcare, Insurance project. I learnt the information is
-much more valuable than the raw data, and also learnt the skill of
-the data query optimization. I read MSDN articles, improved my English reading and writing.
-However in that period, I was just working as a team member.
-
-
-The second stage was from the 2014 when I was enrolled into the SJTU with
-full score on entrance exam of specialized course to the the 2016.
-I worked in a Corporate Liquidation System, the CI platform, and I passed the CFA Level I exam.
+The second phase was from 2014 when I was enrolled into the SJTU to 2016.
+I worked in a Corporate Liquidation System, the CI platform,
+and I passed the CFA Level I exam.
 I realized the difference between being a team developer
-and being the Team Lead. Then I delivered a online shopping system
-with 6 members team, improved my architecture ability. However, in these 2 years,
-I realized that I had
-limited conception on engineering practice.
+and being a Team Lead. I delivered a online shopping system
+with 6 members part-time team, improved my decoupling and architecture ability.
+Meanwhile, I started to implement fundamental algorithm with JavaScript
+(see project [tango](https://scozv.github.io/tango/en/)), including linear, sorting
+and basic graph algorithm.
 
-
-The third stage was from September 2016 when I joined the
-Infrastructure Architect Group of Hujiang to January 2017
-when I moved to working in Singapore and to now. I understand that
+The third phase was from September 2016 when I joined the
+Infrastructure Architecture Group in Hujiang to January 2017
+when I moved to Singapore until now. I understand that
 a programming language is the expression of requirement.
-No need to spend too much energy on comparing the different programming languages,
-instead, software engineering is much more important,
-such as deployment, monitoring, log system, Health Check,
-and metrics, also including the conceptions of architecture design, such
-as concurrent, reliability, throughput. Besides, a project owner needs to understand
+Writing the program with high quality of source code is just one step
+of Software Engineering. A lot of efforts should be also applied on
+deployment, monitoring, data integration, log system, health check,
+and metrics, also the architecture design as well, such
+as concurrent, reliability, throughput.
+A project owner needs to understand
 and plan the roadmap, resources (internal or external) of project.
-In recent 1 year, I practiced not just the delivery of code,
-but also the engineering ability and being the owner of project.
 
-I delivery the solution on time, and I ensure the system keeping running.
+I try to delivery the solution as scheduled,
+and ensure the system keeping running. Reading
+the log history of the project I own every morning
+is a part of daily work if it's possible, and
+building the alert for realtime monitoring is also
+a part of my task.
 
 ### Next Plan
 
 I am pushing myself to be an Architect or Leading role in Software Engineering now,
 since I've already prepared a lot for this in recent 4 ~ 5 years.
+
+
 
 <style>
 .clear {
