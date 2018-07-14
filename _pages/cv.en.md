@@ -107,13 +107,13 @@ Time | Sept, 2016 ~ Dec, 2017
 * Collaborated with the frontend team based on the RESTful specification.
 * Managing version and release. Making the decision and taking the responsibility.
 
-###  S O2O Online Shopping Platform (Tech Lead)
+###  S O2O Online Shopping Platform (Part-time)
 
-Company | Project in SJTU
+Company | SHANLIN Network
 :------|:----------
+Role | Co-founder & Tech Leader
 Project | O2O Online Fruits Shopping Based on WeChat Eco-system
 Time | Aug, 2015 ~ Apr, 2016
-Role | Tech Leader, Architect and Deployment Manager
 
 * Started up the initial project with the Business and Product Design Manager.
 * Built the part time development team for the backend and frontend.
@@ -126,7 +126,7 @@ Role | Tech Leader, Architect and Deployment Manager
 
 ## Working Experience (`Golang`, `.NET` Related)
 
-### D Distributed File System API (Sr. Software Engineer in Infrastructure Architecture Group)
+### D Distributed File System API (Sr. Software Engineer in Infrastructure Architect Team)
 
 Company | Hujiang Education & Technology
 :-------|:-----------
@@ -144,9 +144,8 @@ Achievement of DFS:
 * Collaborated with the development team of the IaaS provider for specific feature.
 * Created 27 Gitlab issues and finished 19 issues of them.
 
-As a member of Infrastructure Architect Group, delivered 5 training sessions of _Algorithm 101_, including the Big O, Fundamental Data Structures, Tail Recursion and Sorting.
-
-Meanwhile I led 6 members delivery team, building the continuous delivery process cross over the entire development group, communicating with cross departments to get resources and support.
+As a member of Infrastructure Architect Team, delivered 5 training sessions of _Algorithm 101_, including the Big O, Fundamental Data Structures, Tail Recursion and Sorting.
+Meanwhile I was leading 6 members delivery team, building the continuous delivery process cross over the entire development group, communicating with cross departments to get resources and support.
 
 
 ### Q Treasury Solution Project (Sr. Product Development Engineer)
@@ -201,7 +200,7 @@ Meanwhile, I started to implement fundamental algorithm with JavaScript
 and basic graph algorithm.
 
 The third phase was from September 2016 when I joined the
-Infrastructure Architecture Group in Hujiang to January 2017
+Infrastructure Architect Team in Hujiang to January 2017
 when I moved to Singapore until now. I understand that
 a programming language is the expression of requirement.
 Writing the program with high quality of source code is just one step
