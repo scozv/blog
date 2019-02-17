@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh" />
+
+
+  
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      Any Thoughts in Programming &middot; The Blog by Scott
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/page4/">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+<div class="page">
+  <h1 class="page-title">
+    
+      
+    
+  </a>
+  </h1>
+  
+
+
+<div class="posts">
+
+
+  
+  <div class="summary-title"> A Loose Coupling Architecture of the Web Solution with Continuous Integration </div>
+  <div class="summary-time"> May 05, 2016 </div>
+  <div class="summary-content">
+  
+    
+<h1 class="no_toc" id="abstract">Abstract</h1>
+
+<blockquote>
+  <p>This article will discuss two core ideas for a Architecture of the Web Solution,
+that are Loose Coupling and Continuous Integration.</p>
+
+  <p>The article is mainly written in Chinese, while the
+English post has not been started yet.
+However, I provide a drawing for indicating the Loose Coupling Architecture.</p>
+</blockquote>
+
+
+
+    
+
+  
+
+  <a href="https://scozv.github.io/blog/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration"><span class="read-more">Read more ...</span></a>
+  </div>
+
+  <br />
+  
+
+  
+  <div class="summary-title"> Fully Migrating from Bitbucket Cloud Issue System to JIRA Server </div>
+  <div class="summary-time"> Apr 05, 2016 </div>
+  <div class="summary-content">
+  
+    
+<h1 class="no_toc" id="abstract">Abstract</h1>
+
+<blockquote>
+  <p>This post will give a full migration guide from Bitbucket Cloud Issue
+to JIRA Server, including:</p>
+
+  <ul>
+    <li>Import legacy Bitbucket Cloud Issue into JIRA Server,</li>
+    <li>Build Dual-direction connection between Bitbucket Cloud and JIRA Server,</li>
+    <li>Upgrade the issue ticket number in git commits history,
+to archive the <strong>FULL</strong> migration.</li>
+  </ul>
+
+  <p>This post will <strong>NOT</strong> cover the topics below:</p>
+
+  <ul>
+    <li>Why I choose JIRA instead of other issue system,</li>
+    <li>Why I choose Bitbucket Cloud instead of other git server,</li>
+    <li>Why I choose Ubuntu 14.04 Server instead of other OS.</li>
+  </ul>
+</blockquote>
+
+
+
+    
+
+  
+
+  <a href="https://scozv.github.io/blog/guide/2016/04/05/fully-migrating-from-bitbucket-cloud-issue-system-to-jira-server"><span class="read-more">Read more ...</span></a>
+  </div>
+
+  <br />
+  
+
+  
+  <div class="summary-title"> How Do We Apply the Hyde Theme to Existing Jekyll Site? </div>
+  <div class="summary-time"> Mar 18, 2016 </div>
+  <div class="summary-content">
+  
+    
+<h1 class="no_toc" id="abstract">Abstract</h1>
+
+<blockquote>
+  <p>This article will describe the process of applying Hyde theme on my existing Jekyll Bootstrap site.
+And this approach can be used for applying any theme of Jekyll. The main ideas of integrating the 3rd Jekyll Theme
+are:</p>
+
+  <ul>
+    <li>knowing the basic structure of Jekyll site,</li>
+    <li>knowing the basic workflow of rendering HTML from Jekyll scripts,</li>
+    <li>comparing the code differences between <code class="highlighter-rouge">Hyde</code> and your site,</li>
+    <li>replacing code and test.</li>
+  </ul>
+</blockquote>
+
+
+
+    
+
+  
+
+  <a href="https://scozv.github.io/blog/guide/2016/03/18/how-do-we-apply-the-hyde-theme-to-existing-jekyll-site"><span class="read-more">Read more ...</span></a>
+  </div>
+
+  <br />
+  
+
+
+</div>
+
+
+
+
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="https://scozv.github.io/blog/page5">
+      Older
+    </a>
+  
+  
+    
+      <a class="pagination-item newer" href="https://scozv.github.io/blog/page3">
+        Newer
+      </a>
+    
+  
+</div>
+
+</div>
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

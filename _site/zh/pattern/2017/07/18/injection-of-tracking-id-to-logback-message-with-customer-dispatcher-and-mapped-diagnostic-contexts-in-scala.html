@@ -1,0 +1,1487 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="zh"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/zh/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/zh/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog/zh">
+      首页
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/archive/">
+              
+                归档
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/categories/">
+              
+                分类
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/tags/">
+              
+                标签
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/about/">
+              
+                关于
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/zh/credits">
+      致谢
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala">
+        English
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog/zh"
+                 title="首页">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id</h1>
+  <span class="post-date">Jul 18, 2017</span>
+  
+<h1 class="no_toc" id="摘要">摘要</h1>
+
+<blockquote>
+  <p>Yann Simon在2014的文章<sup id="fnref:_blog_yanns_mdc_play"><a href="#fn:_blog_yanns_mdc_play" class="footnote">1</a></sup>中总结了两种向Mapped Diagnostic Contexts（MDC）
+增加全局变量的编程方式，利用MDC的全局变量，可以在日志中记录每一个HTTP Request的Tracking Id。</p>
+
+  <p>本文首先对Tracking Id和Yann Simon的两种方式做简要介绍，并描述实践过程
+中遇到的问题。其中一个主要的问题是，
+部分日志没有Tracking Id（同样的问题在Github上也被提到 <sup id="fnref:_github_rishabh9_issue1"><a href="#fn:_github_rishabh9_issue1" class="footnote">2</a></sup>）。
+本文通过在日志中输出了线程信息和Dispatcher的名称，发现<code class="highlighter-rouge">scala.concurrent.ExecutionContext</code>
+下的所有日志，都没有Tracking Id，最终通过修改配置节点<code class="highlighter-rouge">play.akka.actor</code>至<code class="highlighter-rouge">akka.actor</code>，同时替换该<code class="highlighter-rouge">ExecutionContext</code>的方式
+解决了日志中无Tracking Id的问题。</p>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#背景介绍" id="markdown-toc-背景介绍">背景介绍</a>    <ul>
+      <li><a href="#tracking-id的重要性" id="markdown-toc-tracking-id的重要性">Tracking Id的重要性</a></li>
+      <li><a href="#tracking-id的方案设计" id="markdown-toc-tracking-id的方案设计">Tracking Id的方案设计</a></li>
+    </ul>
+  </li>
+  <li><a href="#tracking-id的实现" id="markdown-toc-tracking-id的实现">Tracking Id的实现</a>    <ul>
+      <li><a href="#golang下的一种实现方式" id="markdown-toc-golang下的一种实现方式">Golang下的一种实现方式</a></li>
+      <li><a href="#基于httpfilter和dispatcher的实现" id="markdown-toc-基于httpfilter和dispatcher的实现">基于HttpFilter和Dispatcher的实现</a></li>
+      <li><a href="#实践过程中的建议" id="markdown-toc-实践过程中的建议">实践过程中的建议</a></li>
+    </ul>
+  </li>
+  <li><a href="#解决tracking-id未能添加到日志的问题" id="markdown-toc-解决tracking-id未能添加到日志的问题">解决Tracking Id未能添加到日志的问题</a>    <ul>
+      <li><a href="#问题表述" id="markdown-toc-问题表述">问题表述</a></li>
+      <li><a href="#解决思路" id="markdown-toc-解决思路">解决思路</a></li>
+      <li><a href="#停用scala自带executioncontextglobal" id="markdown-toc-停用scala自带executioncontextglobal">停用Scala自带ExecutionContext.global</a></li>
+    </ul>
+  </li>
+  <li><a href="#tracking-id设计的改进" id="markdown-toc-tracking-id设计的改进">Tracking Id设计的改进</a></li>
+  <li><a href="#参考文献" id="markdown-toc-参考文献">参考文献</a></li>
+</ul>
+
+<h1 id="背景介绍">背景介绍</h1>
+
+<p>软件工程中，比争论不同编程语言孰优孰劣更重要的是，在系统层面使用高效
+的交付方式，建立完善系统监控机制。如果说Git工作流、测试或者覆盖率等是
+可持续交付的基本保障，那么诸如日志、健康检查或者运行时度量（Metric）便是
+系统监控的基础。</p>
+
+<p>软件交付之后，难免会遇上运行时错误，快速地定位并处理问题是保证
+系统可靠的一个因素。在定位线上问题的时候，
+常见的做法是查看日志，Tracking Id是日志信息中针对不同的HTTP Request
+分别生成的唯一编号，用来追踪每一个请求在系统中经历的不同节点。</p>
+
+<h2 id="tracking-id的重要性">Tracking Id的重要性</h2>
+
+<p>目前的系统，通常需要应对大量的请求、而且系统的部署节点可能分布在不同的物理位置。
+简单的<code class="highlighter-rouge">tail -f application.log</code>命令无法跟踪系统的运行状态。</p>
+
+<p>同时，由于多线程的执行对不同请求而言不是线性的，所以不同请求的日志信息
+会随机写入到日志文件中。在日志中使用Tracking Id，能够重组不同的请求
+的运行时状态。比较如下两份日志文件：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>2017-07-17T19:06:55.560Z] <span class="o">[</span>DEBUG] user 1 connected
+<span class="o">[</span>2017-07-17T19:06:57.121Z] <span class="o">[</span>DEBUG] get token from redis
+<span class="o">[</span>2017-07-17T19:07:03.289Z] <span class="o">[</span>DEBUG] start the query with parameter <span class="o">{</span>...<span class="o">}</span>
+<span class="o">[</span>2017-07-17T19:07:03.981Z] <span class="o">[</span>DEBUG] user 2 connected
+<span class="o">[</span>2017-07-17T19:07:05.192Z] <span class="o">[</span>WARN] get result with 1029ms
+<span class="o">[</span>2017-07-17T19:07:05.207Z] <span class="o">[</span>DEBUG] get token from redis
+<span class="o">[</span>2017-07-17T19:07:05.285Z] <span class="o">[</span>ERROR] invalid token</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>2017-07-17T19:06:55.560Z] <span class="o">[</span>tracking-id-0001] <span class="o">[</span>DEBUG] user 1 connected
+<span class="o">[</span>2017-07-17T19:06:57.121Z] <span class="o">[</span>tracking-id-0001] <span class="o">[</span>DEBUG] get token from redis
+<span class="o">[</span>2017-07-17T19:07:03.289Z] <span class="o">[</span>tracking-id-0001] <span class="o">[</span>DEBUG] start the query with parameter <span class="o">{</span>...<span class="o">}</span>
+<span class="o">[</span>2017-07-17T19:07:03.981Z] <span class="o">[</span>tracking-id-1024] <span class="o">[</span>DEBUG] user 2 connected
+<span class="o">[</span>2017-07-17T19:07:05.192Z] <span class="o">[</span>tracking-id-0001] <span class="o">[</span>WARN] get result with 1029ms
+<span class="o">[</span>2017-07-17T19:07:05.207Z] <span class="o">[</span>tracking-id-1024] <span class="o">[</span>DEBUG] get token from redis
+<span class="o">[</span>2017-07-17T19:07:05.285Z] <span class="o">[</span>tracking-id-1024] <span class="o">[</span>ERROR] invalid token</code></pre></figure>
+
+<p>可以看到，第二份日志清晰地记录了两个请求，而且两个请求在系统中的流转过程可以通过<code class="highlighter-rouge">trackingId</code>
+完整地串联起来。</p>
+
+<h2 id="tracking-id的方案设计">Tracking Id的方案设计</h2>
+
+<p>本文在Play 2.6下实现了服务端<code class="highlighter-rouge">trackingId</code>的生成和记录：</p>
+
+<ol>
+  <li>服务端接收到请求（HTTP Request）；</li>
+  <li>利用<code class="highlighter-rouge">HttpFilter</code>为每一个请求赋予一个唯一<code class="highlighter-rouge">trackingId</code>；</li>
+  <li>尝试将<code class="highlighter-rouge">trackingId</code>写入相关的日志中；</li>
+  <li>同样在<code class="highlighter-rouge">HttpFilter</code>中，将<code class="highlighter-rouge">trackingId</code>写入最后的HTTP Response中；</li>
+  <li>客户端接收到带有<code class="highlighter-rouge">trackingId</code>的返回结果。</li>
+</ol>
+
+<p>Yann Simon给出的方案就是为了将<code class="highlighter-rouge">trackingId</code>写入
+Mapped Diagnostic Contexts中，从而可以使用如下的Pattern记录带有
+<code class="highlighter-rouge">trackingId</code>的日志：</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">"FILE"</span> <span class="na">class=</span><span class="s">"ch.qos.logback.core.FileAppender"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;file&gt;</span>${application.home:-.}/logs/application.log<span class="nt">&lt;/file&gt;</span>
+  <span class="nt">&lt;encoder&gt;</span>
+    <span class="nt">&lt;pattern&gt;</span>%date [%level] [%mdc{trackingId:--}] %message%n%xException<span class="nt">&lt;/pattern&gt;</span>
+  <span class="nt">&lt;/encoder&gt;</span>
+<span class="nt">&lt;/appender&gt;</span></code></pre></figure>
+
+<h1 id="tracking-id的实现">Tracking Id的实现</h1>
+
+<h2 id="golang下的一种实现方式">Golang下的一种实现方式</h2>
+
+<p>使用Golang下的<code class="highlighter-rouge">cihub/seelog</code>，会发现<code class="highlighter-rouge">seelog</code>中并不支持带有
+<code class="highlighter-rouge">%mdc</code>的日志格式（Pattern）<sup id="fnref:_github_cihub_seelog_format_ref"><a href="#fn:_github_cihub_seelog_format_ref" class="footnote">3</a></sup>。
+David Budworth指出“Java下MDC所依赖的线程存储（Thread Local Storage），
+在Go中并不存在 <sup id="fnref:_sf_david_bud_mdc_java_go"><a href="#fn:_sf_david_bud_mdc_java_go" class="footnote">4</a></sup>”。</p>
+
+<p>尽管如此，可以利用<code class="highlighter-rouge">Context</code>传递<code class="highlighter-rouge">trackingId</code>。
+一方面，在<code class="highlighter-rouge">gin.Context</code>的基础上新建一个对象 <sup id="fnref:_note_where_go_code_from"><a href="#fn:_note_where_go_code_from" class="footnote">5</a></sup>：</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">type</span><span class="x"> </span><span class="n">RequestContext</span><span class="x"> </span><span class="k">struct</span><span class="x"> </span><span class="p">{</span><span class="x">
+  </span><span class="o">*</span><span class="n">gin</span><span class="o">.</span><span class="n">Context</span><span class="x">
+
+  </span><span class="n">TrackingId</span><span class="x">    </span><span class="kt">string</span><span class="x">
+</span><span class="p">}</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">newContext</span><span class="p">(</span><span class="n">c</span><span class="x"> </span><span class="o">*</span><span class="n">gin</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span><span class="x"> </span><span class="o">*</span><span class="n">RequestContext</span><span class="x"> </span><span class="p">{</span><span class="x">
+  </span><span class="k">return</span><span class="x"> </span><span class="o">&amp;</span><span class="n">RequestContext</span><span class="p">{</span><span class="x">
+    </span><span class="n">Context</span><span class="o">:</span><span class="x">    </span><span class="n">c</span><span class="p">,</span><span class="x">
+    </span><span class="n">TrackingId</span><span class="o">:</span><span class="x"> </span><span class="n">GenGuid</span><span class="p">(),</span><span class="x">
+  </span><span class="p">}</span><span class="x">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>另一方面，在需要记录日志的地方，将<code class="highlighter-rouge">RequestContext</code>对象传递到
+日志相关的方法中:</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">func</span><span class="x"> </span><span class="n">fooAction</span><span class="p">(</span><span class="n">c</span><span class="x"> </span><span class="o">*</span><span class="n">gin</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span><span class="x"> </span><span class="p">{</span><span class="x">
+  </span><span class="k">var</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="kt">error</span><span class="x">
+
+  </span><span class="n">ctx</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">getRequestContext</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="x">
+
+  </span><span class="c">// ..., err =</span><span class="x">
+
+  </span><span class="n">logger</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="n">buildLogMessage</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="x"> </span><span class="s">"Failed in fooAction: $v"</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="p">))</span><span class="x">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>上述代码中，<code class="highlighter-rouge">getRequestContext</code>用于获取（<code class="highlighter-rouge">val.(*RequestContext)</code>）
+或者新建一个<code class="highlighter-rouge">RequestContext</code>（对应<code class="highlighter-rouge">newContext</code>）。日志记录时，通过获取到的
+<code class="highlighter-rouge">RequestContext</code>创建带有<code class="highlighter-rouge">trackingId</code>的消息体，并记录到日志中。</p>
+
+<p>这样，Golang虽然不能通过MDC的方式（<code class="highlighter-rouge">%mdc{trackingId}</code>）将<code class="highlighter-rouge">trackingId</code>写入日志，
+但在创建日志消息体的时候，可将<code class="highlighter-rouge">trackingId</code>附在消息体的最后。唯一的限制条件就是，
+日志的Pattern需设计成：</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">"FILE"</span> <span class="na">class=</span><span class="s">"ch.qos.logback.core.FileAppender"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;file&gt;</span>${application.home:-.}/logs/application.log<span class="nt">&lt;/file&gt;</span>
+  <span class="nt">&lt;encoder&gt;</span>
+    <span class="nt">&lt;pattern&gt;</span>%date [%level] %message%n%xException<span class="nt">&lt;/pattern&gt;</span>
+  <span class="nt">&lt;/encoder&gt;</span>
+<span class="nt">&lt;/appender&gt;</span></code></pre></figure>
+
+<p>这样，无论是通过Java的MDC还是消息体中直接带上 <code class="highlighter-rouge">trackingId</code>。
+都能保证最后的日志格式一致：</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">// with MDC
+%date [%level] [%mdc{trackingId:--}] %message%n%xException
+
+// in Golang
+%date [%level] %message%n%xException
+
+func buildLogMessage(ctx *RequestContext, format string, parms ...interface{}) string {
+  // [trackingId] msg
+  f := fmt.Sprintf("[%s] ", ctx.TrackingId) + format
+  return fmt.Sprintf(f, parms...)
+}</code></pre></figure>
+
+<h2 id="基于httpfilter和dispatcher的实现">基于HttpFilter和Dispatcher的实现</h2>
+
+<p>Yann Simon指出，Play框架会使用不同的线程（Thread）处理同一个HTTP Request。
+而Logback中MDC采用的<code class="highlighter-rouge">ThreadLocal</code>变量，只在单线程中有效<sup id="fnref:_blog_yanns_mdc_play:1"><a href="#fn:_blog_yanns_mdc_play" class="footnote">1</a></sup>。
+因此，为了给每一个HTTP Request赋予唯一的Tracking Id，
+并写入不同线程中的日志中，需要完成为Request生成编号、将编号写入日志两个步骤。</p>
+
+<p>在Play框架下，可以使用<code class="highlighter-rouge">HttpFilter</code>对每一个HTTP Request做一次“过滤”
+的操作，自定义的<code class="highlighter-rouge">HttpFilter</code>一来为请求生成一个编号，二来在后台服务结束之后，将编号
+写入HTTP Response的Header中。当客户端收到异常的时候，可以告知服务端Tracking Id，
+用于查找相关的日志消息。主要的代码如下所示：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">TrackingFilter</span> <span class="nd">@Inject</span><span class="o">()</span> <span class="o">(</span>
+  <span class="k">implicit</span> <span class="n">ec</span><span class="k">:</span> <span class="kt">ExecutionContext</span>
+<span class="o">)</span> <span class="k">extends</span> <span class="nc">EssentialFilter</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">action</span><span class="k">:</span> <span class="kt">EssentialAction</span><span class="o">)</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">EssentialAction</span> <span class="o">{</span>
+    <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">requestHeader</span><span class="k">:</span> <span class="kt">RequestHeader</span><span class="o">)</span><span class="k">:</span> <span class="kt">Accumulator</span><span class="o">[</span><span class="kt">ByteString</span>, <span class="kt">Result</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">trackingId</span> <span class="k">=</span> <span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span>
+      <span class="nc">MDC</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">"trackingId"</span><span class="o">,</span> <span class="n">trackingId</span><span class="o">)</span>
+
+      <span class="n">action</span><span class="o">(</span><span class="n">requestHeader</span><span class="o">)</span>
+        <span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withHeaders</span><span class="o">(</span><span class="s">"X-Tracking-Id"</span> <span class="o">-&gt;</span> <span class="n">trackingId</span><span class="o">)</span> <span class="o">}</span>
+        <span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">result</span> <span class="k">=&gt;</span>
+          <span class="nc">MDC</span><span class="o">.</span><span class="n">remove</span><span class="o">(</span><span class="s">"trackingId"</span><span class="o">)</span>
+          <span class="n">result</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">HttpFilter</code>所生成的<code class="highlighter-rouge">trackingId</code>还需要传递到不同的线程中，并写入各个线程中的MDC里面，
+也就是将MDC中的信息从一个线程传递到另外一个线程中。
+使用Yann Simon文中总结的两种方法——自定义Akka Dispatcher和ExecutionContext，可以
+在非阻塞的Play框架中实现这个功能。</p>
+
+<p>本文选用了自定义Akka Dispatcher的方式，关键的代码如下所示，
+需要注意的是，代码中线程的切换发生在<code class="highlighter-rouge">self.execute(() =&gt; {})</code>里：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">execute</span><span class="o">(</span><span class="n">runnable</span><span class="k">:</span> <span class="kt">Runnable</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">self</span><span class="o">.</span><span class="n">execute</span><span class="o">(()</span> <span class="k">=&gt;</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">oldMDCContext</span> <span class="k">=</span> <span class="nc">MDC</span><span class="o">.</span><span class="n">getCopyOfContextMap</span>
+
+  <span class="n">setContextMap</span><span class="o">(</span><span class="n">mdcContext</span><span class="o">)</span>
+  <span class="k">try</span> <span class="o">{</span>
+    <span class="n">runnable</span><span class="o">.</span><span class="n">run</span><span class="o">()</span>
+  <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+    <span class="n">setContextMap</span><span class="o">(</span><span class="n">oldMDCContext</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">})</span></code></pre></figure>
+
+<h2 id="实践过程中的建议">实践过程中的建议</h2>
+
+<p>相关实现的代码量并不大，并且自定义Akka Dispatcher的代码量相较第二种
+方法，代码量更少。</p>
+
+<p>使用Play 2.6的话，需要保持代码的可注入特性，<code class="highlighter-rouge">TrackingFilter</code>就是一个依赖
+注入的例子。但使用的时候，需要同时配置<code class="highlighter-rouge">play.http.filters</code>参数<sup id="fnref:_play_http_filters"><a href="#fn:_play_http_filters" class="footnote">6</a></sup>。</p>
+
+<p>如果自定义了<code class="highlighter-rouge">play.http.filters</code>参数，在Play的启动日志中可以发现，框架默认开启了四个<code class="highlighter-rouge">HttpFilter</code>：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>info] <span class="o">[</span>-] p.a.h.EnabledFilters - Enabled Filters <span class="o">(</span>see &lt;https://www.playframework.com/documentation/latest/Filters&gt;<span class="o">)</span>:
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+    play.filters.cors.CORSFilter
+
+<span class="o">[</span>info] <span class="o">[</span>-] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span></code></pre></figure>
+
+<p>如果收到了“Host not allowed: server-name”的问题，需要配置
+Host的白名单<sup id="fnref:_play_host_allowed"><a href="#fn:_play_host_allowed" class="footnote">7</a></sup>。另外，一些云IaaS平台提供
+的Load Balance还会使用Private IP进行健康检查，日志中也可能出现
+“Host not allowed: private-ip”的问题，白名单配置中也需要处理。</p>
+
+<p>如果白名单失效的话，最快的办法是移除<code class="highlighter-rouge">AllowedHostsFilter</code>的加载：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Filters</span> <span class="nd">@Inject</span><span class="o">()</span> <span class="o">(</span>
+  <span class="n">defaultFilters</span><span class="k">:</span> <span class="kt">EnabledFilters</span><span class="o">,</span>
+  <span class="n">tracking</span><span class="k">:</span> <span class="kt">TrackingFilter</span>
+<span class="o">)</span> <span class="k">extends</span> <span class="nc">DefaultHttpFilters</span><span class="o">(</span><span class="n">defaultFilters</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">filter</span> <span class="o">{</span>
+  <span class="k">case</span> <span class="n">f</span><span class="k">:</span> <span class="kt">AllowedHostsFilter</span> <span class="o">=&gt;</span> <span class="kc">false</span>
+  <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="kc">true</span>
+<span class="o">}</span> <span class="o">:+</span> <span class="n">tracking</span><span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span></code></pre></figure>
+
+<p>另一个需要注意的是，自定义的Dispatcher需要配置在<code class="highlighter-rouge">akka.actor</code>节点之下，
+Yann Simon文中配置节点为<code class="highlighter-rouge">play.akka.actor</code>，在实践过程中，可以通过运行时检验两种
+配置的结果。</p>
+
+<h1 id="解决tracking-id未能添加到日志的问题">解决Tracking Id未能添加到日志的问题</h1>
+
+<h2 id="问题表述">问题表述</h2>
+
+<p>完成代码实现之后，发现大部分的日志没有Tracking Id：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>info] <span class="o">[</span>-] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span>
+<span class="o">[</span>warn] <span class="o">[</span>-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
+<span class="o">[</span>debug] <span class="o">[</span>-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector<span class="o">(</span>security, profile<span class="o">)</span>
+<span class="o">[</span>debug] <span class="o">[</span>-] c.l.p.a.v.g.ActivityApi - start the get last message
+<span class="o">[</span>debug] <span class="o">[</span>-] c.l.p.n.d.ReactiveMongoManager<span class="nv">$ </span>-  &lt;:&gt; Connecting reactive driver</code></pre></figure>
+
+<p>在<code class="highlighter-rouge">TrackingFilter</code>中加入日志之后，
+进而发现，在生成<code class="highlighter-rouge">trackingId</code>之后，日志上有编号，但是之后的日志却没有：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>info] <span class="o">[</span>-] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span>
+<span class="o">[</span>debug] <span class="o">[</span>3734068e-f354-4de4-a9e7-25fc6ed9a1cb] c.l.TrackingFilter -  &lt;:&gt; trackingId generated: 3734068e-f354-4de4-a9e7-25fc6ed9a1cb
+<span class="o">[</span>warn] <span class="o">[</span>-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
+<span class="o">[</span>debug] <span class="o">[</span>-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector<span class="o">(</span>security, profile<span class="o">)</span></code></pre></figure>
+
+<p>进一步地，在自定义的<code class="highlighter-rouge">MDCPropagatingDispatcher</code>里添加日志，可以看到类似如下的结果：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>info] <span class="o">[</span>-] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span>
+<span class="o">[</span>debug] <span class="o">[</span>a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] c.l.TrackingFilter -  &lt;:&gt; trackingId generated: a5a7cbab-6ee4-4dd8-b54e-64217dc7357e
+<span class="o">[</span>debug] <span class="o">[</span>a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] old context: null
+<span class="o">[</span>debug] <span class="o">[</span>a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] new context: <span class="o">{</span><span class="nv">trackingId</span><span class="o">=</span>a5a7cbab-6ee4-4dd8-b54e-64217dc7357e<span class="o">}</span>
+<span class="c"># many log skipped  ...</span>
+<span class="o">[</span>debug] <span class="o">[</span>-] old context: null
+<span class="o">[</span>debug] <span class="o">[</span>-] new context: null
+<span class="o">[</span>debug] <span class="o">[</span>-] old context: <span class="o">{}</span>
+<span class="o">[</span>debug] <span class="o">[</span>-] new context: null</code></pre></figure>
+
+<h2 id="解决思路">解决思路</h2>
+
+<p>上面最后一则日志中可以看出：</p>
+
+<ul>
+  <li>自定义的Dispatcher生效了，因为日志中含有Dispather的日志；</li>
+  <li>线程可能在不停地切换，因为出现了多则<code class="highlighter-rouge">old / new context</code>的日志，而且相应的日志内容还不同。</li>
+</ul>
+
+<p>因此，待解决的问题归纳为：为什么多个线程之间，MDC信息没有相互传递。
+既然已经意识到了是多线程的问题，不妨在日志中输出线程名称：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Log format</span>
+<span class="c"># &lt;pattern&gt;%coloredLevel [%mdc{trackingId:--}] [%thread] %logger{15} - %message%n%xException{10}&lt;/pattern&gt;</span>
+
+<span class="o">[</span>info] <span class="o">[</span>-] <span class="o">[</span>scala-execution-context-global-80] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span>
+<span class="o">[</span>debug] <span class="o">[</span>006bc4df-0310-4793-a88d-923dfde227d9] <span class="o">[</span>play-dev-mode-akka.actor.default-dispatcher-2] c.l.TrackingFilter -  &lt;:&gt; trackingId generated: 006bc4df-0310-4793-a88d-923dfde227d9
+<span class="o">[</span>debug] <span class="o">[</span>006bc4df-0310-4793-a88d-923dfde227d9] <span class="o">[</span>application-akka.actor.default-dispatcher-2] - old context: null
+<span class="o">[</span>debug] <span class="o">[</span>006bc4df-0310-4793-a88d-923dfde227d9] <span class="o">[</span>application-akka.actor.default-dispatcher-2] - new context: <span class="o">{</span><span class="nv">trackingId</span><span class="o">=</span>006bc4df-0310-4793-a88d-923dfde227d9<span class="o">}</span>
+<span class="o">[</span>warn] <span class="o">[</span>-] <span class="o">[</span>scala-execution-context-global-80] - <span class="o">[</span><span class="s1">'token'</span>: <span class="s1">'fd'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'request'</span>: <span class="s1">'POST /api/auth'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'clientIp'</span>: <span class="s1">'0:0:0:0:0:0:0:1'</span><span class="o">]</span> &lt;:&gt; Valid token not found</code></pre></figure>
+
+<p>留意到最后两条日志，一条带Tracking Id，另一条没有：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>debug] <span class="o">[</span>006bc4df-0310-4793-a88d-923dfde227d9] <span class="o">[</span>application-akka.actor.default-dispatcher-2] - new context: <span class="o">{</span><span class="nv">trackingId</span><span class="o">=</span>006bc4df-0....
+<span class="o">[</span>warn] <span class="o">[</span>-] <span class="o">[</span>scala-execution-context-global-80] - <span class="o">[</span><span class="s1">'token'</span>: <span class="s1">'404'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'request'</span>: <span class="s1">'POST /api/auth'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'clientIp'</span>: <span class="s1">'0:0:0:0:0:0:0:1'</span><span class="o">]</span> &lt;:&gt; Valid token not found</code></pre></figure>
+
+<p>从线程的名称可以看到两条日志使用的线程是不同对象创建的：
+前者使用的是<code class="highlighter-rouge">akka.actor.default-dispatcher</code>，后者
+从名称（<code class="highlighter-rouge">scala-execution-context-global-80</code>）推断，应该和<code class="highlighter-rouge">scala.concurrent.ExecutionContext.global</code>有关。</p>
+
+<p>Play 2.6提倡使用依赖注入，所以使用全局<code class="highlighter-rouge">ExecutionContext.global</code>
+不是一种好的实践方式<sup id="fnref:_play_ec_deprected"><a href="#fn:_play_ec_deprected" class="footnote">8</a></sup>。</p>
+
+<h2 id="停用scala自带executioncontextglobal">停用Scala自带ExecutionContext.global</h2>
+
+<p>通过上面的分析，尝试在代码中查找<code class="highlighter-rouge">ExecutionContext.global</code>的<code class="highlighter-rouge">implicit</code>引用，
+并使用依赖注入的方式替代<code class="highlighter-rouge">ExecutionContext.global</code>，一种修改方案是：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Security</span> <span class="nd">@Inject</span><span class="o">()</span> <span class="o">(</span>
+<span class="o">+</span>  <span class="k">implicit</span> <span class="n">ec</span><span class="k">:</span> <span class="kt">ExecutionContext</span><span class="o">,</span>
+  <span class="n">membersDao</span><span class="k">:</span> <span class="kt">MembersDao</span><span class="o">,</span>
+  <span class="n">userApiToken</span><span class="k">:</span> <span class="kt">UserApiTokenDao</span><span class="o">,</span>
+  <span class="n">enforceHttpsAction</span><span class="k">:</span> <span class="kt">EnforceHttpsAction</span>
+<span class="o">)</span> <span class="o">{</span>
+
+<span class="o">-</span>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">ec</span> <span class="k">=</span> <span class="n">scala</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="nc">ExecutionContext</span><span class="o">.</span><span class="n">global</span>
+
+<span class="o">}</span></code></pre></figure>
+
+<p>修改之后，重新启动服务，可以看到日志信息中已经包含了Tracking Id：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>debug] <span class="o">[</span>f6ab38a5-1461-44c9-a5f8-ce7764025fad] -  &lt;:&gt; trackingId generated: f6ab38a5-1461-44c9-a5f8-ce7764025fad
+<span class="o">[</span>warn] <span class="o">[</span>f6ab38a5-1461-44c9-a5f8-ce7764025fad] - <span class="o">[</span><span class="s1">'token'</span>: <span class="s1">'404'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'request'</span>: <span class="s1">'POST /api/auth'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'clientIp'</span>: <span class="s1">'0:0:0:0:0:0:0:1'</span><span class="o">]</span> &lt;:&gt; Valid token not found</code></pre></figure>
+
+<h1 id="tracking-id设计的改进">Tracking Id设计的改进</h1>
+
+<p>Tracking Id的重要性不必多说，本文的实践只是完成了服务端的Tracking Id 处理。</p>
+
+<p>一个完整的Tracking Id方案最好能形成一个闭环，从客户端的发起、到网络中的
+反向代理（Nginx日志），传递到服务端进行后台处理，包括返回的最终结果，每一个节点都能记录
+唯一的<code class="highlighter-rouge">trackingId</code>。在这种方案中，通常由客户端生成<code class="highlighter-rouge">trackingId</code>，传递给系统
+的其它节点使用，并最终送回给客户端。因此使用Ngnix的系统
+最好在Access Log里面也加入Tracking Id，通过使用<code class="highlighter-rouge">condition</code>配置<sup id="fnref:_ngix_condition_log"><a href="#fn:_ngix_condition_log" class="footnote">9</a></sup>，可以对
+HTTP <code class="highlighter-rouge">4xx</code>的Response做相应的记录，从而通过Tracking Id，可以：</p>
+
+<ul>
+  <li>在Ngnix日志中找到对应的HTTP完整信息；</li>
+  <li>在后端日志中找到相应的步骤日志</li>
+</ul>
+
+<p>这样，系统出现异常时，前端只需要回报Tracking Id，开发人员便可以
+方面的了解该异常的背景信息了。</p>
+
+<h1 id="参考文献">参考文献</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:_blog_yanns_mdc_play">
+      <p><a href="http://yanns.github.io/blog/2014/05/04/slf4j-mapped-diagnostic-context-mdc-with-play-framework/">SLF4J Mapped Diagnostic Context (MDC) With Play Framework</a> by Yann Simon, 2014&nbsp;<a href="#fnref:_blog_yanns_mdc_play" class="reversefootnote">&#8617;</a>&nbsp;<a href="#fnref:_blog_yanns_mdc_play:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:_github_rishabh9_issue1">
+      <p><a href="https://github.com/rishabh9/mdc-propagation-dispatcher/issues/1"><code class="highlighter-rouge">TrackingId</code> not printed as description in issue #1 of rishabh9/mdc-propagation-dispatcher</a>&nbsp;<a href="#fnref:_github_rishabh9_issue1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_github_cihub_seelog_format_ref">
+      <p><a href="https://github.com/cihub/seelog/wiki/Format-reference/7eb0ebc6df74a6386165d9b4687445c6b86bac97">Format Reference of cihub/seelog</a>&nbsp;<a href="#fnref:_github_cihub_seelog_format_ref" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_sf_david_bud_mdc_java_go">
+      <p><a href="https://stackoverflow.com/a/41049394"><em>“Java MDC relies on thread local storage, Go does not have”</em> by David Budworth’s reply on Stackoverflow</a>&nbsp;<a href="#fnref:_sf_david_bud_mdc_java_go" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_note_where_go_code_from">
+      <p>这段代码中的<code class="highlighter-rouge">RequestContext</code>来自沪江工作期间，原同事的Golang代码，我在其基础上增加了<code class="highlighter-rouge">TrackingId</code>变量，并完成了日志中写入<code class="highlighter-rouge">TrackingId</code>的代码&nbsp;<a href="#fnref:_note_where_go_code_from" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_play_http_filters">
+      <p><a href="https://www.playframework.com/documentation/2.6.x/ScalaHttpFilters#Using-filters">Using Filters in Play 2.6</a>&nbsp;<a href="#fnref:_play_http_filters" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_play_host_allowed">
+      <p><a href="https://www.playframework.com/documentation/2.6.x/AllowedHostsFilter#Configuring-allowed-hosts">Configure Allowed Hosts</a>&nbsp;<a href="#fnref:_play_host_allowed" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_play_ec_deprected">
+      <p><a href="https://playframework.com/documentation/2.6.x/Migration26#play.api.libs.concurrent.Execution-is-deprecated"><code class="highlighter-rouge">play.api.libs.concurrent.Execution</code> is deprecated</a>&nbsp;<a href="#fnref:_play_ec_deprected" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_ngix_condition_log">
+      <p><a href="http://nginx.org/en/docs/http/ngx_http_log_module.html">Module ngx_http_log_module</a>&nbsp;<a href="#fnref:_ngix_condition_log" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <h4>您也许还想读……</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+                      Bolero，累积更新说明（2016-09-04）
+                      <small>Sep 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/08/22/scala-quick-tour-part-ii">
+                      Scala函数编程（二）
+                      <small>Aug 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/08/21/scala-quick-tour-part-i">
+                      Scala函数编程（一）
+                      <small>Aug 21, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+                      Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板
+                      <small>Jul 27, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk">
+                      使用Ping++设计可供集中收银的微服务
+                      <small>Jul 11, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/zh/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala';
+      this.page.identifier = '/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala';
+      this.page.title = '使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

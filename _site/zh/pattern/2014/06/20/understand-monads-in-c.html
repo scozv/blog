@@ -1,0 +1,1155 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="zh"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/pattern/2014/06/20/understand-monads-in-c" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/pattern/2014/06/20/understand-monads-in-c" />
+
+
+  <meta name="description" content="An Short Literature Review on Monads in C#">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      对Eric Lippert所著的Monads系列文章的综述 &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/zh/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/zh/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog/zh">
+      首页
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/archive/">
+              
+                归档
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/categories/">
+              
+                分类
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/tags/">
+              
+                标签
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/about/">
+              
+                关于
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/zh/credits">
+      致谢
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/pattern/2014/06/20/understand-monads-in-c">
+        English
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog/zh"
+                 title="首页">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">对Eric Lippert所著的Monads系列文章的综述</h1>
+  <span class="post-date">Jun 20, 2014</span>
+  
+<h1 class="no_toc" id="摘要">摘要</h1>
+
+<blockquote>
+  <p>本文主要对几篇讨论Monad的文献进行综述，文中的大部分代码都来自参考文献（我会指明参考来源）。本文有几处地方提出了几个思考题，这些思考题也来自参考文献，建议先尝试写写这些思考题，再去阅读参考文献。这一份综述尝试抛开函数编程的背景，去看看我们平时已经在使用但却没有留意的一些Monad。文章主要涉及到C#这门语言，但是不同的语言背景并不会有太多的影响。</p>
+
+  <p>我推荐阅读参考文献中的英文原文。虽然中文意合英文形合<sup id="fnref:G08"><a href="#fn:G08" class="footnote">1</a></sup>，但是本文的综述将使用中文，除了部分程序代码，和一些术语、人名 that 我不打算翻译的。</p>
+
+  <p>本文对Haskell和.NET中异步Task的理解不够，如果需要了解Task这个Monad的话，请参考Stephen Toub的文章<sup id="fnref:ST13"><a href="#fn:ST13" class="footnote">2</a></sup>。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”<sup id="fnref:DC13"><a href="#fn:DC13" class="footnote">3</a></sup>。</p>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#一个略微复杂的思考题" id="markdown-toc-一个略微复杂的思考题">一个略微复杂的思考题</a></li>
+  <li><a href="#身边的几个泛型类" id="markdown-toc-身边的几个泛型类">身边的几个泛型类</a></li>
+  <li><a href="#数学理论中的复合映射" id="markdown-toc-数学理论中的复合映射">数学理论中的复合映射</a></li>
+  <li><a href="#从复合映射到复合函数" id="markdown-toc-从复合映射到复合函数">从复合映射到复合函数</a></li>
+  <li><a href="#一个简单的加法运算" id="markdown-toc-一个简单的加法运算">一个简单的加法运算</a></li>
+  <li><a href="#更一般化的加法运算" id="markdown-toc-更一般化的加法运算">更一般化的加法运算</a></li>
+  <li><a href="#平面化" id="markdown-toc-平面化">平面化</a></li>
+  <li><a href="#monad的历史" id="markdown-toc-monad的历史">Monad的历史</a></li>
+  <li><a href="#monad的性质" id="markdown-toc-monad的性质">Monad的性质</a></li>
+  <li><a href="#开头的思考题" id="markdown-toc-开头的思考题">开头的思考题</a></li>
+  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+  <li><a href="#参考文献" id="markdown-toc-参考文献">参考文献</a></li>
+</ul>
+
+<h1 id="一个略微复杂的思考题">一个略微复杂的思考题</h1>
+<p>假如我们有如下这样一个委托，称其为K：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>delegate Answer K&lt;T,Answer&gt;(Func&lt;T,Answer&gt; k);
+</code></pre>
+</div>
+
+<p>其中，T、Answer都是泛型类型。这个委托等价于：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Func&lt;Func&lt;T, Answer&gt;, Answer&gt; K;
+</code></pre>
+</div>
+
+<p>也就是说，K这个类型是一类函数签名，这类函数返回一个值Answer，接收一个参数，而接收的参数又是一类函数Func&lt;T, Answer&gt;。</p>
+
+<p>另外，给出K的构造方法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static K&lt;T, Answer&gt; ToContinuation&lt;T, Answer&gt;(this T value)
+{
+	return (Func&lt;T, Answer&gt; solve) =&gt; solve(value);
+}
+</code></pre>
+</div>
+
+<p>现在的问题是，参考K的构造方法，如何实现下面这个方法，保证它能够编译通过，即方法的返回类型和方法签名匹配？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static K&lt;U, Answer&gt; SelectMany&lt;T, U, Answer&gt;(this K&lt;T, Answer&gt; m, Func&lt;T, K&lt;U, Answer&gt;&gt; k)
+</code></pre>
+</div>
+
+<p>这个问题来自Wes Dyer文章的最后一部分<sup id="fnref:WD08"><a href="#fn:WD08" class="footnote">4</a></sup>，我认为，如果能在看懂题意的基础上，尝试写一写内部实现，将有助于理解Monad。如果对题目有些费解，请先往下看。本文的最后会再次提到这个题目。</p>
+
+<h1 id="身边的几个泛型类">身边的几个泛型类</h1>
+<p>Eric Lippert在他的Monad系列<sup id="fnref:EL13"><a href="#fn:EL13" class="footnote">5</a></sup>中，给出了如下几个泛型类，并借助这几个泛型类，由浅入深地揭示了Monad的性质。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Nullable&lt;T&gt;
+IEnumerable&lt;T&gt;
+Lazy&lt;T&gt;
+OnDemand&lt;T&gt;
+Task&lt;T&gt;
+</code></pre>
+</div>
+
+<p>其中，OnDemand&lt;T&gt;本质上是Func&lt;T&gt;，指的是一类无参有返回值的函数，Eric这样做，是为了和更一般的Func&lt;V, U&gt;加以区别。</p>
+
+<p>这几个泛型类的特点是，它们都赋予了T新的能力：</p>
+
+<ul>
+  <li>Nullable&lt;T&gt; 使得T可空；</li>
+  <li>IEnumerable&lt;T&gt; 使得T可以被遍历；</li>
+  <li>Lazy&lt;T&gt; 使得T只在第一次需要的时候才计算，之后都从cache中获取；</li>
+  <li>OnDemand&lt;T&gt; 使得T只有在需要的时候才被调用；</li>
+  <li>Task&lt;T&gt; 使得…</li>
+</ul>
+
+<p>因为这些泛型类扩展了T的能力，所以，我们称它们为Amplifier，对于这一类扩展后的类型，我们统一用M&lt;T&gt;来表示。</p>
+
+<h1 id="数学理论中的复合映射">数学理论中的复合映射</h1>
+<p>抛开计算机语言或者函数编程的思维，我们先来回顾一下高等数学中复合函数的概念。为了和计算机程序设计中的函数加以区别，我们使用映射这个术语。</p>
+
+<p>给定如下两个映射：</p>
+
+<script type="math/tex; mode=display">g(x) =  x^2-4x, f(x) = \ln (x+4)</script>
+
+<p>令复合映射：</p>
+
+<script type="math/tex; mode=display">p(x) = f(g(x))</script>
+
+<p>符号计算得知：</p>
+
+<script type="math/tex; mode=display">p(x)= \ln (x^2-4x+4) = \ln [(x-2)^2] = 2 \ln (x-2)</script>
+
+<p>我们可以看到，复合映射之后，新的映射计算过程被重新组合，我们并不需要先计算出<script type="math/tex">x^2-4x</script>的值，再代入第二层函数。</p>
+
+<p>我们思考，假如：</p>
+
+<ol>
+  <li>令<script type="math/tex">x=e+2=4.718281828459045</script>，我们是计算<script type="math/tex">(4.718281828459045)^2-4*4.718281828459045</script>容易呢，还是计算<script type="math/tex">2 \ln (e+2-2)=2\ln e = 2</script>容易？</li>
+  <li>或者，运算器不支持平方运算，却有一张对数表，那么我们通过符号运算化简得到<script type="math/tex">p(x)</script>，才能计算出结果；</li>
+  <li>又或者，在程序语言中，传入的参数是Int.MaxValue，平方运算很可能超出存储的范围，那么我们也最好到最后再去用新的映射加以计算。</li>
+</ol>
+
+<p>所以，有些事儿不要急着去处理。后面我们还会看到这句话。</p>
+
+<h1 id="从复合映射到复合函数">从复合映射到复合函数</h1>
+<p>Wes Dyer在他的文章中用程序语言的方式来描述复合映射这样的概念<sup id="fnref:WD08:1"><a href="#fn:WD08" class="footnote">4</a></sup>，Wes Dyer首先给出对一般类型T的函数复合：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static Func&lt;T, V&gt; Compose&lt;T, U, V&gt;(this Func&lt;U, V&gt; f, Func&lt;T, U&gt; g)
+{
+    return x =&gt; f(g(x));
+}
+</code></pre>
+</div>
+
+<p>在前面的小节里，我们提到，诸如Nullable&lt;T&gt;这些泛型类，它们扩展了T的能力，对于这一类扩展后的类型，我们统一用M<T>来表示。</T></p>
+
+<p>如果我们用M&lt;V&gt;和M&lt;U&gt;来替换上面的签名，比如用Nullable&lt;V&gt;和Nullable&lt;U&gt;来替换：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static Func&lt;T, Nullable&lt;V&gt;&gt; Compose&lt;T, U, V&gt;(this Func&lt;U, Nullable&lt;V&gt;&gt; f, Func&lt;T, Nullable&lt;U&gt;&gt; g)
+{
+    return x =&gt; f(g(x)); // 编译错误，g(x)返回一个Nullable&lt;U&gt;，但是f只接收U作为传入参数
+}
+</code></pre>
+</div>
+
+<p>简单的替换导致编译错误，因此Wes Dyer在文中引入了一个中间函数Bind，用来解决值域属于M&lt;T&gt;复合函数的绑定：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static M&lt;V&gt; Bind&lt;U, V&gt;(this M&lt;U&gt; m, Func&lt;U, M&lt;V&gt;&gt; k);
+
+public static Func&lt;T, M&lt;V&gt;&gt; Compose&lt;T, U, V&gt;(this Func&lt;U, M&lt;V&gt;&gt; f, Func&lt;T, M&lt;U&gt;&gt; g)
+{
+    return x =&gt; Bind(g(x), f);
+}
+</code></pre>
+</div>
+
+<p>那么，前文提到的那些M&lt;T&gt;：Nullable&lt;T&gt;, Lazy&lt;T&gt;, OnDemand&lt;T&gt;, Task&lt;T&gt;, IEnumerable&lt;T&gt;，这些类型的Bind函数分别应该如何实现呢？</p>
+
+<h1 id="一个简单的加法运算">一个简单的加法运算</h1>
+
+<p>扩展了一个T之后，我们现在有了增强版的类型M&lt;T&gt;。一个类型，总会有一些动态的行为。Eric Lippert在他的Monads系列中的第三部分，为上述的一些M&lt;int&gt;增加了一个加法运算<sup id="fnref:EL13-3"><a href="#fn:EL13-3" class="footnote">6</a></sup>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static Nullable&lt;int&gt; AddOne(Nullable&lt;int&gt; nullable)
+{
+  if (nullable.HasValue)
+  {
+    int unwrapped = nullable.Value;
+    int result = unwrapped + 1;
+    return CreateSimpleNullable(result);
+  }
+  else  
+    return new Nullable&lt;int&gt;();
+}
+</code></pre>
+</div>
+
+<p>以及OnDemand&lt;T&gt;的加法运算：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static OnDemand&lt;int&gt; AddOne(OnDemand&lt;int&gt; onDemand)
+{
+  return ()=&gt;
+  {
+    int unwrapped = onDemand();
+    int result = unwrapped + 1;
+    return result;
+  };
+}
+</code></pre>
+</div>
+
+<p>注意，我们前面提到，有些事儿不要着急去处理，OnDemand&lt;int&gt;的加法运算为什么不这样写呢？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 不要采用这样的实现方式
+static OnDemand&lt;int&gt; AddOne(OnDemand&lt;int&gt; onDemand)
+{
+  int unwrapped = onDemand();
+  int result = unwrapped + 1;
+  return ()=&gt;{return result;}
+}
+</code></pre>
+</div>
+
+<p>因为我们过早地计算了最初的onDemand承载的值。</p>
+
+<p>现在，参考上面两个实现，请写出其它M&lt;T&gt;的加法运算：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static Lazy&lt;int&gt; AddOne(Lazy&lt;int&gt; lazy)
+static IEnumerable&lt;int&gt; AddOne(IEnumerable&lt;int&gt; sequence)
+async static Task&lt;int&gt; AddOne(Task&lt;int&gt; task)
+</code></pre>
+</div>
+
+<p>答案在Eric的Monads系列中，请阅读参考文献。</p>
+
+<h1 id="更一般化的加法运算">更一般化的加法运算</h1>
+<p>如何我们仔细地阅读上面的两个加法运算，我们会发现，加法这个操作，只出现在一个地方：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>int result = unwrapped + 1;
+</code></pre>
+</div>
+
+<p>Eric在他的Monads系列的第四部分，将加法运算更一般化了<sup id="fnref:EL13-4"><a href="#fn:EL13-4" class="footnote">7</a></sup>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static Nullable&lt;R&gt; ApplyFunction&lt;A, R&gt;(Nullable&lt;A&gt; nullable, Func&lt;A, R&gt; function)
+{
+  if (nullable.HasValue)
+  {
+    A unwrapped = nullable.Value;
+    R result = function(unwrapped);
+    return new Nullable&lt;R&gt;(result);
+  }
+  else
+    return new Nullable&lt;R&gt;();
+}
+
+// 使用ApplyFunction构造具体的复合函数
+static Nullable&lt;int&gt; AddOne(Nullable&lt;int&gt; nullable)
+{
+  return ApplyFunction(nullable, (int x) =&gt; x + 1);
+}
+</code></pre>
+</div>
+
+<p>我们可以看到，加法运算只是ApplyFunction的一个特例。</p>
+
+<p>同样的，参考上面的实现，请思考其它几个M&lt;T&gt;的ApplyFunction应该如何实现：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static Lazy&lt;R&gt; ApplyFunction&lt;A, R&gt;(Lazy&lt;A&gt; lazy, Func&lt;A, R&gt; function);
+static OnDemand&lt;R&gt; ApplyFunction&lt;A, R&gt;(OnDemand&lt;A&gt; onDemand, Func&lt;A, R&gt; function);
+static IEnumerable&lt;R&gt; ApplyFunction&lt;A, R&gt;(IEnumerable&lt;A&gt; sequence, Func&lt;A, R&gt; function);
+async static Task&lt;R&gt; ApplyFunction&lt;A, R&gt;(Task&lt;A&gt; sequence, Func&lt;A, R&gt; function);
+</code></pre>
+</div>
+
+<h1 id="平面化">平面化</h1>
+<p>设想，我们有如下一个方法，它计算一个整数的对数，当x小于零的时候，<script type="math/tex">\log</script>函数没有意义，将返回一个空：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Nullable&lt;int&gt; SaftLog(int x) {return x &gt; 0 ? Math.Log(x) : null;}
+</code></pre>
+</div>
+
+<p>如果把这个函数传给上一节给出的ApplyFunction，会有什么问题呢？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static Nullable&lt;R&gt; ApplyFunction&lt;A, R&gt;(Nullable&lt;A&gt; nullable, Func&lt;A, R&gt; function);
+</code></pre>
+</div>
+
+<p>通过依次比对类型签名，我们发现，R对应的是Nullable&lt;int&gt;，也就是说，ApplyFunction返回的类型是：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Nullable&lt;Nullable&lt;int&gt;&gt;
+</code></pre>
+</div>
+
+<p>首先，这在C#是不合法的，Nullable只能用在值类型上面。其次，就算合法，但也过多嵌套。同样的，Lazy&lt;Lazy&lt;int&gt;&gt;，OnDemand&lt;OnDemand&lt;T&gt;&gt;等都是不合适的。我们需要将其平面化。</p>
+
+<p>Eric在他Monads系列的第五部分给出了新的一个函数签名<sup id="fnref:EL13-5"><a href="#fn:EL13-5" class="footnote">8</a></sup>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static Nullable&lt;R&gt; ApplySpecialFunction&lt;A, R&gt;(Nullable&lt;A&gt; nullable, Func&lt;A, Nullable&lt;R&gt;&gt; function)
+</code></pre>
+</div>
+
+<p>回忆，在复合函数那一小节，Wes Dyer给出了如下的函数签名：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static M&lt;V&gt; Bind&lt;U, V&gt;(this M&lt;U&gt; m, Func&lt;U, M&lt;V&gt;&gt; k);
+</code></pre>
+</div>
+
+<p>我们看到，这两个签名本质上是相同的。</p>
+
+<p>同样的，作为辅助思考的练习，请写出如下签名的实现：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static Nullable&lt;R&gt; ApplySpecialFunction&lt;A, R&gt;(Nullable&lt;A&gt; nullable, Func&lt;A, Nullable&lt;R&gt;&gt; function);
+static OnDemand&lt;R&gt; ApplySpecialFunction&lt;A, R&gt;(OnDemand&lt;A&gt; onDemand, Func&lt;A, OnDemand&lt;R&gt;&gt; function);
+static Lazy&lt;R&gt; ApplySpecialFunction&lt;A, R&gt;(Lazy&lt;A&gt; lazy, Func&lt;A, Lazy&lt;R&gt;&gt; function);
+static async Task&lt;R&gt; ApplySpecialFunction&lt;A, R&gt;(Task&lt;A&gt; task, Func&lt;A, Task&lt;R&gt;&gt; function);
+static IEnumerable&lt;R&gt; ApplySpecialFunction&lt;A, R&gt;(IEnumerable&lt;A&gt; sequence, Func&lt;A, IEnumerable&lt;R&gt;&gt; function);
+</code></pre>
+</div>
+
+<h1 id="monad的历史">Monad的历史</h1>
+<p>Wes Dyer在他的文章中简述了Monad的历史<sup id="fnref:WD08:2"><a href="#fn:WD08" class="footnote">4</a></sup>。他指出，Monad这个概念来自理论数学的范畴论，Eugenio Moggi在其文章《Notions of computation and monads》将Monad引入了计算机科学领域。Philip Wadler在其著作《The essence of functional programming》探讨了Monad的应用。Haskell中更是大量的使用了Monad。</p>
+
+<p>这样一来，使得我们一说到Moand就和函数编程扯上关系。就好比面向对象、UML的特性容易表达设计模式那样，我们常常一说到设计模式，就往OOP上面靠<sup id="fnref:CH13"><a href="#fn:CH13" class="footnote">9</a></sup>。</p>
+
+<p>要知道，函数编程里面的匿名函数λ表达式，也是从理论数学中发展过来的<sup id="fnref:WL14"><a href="#fn:WL14" class="footnote">10</a></sup>。Eric也多次提及LINQ的设计者之一Erik Meijer正是Haskell的设计参与者，比如他在StackOverflow上对LINQ与Haskell关系的回答<sup id="fnref:EL11"><a href="#fn:EL11" class="footnote">11</a></sup>。</p>
+
+<h1 id="monad的性质">Monad的性质</h1>
+<p>Eric指出Monad是类型（Type）的一种设计模式，是对现有Type的能力的一种放大（amplifier），或者是对T的一种wrapper，借助之前提到的几个M&lt;T&gt;，我们很容易地设计出一种“asynchronously-computed sequence of nullable bytes”<sup id="fnref:EL13-2"><a href="#fn:EL13-2" class="footnote">12</a></sup>类型：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Task&lt;IEnumerable&lt;Nullable&lt;int&gt;&gt;&gt;
+</code></pre>
+</div>
+
+<p>所以我们需要一个构造器将T转化为M&lt;T&gt;，这就是下面我们会看到的Unit。</p>
+
+<p>另外，Moanded类型还需要定义一个操作，用来复合函数。该放大器不会改变底层（Underlying）类型的原有特性。更重要的是，诸如OnDemand的复合，我们只有在最后invoke函数的时候，才去计算，不能过早。诸如IEnumerable&lt;T&gt;的复合，只有最终需要内部元素的时候，才去遍历，不能过早。诸如IQueryable&lt;T&gt;，只有最终需要拿回查询结果的时候，再去连接数据源，也不能过早。</p>
+
+<p>一个直观的例子就是：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// C#
+IEnumerabe&lt;T&gt;.Select().Where().FirstOrDefault();
+// Scala
+Seq[T].map().filter().firstOrDefault();
+</code></pre>
+</div>
+
+<p>我们可以看到，在这样一条复合运算中，最终只需要一个值，如果数组很长，映射的运算非常耗时，过早地遍历数组显然不是明智之举。是的，LINQ的延迟运算，就是基于这样的思想。</p>
+
+<p>Eric在文中提出<sup id="fnref:EL13-8"><a href="#fn:EL13-8" class="footnote">13</a></sup>：</p>
+
+<blockquote>
+  <p>You might have noticed that the asynchronous, lazy, on-demand and sequence monads all have an interesting common property: when you apply a function to any of these monads, what you get back is an object that will perform that function in the future. Essentially, the bind function takes an immutable workflow and its subsequent step, and returns you the resulting new workflow. The bind operator does not execute the workflow; it makes a new workflow out of an old one.</p>
+</blockquote>
+
+<p>这个复合操作就是我们下面看到的Bind，在C#中，对应的函数名为SelectMany，在Scala中，对应的叫flatMap。</p>
+
+<p>Wes Dyer表明，如果放大用Unit来构造，复合用Bind来表示的话，我们需要如下两个签名<sup id="fnref:WD08:3"><a href="#fn:WD08" class="footnote">4</a></sup>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static M&lt;T&gt;  Unit&lt;T&gt;(T value);
+static M&lt;R&gt;  Bind&lt;T, R&gt;(M&lt;T&gt;, Func&lt;T, M&lt;R&gt;&gt;)
+</code></pre>
+</div>
+
+<p>并满足如下的三个法则：</p>
+
+<ol>
+  <li>
+    <p>Left Identity</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>Bind(Unit(e), k) = k(e)
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Right Identity</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>Bind(m, Unit) = m
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>结合律</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>Bind(m, x =&gt; Bind(k(x), y =&gt; h(y)) = Bind(Bind(m, x =&gt; k(x)), y =&gt; h(y))
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h1 id="开头的思考题">开头的思考题</h1>
+
+<p>文章开头的练习题来自Wes Dyer的文献，那道题让我们习惯函数的返回值也是一个函数。</p>
+
+<p>接下来，让我们来看Eric给出的思考题，这个思考题让我们尝试去设计一个Monad。</p>
+
+<p>正如上一节所说，C#的Bind取名为SelectMany，给定实现<sup id="fnref:EL13-10"><a href="#fn:EL13-10" class="footnote">14</a></sup>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static IEnumerable&lt;R&gt; SelectMany&lt;A, R&gt;(this IEnumerable&lt;A&gt; sequence, Func&lt;A, IEnumerable&lt;R&gt;&gt; function)
+{
+  foreach(A outerItem in sequence)
+    foreach(R innerItem in function(outerItem))
+      yield return innerItem;
+}
+</code></pre>
+</div>
+
+<p>使用SelectMany，请设计如下的实现：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>static IEnumerable&lt;A&gt; Where(this IEnumerable&lt;A&gt; source, Func&lt;A, boolean&gt; prediction);
+static IEnumerable&lt;R&gt; Selcect(this IEnumerable&lt;A&gt; source, Func&lt;A, R&gt; map);
+</code></pre>
+</div>
+
+<p>借助SelectMany、Where和Select，我们可以实现更复杂的Join操作，请练习（暂时不要考虑时间复杂度效率的问题）：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static IEnumerable&lt;TResult&gt; Join&lt;TOuter, TInner, TKey, TResult&gt;(
+    this IEnumerable&lt;TOuter&gt; outer,
+    IEnumerable&lt;TInner&gt; inner,
+    Func&lt;TOuter, TKey&gt; outerKeySelector,
+    Func&lt;TInner, TKey&gt; innerKeySelector,
+    Func&lt;TOuter, TInner, TResult&gt; resultSelector,
+    IEqualityComparer&lt;TKey&gt; comparer
+)
+</code></pre>
+</div>
+
+<p>我强烈建议在查阅文献之前，动手写写这三个实现，对我们理解Monad有很大的帮助。我自己也尝试写过一遍，你可以参考我的Gist。</p>
+
+<h1 id="总结">总结</h1>
+<p>Monad是一种类型的设计模式，用来放大现有Type的能力。需要满足一些法则，并且向Monad上面添加操作流的时候，我们不要提早运行，而丢失了Monad特性。</p>
+
+<p>添加操作类的过程，在Haskell中叫Bind，在C#中叫SelectMany，在Scala中叫flatMap。这样，对于凡是实现了这些签名的类，就可以在For Comperhensoin中使用了，Eric在Monad系列的第十二部分，对此有详细的阐述，同时还讨论了如何解决SelectMany多重嵌套导致的效率低下问题。</p>
+
+<p>正如Eric指出的那样，Monad是类型的一种设计模式。所以Scala的Try[T]类，Rx库（rx.codeplex.com）中的IObservable&lt;T&gt;，还有LINQ，都是基于这样的设计模式。</p>
+
+<p>最后，再次推荐阅读参考文献的英文原文。</p>
+
+<h1 id="参考文献">参考文献</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:G08">
+      <p>郭富强. 意合形合的汉英对比研究[D]. 华东师范大学 2006&nbsp;<a href="#fnref:G08" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:ST13">
+      <p>Stephen Toub. <a href="http://blogs.msdn.com/b/pfxteam/archive/2013/04/03/tasks-monads-and-linq.aspx">Tasks, Monads, and LINQ</a>[J/OL] 2013&nbsp;<a href="#fnref:ST13" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:DC13">
+      <p>Douglas Crockford. Monads and Gonads, in the Speech named <em>JavaScript the Good Parts</em>&nbsp;<a href="#fnref:DC13" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:WD08">
+      <p>Wes Dyer. <a href="http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx">The Marvels of Monads</a>[J/OL] 2008&nbsp;<a href="#fnref:WD08" class="reversefootnote">&#8617;</a>&nbsp;<a href="#fnref:WD08:1" class="reversefootnote">&#8617;<sup>2</sup></a>&nbsp;<a href="#fnref:WD08:2" class="reversefootnote">&#8617;<sup>3</sup></a>&nbsp;<a href="#fnref:WD08:3" class="reversefootnote">&#8617;<sup>4</sup></a></p>
+    </li>
+    <li id="fn:EL13">
+      <p>Eric Lippert. <a href="http://ericlippert.com/category/monads">Monads</a>[J/OL] 2013&nbsp;<a href="#fnref:EL13" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:EL13-3">
+      <p>Eric Lippert. <a href="http://ericlippert.com/2013/02/28/monads-part-three/">Monads, Part 3</a>[J/OL] 2013.02.28&nbsp;<a href="#fnref:EL13-3" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:EL13-4">
+      <p>Eric Lippert. <a href="http://ericlippert.com/2013/03/04/monads-part-four/">Monads, Part 4</a>[J/OL] 2013.03.04&nbsp;<a href="#fnref:EL13-4" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:EL13-5">
+      <p>Eric Lippert. <a href="http://ericlippert.com/2013/03/07/monads-part-five/">Monads, Part 5</a>[J/OL] 2013.03.07&nbsp;<a href="#fnref:EL13-5" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:CH13">
+      <p>陈浩. <a href="http://coolshell.cn/articles/8961.html">从面向对象的设计模式看软件设计</a>[J/OL] 2013&nbsp;<a href="#fnref:CH13" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:WL14">
+      <p>维基百科. <a href="https://en.wikipedia.org/wiki/Lambda_calculus">λ演算</a>[J/OL] 2014&nbsp;<a href="#fnref:WL14" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:EL11">
+      <p>Eric Lippert. <a href="http://stackoverflow.com/a/4683716">Answer to <em>Are there any connections between Haskell and LINQ?</em></a>[EB/OL]. StackOverflow.com 2011.01.13&nbsp;<a href="#fnref:EL11" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:EL13-2">
+      <p>Eric Lippert. <a href="http://ericlippert.com/2013/02/25/monads-part-two/">Monads, Part 2</a>[J/OL] 2013.02.25&nbsp;<a href="#fnref:EL13-2" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:EL13-8">
+      <p>Eric Lippert. <a href="http://ericlippert.com/2013/03/18/monads-part-eight/">Monads, Part 8</a>[J/OL] 2013.03.18&nbsp;<a href="#fnref:EL13-8" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:EL13-10">
+      <p>Eric Lippert. <a href="http://ericlippert.com/2013/03/25/monads-part-ten/">Monads, Part 10</a>[J/OL] 2013.03.25&nbsp;<a href="#fnref:EL13-10" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <h4>您也许还想读……</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala">
+                      使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id
+                      <small>Jul 18, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+                      Bolero，累积更新说明（2016-09-04）
+                      <small>Sep 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/08/22/scala-quick-tour-part-ii">
+                      Scala函数编程（二）
+                      <small>Aug 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/08/21/scala-quick-tour-part-i">
+                      Scala函数编程（一）
+                      <small>Aug 21, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+                      Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板
+                      <small>Jul 27, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk">
+                      使用Ping++设计可供集中收银的微服务
+                      <small>Jul 11, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/zh/pattern/2014/06/20/understand-monads-in-c';
+      this.page.identifier = '/pattern/2014/06/20/understand-monads-in-c';
+      this.page.title = '对Eric Lippert所著的Monads系列文章的综述';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

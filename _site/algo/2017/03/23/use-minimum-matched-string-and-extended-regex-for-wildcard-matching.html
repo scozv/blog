@@ -1,0 +1,927 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/algo/2017/03/23/use-minimum-matched-string-and-extended-regex-for-wildcard-matching" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/algo/2017/03/23/use-minimum-matched-string-and-extended-regex-for-wildcard-matching" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      Design Test Cases Before Write Implementation If the Former Is Easier &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/algo/2017/03/23/use-minimum-matched-string-and-extended-regex-for-wildcard-matching">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">Design Test Cases Before Write Implementation If the Former Is Easier</h1>
+  <span class="post-date">Mar 23, 2017</span>
+  
+<h1 class="no_toc" id="abstract">Abstract</h1>
+
+<blockquote>
+  <p>If we want to map the domain according to the defined rules, and：</p>
+
+  <ul>
+    <li>store the mapping rules in database, such as <code class="highlighter-rouge">*a.com</code>，</li>
+    <li>for input <code class="highlighter-rouge">s1.a.com</code>，it can be matched by this rule, while, <code class="highlighter-rouge">a.com</code> cannot.</li>
+  </ul>
+
+  <p>This article will introduce two implementations for this requirement, however,
+in specific case, implementation detail sometimes is not as important as the test cases.</p>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#requirement" id="markdown-toc-requirement">Requirement</a></li>
+  <li><a href="#implementations" id="markdown-toc-implementations">Implementations</a>    <ul>
+      <li><a href="#internetdomainname-for-keyword-in-domain" id="markdown-toc-internetdomainname-for-keyword-in-domain"><code class="highlighter-rouge">InternetDomainName</code> for Keyword in Domain</a></li>
+      <li><a href="#rebuild-the-matching-rules" id="markdown-toc-rebuild-the-matching-rules">Rebuild the Matching Rules</a></li>
+      <li><a href="#regex" id="markdown-toc-regex">Regex</a></li>
+    </ul>
+  </li>
+  <li><a href="#write-test-cases-at-first" id="markdown-toc-write-test-cases-at-first">Write Test Cases At First</a></li>
+  <li><a href="#summary" id="markdown-toc-summary">Summary</a></li>
+  <li><a href="#references" id="markdown-toc-references">References</a></li>
+</ul>
+
+<h1 id="requirement">Requirement</h1>
+
+<p>We have four rules for pattern match：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">a.<span class="k">*</span>       -&gt; 1
+a-<span class="k">*</span>       -&gt; 2
+<span class="k">*</span>.a.com   -&gt; 3
+<span class="k">*</span>.a.<span class="k">*</span>     -&gt; 4</code></pre></figure>
+
+<p>The left side of arrow is the wildcard matching rule, while,
+the right side is the return result when the input parameter matches
+this rule.</p>
+
+<p>For instance, the input parameters in the left side will get
+the result value in right side:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">z.a.com   -&gt; 3
+z.a.io    -&gt; 4</code></pre></figure>
+
+<h1 id="implementations">Implementations</h1>
+
+<p>We cannot use <code class="highlighter-rouge">substring</code> directly, since we have the wildcard in
+the rules.</p>
+
+<p>A plain solution is using the idea of <code class="highlighter-rouge">substring</code> after we extract
+the main keyword in our parameters (such as <code class="highlighter-rouge">a</code> in the example above).</p>
+
+<h2 id="internetdomainname-for-keyword-in-domain"><code class="highlighter-rouge">InternetDomainName</code> for Keyword in Domain</h2>
+
+<p>We can use <code class="highlighter-rouge">InternetDomainName</code> <sup id="fnref:_guava_int_dn"><a href="#fn:_guava_int_dn" class="footnote">1</a></sup> to extract the root domain from the
+parameters, then we can use the keyword (root domain) to build our matching rules
+which include the wildcard.</p>
+
+<p>The function extracting the root domain can be defined as below:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">getRootDomain</span><span class="p">(</span><span class="nx">domain</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="rebuild-the-matching-rules">Rebuild the Matching Rules</h2>
+
+<p>Now we have:</p>
+
+<ul>
+  <li>4 matching rules,</li>
+  <li>the keyword (root domain) from the input.</li>
+</ul>
+
+<p>We can rebuild the matching rules containing the wildcard,
+then do our comparison.</p>
+
+<p>The demonstration code is listed below:</p>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">function matchAndGetResult(domain) {
+  var rootDomain = getRootDomain(domain)
+  // rule 1
+  if (db.find(`$rootDomain.*`)) return 1
+  if (db.find(`$rootDomain-*`)) return 2
+  if (db.find(`*.$rootDomain.com`)) return 3
+  if (db.find(`*.$rootDomain.*`)) return 4
+}</code></pre></figure>
+
+<p>However, we may easily find the potential issue
+in our implementation, just write some test cases, such as:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">matchAndGetResult</span><span class="p">(</span><span class="s1">'z.a.com'</span><span class="p">)</span> <span class="nx">should</span> <span class="nx">equal</span> <span class="nx">to</span> <span class="mi">3</span></code></pre></figure>
+
+<p>The result value of this test is <code class="highlighter-rouge">1</code> actually.</p>
+
+<p>So we fix the issue:</p>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">function matchAndGetResult(domain) {
+  var rootDomain = getRootDomain(domain)
+  // rule 1
+  if (db.find(`$rootDomain.*`) &amp;&amp; domain.startWith(`$rootDomain.`))
+    return 1
+  // ...
+}</code></pre></figure>
+
+<p>We still have 2 cons in this implementation:</p>
+
+<ul>
+  <li>some rules need the <code class="highlighter-rouge">startWith</code>, while, some need the <code class="highlighter-rouge">contains()</code>;</li>
+  <li>the number of <code class="highlighter-rouge">if-else</code> will be increased with the number of matching rules.</li>
+</ul>
+
+<h2 id="regex">Regex</h2>
+
+<p>We consider the 2 cons as:</p>
+
+<ul>
+  <li>how do we match the <code class="highlighter-rouge">begin</code> or <code class="highlighter-rouge">middle</code> position of string,</li>
+  <li>how do we provide the generic solution to decrease the number of <code class="highlighter-rouge">if-return</code>?</li>
+</ul>
+
+<p>Regex is an powerful tool to cover these 2 cons:</p>
+
+<ul>
+  <li>Regex has <code class="highlighter-rouge">^</code> for <code class="highlighter-rouge">begin</code>,</li>
+  <li>Regex is generic.</li>
+</ul>
+
+<p>So we have an alternative solution as below：</p>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">function matchAndGetResult(domain) {
+  var rootDomain = getRootDomain(domain)
+
+  if (var dbResult = db.find(`$rootDomain.*`)) {
+    // build the regex
+    var regex = dbResult
+      .string
+      .replace('*', '[\\S]*')
+      .replace('.', '\\.')
+
+    if (/^$regex/g).test(domain) {
+      return dbResult.value
+    }
+  }
+}</code></pre></figure>
+
+<h1 id="write-test-cases-at-first">Write Test Cases At First</h1>
+
+<p>These two solutions are not the best solutions.</p>
+
+<p>In this scenario, writing the test cases should be
+put as the first priority.</p>
+
+<p><strong>Simple I/O for Test Cases</strong></p>
+
+<p>We can write the test cases quickly after read this
+requirement. The input and output can be easily figured out
+even we don’t have any solution.</p>
+
+<p><strong>Private Function and Short Implementation</strong></p>
+
+<p>Usually, this function should be private and the number of code lines is short.</p>
+
+<p><strong>Different Ideas from Different Programmers</strong></p>
+
+<p>There is no need to argue with different solutions.
+Just make sure the solution can pass all the tests.</p>
+
+<h1 id="summary">Summary</h1>
+
+<p>“Put Tests at First” doesn’t mean:</p>
+
+<ul>
+  <li>Put the tests at first for all the time,</li>
+  <li>No needs to follow the code style or conventions from team or community.</li>
+</ul>
+
+<p>“Put Tests at First” just wants to express the idea that there are
+more things important than the “Put the Solution at First”:</p>
+
+<ul>
+  <li>Make the implementation correctly,</li>
+  <li>Figure out the solution quickly,</li>
+  <li>Cover the cases for further refactor,</li>
+  <li>etc.</li>
+</ul>
+
+<h1 id="references">References</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:_guava_int_dn">
+      <p><a href="https://github.com/google/guava/wiki/InternetDomainNameExplained">Explanation of <code class="highlighter-rouge">InternetDomainName</code></a>&nbsp;<a href="#fnref:_guava_int_dn" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/algo/2017/03/23/use-minimum-matched-string-and-extended-regex-for-wildcard-matching';
+      this.page.identifier = '/algo/2017/03/23/use-minimum-matched-string-and-extended-regex-for-wildcard-matching';
+      this.page.title = 'Design Test Cases Before Write Implementation If the Former Is Easier';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

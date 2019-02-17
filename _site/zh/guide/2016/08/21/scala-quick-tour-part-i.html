@@ -1,0 +1,1495 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="zh"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/guide/2016/08/21/scala-quick-tour-part-i" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/guide/2016/08/21/scala-quick-tour-part-i" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      Scala函数编程（一） &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/zh/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/zh/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog/zh">
+      首页
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/archive/">
+              
+                归档
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/categories/">
+              
+                分类
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/tags/">
+              
+                标签
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/about/">
+              
+                关于
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/zh/credits">
+      致谢
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/guide/2016/08/21/scala-quick-tour-part-i">
+        English
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog/zh"
+                 title="首页">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">Scala函数编程（一）</h1>
+  <span class="post-date">Aug 21, 2016</span>
+  
+<h1 class="no_toc" id="摘要">摘要</h1>
+
+<blockquote>
+  <p>接下来的一系列《Scala函数编程》，得益于公开课《Functional Programming Principles in Scala》<sup id="fnref:open_progfun1"><a href="#fn:open_progfun1" class="footnote">1</a></sup>。
+我整理了函数编程中的重要概念，并加入了我两年<code class="highlighter-rouge">Scala</code>开发的心得体会 <sup id="fnref:blog_bolero"><a href="#fn:blog_bolero" class="footnote">2</a></sup>。</p>
+
+  <p>为了便于理解，部分名词、专有术语，我直接使用英文，不作任何翻译。</p>
+
+  <p>《Scala函数编程》这一系列，不单纯只是原公开课的笔记整理。
+我也加入了自己的理解、一些理论化的表述和一些练习题，供加深理解。
+但我依然建议去听原版公开课，并完成所有的Assignment。另外，还要多写代码。</p>
+
+  <p>这一系列的文章，将按照如下顺序来写：</p>
+
+  <ul>
+    <li>一、函数编程的基本概念、函数类型和类型推断</li>
+    <li>二、尾递归（Tail Recursion）和<code class="highlighter-rouge">List[T]</code></li>
+    <li>三、OOP在<code class="highlighter-rouge">Scala</code>中的体现</li>
+    <li>四、模式匹配</li>
+    <li>五、其它线性数据结构类型介绍</li>
+    <li>六、延迟执行和Monad、<code class="highlighter-rouge">map</code>和<code class="highlighter-rouge">flatMap</code></li>
+    <li>七、<code class="highlighter-rouge">Future[T]</code>、For Comprehension</li>
+    <li>八、<code class="highlighter-rouge">Bolero</code>代码模板 <sup id="fnref:github_bolero"><a href="#fn:github_bolero" class="footnote">3</a></sup> 详解</li>
+  </ul>
+
+  <p>本文是第一部分，包括如下内容：</p>
+
+  <ul>
+    <li>函数编程初览；</li>
+    <li>Evaluation：CBN和CBV；</li>
+    <li>函数的类型（Type）；</li>
+    <li>类型推断和类型匹配。</li>
+  </ul>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#函数编程初览" id="markdown-toc-函数编程初览">函数编程初览</a>    <ul>
+      <li><a href="#常用的术语" id="markdown-toc-常用的术语">常用的术语</a></li>
+      <li><a href="#命令式和声明式" id="markdown-toc-命令式和声明式">命令式和声明式</a></li>
+      <li><a href="#运算法则theroy并没有定义mutable" id="markdown-toc-运算法则theroy并没有定义mutable">运算法则（Theroy）并没有定义Mutable</a></li>
+      <li><a href="#历史和定义" id="markdown-toc-历史和定义">历史和定义</a></li>
+    </ul>
+  </li>
+  <li><a href="#两种evaluation的方式" id="markdown-toc-两种evaluation的方式">两种Evaluation的方式</a>    <ul>
+      <li><a href="#repl" id="markdown-toc-repl">REPL</a></li>
+      <li><a href="#表达式" id="markdown-toc-表达式">表达式</a></li>
+      <li><a href="#call-by-valuecbv" id="markdown-toc-call-by-valuecbv">Call By-Value，CBV</a></li>
+      <li><a href="#call-by-namecbn" id="markdown-toc-call-by-namecbn">Call By-Name，CBN</a></li>
+      <li><a href="#收敛" id="markdown-toc-收敛">收敛</a></li>
+    </ul>
+  </li>
+  <li><a href="#函数的基础知识" id="markdown-toc-函数的基础知识">函数的基础知识</a>    <ul>
+      <li><a href="#通常的函数定义" id="markdown-toc-通常的函数定义">通常的函数定义</a></li>
+      <li><a href="#函数调用" id="markdown-toc-函数调用">函数调用</a></li>
+      <li><a href="#scope" id="markdown-toc-scope">Scope</a></li>
+      <li><a href="#匿名函数" id="markdown-toc-匿名函数">匿名函数</a></li>
+    </ul>
+  </li>
+  <li><a href="#函数类型" id="markdown-toc-函数类型">函数类型</a>    <ul>
+      <li><a href="#函数作为参数" id="markdown-toc-函数作为参数">函数作为参数</a></li>
+      <li><a href="#函数作为返回值" id="markdown-toc-函数作为返回值">函数作为返回值</a></li>
+      <li><a href="#类型推断" id="markdown-toc-类型推断">类型推断</a></li>
+      <li><a href="#类型匹配" id="markdown-toc-类型匹配">类型匹配</a></li>
+      <li><a href="#函数的返回值不要过度依赖类型推断" id="markdown-toc-函数的返回值不要过度依赖类型推断">函数的返回值不要过度依赖类型推断</a></li>
+      <li><a href="#scala语言中如何定义call-by-value" id="markdown-toc-scala语言中如何定义call-by-value"><code class="highlighter-rouge">Scala</code>语言中如何定义Call By-Value</a></li>
+      <li><a href="#scala语言中如何定义call-by-name" id="markdown-toc-scala语言中如何定义call-by-name"><code class="highlighter-rouge">Scala</code>语言中如何定义Call By-Name</a></li>
+      <li><a href="#函数参数中的cbv和cbn" id="markdown-toc-函数参数中的cbv和cbn">函数参数中的CBV和CBN</a></li>
+    </ul>
+  </li>
+  <li><a href="#综合练习" id="markdown-toc-综合练习">综合练习</a>    <ul>
+      <li><a href="#根据函数定义写出它们对应的函数类型" id="markdown-toc-根据函数定义写出它们对应的函数类型">根据函数定义，写出它们对应的函数类型</a></li>
+      <li><a href="#判断下列的函数定义是否合法" id="markdown-toc-判断下列的函数定义是否合法">判断下列的函数定义，是否合法</a></li>
+      <li><a href="#判断下列的函数调用是否合法" id="markdown-toc-判断下列的函数调用是否合法">判断下列的函数调用，是否合法</a></li>
+      <li><a href="#根据函数类型定义一个满足该类型的函数" id="markdown-toc-根据函数类型定义一个满足该类型的函数">根据函数类型，定义一个满足该类型的函数</a></li>
+      <li><a href="#将包含cbn参数的函数改写成类似的普通函数" id="markdown-toc-将包含cbn参数的函数改写成类似的普通函数">将包含CBN参数的函数，改写成类似的普通函数</a></li>
+      <li><a href="#设计一个布尔类型" id="markdown-toc-设计一个布尔类型">设计一个布尔类型</a></li>
+    </ul>
+  </li>
+  <li><a href="#练习题参考答案" id="markdown-toc-练习题参考答案">练习题参考答案</a>    <ul>
+      <li><a href="#举出一个反之未必的例子" id="markdown-toc-举出一个反之未必的例子">举出一个“反之未必”的例子</a></li>
+      <li><a href="#基于一阶谓词逻辑的命题定义的证明过程" id="markdown-toc-基于一阶谓词逻辑的命题定义的证明过程">基于一阶谓词逻辑的命题定义的证明过程</a></li>
+    </ul>
+  </li>
+  <li><a href="#参考文献" id="markdown-toc-参考文献">参考文献</a></li>
+</ul>
+
+<h1 id="函数编程初览">函数编程初览</h1>
+
+<h2 id="常用的术语">常用的术语</h2>
+
+<p>为了便于理解，部分名词、专有术语，我直接使用英文，不作任何翻译。</p>
+
+<p>如下先来看一些术语：</p>
+
+<ul>
+  <li>Immutable，如果一个变量（对象）在构造之后，不能重新赋值，我们称其为不可变。
+其对应的反义词mutable（可变）表示一个变量（对象）可以多次被赋值。</li>
+  <li>Type，类型包括：
+    <ul>
+      <li>基本类型（Primative）：比如整数、数组，布尔等；</li>
+      <li>类或者接口；</li>
+      <li>函数类型，过会儿会详细解释。</li>
+    </ul>
+  </li>
+  <li>表达式，精确的表达式定义可参考Scala Specification <sup id="fnref:scala_spec_exp"><a href="#fn:scala_spec_exp" class="footnote">4</a></sup>。</li>
+  <li>Evaluation：将一个表达式的最终值给计算出来，我们称之为Evaluation。</li>
+  <li>FP：Functional Programming，函数式编程（语言），简称FP。</li>
+</ul>
+
+<h2 id="命令式和声明式">命令式和声明式</h2>
+
+<p>我们通常把编程 Paradigm 分成如下两种（参考C#讲座<sup id="fnref:c9_lang_future"><a href="#fn:c9_lang_future" class="footnote">5</a></sup>，公开课提到了三种）：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">命令式</th>
+      <th style="text-align: left">声明式</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">mutable</td>
+      <td style="text-align: left">immutable</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">赋值</td>
+      <td style="text-align: left">定义之后不能再赋值</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">if-else，循环等</td>
+      <td style="text-align: left">模式匹配，递归等</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>命令式的编程，通常关注实现细节——怎么做（How），比如我们常见的自上而下的程序化
+编程语言，使用<code class="highlighter-rouge">for-loop</code>去控制实现的细节。</p>
+
+<p>对应地，声明式的编程，通常关注最后的目标——做什么（What），比如我们写如下的<code class="highlighter-rouge">SQL</code>语句：</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span>
+<span class="k">FROM</span> <span class="n">person</span>
+<span class="k">WHERE</span> <span class="n">class_id</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">;</span></code></pre></figure>
+
+<p>我们“声明”了三个指令：</p>
+
+<ul>
+  <li>从<code class="highlighter-rouge">person</code>表中；</li>
+  <li>筛选班级编号为<code class="highlighter-rouge">3</code>的人；</li>
+  <li>输出<code class="highlighter-rouge">_id</code>、<code class="highlighter-rouge">name</code>和<code class="highlighter-rouge">age</code>三个字段（Property）；</li>
+</ul>
+
+<p>我们没有使用<code class="highlighter-rouge">for-loop</code>去“命令”数据库，如何去实现筛选的：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">person</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">person</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">class_id</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">person</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">_id</span><span class="p">,</span> <span class="nx">person</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">,</span> <span class="nx">person</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">age</span><span class="p">})</span>
+  <span class="p">}</span>
+<span class="p">}</span> <span class="c1">// end loop</span>
+
+<span class="k">return</span> <span class="nx">res</span></code></pre></figure>
+
+<h2 id="运算法则theroy并没有定义mutable">运算法则（Theroy）并没有定义Mutable</h2>
+
+<p>我们有如下的加法结合律：</p>
+
+<script type="math/tex; mode=display">(a + b) + c = a + (b + c)</script>
+
+<p>我们把这个结合律，分解成如下几个赋值的步骤：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">x</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">c</span>
+<span class="nx">r1</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span>
+<span class="nx">x</span> <span class="o">=</span> <span class="nx">a</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">b</span> <span class="o">+</span> <span class="nx">c</span>
+<span class="nx">r2</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span>
+
+<span class="nx">Assert</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="nx">r1</span><span class="p">,</span> <span class="nx">r2</span><span class="p">)</span></code></pre></figure>
+
+<p>上述的赋值，意味着各个变量都是可变的（Mutable）。</p>
+
+<p>但是，这个结合律里面，实际上，我们只定义了一个加法运算，
+如果我们把一个加法运算提炼成一个函数，那么，这个函数
+接收两个Number类型的参数，并返回它们的和：</p>
+
+<script type="math/tex; mode=display">f(x, y) \triangleq x + y</script>
+
+<p>上述的结合律，其实对应了如下的函数调用：</p>
+
+<script type="math/tex; mode=display">f(f(a, b), c) == f(a, f(b, c))</script>
+
+<p>也就是说，加法结合律，这一个运算法则并没有定义任何的Mutable变量。</p>
+
+<h2 id="历史和定义">历史和定义</h2>
+
+<p>函数编程早期的语言是<code class="highlighter-rouge">Lisp</code>，与其相关的语言是<code class="highlighter-rouge">Scheme</code>。
+在<code class="highlighter-rouge">Scheme</code>论坛里面，有一本称之为“The Bible”的书叫
+《Structure and Interpretation of Computer Programs (SICP)》<sup id="fnref:sicp"><a href="#fn:sicp" class="footnote">6</a></sup>。</p>
+
+<p>随后出现的函数式编程语言还有<code class="highlighter-rouge">Erlang</code>、<code class="highlighter-rouge">Haskell</code>。</p>
+
+<p>运行在<code class="highlighter-rouge">.NET</code>上的FP是<code class="highlighter-rouge">F#</code>，而运行在<code class="highlighter-rouge">JVM</code>上的FP是<code class="highlighter-rouge">Scala</code>。</p>
+
+<p>通常的，我们将函数式编程定义为：</p>
+
+<ul>
+  <li>Immutable；</li>
+  <li>没有赋值；</li>
+  <li>没有<code class="highlighter-rouge">if-else</code>、循环；</li>
+  <li>函数是Pure的；</li>
+  <li>函数和其它Type处在同一地位：可作参数、可作返回值。</li>
+</ul>
+
+<h1 id="两种evaluation的方式">两种Evaluation的方式</h1>
+
+<h2 id="repl">REPL</h2>
+
+<p>我们可以在REPL下面执行<code class="highlighter-rouge">Scala</code>语句，REPL全称为：Read-Evaluation-Print-Loop，
+表示：</p>
+
+<ul>
+  <li>读取输入的表达式；</li>
+  <li>求值；</li>
+  <li>输出结果；</li>
+  <li>重复第一步。</li>
+</ul>
+
+<p>其中E就是Evaluation的意思——计算表达式的值。</p>
+
+<p>可以在命令行中输入<code class="highlighter-rouge">scala</code>，开启<code class="highlighter-rouge">Scala</code>语言的REPL页面：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>scala
+Welcome to Scala version 2.11.6 <span class="o">(</span>OpenJDK 64-Bit Server VM, Java 1.8.0_91<span class="o">)</span>.
+Type <span class="k">in </span>expressions to have them evaluated.
+Type :help <span class="k">for </span>more information.
+
+scala&gt;</code></pre></figure>
+
+<h2 id="表达式">表达式</h2>
+
+<p>精确的表达式定义可参考Scala Specification <sup id="fnref:scala_spec_exp:1"><a href="#fn:scala_spec_exp" class="footnote">4</a></sup>，规格文档中，
+采用了递归定义的方式。</p>
+
+<p>为了便于理解，什么是递归定义，此处引用一阶谓词逻辑的“命题”的定义 <sup id="fnref:wiki_formula"><a href="#fn:wiki_formula" class="footnote">7</a></sup>：</p>
+
+<ul>
+  <li>一个简单的句子是一个命题，比如“天是蓝色的”、“我是人”，在这些句子中，“是”是一个一阶谓词；</li>
+  <li>任意的一个命题<script type="math/tex">A</script>，它的否定形式也是一个命题 <script type="math/tex">\neg A</script>；</li>
+  <li>更一般地，对于任意一个命题<script type="math/tex">A</script>，使用任意一个一元操作符<script type="math/tex">\otimes</script>，也能称之为命题<script type="math/tex">\otimes A</script>；</li>
+  <li>任意两个命题<script type="math/tex">A</script>、<script type="math/tex">B</script>，使用任意一个二元操作符 <sup id="fnref:wiki_connective"><a href="#fn:wiki_connective" class="footnote">8</a></sup><script type="math/tex">\otimes</script>，也称之为命题<script type="math/tex">A \otimes B</script>。
+在谓词逻辑中，常见的二元操作符有“与”、“或”和“蕴含” <sup id="fnref:fn_if-then"><a href="#fn:fn_if-then" class="footnote">9</a></sup>；</li>
+  <li>任意一个命题<script type="math/tex">A</script>，使用括号之后，依然是一个命题<script type="math/tex">(A)</script>，其真值表和原命题相同，并在表达式中享有计算的最高优先级。</li>
+</ul>
+
+<h2 id="call-by-valuecbv">Call By-Value，CBV</h2>
+
+<p>我们来看第一种Evaluation的方式，定义如下两个函数：</p>
+
+<p>函数一，求和：</p>
+
+<script type="math/tex; mode=display">f(x, y) = x + y</script>
+
+<p>函数二，计算平方：</p>
+
+<script type="math/tex; mode=display">g(x) = x^2</script>
+
+<p>对于复合函数平方和计算，我们有：</p>
+
+<script type="math/tex; mode=display">h(x, y) = x^2+y^2 = f(x^2, y^2) = f\left[ g(x), g(y) \right]</script>
+
+<p>下面我们给出<script type="math/tex">h(3, f(4,1))</script>的求值过程：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="nx">h</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="o">=</span> <span class="nx">h</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="o">=</span> <span class="nx">h</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="nx">g</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nx">g</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="nx">g</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="nx">g</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="o">=</span> <span class="mi">9</span> <span class="o">+</span> <span class="mi">25</span>
+<span class="o">=</span> <span class="mi">34</span></code></pre></figure>
+
+<p>在上面的Evaluation过程中，我们优先将“值”应用（Apply）到
+表达式中的各个参数上，比如第一步里面，我们先计算出第二个参数<script type="math/tex">f(4,1)</script>
+的最终值，再代入（Apply）函数<script type="math/tex">h(3,5)</script>中做后续的计算。</p>
+
+<p>这样的模式，我们称为Application模式。
+并将这种模式下面的Evaluation，称为Call By-Value，简写为CBV。</p>
+
+<h2 id="call-by-namecbn">Call By-Name，CBN</h2>
+
+<p>同样上面的函数定义，我们来看第二种Evaluation的方式：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="nx">h</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="o">=</span> <span class="nx">f</span><span class="p">[</span><span class="nx">g</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nx">g</span><span class="p">(</span> <span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="p">)]</span>
+<span class="o">=</span> <span class="nx">g</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="nx">g</span><span class="p">[</span><span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">g</span><span class="p">[</span><span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>          <span class="c1">// A</span>
+
+<span class="o">=</span> <span class="mi">9</span> <span class="o">+</span> <span class="nx">g</span><span class="p">[</span><span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="o">=</span> <span class="mi">9</span> <span class="o">+</span> <span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>     <span class="c1">// B</span>
+<span class="o">=</span> <span class="mi">9</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="o">=</span> <span class="mi">9</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>           
+<span class="o">=</span> <span class="mi">9</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>           <span class="c1">// C</span>
+<span class="o">=</span> <span class="mi">9</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="o">=</span> <span class="mi">9</span> <span class="o">+</span> <span class="mi">25</span>
+<span class="o">=</span> <span class="mi">34</span></code></pre></figure>
+
+<p>上面的Evalution过程，我们作如下解释。</p>
+
+<p>步骤A的解释：</p>
+
+<ul>
+  <li>要想求得两个数相加的和，必须先Evaluate左边的值；</li>
+  <li>此时，对于二元操作符“加”而言，左边的表达式可以求值了，我们得到<script type="math/tex">3*3=9</script>；</li>
+  <li>加号右边的表达式是一个复合函数；</li>
+  <li>我们还可以继续将参数<script type="math/tex">f(4, 1)</script>替换（Substitute）进函数<script type="math/tex">g(x)=x^2</script>中；</li>
+  <li>替换（Substitute）得到步骤B的表达式<script type="math/tex">g(f(4,1)) = \left[ f(4,1) \right]^2</script>。</li>
+</ul>
+
+<p>步骤B的解释：</p>
+
+<ul>
+  <li>对于表达式<script type="math/tex">f(4, 1) * f(4, 1)</script>这样一个乘法运算；</li>
+  <li>我们首先计算乘号左边的值；</li>
+  <li>替换（Substitute）得到<script type="math/tex">(4 + 1) * f(4, 1)</script>；</li>
+  <li>计算得到<script type="math/tex">5 * f(4, 1)</script>；</li>
+  <li>此时，乘号左边的值已经确定，我们“不得不”去Evaluate乘号右边的表达式<script type="math/tex">f(4, 1)</script>。</li>
+</ul>
+
+<p>步骤C的解释：</p>
+
+<ul>
+  <li>既然已经求得第一个<script type="math/tex">f(4,1)=5</script>了，为什么不在同一时刻代入乘号右边的<script type="math/tex">f(4,1)</script>？</li>
+  <li>如果我们先后调用了两次<script type="math/tex">f(4,1)</script>，如何保证两次调用，最终Evaluate的值是一样的？</li>
+  <li>上面两个问题，包含函数编程的两个重要思想：Immutable和Pure，以后再解释。</li>
+</ul>
+
+<p>上面的步骤，我们优先尝试将参数最原始的状态替代（Substitute）进入表达式。
+直到，表达式没有参数可以替代了，“不得不”去计算一个原始状态，我们才调用加号、或者乘号求值。</p>
+
+<p>这样的模式，我们称为Substitution模式。
+并将这种模式下面的Evaluation，称为Call By-Name，简写为CBN。</p>
+
+<h2 id="收敛">收敛</h2>
+
+<p>如果一个Evaluation的过程，在有限的时间内，可以终止（Terminate）计算。
+我们称该Evaluation是收敛的。</p>
+
+<p>我们作如下的定义：</p>
+
+<blockquote>
+  <p>表达式<script type="math/tex">A</script>收敛，表示为<script type="math/tex">\Lambda(A)</script>，意味着：</p>
+
+  <p>在有限的时间内，存在一个值<script type="math/tex">a</script>，使得<script type="math/tex">\Lambda(A) = a</script>；</p>
+
+  <p>同时，我们记<script type="math/tex">\overline{\Lambda(A)}</script>，表示为表达式<script type="math/tex">A</script>不收敛。</p>
+
+  <p>我们将CBV下的收敛，简写为<script type="math/tex">\Lambda_{\text{CBV}}(A)</script>，
+将CBN下的收敛，简写为<script type="math/tex">\Lambda_{\text{CBN}}(A)</script></p>
+</blockquote>
+
+<p>我们可得如下结论：</p>
+
+<blockquote>
+  <p>如果<script type="math/tex">\Lambda_{\text{CBV}}(A)</script>，则一定有<script type="math/tex">\Lambda_{\text{CBN}}(A)</script>；</p>
+
+  <p>反之未必。</p>
+</blockquote>
+
+<p>练习：</p>
+
+<blockquote>
+  <p>举出一个“反之未必”的例子；</p>
+
+  <p>基于一阶谓词逻辑的命题定义，证明上述结论：<script type="math/tex">\Lambda_{\text{CBV}}(A) \rightarrow \Lambda_{\text{CBN}}(A)</script>。</p>
+</blockquote>
+
+<h1 id="函数的基础知识">函数的基础知识</h1>
+
+<p>本小节不会介绍<code class="highlighter-rouge">Scala</code>中的基本Data Type，这些基础知识，可以在<code class="highlighter-rouge">Scala</code>的官方文档或者
+《Programming in Scala》<sup id="fnref:scala_progfun_2nd"><a href="#fn:scala_progfun_2nd" class="footnote">10</a></sup>（Chapter 5 Basic Types and Operations）中找到。</p>
+
+<p>本小节，暂时不会涉及到泛型相关的话题。</p>
+
+<h2 id="通常的函数定义">通常的函数定义</h2>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">sum</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="n">sum</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">,</span> <span class="kt">y:</span> <span class="kt">Int</span><span class="o">)</span><span class="nc">Int</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">square</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+<span class="n">square</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">)</span><span class="kt">Int</span></code></pre></figure>
+
+<p>完整的函数定义规格文档参考官方文档（引用），如下做简要说明，通常的函数定义从左到右依次为：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">def</code>关键字，表示开始定义一个函数；</li>
+  <li>函数名称，如上面的<code class="highlighter-rouge">sum</code>和<code class="highlighter-rouge">square</code>；</li>
+  <li>函数参数定义列表，由一个括号包围，定义如下：
+    <ul>
+      <li>函数可以不接受任何参数，此时参数列表为空，括号可以省略；</li>
+      <li>函数只有一个参数定义，包含参数名称、冒号和参数类型（Type）；</li>
+      <li>函数如果有多个参数，则使用逗号分割；</li>
+    </ul>
+  </li>
+  <li>函数的返回类型定义，由冒号和类型（Type）组成；</li>
+  <li>函数的函数体，由等号和表达式组成。</li>
+</ul>
+
+<h2 id="函数调用">函数调用</h2>
+
+<p><code class="highlighter-rouge">Scala</code>中函数调用和大多数语言一样，唯一的不同在于，如果函数接收空参数，那么
+调用时，括号可以省略：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="n">sum</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span>
+<span class="n">res6</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">random</span><span class="o">()</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">scala</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">Random</span><span class="o">.</span><span class="n">nextInt</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+<span class="n">random</span><span class="k">:</span> <span class="o">()</span><span class="kt">Int</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">random</span><span class="o">()</span>
+<span class="n">res8</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">random</span>
+<span class="n">res9</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span></code></pre></figure>
+
+<p>此处有备注：</p>
+
+<blockquote>
+  <p>有关随机函数是否为Pure的讨论，可以参考StackOverflow中的讨论：</p>
+
+  <p>stackoverflow.com/questions/31818787</p>
+</blockquote>
+
+<h2 id="scope">Scope</h2>
+
+<p>使用花括号包围的一个Block，构成了一个局部的Scope。</p>
+
+<p>在<code class="highlighter-rouge">Scala</code>中，一个Block也是一个表达式，它的值就是这个Block中，最后一个表达式的值。</p>
+
+<p>练习：</p>
+
+<blockquote>
+  <p>请问<code class="highlighter-rouge">result</code>的值是多少？</p>
+
+  <div class="highlighter-rouge"><pre class="highlight"><code>val x = 0
+def f(x: Int) = x + 1
+val result = {
+  val x = f(1)
+  x * x
+} + x
+</code></pre>
+  </div>
+</blockquote>
+
+<p>正因为一个Block也是一个表达式，我们也说过，函数体是由等号和表达式构成的，所以
+函数的定义也可以包含一个Block：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+         <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+         <span class="n">y</span>
+       <span class="o">}</span>
+
+<span class="n">f</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">)</span><span class="kt">Int</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">f</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
+<span class="n">res10</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">4</span></code></pre></figure>
+
+<h2 id="匿名函数">匿名函数</h2>
+
+<p>我们可以定义一个匿名函数：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="n">res19</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span><span class="o">,</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Int</span> <span class="k">=</span> <span class="o">&lt;</span><span class="n">function2</span><span class="o">&gt;</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">res19</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span>
+<span class="n">res20</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">3</span></code></pre></figure>
+
+<p>上述的匿名函数，等价于一个Block：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="o">{</span>
+  <span class="k">def</span> <span class="n">res19</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+  <span class="n">res19</span>
+<span class="o">}</span></code></pre></figure>
+
+<h1 id="函数类型">函数类型</h1>
+
+<p>仔细留意<code class="highlighter-rouge">Scala</code>的REPL输出值（Print）。
+类型
+对于具名函数的定义：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">sum</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="n">sum</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">,</span> <span class="kt">y:</span> <span class="kt">Int</span><span class="o">)</span><span class="nc">Int</span></code></pre></figure>
+
+<p>对于匿名函数的定义：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="n">res19</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span><span class="o">,</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Int</span> <span class="k">=</span> <span class="o">&lt;</span><span class="n">function2</span><span class="o">&gt;</span></code></pre></figure>
+
+<p>我们称，<code class="highlighter-rouge">(Int, Int) =&gt; Int</code>是一个函数类型，它是一个无穷集合，该集合：</p>
+
+<ul>
+  <li>每一个元素都是一个函数；</li>
+  <li>任意一个函数满足：
+    <ul>
+      <li>接收两个参数；</li>
+      <li>第一个参数是<code class="highlighter-rouge">Int</code>类型；</li>
+      <li>第二个参数是<code class="highlighter-rouge">Int</code>类型；</li>
+      <li>函数返回一个<code class="highlighter-rouge">Int</code>类型；</li>
+    </ul>
+  </li>
+  <li>不满足如上条件的函数定义，不能成为该集合的一个元素。</li>
+</ul>
+
+<p>如果函数不需要参数，则它对应的函数类型为：<code class="highlighter-rouge">() =&gt; ?</code>，比如：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="o">()</span> <span class="k">=&gt;</span> <span class="mi">1</span>
+<span class="n">res24</span><span class="k">:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="nc">Int</span> <span class="k">=</span> <span class="o">&lt;</span><span class="n">function0</span><span class="o">&gt;</span></code></pre></figure>
+
+<h2 id="函数作为参数">函数作为参数</h2>
+
+<p>函数类型（Type）类似于其它普通类型——比如<code class="highlighter-rouge">Int</code>——可以作为参数传递：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">sumBy</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">by</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">by</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">+</span> <span class="n">by</span><span class="o">(</span><span class="n">y</span><span class="o">)</span>
+<span class="n">sumBy</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">,</span> <span class="kt">y:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">by</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span><span class="nc">Int</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">sumBy</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="o">)</span>
+<span class="n">res27</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">sumBy</code>中的第三个参数<code class="highlighter-rouge">by</code>是一个函数类型，它表示：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">by</code>这个参数接收一个函数；
+    <ul>
+      <li>这个函数接收一个<code class="highlighter-rouge">Int</code>作为参数；</li>
+      <li>并返回一个<code class="highlighter-rouge">Int</code>；</li>
+    </ul>
+  </li>
+  <li>不满足<code class="highlighter-rouge">Int =&gt; Int</code>类型的，都无法传递给<code class="highlighter-rouge">by</code>这个参数。</li>
+</ul>
+
+<p>上述<code class="highlighter-rouge">sumBy</code>对应的函数类型为：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="o">(</span><span class="nc">Int</span><span class="o">,</span> <span class="nc">Int</span><span class="o">,</span> <span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Int</span></code></pre></figure>
+
+<h2 id="函数作为返回值">函数作为返回值</h2>
+
+<p>同样地，函数类型（Type）类似于其它普通类型——比如<code class="highlighter-rouge">Int</code>——可以作为值返回：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">step</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">step</span> <span class="o">+</span> <span class="n">x</span>
+<span class="n">g</span><span class="k">:</span> <span class="o">(</span><span class="kt">step:</span> <span class="kt">Int</span><span class="o">)</span><span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">s1</span> <span class="k">=</span> <span class="n">g</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+<span class="n">s1</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span> <span class="k">=</span> <span class="o">&lt;</span><span class="n">function1</span><span class="o">&gt;</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">s3</span> <span class="k">=</span> <span class="n">g</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
+<span class="n">s3</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span> <span class="k">=</span> <span class="o">&lt;</span><span class="n">function1</span><span class="o">&gt;</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">s1</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+<span class="n">res28</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">s3</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+<span class="n">res29</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span></code></pre></figure>
+
+<p>上述<code class="highlighter-rouge">g</code>的定义等价于：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">step</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">step</span> <span class="o">+</span> <span class="n">x</span>
+
+  <span class="n">f</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>对应的函数类型为：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span></code></pre></figure>
+
+<p>在函数类型的表示中，默认从右向左看，所以如下两个定义是等价的：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span>
+<span class="nc">Int</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span><span class="o">)</span></code></pre></figure>
+
+<p>表示：</p>
+
+<ul>
+  <li>使用一个<code class="highlighter-rouge">Int</code>参数；</li>
+  <li>可以返回（构造出）一个函数；</li>
+  <li>构造出来的函数接收一个<code class="highlighter-rouge">Int</code>参数；</li>
+  <li>构造出来的函数最终返回一个<code class="highlighter-rouge">Int</code>值。</li>
+</ul>
+
+<p>所以，上述的函数类型，有别于如下的函数类型：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="o">(</span><span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Int</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">(Int =&gt; Int) =&gt; Int</code>，表示为：</p>
+
+<ul>
+  <li>首先接收一个函数作为参数；</li>
+  <li>这个函数参数将<code class="highlighter-rouge">Int</code>映射成一个<code class="highlighter-rouge">Int</code>；</li>
+  <li>整个函数，最终返回一个<code class="highlighter-rouge">Int</code>。</li>
+</ul>
+
+<p>练习：</p>
+
+<blockquote>
+  <p>定义一个函数，使其函数类型满足<code class="highlighter-rouge">(Int =&gt; Int) =&gt; Int</code>。</p>
+</blockquote>
+
+<h2 id="类型推断">类型推断</h2>
+
+<p>我们可以让<code class="highlighter-rouge">Scala</code>编译器，来推断函数的返回值，比如：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="n">f</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">,</span> <span class="kt">y:</span> <span class="kt">Int</span><span class="o">)</span><span class="nc">Int</span></code></pre></figure>
+
+<p>应用在两个<code class="highlighter-rouge">Int</code>上的加法运算，得到的结果也是一个 <code class="highlighter-rouge">Int</code>。
+这就是类型推断的结果，帮助我们简化了函数定义。</p>
+
+<p>类型推断，也可以推出函数类型：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">step</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">step</span> <span class="o">+</span> <span class="n">x</span>
+<span class="n">g</span><span class="k">:</span> <span class="o">(</span><span class="kt">step:</span> <span class="kt">Int</span><span class="o">)</span><span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span></code></pre></figure>
+
+<p>如果编译器的类型推断和函数定义的返回类型一致，则称该函数的定义合法。</p>
+
+<h2 id="类型匹配">类型匹配</h2>
+
+<p>函数的调用需要进行类型匹配，先来看基本类型的匹配：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="n">f</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">,</span> <span class="kt">y:</span> <span class="kt">Double</span><span class="o">)</span><span class="nc">Double</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span>
+<span class="n">res34</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">3.0</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">f</span><span class="o">(</span><span class="mf">1.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">9</span><span class="k">:</span> <span class="kt">error:</span> <span class="k">type</span> <span class="kt">mismatch</span><span class="o">;</span>
+ <span class="n">found</span>   <span class="k">:</span> <span class="kt">Double</span><span class="o">(</span><span class="err">1</span><span class="kt">.</span><span class="err">0</span><span class="o">)</span>
+ <span class="kt">required:</span> <span class="kt">Int</span>
+              <span class="n">f</span><span class="o">(</span><span class="mf">1.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">)</span>
+                <span class="o">^</span></code></pre></figure>
+
+<p>函数类型（Type）类似于其它普通类型——比如<code class="highlighter-rouge">Int</code>——调用包含函数参数的函数，也
+需要进行类型匹配：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">sumBy</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">by</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">by</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">+</span> <span class="n">by</span><span class="o">(</span><span class="n">y</span><span class="o">)</span>
+<span class="n">sumBy</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">,</span> <span class="kt">y:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">by</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span><span class="nc">Int</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">sumBy</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">9</span><span class="k">:</span> <span class="kt">error:</span> <span class="k">type</span> <span class="kt">mismatch</span><span class="o">;</span>
+ <span class="n">found</span>   <span class="k">:</span> <span class="kt">Int</span><span class="o">(</span><span class="err">3</span><span class="o">)</span>
+ <span class="kt">required:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span>
+              <span class="n">sumBy</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+                          <span class="o">^</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">sumBy</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">)</span>
+<span class="n">res37</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">f</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">)</span><span class="kt">Int</span>
+
+<span class="n">scala</span><span class="o">&gt;</span> <span class="n">sumBy</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="n">f</span><span class="o">)</span>
+<span class="n">res38</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span></code></pre></figure>
+
+<p>我们将参数列表数量相同，并且类型匹配的函数调用，称为合法的函数调用。</p>
+
+<h2 id="函数的返回值不要过度依赖类型推断">函数的返回值不要过度依赖类型推断</h2>
+
+<p>不要过度依赖类型推断，在设计复杂类（尤其存在泛型）的时候，显式地定义函数返回类型，
+可以保证函数的逻辑正确，如果不显式定义返回类型的话， <code class="highlighter-rouge">Bolero</code>中常用的如下的类型，很容易混淆：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">Future</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
+<span class="nc">Future</span><span class="o">[</span><span class="kt">Option</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span>
+<span class="nc">Future</span><span class="o">[</span><span class="kt">Future</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span>
+<span class="nc">Future</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span>
+<span class="nc">Seq</span><span class="o">[</span><span class="kt">Future</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span>
+<span class="o">//</span> <span class="n">未来的章节</span><span class="err">，</span><span class="n">会提到这些类型</span></code></pre></figure>
+
+<h2 id="scala语言中如何定义call-by-value"><code class="highlighter-rouge">Scala</code>语言中如何定义Call By-Value</h2>
+
+<p>使用<code class="highlighter-rouge">val</code>可以定义一个CBV的表达式，在定义的那一刻就完成Evaluation。</p>
+
+<h2 id="scala语言中如何定义call-by-name"><code class="highlighter-rouge">Scala</code>语言中如何定义Call By-Name</h2>
+
+<p>使用<code class="highlighter-rouge">def</code>可以定义一个CBN的表达式，只有在“不得不”的时候，才会Evaluate。</p>
+
+<h2 id="函数参数中的cbv和cbn">函数参数中的CBV和CBN</h2>
+
+<p>通常的，所有函数参数都是CBV的，可以按照如下方式，定义一个CBN：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">x</span> <span class="k">else</span> <span class="n">y</span></code></pre></figure>
+
+<p>可以改写为：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">x</span> <span class="k">else</span> <span class="n">y</span><span class="o">()</span></code></pre></figure>
+
+<h1 id="综合练习">综合练习</h1>
+
+<h2 id="根据函数定义写出它们对应的函数类型">根据函数定义，写出它们对应的函数类型</h2>
+
+<p>举例：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="o">//</span> <span class="n">对应的函数类型为</span><span class="err">：</span><span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span></code></pre></figure>
+
+<p>题目：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">z</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">z</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">*</span> <span class="o">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">z</span><span class="o">)</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">z</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span> <span class="o">*</span> <span class="mf">1.0</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="o">)</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+  <span class="n">g</span>
+<span class="o">}</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">y</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">()</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span><span class="o">,</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">y</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">z</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">()</span> <span class="o">+</span> <span class="n">z</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">z</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="o">(()</span> <span class="k">=&gt;</span> <span class="n">y</span><span class="o">())()</span></code></pre></figure>
+
+<h2 id="判断下列的函数定义是否合法">判断下列的函数定义，是否合法</h2>
+
+<p>举例：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="c1">// 该函数定义合法，因为当x是整数的时候，(x + 1) 也是一个整数；
+// 类型推断符合函数返回类型
+</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="c1">// 该函数定义不合法，因为(x + 1)是一个整数，但是函数需要一个String作返回值；
+</span><span class="o">//</span> <span class="n">类型推断不符合函数的返回类型</span></code></pre></figure>
+
+<p>题目：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.0</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">z</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="o">.</span><span class="n">length</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">z</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">z</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">()</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">y</span><span class="o">(</span><span class="n">x</span><span class="o">)</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">(</span><span class="n">z</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">y</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">+</span> <span class="n">z</span></code></pre></figure>
+
+<h2 id="判断下列的函数调用是否合法">判断下列的函数调用，是否合法</h2>
+
+<p>举例：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">1.0</span>
+<span class="n">f</span><span class="o">()</span>         <span class="c1">// 调用不合法，因为参数列表的数量不匹配
+</span><span class="n">f</span><span class="o">(</span><span class="mf">1.0</span><span class="o">)</span>      <span class="c1">// 调用合法，参数列表的数量、类型都匹配
+</span><span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>        <span class="o">//</span> <span class="n">调用合法</span><span class="err">，</span><span class="n">参数列表的数量相同</span><span class="err">，</span><span class="nc">Int类型可以隐式转换为Double类型</span></code></pre></figure>
+
+<p>题目：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">z</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="o">.</span><span class="n">length</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="s">"3"</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mf">1.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">,</span> <span class="s">"3.0"</span><span class="o">)</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">()</span>
+<span class="k">def</span> <span class="n">g</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">def</span> <span class="n">h</span><span class="o">()</span> <span class="k">=</span> <span class="mi">2</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="o">()</span> <span class="k">=&gt;</span> <span class="mi">2</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="mi">2</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">g</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">g</span><span class="o">())</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">h</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">h</span><span class="o">())</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">y</span><span class="o">(</span><span class="n">x</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">)</span>
+<span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">)</span></code></pre></figure>
+
+<h2 id="根据函数类型定义一个满足该类型的函数">根据函数类型，定义一个满足该类型的函数</h2>
+
+<p>尽量使用匿名表达式定义如下函数。</p>
+
+<p>举例：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// 对于函数类型：Int =&gt; Double，可定义
+</span><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">1.0</span>
+<span class="c1">// 对应的匿名表达式为
+</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">1.0</span></code></pre></figure>
+
+<p>题目：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="o">()</span> <span class="k">=&gt;</span> <span class="nc">Int</span>
+<span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span>
+
+<span class="o">(</span><span class="nc">Int</span><span class="o">,</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Int</span>
+
+<span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span>
+<span class="nc">Int</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span><span class="o">)</span>
+
+<span class="o">(</span><span class="nc">Int</span><span class="o">,</span> <span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Int</span>
+<span class="o">(</span><span class="nc">Int</span><span class="o">,</span> <span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span>
+
+<span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span>
+
+<span class="nc">Int</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="nc">Int</span> <span class="k">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Int</span></code></pre></figure>
+
+<h2 id="将包含cbn参数的函数改写成类似的普通函数">将包含CBN参数的函数，改写成类似的普通函数</h2>
+
+<p>举例参考正文中的例子。</p>
+
+<p>题目：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">x</span> <span class="k">else</span> <span class="n">y</span>
+
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="nc">Int</span><span class="o">)</span> <span class="k">=</span>
+  <span class="o">(</span><span class="n">z</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span></code></pre></figure>
+
+<h2 id="设计一个布尔类型">设计一个布尔类型</h2>
+
+<p>（略）</p>
+
+<p>注意CBV和CBN的使用。</p>
+
+<h1 id="练习题参考答案">练习题参考答案</h1>
+
+<h2 id="举出一个反之未必的例子">举出一个“反之未必”的例子</h2>
+
+<p>定义两个函数：</p>
+
+<p>函数一，永久循环累加：</p>
+
+<script type="math/tex; mode=display">f(x) = x + (x+1) + (x+2) + \ldots + \infty = \sum_{t=x}^{\infty} t</script>
+
+<p>函数二，有条件地返回第一个参数：</p>
+
+<script type="math/tex; mode=display">g(x, y) =  (x > 0) \; ? \;x : y</script>
+
+<p>则：</p>
+
+<p><script type="math/tex">\Lambda_{\text{CBN}}\left( g[1, f(0)]\right) = 1</script>，但是<script type="math/tex">\overline{\Lambda_{\text{CBV}}(g[1, f(0)])}</script></p>
+
+<h2 id="基于一阶谓词逻辑的命题定义的证明过程">基于一阶谓词逻辑的命题定义的证明过程</h2>
+
+<p>题目：</p>
+
+<blockquote>
+  <p>基于一阶谓词逻辑的命题定义，证明：<script type="math/tex">\Lambda_{\text{CBV}}(A) \rightarrow \Lambda_{\text{CBN}}(A)</script></p>
+</blockquote>
+
+<p>证明：</p>
+
+<p>根据一阶谓词逻辑下，对“命题”的递归定义，使用归纳法证明：</p>
+
+<p>首先考虑命题<script type="math/tex">A</script>、<script type="math/tex">B</script>是一个简单句，此时<script type="math/tex">\Lambda_{\text{CBV}}(A)</script>等同于<script type="math/tex">\Lambda_{\text{CBN}}(A)</script>。</p>
+
+<p>于是不难证明，当<script type="math/tex">A</script>是一个简单句时：</p>
+
+<ul>
+  <li>(1)，<script type="math/tex">\Lambda_{\text{CBV}}(A) \rightarrow \Lambda_{\text{CBN}}(A)</script>；</li>
+  <li>(2)，<script type="math/tex">\Lambda_{\text{CBV}}(\neg A) \rightarrow \Lambda_{\text{CBN}}(\neg A)</script>，该结论使用反证法可得；</li>
+  <li>(3)，<script type="math/tex">\Lambda_{\text{CBV}}[(A)] \rightarrow \Lambda_{\text{CBN}}[(A)]</script>，该结论使用反证法可得；</li>
+</ul>
+
+<p>下面证明，当命题<script type="math/tex">A</script>、<script type="math/tex">B</script>是一个简单句，对于任意的二元操作符<script type="math/tex">\otimes</script>，同样满足：</p>
+
+<script type="math/tex; mode=display">\Lambda_{\text{CBV}}(A \otimes B) \rightarrow \Lambda_{\text{CBN}}(A \otimes B)</script>
+
+<p>先看蕴含式的左边，我们可得：</p>
+
+<script type="math/tex; mode=display">\Lambda_{\text{CBV}}(A \otimes B) \rightarrow \Lambda_{\text{CBV}}(A) \wedge \Lambda_{\text{CBV}}(B)</script>
+
+<p>因为（反证法），在CBV的情况下，若<script type="math/tex">A</script>和<script type="math/tex">B</script>中存在任意一个无法Evaluation的情况，二元操作符<script type="math/tex">\otimes</script>都不能执行，最终
+导致<script type="math/tex">\overline{\Lambda_{\text{CBV}}(A \otimes B)}</script>，和题目本意矛盾。</p>
+
+<p>于是，我们证明了，当命题<script type="math/tex">A</script>、<script type="math/tex">B</script>是一个简单句，对于任意的二元操作符<script type="math/tex">\otimes</script>，如果
+<script type="math/tex">\Lambda_{\text{CBV}}(A \otimes B)</script>，则在有限的时间内：</p>
+
+<ul>
+  <li>(4)，<script type="math/tex">\exists a \rightarrow \Lambda_{\text{CBV}}(A) = a</script>；</li>
+  <li>(5)，<script type="math/tex">\exists b \rightarrow \Lambda_{\text{CBV}}(B) = b</script>；</li>
+</ul>
+
+<p>进而，</p>
+
+<script type="math/tex; mode=display">\Lambda_{\text{CBN}}(A \otimes B)  \;{\tiny\begin{matrix}\\ \normalsize = \\ ^{\scriptsize (4)}\end{matrix}}\; \Lambda_{\text{CBN}}(a \otimes B)  \;{\tiny\begin{matrix}\\ \normalsize = \\ ^{\scriptsize (5)}\end{matrix}}\; \Lambda_{\text{CBN}}(a \otimes b) = a\otimes b</script>
+
+<p>之后，使用递归，对复杂命题同理证明。</p>
+
+<p>（略）</p>
+
+<h1 id="参考文献">参考文献</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:open_progfun1">
+      <p><a href="https://www.coursera.org/learn/progfun1">Functional Programming Principles in Scala</a> from École Polytechnique Fédérale de Lausanne&nbsp;<a href="#fnref:open_progfun1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:blog_bolero">
+      <p><a href="https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板</a>&nbsp;<a href="#fnref:blog_bolero" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:github_bolero">
+      <p><a href="https://github.com/scozv/bolero">Bolero, 源代码</a>&nbsp;<a href="#fnref:github_bolero" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:scala_spec_exp">
+      <p><a href="http://www.scala-lang.org/files/archive/spec/2.11/06-expressions.html">Scala Specification, Chapter 6 Expressions</a>&nbsp;<a href="#fnref:scala_spec_exp" class="reversefootnote">&#8617;</a>&nbsp;<a href="#fnref:scala_spec_exp:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:c9_lang_future">
+      <p><a href="https://channel9.msdn.com/blogs/adebruyn/techdays-2010-developer-keynote-by-anders-hejlsberg">TechDays 2010 Keynote by Anders Hejlsberg: Trends and future directions in programming languages</a>&nbsp;<a href="#fnref:c9_lang_future" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:sicp">
+      <p><a href="https://mitpress.mit.edu/sicp/"> Structure and Interpretation of Computer Programs</a>&nbsp;<a href="#fnref:sicp" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:wiki_formula">
+      <p><a href="https://zh.wikipedia.org/wiki/%E5%8E%9F%E5%AD%90%E5%85%AC%E5%BC%8F">原子公式</a>&nbsp;<a href="#fnref:wiki_formula" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:wiki_connective">
+      <p><a href="https://zh.wikipedia.org/wiki/%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6">逻辑运算符</a>&nbsp;<a href="#fnref:wiki_connective" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:fn_if-then">
+      <p>可以通过枚举真值表的方式证明，“蕴含”（<script type="math/tex">A \rightarrow B</script>）等价于复合命题<script type="math/tex">\neg A \vee B</script>。更一般地，可以证明，一阶谓词逻辑的所有命题，最多只需要“否定”、“或”两个连接词表示。&nbsp;<a href="#fnref:fn_if-then" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:scala_progfun_2nd">
+      <p>Martin Odersky, Lex Spoon, Bill Venners. Programming in Scala (Second Edition), Artima Press&nbsp;<a href="#fnref:scala_progfun_2nd" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+                
+                <h4>您也许还想读……</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala">
+                      使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id
+                      <small>Jul 18, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+                      Bolero，累积更新说明（2016-09-04）
+                      <small>Sep 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/08/22/scala-quick-tour-part-ii">
+                      Scala函数编程（二）
+                      <small>Aug 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+                      Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板
+                      <small>Jul 27, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk">
+                      使用Ping++设计可供集中收银的微服务
+                      <small>Jul 11, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/zh/guide/2016/08/21/scala-quick-tour-part-i';
+      this.page.identifier = '/guide/2016/08/21/scala-quick-tour-part-i';
+      this.page.title = 'Scala函数编程（一）';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

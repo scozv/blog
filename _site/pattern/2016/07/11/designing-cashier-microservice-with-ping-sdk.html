@@ -1,0 +1,1114 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      Design a Cashier Microservice with Ping++ SDK &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">Design a Cashier Microservice with Ping++ SDK</h1>
+  <span class="post-date">Jul 11, 2016</span>
+  
+<h1 class="no_toc" id="abstract">Abstract</h1>
+
+<blockquote>
+  <p>Ping++ <sup id="fnref:pingpp"><a href="#fn:pingpp" class="footnote">1</a></sup> provides a facade implementation for multiple payments.
+Usually, each application we create needs a corresponding Ping++ application.</p>
+
+  <p>In this article, I try to design a cashier microservice where only one
+Ping++ application is needed.</p>
+
+  <p>This article is mainly written in Chinese.</p>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#term" id="markdown-toc-term">Term</a>    <ul>
+      <li><a href="#application" id="markdown-toc-application">Application</a></li>
+      <li><a href="#view-layer" id="markdown-toc-view-layer">View layer</a></li>
+      <li><a href="#restful-server-layer" id="markdown-toc-restful-server-layer">RESTful Server layer</a></li>
+      <li><a href="#ping-application" id="markdown-toc-ping-application">Ping++ Application</a></li>
+      <li><a href="#cashier" id="markdown-toc-cashier">Cashier</a></li>
+    </ul>
+  </li>
+  <li><a href="#design" id="markdown-toc-design">Design</a>    <ul>
+      <li><a href="#general-payment-process-with-ping-" id="markdown-toc-general-payment-process-with-ping-">General Payment Process with Ping++ </a></li>
+      <li><a href="#decompressing-one-restful-server-into-multiple-services" id="markdown-toc-decompressing-one-restful-server-into-multiple-services">Decompressing One <code class="highlighter-rouge">RESTful Server</code> into Multiple Services</a></li>
+      <li><a href="#cashier-microservice-design" id="markdown-toc-cashier-microservice-design">Cashier Microservice Design</a></li>
+      <li><a href="#restful-api-of-cashier-microservice" id="markdown-toc-restful-api-of-cashier-microservice">RESTful API of Cashier Microservice</a></li>
+    </ul>
+  </li>
+  <li><a href="#references" id="markdown-toc-references">References</a></li>
+</ul>
+
+<h1 id="term">Term</h1>
+
+<h2 id="application">Application</h2>
+
+<p>Application is an abstract word, it can be a tiny calculation executable, or
+a huge system, such as personal finance management system.</p>
+
+<p>Application has different representation, like a <code class="highlighter-rouge">.exe</code> file, a Website or an
+App installed in smart devices.</p>
+
+<p>In this article, the term <strong>Application</strong>:</p>
+
+<ul>
+  <li>is a system with a complete workflow,</li>
+  <li>has a <code class="highlighter-rouge">View</code> as the user interface,</li>
+  <li>has a <code class="highlighter-rouge">Server</code> layer,
+＊is independent from each other Application.</li>
+</ul>
+
+<h2 id="view-layer">View layer</h2>
+
+<p>I suggest to separate the <code class="highlighter-rouge">View</code> layer from the business server.</p>
+
+<p>Here, the <code class="highlighter-rouge">View</code>:</p>
+
+<ul>
+  <li>accepts the user’s interaction,</li>
+  <li>sometimes, it is also called Client side.</li>
+</ul>
+
+<h2 id="restful-server-layer">RESTful Server layer</h2>
+
+<p>I suggest that all business servers are represented as <code class="highlighter-rouge">RESTful API</code>,
+in this article, the terms below are all equivalent:</p>
+
+<ul>
+  <li>Server side,</li>
+  <li>RESTful Server</li>
+  <li>Backend server.</li>
+</ul>
+
+<h2 id="ping-application">Ping++ Application</h2>
+
+<p>In Ping++ console page, developer can create one or more <strong>Ping++ Application</strong>.
+Each Ping++ application has a unique <code class="highlighter-rouge">app_id</code>.</p>
+
+<h2 id="cashier">Cashier</h2>
+
+<p>In this article, I try to design a cashier microservice where only one
+Ping++ application is needed, but multiple applications can use this
+cashier microservice.</p>
+
+<h1 id="design">Design</h1>
+
+<h2 id="general-payment-process-with-ping-">General Payment Process with Ping++ <sup id="fnref:pingpp_charge"><a href="#fn:pingpp_charge" class="footnote">2</a></sup></h2>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">+------------------------------------------+----------------+
+|                                          |                |
+|    STEP 1                                |   Client Side  |
+|    put product into cart                 |                |
+|                                          +----------------+
+|    STEP 4                             STEP 7              | STEP 8
+|                                       (Ping++ Client SDK) |         +--------+
+|    use Order data                                         | finish  |        |
+|    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
+|                                       request a payment   | +-----&gt; |        |
++-----------------------------------------------------------+         +--------+
+  + ^                  + ^
+  | |                  | |
+  | | STEP 2 &amp; 3       | | STEP 4                STEP 5
+  | |                  | |                       (Ping++ Server SDK)
+  | | apply an order   | | apply for Charge
+  | |                  | |
+  | | RESPONSE the     | | payload with          apply for Charge
+  | | Order {_id, ...} | | previous Order data   from Ping++ Server
+  | |                  | |                           +
+  v +                  v +                           |
++-------------------------------------+              |     +--------+
+|                                     | STEP 5       |     |        |
+|                  STEP 6             | +------------+---&gt; |        |
+|                                     | &lt;----------------+ |        |
+|                  get Charge data    |                    |        |
+|                  from Ping++ Server | &lt;----------------+ | Ping++ |
++---------------+                     | STEP 9             | Server |
+|               |  RESPONSE to View   | (Async)            |        |
+| RESTful Sever |                     |                    |        |
+|               |                     | Webhook            |        |
+| Cashier       |                     | POST notification  |        |
+|               |                     | to RESTful server  |        |
++---------------+---------------------+                    +--------+</code></pre></figure>
+
+<h2 id="decompressing-one-restful-server-into-multiple-services">Decompressing One <code class="highlighter-rouge">RESTful Server</code> into Multiple Services</h2>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">+------------------------+          +-----------------------+
+|                        |          |                       |
+|  RESTful Server        |          |  RESTful Server       |
+|                        |          |                       |
+|  Static data           |          |  Order system         |
++------------------------+          +-----------------------+
+ +                                   +  ^
+ |                                   |  | STEP 2 &amp; 3
+ | STEP 1                            |  |
+ | put product into cart             |  | apply an order
+ |                                   |  |
+ |                                   |  | RESPONSE the
+ v                                   v  + Order {_id, ...}
++------------------------------------------+----------------+
+|                                          |                |
+|                                          |   Client Side  |
+|                                          |                |
+|                                          +----------------+
+|    STEP 4                             STEP 7              | STEP 8
+|                                       (Ping++ Client SDK) |         +--------+
+|    use Order data                                         | finish  |        |
+|    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
+|                                       request a payment   | +-----&gt; |        |
++-----------------------------------------------------------+         +--------+
+  +  STEP 4              ^
+  |                      |
+  |  apply for Charge    |
+  |                      |             STEP 5
+  |  payload with        |             (Ping++ Server SDK)
+  |  previous Order data |
+  v                      +             apply for Charge
+                                       from Ping++ Server
++-------------------------------------+                    +--------+
+|                                     | +----------------&gt; |        |
+|                  STEP 6             | &lt;----------------+ |        |
+|                                     |                    |        |
+|                  get Charge data    |                    |        |
+|                  from Ping++ Server | &lt;----------------+ | Ping++ |
++---------------+                     | STEP 9             | Server |
+|               |  RESPONSE to View   | (Async)            |        |
+| RESTful Sever |                     |                    |        |
+|               |                     | Webhook            |        |
+| Cashier       |                     | POST notification  |        |
+|               |                     | to RESTful server  |        |
++---------------+---------------------+                    +--------+</code></pre></figure>
+
+<h2 id="cashier-microservice-design">Cashier Microservice Design</h2>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">+------------------------+          +-----------------------+
+|                        |          |                       |
+|  RESTful Server        |          |  RESTful Server       |
+|                        |          |                       |
+|  Static data           |          |  Order system         |
++------------------------+          +-----------------------+
+   +                                   +  ^
+   |                                   |  | STEP 2 &amp; 3
+   | STEP 1                            |  |
+   | put product into cart             |  | apply an order
+   |                                   |  |
+   |                                   |  | RESPONSE the
+   v                                   v  + Order {_id, ...}
+ +------------------------------------------+----------------+
+ |                                          |                |
+ |                                          |   Client Side  |
+ |                                          |                |
+ |                                          +----------------+
+ |    STEP 4                             STEP 7              | STEP 8
+ |                                       (Ping++ Client SDK) |         +--------+
+ |    use Order data                                         | finish  |        |
+ |    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
+ |                                       request a payment   | +-----&gt; |        |
+ +-----------------------------------------------------------+         +--------+
+  +  STEP 4              ^
+  |                      |
+  |  apply for Charge    |
+  |                      |             STEP 5
+  |  payload with        |             (Ping++ Server SDK)
+  |  previous Order data |
+  v                      +             apply for Charge
+                                       from Ping++ Server
++-------------------------------------+                    +--------+
+|                                     | +----------------&gt; |        |
+|                  STEP 6             | &lt;----------------+ |        |
+|                                     |                    |        |
+|                  get Charge data    |                    |        |
+|                  from Ping++ Server | &lt;----------------+ | Ping++ |
++---------------+                     | STEP 9             | Server |
+|               |  RESPONSE to View   | (Async)            |        |
+| RESTful Sever |                     |                    |        |
+|               |                     | Webhook            |        |
+| Cashier       |                     | POST notification  |        |
+|               |                     | to RESTful server  |        |
++---------------+---------------------+                    +--------+
++  ^                            +  ^
+|  |  apply for Charge          |  |  apply for Charge
+|  |                            |  |
+|  |  payload with              |  |  payload with
+|  |  GenericOrder data         |  |  GenericOrder data
+|  |                            |  |
+v  +                            v  +
++---------+     +---------+     +---------+
+|         |     |         |     |         |
+| App 1   |     | App 2   |     | App 3   |
+|         |     |         |     |         |
++---------+     +---------+     +---------+</code></pre></figure>
+
+<h2 id="restful-api-of-cashier-microservice">RESTful API of Cashier Microservice</h2>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// STEP 4 apply for Charge data
+</span><span class="nc">POST</span> <span class="o">/</span><span class="n">cashier</span><span class="o">/</span><span class="n">charge</span>
+
+<span class="n">payload</span><span class="k">:</span> <span class="o">{</span>
+  <span class="kt">order:</span> <span class="kt">Order</span> <span class="o">{</span> <span class="k">_</span><span class="kt">id</span><span class="o">,</span> <span class="kt">...</span><span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// STEP 6
+</span><span class="nc">RESPONSE</span><span class="k">:</span> <span class="o">{</span>
+  <span class="kt">data:</span> <span class="kt">Ping++</span> <span class="kt">Charge</span> <span class="kt">data</span>
+<span class="o">}</span>
+
+<span class="c1">// STEP 9
+</span><span class="nc">POST</span> <span class="o">/</span><span class="n">cashier</span><span class="o">/</span><span class="n">webhook</span></code></pre></figure>
+
+<h1 id="references">References</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:pingpp">
+      <p>https://www.pingxx.com&nbsp;<a href="#fnref:pingpp" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:pingpp_charge">
+      <p>https://www.pingxx.com/docs/overview/flow/charge&nbsp;<a href="#fnref:pingpp_charge" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <h4>Similar Posts</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala">
+                      Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6
+                      <small>Jul 18, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+                      Bolero, Cumulative Update (Sep 04, 2016)
+                      <small>Sep 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/08/22/scala-quick-tour-part-ii">
+                      Scala Quick Tour Part II
+                      <small>Aug 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/08/21/scala-quick-tour-part-i">
+                      Scala Quick Tour Part I
+                      <small>Aug 21, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+                      Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo
+                      <small>Jul 27, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk';
+      this.page.identifier = '/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk';
+      this.page.title = 'Design a Cashier Microservice with Ping++ SDK';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+
