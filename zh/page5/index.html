@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="zh"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh" />
+
+
+  
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      Any Thoughts in Programming &middot; The Blog by Scott
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/zh/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/zh/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog/zh">
+      首页
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/archive/">
+              
+                归档
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/categories/">
+              
+                分类
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/tags/">
+              
+                标签
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/about/">
+              
+                关于
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/zh/credits">
+      致谢
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/page5/">
+        English
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog/zh"
+                 title="首页">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+<div class="page">
+  <h1 class="page-title">
+    
+      
+    
+  </a>
+  </h1>
+  
+
+
+<div class="posts">
+
+
+  
+  <div class="summary-title"> 用于需求分析、开发以至持续集成的源代码管理工作模式 </div>
+  <div class="summary-time"> Sep 04, 2015 </div>
+  <div class="summary-content">
+  
+    
+<h1 class="no_toc" id="摘要">摘要</h1>
+<blockquote>
+  <p>开发团队中，使用Word或者PDF文档，或者邮件来描述需求，可能导致同样内容的文档出现在不同成员的电脑上，进而可能导致
+版本不一致。另外两次版本的需求更改，很难进行差异比较（Word和PDF文档不是简单的文本文件）。
+一种解决方案是，使用文本文件（比如Markdown或者LaTeX）来描述需求，并将所有的文件纳入源代码管理。
+所以，本文描述的这个工作流，将所有的文档纳入源代码管理。同时还将提到：</p>
+
+  <ul>
+    <li>使用Issue来跟踪需求、变更和问题解决</li>
+    <li>产品、测试和开发等不同角色如何便捷的使用Bitbucket来提出并跟踪任务</li>
+    <li>一些基本的工具，比如c9.io，或者git的基本用法</li>
+    <li>Markdown的基本语法</li>
+  </ul>
+</blockquote>
+
+
+
+    
+
+  
+
+  <a href="https://scozv.github.io/blog/zh/pattern/2015/09/04/a-vcs-project-workflow-for-requirement-coding-and-ci"><span class="read-more">详细内容……</span></a>
+  </div>
+
+  <br />
+  
+
+  
+  <div class="summary-title"> 介绍专业的文档系统LaTeX </div>
+  <div class="summary-time"> Aug 12, 2015 </div>
+  <div class="summary-content">
+  
+    
+<!--2015-08-10-introduction-of-building-documents-with-latex-->
+
+<h1 class="no_toc" id="摘要">摘要</h1>
+<blockquote>
+  <p><code class="highlighter-rouge">TeX</code>家族是一个专业的排版系统。本文简要地介绍了<code class="highlighter-rouge">TeX</code>家族的常见成员，
+并整理出了<code class="highlighter-rouge">LaTeX</code>入门使用过程中会遇到的一些问题，</p>
+
+  <p>同时，将演示<code class="highlighter-rouge">LaTeX</code>在网页中的集成。最后在附录部分，给出了样式模板的参考代码。</p>
+</blockquote>
+
+
+
+    
+
+  
+
+  <a href="https://scozv.github.io/blog/zh/guide/2015/08/12/introduction-of-building-documents-with-latex"><span class="read-more">详细内容……</span></a>
+  </div>
+
+  <br />
+  
+
+  
+  <div class="summary-title"> 对Eric Lippert所著的Monads系列文章的综述 </div>
+  <div class="summary-time"> Jun 20, 2014 </div>
+  <div class="summary-content">
+  
+    
+<h1 class="no_toc" id="摘要">摘要</h1>
+
+<blockquote>
+  <p>本文主要对几篇讨论Monad的文献进行综述，文中的大部分代码都来自参考文献（我会指明参考来源）。本文有几处地方提出了几个思考题，这些思考题也来自参考文献，建议先尝试写写这些思考题，再去阅读参考文献。这一份综述尝试抛开函数编程的背景，去看看我们平时已经在使用但却没有留意的一些Monad。文章主要涉及到C#这门语言，但是不同的语言背景并不会有太多的影响。</p>
+
+  <p>我推荐阅读参考文献中的英文原文。虽然中文意合英文形合<sup id="fnref:G08"><a href="#fn:G08" class="footnote">1</a></sup>，但是本文的综述将使用中文，除了部分程序代码，和一些术语、人名 that 我不打算翻译的。</p>
+
+  <p>本文对Haskell和.NET中异步Task的理解不够，如果需要了解Task这个Monad的话，请参考Stephen Toub的文章<sup id="fnref:ST13"><a href="#fn:ST13" class="footnote">2</a></sup>。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”<sup id="fnref:DC13"><a href="#fn:DC13" class="footnote">3</a></sup>。</p>
+</blockquote>
+
+
+
+    
+
+  
+
+  <a href="https://scozv.github.io/blog/zh/pattern/2014/06/20/understand-monads-in-c"><span class="read-more">详细内容……</span></a>
+  </div>
+
+  <br />
+  
+
+
+</div>
+
+
+
+
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="https://scozv.github.io/blog/zh/page6">
+      早些时候的文章
+    </a>
+  
+  
+    
+      <a class="pagination-item newer" href="https://scozv.github.io/blog/zh/page4">
+        最近几天的文章
+      </a>
+    
+  
+</div>
+
+</div>
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

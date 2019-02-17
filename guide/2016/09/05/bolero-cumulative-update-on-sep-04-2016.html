@@ -1,0 +1,994 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      Bolero, Cumulative Update (Sep 04, 2016) &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">Bolero, Cumulative Update (Sep 04, 2016)</h1>
+  <span class="post-date">Sep 05, 2016</span>
+  
+<h1 class="no_toc" id="摘要">摘要</h1>
+
+<blockquote>
+  <p>This article gives a short description on cumulative update of <code class="highlighter-rouge">Bolero</code>.
+For the entire project details, please read previous post <sup id="fnref:blog_bolero"><a href="#fn:blog_bolero" class="footnote">1</a></sup>。</p>
+
+  <p>You may find the source code of <code class="highlighter-rouge">Bolero</code> on <a href="https://github.com/scozv/bolero">scozv/bolero</a>.</p>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#conventions-and-rules" id="markdown-toc-conventions-and-rules">Conventions and Rules</a>    <ul>
+      <li><a href="#uniform-http-response" id="markdown-toc-uniform-http-response">Uniform HTTP Response</a></li>
+      <li><a href="#consistency-in-payload-and-response" id="markdown-toc-consistency-in-payload-and-response">Consistency in payload and Response</a></li>
+    </ul>
+  </li>
+  <li><a href="#refactor-and-enhancement" id="markdown-toc-refactor-and-enhancement">Refactor and Enhancement</a>    <ul>
+      <li><a href="#canconnectdb2" id="markdown-toc-canconnectdb2"><code class="highlighter-rouge">CanConnectDB2</code></a></li>
+      <li><a href="#separated-canbehierarchic" id="markdown-toc-separated-canbehierarchic">Separated <code class="highlighter-rouge">CanBeHierarchic</code></a></li>
+      <li><a href="#global-setting-for-action-not-found" id="markdown-toc-global-setting-for-action-not-found">Global Setting for <code class="highlighter-rouge">Action Not Found</code></a></li>
+      <li><a href="#improvement-of-responseok" id="markdown-toc-improvement-of-responseok">Improvement of <code class="highlighter-rouge">ResponseOk</code></a></li>
+      <li><a href="#clear-unused-import" id="markdown-toc-clear-unused-import">Clear <code class="highlighter-rouge">unused import</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#unsolved-issue" id="markdown-toc-unsolved-issue">Unsolved Issue</a>    <ul>
+      <li><a href="#compiling-triggered-after-service-started" id="markdown-toc-compiling-triggered-after-service-started">Compiling Triggered After Service Started</a></li>
+      <li><a href="#test-failed-after-many-codes-changed" id="markdown-toc-test-failed-after-many-codes-changed">Test Failed After Many Codes Changed</a></li>
+      <li><a href="#test-db-and-development-db" id="markdown-toc-test-db-and-development-db">Test DB and Development DB</a></li>
+    </ul>
+  </li>
+  <li><a href="#references" id="markdown-toc-references">References</a></li>
+</ul>
+
+<h1 id="conventions-and-rules">Conventions and Rules</h1>
+
+<p>The conventions or rules in <code class="highlighter-rouge">Bolero</code> may not be the best practice:</p>
+
+<ul>
+  <li>Naming most <code class="highlighter-rouge">trait</code> with the initial <code class="highlighter-rouge">Can</code>, in order to state it has some sort of ability,</li>
+  <li><code class="highlighter-rouge">interop</code> directory was used for inter-operating between 3rd party API, at beginning,</li>
+  <li><code class="highlighter-rouge">_id</code> means primary key, and it is <code class="highlighter-rouge">String</code>.</li>
+</ul>
+
+<h2 id="uniform-http-response">Uniform HTTP Response</h2>
+
+<p>All HTTP Response return uniform <code class="highlighter-rouge">JSON</code> as below:</p>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">{
+  ok: Boolean,
+  data: T,
+  error: String
+}</code></pre></figure>
+
+<h2 id="consistency-in-payload-and-response">Consistency in payload and Response</h2>
+
+<p>Inspired by <code class="highlighter-rouge">map()</code>, <code class="highlighter-rouge">Bolero</code> keeps consistence between <code class="highlighter-rouge">payload</code>
+and Response data.</p>
+
+<p>For instance:</p>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">PUT /transaction
+
+// Request
+// header: Token for authentication
+payload: "Bolero.models.Transaction"
+
+// Response
+data: "Bolero.models.Transaction"</code></pre></figure>
+
+<p>Only difference is <code class="highlighter-rouge">_id</code> in <code class="highlighter-rouge">payload</code> is empty, while <code class="highlighter-rouge">_id</code> in Response
+will be generated.</p>
+
+<h1 id="refactor-and-enhancement">Refactor and Enhancement</h1>
+
+<h2 id="canconnectdb2"><code class="highlighter-rouge">CanConnectDB2</code></h2>
+
+<p><code class="highlighter-rouge">CanConnectDB2</code> provides more generic <code class="highlighter-rouge">MongoDB</code> I/O abilities with <code class="highlighter-rouge">implicit</code>.</p>
+
+<h2 id="separated-canbehierarchic">Separated <code class="highlighter-rouge">CanBeHierarchic</code></h2>
+
+<p><code class="highlighter-rouge">Hierarchic</code> handles the connection relationship with <code class="highlighter-rouge">union-find</code> algorithm。</p>
+
+<p><code class="highlighter-rouge">CanBeHierarchic</code> has been separated into <code class="highlighter-rouge">CanBeHierarchicInstance</code> and <code class="highlighter-rouge">CanBeHierarchicObject</code>.</p>
+
+<p>See:</p>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">https://github.com/scozv/bolero/commit/ea24ab2c443a802145488b81c15e2fa7266492ae</code></pre></figure>
+
+<h2 id="global-setting-for-action-not-found">Global Setting for <code class="highlighter-rouge">Action Not Found</code></h2>
+
+<p><code class="highlighter-rouge">Bolero</code> will return <code class="highlighter-rouge"><span class="p">{</span><span class="err">ok:</span><span class="w"> </span><span class="err">false,</span><span class="w"> </span><span class="err">error:</span><span class="w"> </span><span class="err">'100'</span><span class="p">}</span></code>
+when <code class="highlighter-rouge">Action Not Found</code></p>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">https://github.com/scozv/bolero/commit/e8991bc146adeabaf5d5f713f253a2a6fa1fe950</code></pre></figure>
+
+<h2 id="improvement-of-responseok">Improvement of <code class="highlighter-rouge">ResponseOk</code></h2>
+
+<p><code class="highlighter-rouge">Bolero</code> uses <code class="highlighter-rouge">implicit writes</code>, in order to avoid
+<code class="highlighter-rouge">Json.toJson</code> manually of parameters.</p>
+
+<h2 id="clear-unused-import">Clear <code class="highlighter-rouge">unused import</code></h2>
+
+<p><code class="highlighter-rouge">unused import</code> has been cleared.</p>
+
+<h1 id="unsolved-issue">Unsolved Issue</h1>
+
+<h2 id="compiling-triggered-after-service-started">Compiling Triggered After Service Started</h2>
+
+<p>When <code class="highlighter-rouge">output</code> (<code class="highlighter-rouge">activator run</code> or from IntelliJ IDEA) said <em>service has been running on <code class="highlighter-rouge">9000</code></em>,
+the refresh compile will still be invoked at the firstly API access.</p>
+
+<h2 id="test-failed-after-many-codes-changed">Test Failed After Many Codes Changed</h2>
+
+<p>When many codes have been changed, test will be failed
+unless we <code class="highlighter-rouge">run</code> a service to trigger a refresh compile.</p>
+
+<h2 id="test-db-and-development-db">Test DB and Development DB</h2>
+
+<p>The <code class="highlighter-rouge">FakeHTTPRequest</code> of <code class="highlighter-rouge">WithApplication</code> may use the <code class="highlighter-rouge">DB</code> connection in <code class="highlighter-rouge">application.conf</code>.
+So that we cannot reconfigure the <code class="highlighter-rouge">DB</code> in our test case.</p>
+
+<h1 id="references">References</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:blog_bolero">
+      <p><a href="https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo</a>&nbsp;<a href="#fnref:blog_bolero" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+                
+                <h4>Similar Posts</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala">
+                      Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6
+                      <small>Jul 18, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/08/22/scala-quick-tour-part-ii">
+                      Scala Quick Tour Part II
+                      <small>Aug 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/08/21/scala-quick-tour-part-i">
+                      Scala Quick Tour Part I
+                      <small>Aug 21, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+                      Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo
+                      <small>Jul 27, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk">
+                      Design a Cashier Microservice with Ping++ SDK
+                      <small>Jul 11, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration">
+                      A Loose Coupling Architecture of the Web Solution with Continuous Integration
+                      <small>May 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016';
+      this.page.identifier = '/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016';
+      this.page.title = 'Bolero, Cumulative Update (Sep 04, 2016)';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

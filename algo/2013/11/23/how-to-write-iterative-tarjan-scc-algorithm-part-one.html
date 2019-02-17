@@ -1,0 +1,978 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/algo/2013/11/23/how-to-write-iterative-tarjan-scc-algorithm-part-one" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/algo/2013/11/23/how-to-write-iterative-tarjan-scc-algorithm-part-one" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      How to Write Iterative Tarjan SCC Algorithm, Part II &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/algo/2013/11/23/how-to-write-iterative-tarjan-scc-algorithm-part-one">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">How to Write Iterative Tarjan SCC Algorithm, Part II</h1>
+  <span class="post-date">Nov 23, 2013</span>
+  
+<blockquote>
+  <p>In <a href="https://scozv.github.io/blog/algo/2013/11/10/how-to-write-iterative-tarjan-scc-algorithm-part-zero" title="Tarjan, Part I">previous part</a>, we talked about iterative DFS, where we use a stack named  <strong>frontier</strong> to keep the visiting order. This time, we are going to look at the iterative topological sort and Karasoju SCC algorithm.</p>
+
+  <p>The key idea of my iterative topological sort is use another stack named <strong>head</strong> to track when we finish visiting all descendant vertex of the head vertex.</p>
+</blockquote>
+
+<!--more-->
+
+<p><a name="pi">
+</a></p>
+
+<h2 id="recursive-topological-sort">Recursive Topological Sort</h2>
+<p>In the beginning, we introduce the code of recursive topological sort:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">topologicalSortRec</span><span class="p">(</span><span class="nx">graph</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">numberOfVertex</span><span class="p">,</span>
+  <span class="nx">order</span> <span class="o">=</span> <span class="p">[],</span>
+
+  <span class="nx">DFS</span><span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// recursive search graph g,</span>
+    <span class="c1">// from the initial node i</span>
+    <span class="p">(</span><span class="k">for</span> <span class="nx">x</span> <span class="k">in</span> <span class="nx">g</span><span class="p">.</span><span class="nx">getAdjacentVertex</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">not</span> <span class="nx">g</span><span class="p">.</span><span class="nx">isVisited</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">DFS</span><span class="p">(</span><span class="nx">g</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="nx">order</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">n</span><span class="o">--</span><span class="p">;</span>
+    <span class="nx">graph</span><span class="p">.</span><span class="nx">markVisited</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="p">(</span><span class="k">for</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">not</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">isVisited</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">DFS</span><span class="p">(</span><span class="nx">graph</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">order</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>As we notice, we get the topological order from recursive DFS. The proof of correctness will be found at Wikipedia or online course <a href="https://www.coursera.org/course/algo" title="Online course by Tim Roughgarden"><em>Algorithms: Design and Analysis, Part 1</em></a></p>
+
+<h2 id="call-stack">Call Stack</h2>
+
+<p>Take a directed graph represented by adjacency list below for instance.</p>
+
+<p>1: [2, 4]
+  2: <a href="https://github.com/scozv/tango" title="Tango.js">3</a>
+  3: [5]
+  4: [3, 5]</p>
+
+<p>(Please draw this simple graph on the paper to help understand. <code class="highlighter-rouge">1: [2, 4]</code> means there are only two edges from vertex 1, that are 1 → 2 and 1 → 4.)</p>
+
+<p>Here is the call stack of recursive topological sort. In each loop at current <code class="highlighter-rouge">v</code>, we list its parent vertex in column titled <strong>P</strong>. If all of descendant vertex of <code class="highlighter-rouge">v</code> which we list in column titled <code class="highlighter-rouge">v.c()</code> have been visited, we set the <code class="highlighter-rouge">order(v)</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">P</th>
+      <th style="text-align: center"><code class="highlighter-rouge">v</code></th>
+      <th style="text-align: left"><code class="highlighter-rouge">v.c()</code></th>
+      <th style="text-align: left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><span></span></td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">{2, 4}</td>
+      <td style="text-align: left">initial call</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">2</td>
+      <td style="text-align: left">{3}</td>
+      <td style="text-align: left"><span></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">3</td>
+      <td style="text-align: left">{5}</td>
+      <td style="text-align: left"><span></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3</td>
+      <td style="text-align: center">5</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">order(5) = 5, back to __p__arent <code class="highlighter-rouge">v#3</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">3</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">order(3) = 4, back to __p__arent <code class="highlighter-rouge">v#2</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">2</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">order(2) = 3, back to __p__arent <code class="highlighter-rouge">v#1</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><span></span></td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">{4}</td>
+      <td style="text-align: left"><span></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">4</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">order(4) = 2, back to __p__arent <code class="highlighter-rouge">v#1</code> (initial call)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><span></span></td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">order(1) = 1</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="inspiration">Inspiration</h2>
+
+<p>According to <em>Part Zero</em>, we add <code class="highlighter-rouge">frontier</code> to call stack table as below.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">P</th>
+      <th style="text-align: center"><code class="highlighter-rouge">v</code></th>
+      <th style="text-align: left"><code class="highlighter-rouge">v.c()</code></th>
+      <th style="text-align: left"><code class="highlighter-rouge">frontier</code></th>
+      <th style="text-align: left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><span></span></td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">{2, 4}</td>
+      <td style="text-align: left">(1, 4, 2&gt;</td>
+      <td style="text-align: left">initial call</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">2</td>
+      <td style="text-align: left">{3}</td>
+      <td style="text-align: left">(1, 4, 2, 3&gt;</td>
+      <td style="text-align: left"><span></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">3</td>
+      <td style="text-align: left">{5}</td>
+      <td style="text-align: left">(1, 4, 2, 3, 5&gt;</td>
+      <td style="text-align: left"><span></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3</td>
+      <td style="text-align: center">5</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">(1, 4, 2, 3, 5&gt;</td>
+      <td style="text-align: left">order(5) = 5, back to __p__arent <code class="highlighter-rouge">v#3</code>, pop frontier</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">3</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">(1, 4, 2, 3&gt;</td>
+      <td style="text-align: left">order(3) = 4, back to __p__arent <code class="highlighter-rouge">v#2</code>, pop frontier</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">2</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">(1, 4, 2&gt;</td>
+      <td style="text-align: left">order(2) = 3, back to __p__arent <code class="highlighter-rouge">v#1</code>, pop frontier</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><span></span></td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">{4}</td>
+      <td style="text-align: left">(1, 4&gt;</td>
+      <td style="text-align: left"><span></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">4</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">(1, 4&gt;</td>
+      <td style="text-align: left">order(4) = 2, back to __p__arent <code class="highlighter-rouge">v#1</code> (initial call), pop frontier</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><span></span></td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: left">(1&gt;</td>
+      <td style="text-align: left">order(1) = 1, pop frontier, then frontier is empty</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>If we look into the <code class="highlighter-rouge">frontier</code> and the time when descendant vertex array is empty, we may notice the top of <code class="highlighter-rouge">frontier</code> is the vertex we visit currently.</p>
+
+<h2 id="stack-head">Stack Head</h2>
+
+<p>So we introduce a stack named <code class="highlighter-rouge">head</code> to track the time when we finish visiting all descendant vertex of the head vertex (current <code class="highlighter-rouge">v</code>).</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">iterTopologicalSort</span><span class="p">(</span><span class="nx">graph</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">frontier</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stack</span><span class="p">(),</span>
+      <span class="nx">head</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stack</span><span class="p">(),</span>
+      <span class="nx">n</span> <span class="o">=</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">numberOfVertex</span><span class="p">,</span>
+      <span class="nx">order</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="nx">frontier</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">not</span> <span class="nx">frontier</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+      <span class="nx">current</span> <span class="o">=</span> <span class="nx">frontier</span><span class="p">.</span><span class="nx">peek</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">current</span> <span class="o">===</span> <span class="nx">head</span><span class="p">.</span><span class="nx">peek</span><span class="p">()</span> <span class="cm">/*head may be empty here*/</span><span class="p">)</span> <span class="p">{</span>
+          <span class="c1">// we hit the time to set order</span>
+          <span class="nx">frontier</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+          <span class="nx">head</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+          <span class="nx">order</span><span class="p">[</span><span class="nx">current</span><span class="p">]</span> <span class="o">=</span> <span class="nx">n</span><span class="o">--</span><span class="p">;</span>
+          <span class="nx">graph</span><span class="p">.</span><span class="nx">markVisited</span><span class="p">(</span><span class="nx">current</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="c1">// current is just a child of some v</span>
+          <span class="nx">head</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">current</span><span class="p">);</span>
+          <span class="p">(</span><span class="k">for</span> <span class="nx">x</span> <span class="k">in</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">getAdjacentVertex</span><span class="p">(</span><span class="nx">current</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">not</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">isVisited</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span> <span class="p">{</span>
+              <span class="nx">frontier</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+            <span class="p">}</span>
+          <span class="p">};</span>  <span class="c1">// end for</span>
+      <span class="p">}</span> <span class="c1">// end else</span>
+    <span class="p">}</span> <span class="c1">// end while</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Running the iterative code, we update the stack table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><code class="highlighter-rouge">v</code></th>
+      <th style="text-align: left"><code class="highlighter-rouge">head</code></th>
+      <th style="text-align: left"><code class="highlighter-rouge">frontier</code></th>
+      <th style="text-align: left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">(1&gt;</td>
+      <td style="text-align: left">(1, 4, 2&gt;</td>
+      <td style="text-align: left">initial call</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: left">(1, 2&gt;</td>
+      <td style="text-align: left">(1, 4, 2, 3&gt;</td>
+      <td style="text-align: left"><span></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3</td>
+      <td style="text-align: left">(1, 2, 3&gt;</td>
+      <td style="text-align: left">(1, 4, 2, 3, 5&gt;</td>
+      <td style="text-align: left"><span></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">5</td>
+      <td style="text-align: left">(1, 2, 3, 5&gt;</td>
+      <td style="text-align: left">(1, 4, 2, 3, 5&gt;</td>
+      <td style="text-align: left"><code class="highlighter-rouge">peek()</code> eqauls, set order(5), pop two stacks</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3</td>
+      <td style="text-align: left">(1, 2, 3&gt;</td>
+      <td style="text-align: left">(1, 4, 2, 3&gt;</td>
+      <td style="text-align: left"><code class="highlighter-rouge">peek()</code> eqauls, set order(3), pop two stacks</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: left">(1, 2&gt;</td>
+      <td style="text-align: left">(1, 4, 2&gt;</td>
+      <td style="text-align: left"><code class="highlighter-rouge">peek()</code> eqauls, set order(2), pop two stacks</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">(1&gt;</td>
+      <td style="text-align: left">(1, 4&gt;</td>
+      <td style="text-align: left"><span></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: left">(1, 4&gt;</td>
+      <td style="text-align: left">(1, 4&gt;</td>
+      <td style="text-align: left"><code class="highlighter-rouge">peek()</code> eqauls, set order(4), pop two stacks</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">(1&gt;</td>
+      <td style="text-align: left">(1&gt;</td>
+      <td style="text-align: left"><code class="highlighter-rouge">peek()</code> eqauls, set order(1), pop two stacks</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As we see, The time of finishing visit all descendant of current <code class="highlighter-rouge">v</code>, and to set order(current) is when <code class="highlighter-rouge">peek()</code> eqauls, i.e. <code class="highlighter-rouge">head.peek() == frontier.peek()</code>.</p>
+
+<h2 id="attention">Attention</h2>
+<ul>
+  <li><strong>Empty Head</strong>. At line 10, <code class="highlighter-rouge">head.peek()</code> may throw an exception if <code class="highlighter-rouge">head.isEmpty()</code>. We can check it before each <code class="highlighter-rouge">peek()</code>, or we can push <code class="highlighter-rouge">-1</code> (whatever bottom item) to make sure head is always contains item(s) before <code class="highlighter-rouge">frontier.isEmpty()</code>.</li>
+  <li><strong>Vertex Status</strong>. Same issue may be occurred similarly as in iterative DFS we mentioned in last part. (see <a href="https://github.com/scozv/algo-js/issues/20" title="Issue 20">issue #20</a>)</li>
+</ul>
+
+<h2 id="kosaraju-scc">Kosaraju SCC</h2>
+<p>Kosaraju SCC algorithm, which runs DFS twice, finds some kind of visiting order in the first DFS. So we can find topological sort order as in the first DFS, then use the order for the second DFS.</p>
+
+<h2 id="running-time">Running Time</h2>
+<p>Roughly speaking, the running time of iterarive topological sort is same as time of DFS.
+The time of Kosaraju SCC which runs DFS twice, is still <script type="math/tex">O(m+n)</script>.</p>
+
+<h2 id="next">Next</h2>
+<p>See code on details in <code class="highlighter-rouge">graph.search.js</code> of <a href="https://github.com/scozv/tango" title="Tango.js">Tango.js</a>. And next post, I am going to explain iterative Tarjan SCC algorithm, which cost me a few time.</p>
+
+<p><br /></p>
+
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <h4>Similar Posts</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/algo/2017/03/23/use-minimum-matched-string-and-extended-regex-for-wildcard-matching">
+                      Design Test Cases Before Write Implementation If the Former Is Easier
+                      <small>Mar 23, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/algo/2013/11/23/how-to-write-iterative-tarjan-scc-algorithm-part-one';
+      this.page.identifier = '/algo/2013/11/23/how-to-write-iterative-tarjan-scc-algorithm-part-one';
+      this.page.title = 'How to Write Iterative Tarjan SCC Algorithm, Part II';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

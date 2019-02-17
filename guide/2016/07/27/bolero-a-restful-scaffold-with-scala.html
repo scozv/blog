@@ -1,0 +1,1441 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo</h1>
+  <span class="post-date">Jul 27, 2016</span>
+  
+<h1 class="no_toc" id="abstract">Abstract</h1>
+
+<blockquote>
+  <p>Bolero is a <code class="highlighter-rouge">RESTful</code> Scaffold with <code class="highlighter-rouge">Scala</code>, <code class="highlighter-rouge">Play!</code> and <code class="highlighter-rouge">ReactiveMongo</code>.</p>
+
+  <p><code class="highlighter-rouge">Play!</code> handles the HTTP Request and Response, while the <code class="highlighter-rouge">ReactiveMongo</code>
+reads and write with <code class="highlighter-rouge">MongoDB</code>. This article will introduce a few ideas in Bolero, including:</p>
+
+  <ul>
+    <li><code class="highlighter-rouge">Model</code> naming and Jsonfying,</li>
+    <li><code class="highlighter-rouge">RESTful API</code> design,</li>
+    <li><code class="highlighter-rouge">CORS</code> configuration,</li>
+    <li>Token based authentication,</li>
+    <li><code class="highlighter-rouge">EitherOrError</code>, a Monad class for global rules,</li>
+    <li>Webhook handling,</li>
+    <li><code class="highlighter-rouge">FakeApplication</code> for HTTP Request mock,</li>
+    <li>Deploy with <code class="highlighter-rouge">sbt-native</code>.</li>
+  </ul>
+
+  <p>You may find the source code of <code class="highlighter-rouge">Bolero</code> on <a href="https://github.com/scozv/bolero">scozv/bolero</a>.</p>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#principles-of-bolero" id="markdown-toc-principles-of-bolero">Principles of <code class="highlighter-rouge">Bolero</code></a>    <ul>
+      <li><a href="#loose-coupling" id="markdown-toc-loose-coupling">Loose Coupling</a></li>
+      <li><a href="#modeling-the-name-polymorphism-and-the-json-formats" id="markdown-toc-modeling-the-name-polymorphism-and-the-json-formats">Modeling, the Name, Polymorphism, and the JSON Formats</a></li>
+      <li><a href="#tips-on-restful-api-design" id="markdown-toc-tips-on-restful-api-design">Tips on <code class="highlighter-rouge">RESTful API</code> Design</a>        <ul>
+          <li><a href="#factors-in-restful-api" id="markdown-toc-factors-in-restful-api">Factors in <code class="highlighter-rouge">RESTful API</code></a></li>
+          <li><a href="#consistency-in-payload-and-response" id="markdown-toc-consistency-in-payload-and-response">Consistency in payload and Response</a></li>
+          <li><a href="#be-cors-or-not" id="markdown-toc-be-cors-or-not">Be CORS or NOT</a></li>
+          <li><a href="#uri-the-plurals-and-the-order" id="markdown-toc-uri-the-plurals-and-the-order">URI, the Plurals, and the Order</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#details-in-codes" id="markdown-toc-details-in-codes">Details in Codes</a>    <ul>
+      <li><a href="#ability-of-model" id="markdown-toc-ability-of-model">Ability of Model</a>        <ul>
+          <li><a href="#canbehierarchic-building-the-hierarchical-models" id="markdown-toc-canbehierarchic-building-the-hierarchical-models"><code class="highlighter-rouge">CanBeHierarchic</code>, building the hierarchical model(s)</a></li>
+          <li><a href="#canbejsonfied-reading-and-writing-json" id="markdown-toc-canbejsonfied-reading-and-writing-json"><code class="highlighter-rouge">CanBeJsonfied</code>, reading and writing <code class="highlighter-rouge">JSON</code></a></li>
+          <li><a href="#canbemasked-removing-the-sensitive-data" id="markdown-toc-canbemasked-removing-the-sensitive-data"><code class="highlighter-rouge">CanBeMasked</code>, removing the sensitive data</a></li>
+        </ul>
+      </li>
+      <li><a href="#orderorerror-a-monad-pattern-for-global-validation" id="markdown-toc-orderorerror-a-monad-pattern-for-global-validation"><code class="highlighter-rouge">OrderOrError</code>, a Monad Pattern for Global Validation</a></li>
+      <li><a href="#cancrossorigin-handling-the-option-request" id="markdown-toc-cancrossorigin-handling-the-option-request"><code class="highlighter-rouge">CanCrossOrigin</code>, handling the <code class="highlighter-rouge">OPTION</code> Request</a></li>
+      <li><a href="#canconnectdb2t-making-code-easy-to-io-mongodb" id="markdown-toc-canconnectdb2t-making-code-easy-to-io-mongodb"><code class="highlighter-rouge">CanConnectDB2[T]</code>, making code easy to I/O <code class="highlighter-rouge">MongoDB</code></a></li>
+      <li><a href="#token-based-authentication" id="markdown-toc-token-based-authentication">Token Based Authentication</a></li>
+    </ul>
+  </li>
+  <li><a href="#test-refactor-and-ci" id="markdown-toc-test-refactor-and-ci">Test, Refactor and CI</a>    <ul>
+      <li><a href="#the-structure-of-test" id="markdown-toc-the-structure-of-test">The Structure of Test</a></li>
+      <li><a href="#begin-and-end-of-test" id="markdown-toc-begin-and-end-of-test">Begin and End of Test</a></li>
+      <li><a href="#canfakehttp-http-request-mocking" id="markdown-toc-canfakehttp-http-request-mocking"><code class="highlighter-rouge">CanFakeHTTP</code>, HTTP Request Mocking</a></li>
+    </ul>
+  </li>
+  <li><a href="#deployment" id="markdown-toc-deployment">Deployment</a></li>
+  <li><a href="#references" id="markdown-toc-references">References</a></li>
+</ul>
+
+<h1 id="principles-of-bolero">Principles of <code class="highlighter-rouge">Bolero</code></h1>
+
+<p>I will introduce a <code class="highlighter-rouge">RESTful</code> Server code scaffold named <code class="highlighter-rouge">Bolero</code>.
+The source code of it can be checked in <a href="https://github.com/scozv/bolero">github</a>.</p>
+
+<p>Let’s look at the principles of <code class="highlighter-rouge">Bolero</code>.</p>
+
+<h2 id="loose-coupling">Loose Coupling</h2>
+
+<p>Loose Coupling is a very important idea of <code class="highlighter-rouge">Bolero</code>, I develop and deploy the
+View (web page) and <code class="highlighter-rouge">RESTful</code> Server individually:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Bolero</code> only provides the <code class="highlighter-rouge">RESTful</code> Server, the view engine of <code class="highlighter-rouge">Play !</code> is
+not used in <code class="highlighter-rouge">Bolero</code>. I am planning to replace <code class="highlighter-rouge">Play!</code> with <code class="highlighter-rouge">Spary.io</code>,</li>
+  <li>As the <code class="highlighter-rouge">RESTful</code> Server, <code class="highlighter-rouge">Bolero</code> ensures that all data returned is <code class="highlighter-rouge">JSON</code> format.</li>
+</ul>
+
+<p>We can apply <code class="highlighter-rouge">Bolero</code> for multiple <code class="highlighter-rouge">RESTful</code> Server, however, <code class="highlighter-rouge">Bolero</code> is NOT
+a Microservices Framework. Currently, the <code class="highlighter-rouge">Scala</code> version of <code class="highlighter-rouge">Lagom</code> Framework
+provided by Lightbend
+is under development [^lagom_issue1].</p>
+
+<h2 id="modeling-the-name-polymorphism-and-the-json-formats">Modeling, the Name, Polymorphism, and the JSON Formats</h2>
+
+<p>Data (<code class="highlighter-rouge">models</code>) has two paths of transferring in <code class="highlighter-rouge">Bolero</code>.</p>
+
+<p>One path is that HTTP Request sends
+data contained in <code class="highlighter-rouge">payload</code> to <code class="highlighter-rouge">models</code> in <code class="highlighter-rouge">Scala</code>,
+and finally persists the data into <code class="highlighter-rouge">MongoDB</code>.</p>
+
+<p>Another path is from <code class="highlighter-rouge">MongoDB</code> to <code class="highlighter-rouge">models</code>, and then to <code class="highlighter-rouge">JSON</code> in web page.</p>
+
+<p>So we need to build the model in 3 places:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">JSON</code> model in web page, <code class="highlighter-rouge">TypeScript</code> is recommanded for <code class="highlighter-rouge">JSON</code> modeling,</li>
+  <li><code class="highlighter-rouge">Scala</code> model in <code class="highlighter-rouge">RESTful</code> Server, <code class="highlighter-rouge">trait</code> or <code class="highlighter-rouge">case</code>,</li>
+  <li><code class="highlighter-rouge">JSON</code> model in <code class="highlighter-rouge">MongoDB</code>.</li>
+</ul>
+
+<p>In order to keep consistency in 3 places, the naming convention is:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">_id</code> is used for all primary fields,</li>
+  <li><code class="highlighter-rouge">NameOfModel</code> is camel-casing, with initial letter Uppercase,</li>
+  <li><code class="highlighter-rouge">propertyOfModel</code> is camel-casing, with initial letter lowercase.</li>
+</ul>
+
+<blockquote>
+  <p>Attentions:</p>
+
+  <p>The naming conventions above is not a best practice.
+And, I am considering to convert the camel-case to underline_case in <code class="highlighter-rouge">JSON</code> and <code class="highlighter-rouge">MongoDB</code>.
+Considering means just-considering, NOT decided-yet.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Play!</code> provides <code class="highlighter-rouge">Reads</code> and <code class="highlighter-rouge">Writes</code> <sup id="fnref:play_json"><a href="#fn:play_json" class="footnote">1</a></sup> for
+<code class="highlighter-rouge">JSON</code> serialization and deserialization:</p>
+
+<ul>
+  <li>It <code class="highlighter-rouge">Writes</code> code model to <code class="highlighter-rouge">JSON</code>, while,</li>
+  <li><code class="highlighter-rouge">Reads</code> data as strong-typed model from <code class="highlighter-rouge">JSON</code>.</li>
+</ul>
+
+<p>Also, <code class="highlighter-rouge">Play!</code> contains <code class="highlighter-rouge">Formats</code> for <code class="highlighter-rouge">JSON</code> automated mapping <sup id="fnref:play_json_auto"><a href="#fn:play_json_auto" class="footnote">2</a></sup>.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">play.api.libs.json._</span>
+
+<span class="k">implicit</span> <span class="k">val</span> <span class="n">autoReads</span> <span class="k">=</span> <span class="nc">Json</span><span class="o">.</span><span class="n">reads</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
+<span class="k">implicit</span> <span class="k">val</span> <span class="n">autoWrites</span> <span class="k">=</span> <span class="nc">Json</span><span class="o">.</span><span class="n">writes</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
+
+<span class="c1">// format = reads + writes
+</span><span class="k">implicit</span> <span class="k">val</span> <span class="n">autoFormat</span> <span class="k">=</span> <span class="nc">Json</span><span class="o">.</span><span class="n">format</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span></code></pre></figure>
+
+<blockquote>
+  <p>Tips:</p>
+
+  <p><code class="highlighter-rouge">Play!</code> provides automated mapping, however, using <code class="highlighter-rouge">Reads</code> and <code class="highlighter-rouge">Writes</code>
+is recommanded, especially for complex <code class="highlighter-rouge">models</code>, assuming we have the
+high percentage of APIs test coverage.</p>
+
+  <p>The reason of NOT using <code class="highlighter-rouge">Formats[T]</code> is:</p>
+
+  <ul>
+    <li>
+      <p>When any changes happen in any places, we have to update the code of <code class="highlighter-rouge">Reads</code> and <code class="highlighter-rouge">Writes</code>,
+otherwise, an error will be thrown:</p>
+
+      <div class="highlighter-rouge"><pre class="highlight"><code> play.api.libs.json.JsResultException: "obj.field_name":{"msg":["error.path.missing"]
+</code></pre>
+      </div>
+    </li>
+    <li><code class="highlighter-rouge">JSON</code> formatting will be more flexible, such as <code class="highlighter-rouge">Writing</code> empty when <code class="highlighter-rouge">Option[T]</code> is <code class="highlighter-rouge">None</code>,</li>
+    <li>We can use different naming conventions in different places.</li>
+  </ul>
+</blockquote>
+
+<p>Polymorphism is the core idea of OOP, when using the <code class="highlighter-rouge">Reads</code> and <code class="highlighter-rouge">Writes</code>,
+we may encounter the compile error saying:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">ambiguous</span> <span class="n">reference</span> <span class="n">to</span> <span class="n">overloaded</span> <span class="n">definition</span></code></pre></figure>
+
+<p>That means code has the conflict overrides,
+if you have the same issue,
+please read the source code of <a href="(https://github.com/scozv/bolero)"><code class="highlighter-rouge">Bolero</code></a>,
+or drop me a message.</p>
+
+<h2 id="tips-on-restful-api-design">Tips on <code class="highlighter-rouge">RESTful API</code> Design</h2>
+
+<p><code class="highlighter-rouge">Bolero</code> only provides the <code class="highlighter-rouge">RESTful</code> Server returning the <code class="highlighter-rouge">JSON</code> data,
+will NOT provide the View page.</p>
+
+<h3 id="factors-in-restful-api">Factors in <code class="highlighter-rouge">RESTful API</code></h3>
+
+<p>Generally, factors below should be considered during the <code class="highlighter-rouge">RESTful API</code> design:</p>
+
+<ul>
+  <li>HTTP Method, such as <code class="highlighter-rouge">GET</code>, <code class="highlighter-rouge">POST</code>, <code class="highlighter-rouge">PUT</code>, etc <sup id="fnref:rest_http_method"><a href="#fn:rest_http_method" class="footnote">3</a></sup>,</li>
+  <li><code class="highlighter-rouge">URI</code>, like <code class="highlighter-rouge">/user/:id/profile</code>, parameters can be used for sorting, pagination or filtering,</li>
+  <li><code class="highlighter-rouge">payload</code> data that is usually used in <code class="highlighter-rouge">POST</code> or <code class="highlighter-rouge">PUT</code>, it will be transferred to <code class="highlighter-rouge">RESTful</code> Server from Client side,</li>
+  <li>HTTP Header, metadata of HTTP Request, we can add authentication token in Header,</li>
+  <li>HTTP Response data, the returning value of <code class="highlighter-rouge">RESTful API</code>.</li>
+</ul>
+
+<h3 id="consistency-in-payload-and-response">Consistency in payload and Response</h3>
+
+<p>Consistency is not a new idea, especially, when you
+are familier with <code class="highlighter-rouge">map()</code> in <code class="highlighter-rouge">Scala</code>:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">T</span><span class="o">.</span><span class="n">map</span><span class="o">()</span><span class="k">:</span> <span class="kt">T</span>
+<span class="c1">// such as
+</span><span class="nc">List</span><span class="o">[</span><span class="kt">A</span><span class="o">].</span><span class="n">map</span><span class="o">()</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">B</span><span class="o">]</span>
+<span class="nc">Future</span><span class="o">[</span><span class="kt">A</span><span class="o">].</span><span class="n">map</span><span class="o">()</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">B</span><span class="o">]</span></code></pre></figure>
+
+<p>According to this consistency principle,
+the data structure of HTTP Response data is same as
+the data structure of <code class="highlighter-rouge">payload</code> in Request:</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">POST /checkout
+
+// Request
+// header: Token for authentication
+payload: "Bolero.models.Order"
+
+// Response
+data: "Bolero.models.Order"</code></pre></figure>
+
+<p>Consistency principle of Request and Response
+makes the API easy to remember and invoke.</p>
+
+<h3 id="be-cors-or-not">Be CORS or NOT</h3>
+
+<p>CORS stands for Cross Origin Resource Sharing <sup id="fnref:mdn_cors"><a href="#fn:mdn_cors" class="footnote">4</a></sup>.</p>
+
+<p>At the very beginning of <code class="highlighter-rouge">Bolero</code>, I restricted the
+access origin of <code class="highlighter-rouge">RESTful API</code>, and I allowed only one
+specific client (web page server) to access the <code class="highlighter-rouge">RESTful</code> Server.</p>
+
+<p>However, restricting of access origin is helpless for a <code class="highlighter-rouge">RESTful</code> Server,
+especially, when we need to interact with 3rd party Server.
+For instance, the <code class="highlighter-rouge">Bolero</code> Server receives the Webhook from Ping++ payment server,
+which is a <code class="highlighter-rouge">POST</code> request actually, so that it need to open its access origin.</p>
+
+<p>Attention, <code class="highlighter-rouge">Access-Control-Allow-Origin</code> doesn’t support
+the so-called <em>multipal origin</em> <sup id="fnref:w3_cors_multi_issue"><a href="#fn:w3_cors_multi_issue" class="footnote">5</a></sup>,
+we need to open our access origin widely (<code class="highlighter-rouge">*</code>):</p>
+
+<blockquote>
+  <p>In practice the <code class="highlighter-rouge">origin-list-or-null</code> production is more constrained.
+Rather than allowing a space-separated list of origins,
+<strong>it is either a single origin or the string “null”</strong>.</p>
+</blockquote>
+
+<p>Also, restriction of access origin is NOT appropriate
+under Loose Coupling principle and multiple instance deployment.</p>
+
+<p>And, If we need the access origin control, or to monitor the
+HTTP Request, we can:</p>
+
+<ul>
+  <li>use <code class="highlighter-rouge">Filters</code> of <code class="highlighter-rouge">Play!</code> <sup id="fnref:play_filter"><a href="#fn:play_filter" class="footnote">6</a></sup>,</li>
+  <li>use <code class="highlighter-rouge">origin</code> of HTTP Request to restrict origin source,</li>
+  <li>limit the abnormal high frequency sending of HTTP Request in client side.</li>
+</ul>
+
+<h3 id="uri-the-plurals-and-the-order">URI, the Plurals, and the Order</h3>
+
+<p><code class="highlighter-rouge">Bolero</code> has the naming conventions of <code class="highlighter-rouge">URI</code> below:</p>
+
+<ul>
+  <li>using simple nouns in <code class="highlighter-rouge">URI</code>,</li>
+  <li>NOT using any symbol except the <code class="highlighter-rouge">/</code>,</li>
+  <li>NOT using camel-case,</li>
+  <li>
+    <p>using ONLY singular form of nouns in <code class="highlighter-rouge">URI</code>, even the Response data is <code class="highlighter-rouge">List</code>:</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>// get the list of user
+GET /user
+// get a user with specific id
+GET /user/:id
+</code></pre>
+    </div>
+
+    <p>If we treat a user as a file named <code class="highlighter-rouge">:id</code>, we also treat the <code class="highlighter-rouge">List[user]</code> as the folder
+named <code class="highlighter-rouge">user</code>, when we need a file, or need to access the entire folder, we will also access
+the path named <code class="highlighter-rouge">/user</code>. We don’t use path <code class="highlighter-rouge">/user</code> for a single user,
+and use path <code class="highlighter-rouge">/users</code> for a gourp of user at same time,</p>
+  </li>
+  <li>the sorting rules of <code class="highlighter-rouge">Bolero</code>’s HTTP Response data:
+    <ul>
+      <li>returning sorted data if HTTP Request has the specific sorting rule,</li>
+      <li>returning sorted data if the biz requirement needs,</li>
+      <li>otherwise, <code class="highlighter-rouge">Bolero</code> will not ensure the order of list.</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="details-in-codes">Details in Codes</h1>
+
+<p>The source code of <code class="highlighter-rouge">Bolero</code> is hosted as open source
+in <a href="https://github.com/scozv/bolero">github</a>.</p>
+
+<p>The brief structure of <code class="highlighter-rouge">Bolero</code> code is:</p>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">.
+├── app
+|   ├── base                // utils <span class="k">function</span>
+|   ├── biz                 // business implement, ONLY access MongoDB here
+|   ├── contollers          // controll of MVC
+|   └── models              
+|       ├── interop         // models used <span class="k">for </span>interact with 3rd party API
+|       └── model.scala     // modeling data <span class="k">in </span>Scala
+|
+├── conf                    // Play! configuration
+|   ├── application.conf
+|   ├── play.plugins
+|   ├── release.conf
+|   └── routes
+|
+├── project                  // project configuration
+|   ├── build.properties
+|   └── plugin.sbt
+|
+├── <span class="nb">test</span>                     // <span class="nb">test </span><span class="k">case</span>
+<span class="p">|</span>
+└── build.sbt</code></pre></figure>
+
+<h2 id="ability-of-model">Ability of Model</h2>
+
+<p>In <code class="highlighter-rouge">Scala</code>, <code class="highlighter-rouge">trait</code> means an ability,
+<code class="highlighter-rouge">Bolero</code> names <code class="highlighter-rouge">trait</code> as <code class="highlighter-rouge">CanHaveSpecificAbility</code>.</p>
+
+<h3 id="canbehierarchic-building-the-hierarchical-models"><code class="highlighter-rouge">CanBeHierarchic</code>, building the hierarchical model(s)</h3>
+
+<p>Hierarchical model(s) is (are) conntected with each other.
+We can use <code class="highlighter-rouge">union-find</code> to maintain the relationship:</p>
+
+<ul>
+  <li>the <code class="highlighter-rouge">rootId</code> of root object is its own <code class="highlighter-rouge">_id</code>,</li>
+  <li>for any two instances, if they have the same <code class="highlighter-rouge">rootId</code>, they are connected.</li>
+</ul>
+
+<h3 id="canbejsonfied-reading-and-writing-json"><code class="highlighter-rouge">CanBeJsonfied</code>, reading and writing <code class="highlighter-rouge">JSON</code></h3>
+
+<p>Please read the source code of <code class="highlighter-rouge">CanBeJsonfied</code> <sup id="fnref:scozv_git_goods"><a href="#fn:scozv_git_goods" class="footnote">7</a></sup>.</p>
+
+<h3 id="canbemasked-removing-the-sensitive-data"><code class="highlighter-rouge">CanBeMasked</code>, removing the sensitive data</h3>
+
+<p><code class="highlighter-rouge">Bolero</code> will put a mask on the sensitive data, such as
+underlying unique <code class="highlighter-rouge">_id</code>, cost of a product.</p>
+
+<p>Then, using <code class="highlighter-rouge">T.asMasked()</code> will be remove the sensitive data.</p>
+
+<p>Naming as <code class="highlighter-rouge">Mask</code>, is inspired from Oracle Data Masking <sup id="fnref:oracle_mask"><a href="#fn:oracle_mask" class="footnote">8</a></sup>.</p>
+
+<h2 id="orderorerror-a-monad-pattern-for-global-validation"><code class="highlighter-rouge">OrderOrError</code>, a Monad Pattern for Global Validation</h2>
+
+<p>Before creating an <code class="highlighter-rouge">Order</code>, we need validate a serial of rules on this <code class="highlighter-rouge">Order</code>:</p>
+
+<ul>
+  <li>does the user have the privilege of creating order,</li>
+  <li>is there enough inventory for this order,</li>
+  <li>is price valid,</li>
+  <li>is the coupon of order valid,</li>
+  <li>etc.</li>
+</ul>
+
+<p><code class="highlighter-rouge">Bolero</code> provides a Monad Pattern named <code class="highlighter-rouge">OrderOrError</code>,
+it accepts an <code class="highlighter-rouge">OrderOrError</code>, and will</p>
+
+<ul>
+  <li>return <code class="highlighter-rouge">Order</code>, if previous order valid, otherwise,</li>
+  <li>return <code class="highlighter-rouge">Error</code>.</li>
+</ul>
+
+<p>Learning from the <code class="highlighter-rouge">Try</code> of <code class="highlighter-rouge">Scala</code> <sup id="fnref:scala_try"><a href="#fn:scala_try" class="footnote">9</a></sup> , I designed
+<code class="highlighter-rouge">OrderOrError</code> as below:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">type</span> <span class="kt">OrderOrError</span> <span class="o">=</span> <span class="nc">Either</span><span class="o">[</span><span class="kt">Order</span>, <span class="kt">Error</span><span class="o">]</span>
+
+<span class="k">def</span> <span class="n">genericValidation</span><span class="o">(</span><span class="n">order</span><span class="k">:</span> <span class="kt">Order</span><span class="o">,</span> <span class="n">db</span><span class="k">:</span> <span class="kt">DB</span><span class="o">)</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">OrderOrError</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="o">???</span>
+  <span class="cm">/*
+  * we connect DB and validate the order,
+  * so a Future[T] will be returned
+  * */</span>
+<span class="o">}</span>
+
+<span class="k">def</span> <span class="n">genericRule</span>
+<span class="o">(</span><span class="n">order</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">OrderOrError</span><span class="o">],</span> <span class="n">db</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="nc">DB</span><span class="o">)</span>
+<span class="o">(</span><span class="k">implicit</span> <span class="n">ec</span><span class="k">:</span> <span class="kt">ExecutionContext</span><span class="o">)</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">OrderOrError</span><span class="o">]</span> <span class="k">=</span>
+  <span class="n">order</span><span class="o">.</span><span class="n">flatMap</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="nc">Right</span><span class="o">(</span><span class="n">e</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Future</span><span class="o">.</span><span class="n">successful</span><span class="o">(</span><span class="nc">Right</span><span class="o">(</span><span class="n">e</span><span class="o">))</span>
+    <span class="k">case</span> <span class="nc">Left</span><span class="o">(</span><span class="n">o</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">genericValidation</span><span class="o">(</span><span class="n">o</span><span class="o">,</span> <span class="n">db</span><span class="o">)</span>
+  <span class="o">}</span></code></pre></figure>
+
+<blockquote>
+  <p>Attention:</p>
+
+  <p>Strictly speaking, <code class="highlighter-rouge">OrderOrError</code> above is not a Monad.
+Two primary methods haven’t been implemented <sup id="fnref:scozv_bolero_issue1"><a href="#fn:scozv_bolero_issue1" class="footnote">10</a></sup>:</p>
+
+  <div class="highlighter-rouge"><pre class="highlight"><code>  ModelOrError[A].map(A =&gt; B): ModelOrError[B]
+  ModelOrError[A].flatMap(A =&gt; ModelOrError[B]): ModelOrError[B]
+</code></pre>
+  </div>
+</blockquote>
+
+<h2 id="cancrossorigin-handling-the-option-request"><code class="highlighter-rouge">CanCrossOrigin</code>, handling the <code class="highlighter-rouge">OPTION</code> Request</h2>
+
+<p><code class="highlighter-rouge">OPTION</code> Request is used for <code class="highlighter-rouge">POST</code> or <code class="highlighter-rouge">PUT</code> of CORS, we need to:</p>
+
+<ul>
+  <li>define the <code class="highlighter-rouge">OPTION</code> router, and,</li>
+  <li>return <code class="highlighter-rouge">HTTP 200</code> after accepting the <code class="highlighter-rouge">OPTION</code> Request.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// routes
+// OPTIONS       /*path        controllers.CORSController.preFlight(path)
+// controllers
+</span><span class="k">class</span> <span class="nc">CORSController</span>
+  <span class="k">extends</span> <span class="nc">Controller</span>
+  <span class="k">with</span> <span class="nc">CanCrossOrigin</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">preFlight</span><span class="o">(</span><span class="n">path</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="nc">Action</span> <span class="o">{</span> <span class="n">request</span> <span class="k">=&gt;</span>
+    <span class="n">corsOPTION</span><span class="o">(</span><span class="n">path</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// CanCrossOrigin
+</span><span class="k">trait</span> <span class="nc">CanCrossOrigin</span> <span class="o">{</span>
+  <span class="n">self</span><span class="k">:</span> <span class="kt">Controller</span> <span class="o">=&gt;</span>
+
+  <span class="k">def</span> <span class="n">corsOPTION</span><span class="o">(</span><span class="n">from</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"..."</span><span class="o">)</span><span class="k">:</span> <span class="kt">Result</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="o">???</span>
+    <span class="c1">// add Access-Control-Allow-Origin to header
+</span>  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<h2 id="canconnectdb2t-making-code-easy-to-io-mongodb"><code class="highlighter-rouge">CanConnectDB2[T]</code>, making code easy to I/O <code class="highlighter-rouge">MongoDB</code></h2>
+
+<p><code class="highlighter-rouge">CanConnectDB2[T]</code> will replace the original <code class="highlighter-rouge">CanConnectDB</code> soon.
+It will make code easy to read and write <code class="highlighter-rouge">MongoDB</code>.</p>
+
+<p>The code changes
+could be found at
+<a href="https://github.com/scozv/bolero/commit/b0a5fd3c3ab58159305711e6e0f742786fccc30b">git diff</a>.</p>
+
+<p>Currently, methods below are provided:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">trait</span> <span class="nc">CanConnectDB2</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="o">{</span>
+  <span class="c1">// Lists all T
+</span>  <span class="k">def</span> <span class="n">list</span><span class="o">(</span><span class="n">db</span><span class="k">:</span> <span class="kt">DB</span><span class="o">)</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span> <span class="k">=</span> <span class="o">???</span>
+  <span class="c1">// Quereis one T with specific _id
+</span>  <span class="k">def</span> <span class="n">one</span><span class="o">(</span><span class="n">db</span><span class="k">:</span> <span class="kt">DB</span><span class="o">,</span> <span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">Option</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span> <span class="k">=</span> <span class="o">???</span>
+  <span class="c1">// Gets the value of specific field of one T
+</span>  <span class="k">def</span> <span class="n">field</span><span class="o">[</span><span class="kt">B</span><span class="o">](</span><span class="n">db</span><span class="k">:</span> <span class="kt">DB</span><span class="o">,</span> <span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">fieldName</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">Option</span><span class="o">[</span><span class="kt">B</span><span class="o">]]</span> <span class="k">=</span> <span class="o">???</span>
+  <span class="c1">// Lists the specific field values
+</span>  <span class="k">def</span> <span class="n">sequence</span><span class="o">(</span><span class="n">db</span><span class="k">:</span> <span class="kt">DB</span><span class="o">,</span> <span class="n">selector</span><span class="k">:</span> <span class="kt">JsObject</span><span class="o">,</span> <span class="n">fieldName</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">B</span><span class="o">]]</span> <span class="k">=</span> <span class="o">???</span>
+  <span class="c1">// Inserts one T
+</span>  <span class="k">def</span> <span class="n">insert</span><span class="o">(</span><span class="n">db</span><span class="k">:</span> <span class="kt">DB</span><span class="o">,</span> <span class="n">document</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">WriteResult</span><span class="o">]</span> <span class="k">=</span> <span class="o">???</span>
+  <span class="c1">// Updates T(s) when selector holds
+</span>  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">db</span><span class="k">:</span> <span class="kt">DB</span><span class="o">,</span> <span class="n">selector</span><span class="k">:</span> <span class="kt">JsObject</span><span class="o">,</span> <span class="n">update</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">UpdateWriteResult</span><span class="o">]</span> <span class="k">=</span> <span class="o">???</span>
+  <span class="c1">// Edits one T with specific _id
+</span>  <span class="k">def</span> <span class="n">edit</span><span class="o">(</span><span class="n">db</span><span class="k">:</span> <span class="kt">DB</span><span class="o">,</span> <span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">update</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span><span class="kt">Future</span><span class="o">[</span><span class="kt">UpdateWriteResult</span><span class="o">]</span> <span class="k">=</span> <span class="o">???</span>
+<span class="o">}</span></code></pre></figure>
+
+<h2 id="token-based-authentication">Token Based Authentication</h2>
+
+<p>All <code class="highlighter-rouge">RESTful</code> API are stateless in <code class="highlighter-rouge">Bolero</code>.
+Token based authentication can be used for
+user identification. A post <sup id="fnref:auth0_token"><a href="#fn:auth0_token" class="footnote">11</a></sup> from <code class="highlighter-rouge">auth0</code>
+is recommanded.</p>
+
+<p>Also, I am writing a post on token authentication,
+the source code of this draft is in github <sup id="fnref:scozv_blog_auth_token"><a href="#fn:scozv_blog_auth_token" class="footnote">12</a></sup>.</p>
+
+<blockquote>
+  <p>Attention:</p>
+
+  <p>I am not a expert on Web Security.
+<code class="highlighter-rouge">Bolero</code> cannot ensure the 100% security of authentication.
+I am still improving it.</p>
+</blockquote>
+
+<p>Currently, <code class="highlighter-rouge">Bolero</code> uses Action composition <sup id="fnref:play_composition"><a href="#fn:play_composition" class="footnote">13</a></sup>
+for authentication.
+You can read the source code of <code class="highlighter-rouge">controllers.CanAuthenticate.scala</code>.</p>
+
+<h1 id="test-refactor-and-ci">Test, Refactor and CI</h1>
+
+<blockquote>
+  <p><strong>Test is very important <sup id="fnref:scozv_blog_jira"><a href="#fn:scozv_blog_jira" class="footnote">14</a></sup>, it is key to Refactor and CI.</strong></p>
+
+  <p><strong>Test is very important, it is key to Refactor and CI.</strong></p>
+
+  <p><strong>Test is very important, it is key to Refactor and CI.</strong></p>
+</blockquote>
+
+<p>The source code of <code class="highlighter-rouge">test</code>
+is located in <a href="https://github.com/scozv/bolero/tree/master/test"><code class="highlighter-rouge">test</code></a> folder.</p>
+
+<h2 id="the-structure-of-test">The Structure of Test</h2>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">.
+├── <span class="nb">test</span>
+|   |                               // still use previous release file,
+|   ├── WithApplication.scala       //   instead of WithApplication from Play! 2.4
+|   ├── CanConnectDB.scala          // connect to <span class="nb">test </span>database
+|   ├── CanFakeHTTP.scala           // fake HTTP Request
+|   └── BoleroApplicationSpec.scala // <span class="nb">test </span>files, can be separated</code></pre></figure>
+
+<h2 id="begin-and-end-of-test">Begin and End of Test</h2>
+
+<p>In order to keep independency of database,
+<code class="highlighter-rouge">Bolero</code> will prepare data before test, and clean up data after test.</p>
+
+<h2 id="canfakehttp-http-request-mocking"><code class="highlighter-rouge">CanFakeHTTP</code>, HTTP Request Mocking</h2>
+
+<p>Based on the Loose Coupling principle,
+the development process of <code class="highlighter-rouge">RESTful</code> Server
+should be independent with the development process
+of web page. So that <code class="highlighter-rouge">Bolero</code> use <code class="highlighter-rouge">CanFakeHTTP</code>
+to mock the HTTP Request.</p>
+
+<h1 id="deployment">Deployment</h1>
+
+<p>I use <code class="highlighter-rouge">Bolero</code> and host the project on <code class="highlighter-rouge">Ubuntu 14.04</code>.</p>
+
+<p>For deployment, you can read the <code class="highlighter-rouge">deploy.sh</code>, which uses
+<code class="highlighter-rouge">sbt-native-packager</code> <sup id="fnref:scala_sbt_native"><a href="#fn:scala_sbt_native" class="footnote">15</a></sup> for packaging.</p>
+
+<p>DO NOT host the deployment script or
+production configuration in development code.</p>
+
+<p>Supposing we have a huge project (codename: PJ), and we separate
+this project into different code repositories:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">pj-docs                 <span class="c"># documentation center, using Markdown</span>
+pj-core-restful         <span class="c"># this is where the Bolero use</span>
+pj-core-web             <span class="c"># Web models, using TypeScript</span>
+pj-client-web           <span class="c"># View, the user interface, using `pj-core-web`</span>
+pj-client-device        <span class="c"># View, application</span>
+pj-client-console       <span class="c"># View, core management system, still using `pj-core-web`</span>
+pj-deploy               <span class="c"># deploy configuration, NOT open to developers</span>
+pj-data                 <span class="c"># production data backup, NOT open to developers</span></code></pre></figure>
+
+<h1 id="references">References</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:play_json">
+      <p><a href="https://www.playframework.com/documentation/2.5.x/ScalaJsonCombinators"><code class="highlighter-rouge">Play!</code> JSON Reads/Writes/Format Combinators</a>&nbsp;<a href="#fnref:play_json" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:play_json_auto">
+      <p><a href="https://www.playframework.com/documentation/2.5.x/ScalaJsonAutomated"><code class="highlighter-rouge">Play!</code> JSON automated mapping</a>&nbsp;<a href="#fnref:play_json_auto" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:rest_http_method">
+      <p><a href="http://www.restapitutorial.com/lessons/httpmethods.html">Using HTTP Methods for RESTful Services</a>&nbsp;<a href="#fnref:rest_http_method" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:mdn_cors">
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">HTTP access control (CORS)</a>&nbsp;<a href="#fnref:mdn_cors" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:w3_cors_multi_issue">
+      <p><a href="https://www.w3.org/TR/cors/#access-control-allow-origin-response-header">5.1 Access-Control-Allow-Origin Response Header</a> from w3.org&nbsp;<a href="#fnref:w3_cors_multi_issue" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:play_filter">
+      <p><a href="https://www.playframework.com/documentation/2.5.x/ScalaHttpFilters"><code class="highlighter-rouge">Play!</code> Filters</a>&nbsp;<a href="#fnref:play_filter" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:scozv_git_goods">
+      <p><a href="https://github.com/scozv/bolero/blob/master/app/models/Goods.scala#L28"><code class="highlighter-rouge">models.Goods</code></a>&nbsp;<a href="#fnref:scozv_git_goods" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:oracle_mask">
+      <p><a href="http://www.oracle.com/technetwork/database/options/data-masking-subsetting/overview/index.html">Oracle Data Masking and Subsetting Pack</a>&nbsp;<a href="#fnref:oracle_mask" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:scala_try">
+      <p><a href="http://www.scala-lang.org/api/2.9.3/scala/util/Try.html"><code class="highlighter-rouge">scala.util.Try</code></a>&nbsp;<a href="#fnref:scala_try" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:scozv_bolero_issue1">
+      <p><a href="https://github.com/scozv/bolero/issues/1"><code class="highlighter-rouge">Bolero</code> issue #1 monad ModelOrError needed</a>&nbsp;<a href="#fnref:scozv_bolero_issue1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:auth0_token">
+      <p><a href="https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/">Cookies vs Tokens. Getting auth right with Angular.JS</a>&nbsp;<a href="#fnref:auth0_token" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:scozv_blog_auth_token">
+      <p><a href="https://github.com/scozv/blog/blob/master/_drafts/2016-05-12-understanding-of-login-and-the-token-based-authentication.md">Understanding of Token Authentication (Draft, in Chinese)</a>&nbsp;<a href="#fnref:scozv_blog_auth_token" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:play_composition">
+      <p><a href="https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition"><code class="highlighter-rouge">Play!</code> Action composition</a>&nbsp;<a href="#fnref:play_composition" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:scozv_blog_jira">
+      <p><a href="https://scozv.github.io/blog/guide/2016/04/05/fully-migrating-from-bitbucket-cloud-issue-system-to-jira-server">Fully Migrating from Bitbucket Cloud Issue System to JIRA Server</a>&nbsp;<a href="#fnref:scozv_blog_jira" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:scala_sbt_native">
+      <p><a href="[^scala_sbt_native]">Debian Plugin</a>&nbsp;<a href="#fnref:scala_sbt_native" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+                
+                <h4>Similar Posts</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala">
+                      Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6
+                      <small>Jul 18, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+                      Bolero, Cumulative Update (Sep 04, 2016)
+                      <small>Sep 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/08/22/scala-quick-tour-part-ii">
+                      Scala Quick Tour Part II
+                      <small>Aug 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/08/21/scala-quick-tour-part-i">
+                      Scala Quick Tour Part I
+                      <small>Aug 21, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk">
+                      Design a Cashier Microservice with Ping++ SDK
+                      <small>Jul 11, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration">
+                      A Loose Coupling Architecture of the Web Solution with Continuous Integration
+                      <small>May 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala';
+      this.page.identifier = '/guide/2016/07/27/bolero-a-restful-scaffold-with-scala';
+      this.page.title = 'Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

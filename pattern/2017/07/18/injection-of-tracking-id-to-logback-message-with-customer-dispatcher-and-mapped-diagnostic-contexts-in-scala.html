@@ -1,0 +1,1545 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6 &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6</h1>
+  <span class="post-date">Jul 18, 2017</span>
+  
+<h1 class="no_toc" id="abstract">Abstract</h1>
+
+<blockquote>
+  <p>Two approaches of adding global value to Mapped Diagnostic Contexts（MDC)
+have been introduced in the post of 2014 by Yann Simon<sup id="fnref:_blog_yanns_mdc_play"><a href="#fn:_blog_yanns_mdc_play" class="footnote">1</a></sup>.
+Since the global value could be added into MDC,
+the Tracking Id used for tracking the log messages for each HTTP Request
+can be also added into the MDC.</p>
+
+  <p>This post initially introduces the background of Tracking Id
+and the approaches mentioned in Yann’s post. Then describes some improve
+or issues during the implementation.
+A critical or blocked issue is <code class="highlighter-rouge">trackingId</code> not added in every log message,
+and a similiar issue is also mention in Github<sup id="fnref:_github_rishabh9_issue1"><a href="#fn:_github_rishabh9_issue1" class="footnote">2</a></sup>.</p>
+
+  <p>Logging the thread name is useful for locating the reason of issue.
+According to thread information of log messages, a solution or fix that</p>
+
+  <ul>
+    <li>changing the configuration name <code class="highlighter-rouge">play.akka.actor</code> to <code class="highlighter-rouge">akka.actor</code>, and</li>
+    <li>replacing <code class="highlighter-rouge">scala.concurrent.ExecutionContext</code> with injected object</li>
+  </ul>
+
+  <p>has been found and applied.</p>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a>    <ul>
+      <li><a href="#use-case-and-design-of-tracking-id" id="markdown-toc-use-case-and-design-of-tracking-id">Use Case and Design of Tracking Id</a></li>
+    </ul>
+  </li>
+  <li><a href="#implementation-of-tracking-id" id="markdown-toc-implementation-of-tracking-id">Implementation of Tracking Id</a>    <ul>
+      <li><a href="#holding-trackingid-in-context-of-golang" id="markdown-toc-holding-trackingid-in-context-of-golang">Holding <code class="highlighter-rouge">trackingId</code> in Context of Golang</a></li>
+      <li><a href="#using-httpfilter-and-dispatcher-in-scala" id="markdown-toc-using-httpfilter-and-dispatcher-in-scala">Using HttpFilter and Dispatcher in Scala</a></li>
+      <li><a href="#tips-in-implementation" id="markdown-toc-tips-in-implementation">Tips in Implementation</a></li>
+    </ul>
+  </li>
+  <li><a href="#diagnosis-of-tracking-id-not-written-in-log-message" id="markdown-toc-diagnosis-of-tracking-id-not-written-in-log-message">Diagnosis of Tracking Id not Written in Log Message</a>    <ul>
+      <li><a href="#issue-description" id="markdown-toc-issue-description">Issue Description</a></li>
+      <li><a href="#solution-for-tracking-id-missing" id="markdown-toc-solution-for-tracking-id-missing">Solution for Tracking Id Missing</a></li>
+      <li><a href="#replacing-executioncontextglobal-with-injected-object" id="markdown-toc-replacing-executioncontextglobal-with-injected-object">Replacing ExecutionContext.global with Injected Object</a></li>
+    </ul>
+  </li>
+  <li><a href="#improve-of-tracking-id" id="markdown-toc-improve-of-tracking-id">Improve of Tracking Id</a></li>
+  <li><a href="#reference" id="markdown-toc-reference">Reference</a></li>
+</ul>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Applying the Software Engineering means more attention
+should be paid on Engineering, efficient delivery and
+reliable system monitoring, instead of endless dispute on
+programming language A must be better than B.</p>
+
+<p>Initially setting up the team with similar programming stack,
+then the Lead spends much more effort on testing, coverage, and
+also log system, health check, and software metric.</p>
+
+<p>The runtime error in production MUST be fixed as soon as
+possible. Since the regular diagnostic information comes from
+the log message, querying the issue related log message quickly
+is the key to locating the reason of issue. Tracking Id is
+an random string generated for each HTTP Request, this unique string
+will be appended in each log message related to a HTTP Request.
+Searching the log messages by <code class="highlighter-rouge">trackingId</code> can find out the
+exact happened story for each specific HTTP Request.</p>
+
+<h2 id="use-case-and-design-of-tracking-id">Use Case and Design of Tracking Id</h2>
+
+<p>High volume of concurrence and loose coupling of distributed deployment are
+two generic facts of current system design. The log files stored in difference
+server become larger. Meanwhile, the log messages related to a specific HTTP
+Request CANNOT be written linearly.</p>
+
+<p>Here is an example for two requests:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>2017-07-17T19:06:55.560Z] <span class="o">[</span>DEBUG] user 1 connected
+<span class="o">[</span>2017-07-17T19:06:57.121Z] <span class="o">[</span>DEBUG] get token from redis
+<span class="o">[</span>2017-07-17T19:07:03.289Z] <span class="o">[</span>DEBUG] start the query with parameter <span class="o">{</span>...<span class="o">}</span>
+<span class="o">[</span>2017-07-17T19:07:03.981Z] <span class="o">[</span>DEBUG] user 2 connected
+<span class="o">[</span>2017-07-17T19:07:05.192Z] <span class="o">[</span>WARN] get result with 1029ms
+<span class="o">[</span>2017-07-17T19:07:05.207Z] <span class="o">[</span>DEBUG] get token from redis
+<span class="o">[</span>2017-07-17T19:07:05.285Z] <span class="o">[</span>ERROR] invalid token</code></pre></figure>
+
+<p>Reading the large log file from
+multiple server nodes with <code class="highlighter-rouge">tail -f application.log</code> is impossible to
+locating the issue in 5 minutes.</p>
+
+<p>However, with appending <code class="highlighter-rouge">trackingId</code> in log message shown below,
+the exact linear story can be extracted from the large log files:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>2017-07-17T19:06:55.560Z] <span class="o">[</span>tracking-id-0001] <span class="o">[</span>DEBUG] user 1 connected
+<span class="o">[</span>2017-07-17T19:06:57.121Z] <span class="o">[</span>tracking-id-0001] <span class="o">[</span>DEBUG] get token from redis
+<span class="o">[</span>2017-07-17T19:07:03.289Z] <span class="o">[</span>tracking-id-0001] <span class="o">[</span>DEBUG] start the query with parameter <span class="o">{</span>...<span class="o">}</span>
+<span class="o">[</span>2017-07-17T19:07:03.981Z] <span class="o">[</span>tracking-id-1024] <span class="o">[</span>DEBUG] user 2 connected
+<span class="o">[</span>2017-07-17T19:07:05.192Z] <span class="o">[</span>tracking-id-0001] <span class="o">[</span>WARN] get result with 1029ms
+<span class="o">[</span>2017-07-17T19:07:05.207Z] <span class="o">[</span>tracking-id-1024] <span class="o">[</span>DEBUG] get token from redis
+<span class="o">[</span>2017-07-17T19:07:05.285Z] <span class="o">[</span>tracking-id-1024] <span class="o">[</span>ERROR] invalid token</code></pre></figure>
+
+<p>A flow of generating and passing the <code class="highlighter-rouge">trackingId</code> in Play 2.6 is designed as below:</p>
+
+<ol>
+  <li>HTTP Request accepted in backend server side,</li>
+  <li><code class="highlighter-rouge">trackingId</code> generated for each request in <code class="highlighter-rouge">HttpFilter</code> of Play,</li>
+  <li><code class="highlighter-rouge">trackingId</code> passed to MDC and appended to log message,</li>
+  <li><code class="highlighter-rouge">trackingId</code> inserted into the header of HTTP Response,</li>
+  <li>frontend side received the <code class="highlighter-rouge">trackingId</code>.</li>
+</ol>
+
+<p>The approaches provided in Yann Simon’s post are used for passing the <code class="highlighter-rouge">trackingId</code>
+to Mapped Diagnostic Contexts (MDC). So that we can use the Logback pattern with <code class="highlighter-rouge">%mdc{trackingId}</code> to write <code class="highlighter-rouge">trackingId</code> in log messages:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">"FILE"</span> <span class="na">class=</span><span class="s">"ch.qos.logback.core.FileAppender"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;file&gt;</span>${application.home:-.}/logs/application.log<span class="nt">&lt;/file&gt;</span>
+  <span class="nt">&lt;encoder&gt;</span>
+    <span class="nt">&lt;pattern&gt;</span>%date [%level] [%mdc{trackingId:--}] %message%n%xException<span class="nt">&lt;/pattern&gt;</span>
+  <span class="nt">&lt;/encoder&gt;</span>
+<span class="nt">&lt;/appender&gt;</span></code></pre></figure>
+
+<h1 id="implementation-of-tracking-id">Implementation of Tracking Id</h1>
+
+<h2 id="holding-trackingid-in-context-of-golang">Holding <code class="highlighter-rouge">trackingId</code> in Context of Golang</h2>
+
+<p>The <code class="highlighter-rouge">%mdc</code> pattern or fommatter is not supported in <code class="highlighter-rouge">cihub/seelog</code>
+package of Golang<sup id="fnref:_github_cihub_seelog_format_ref"><a href="#fn:_github_cihub_seelog_format_ref" class="footnote">3</a></sup>. David Budworth
+explained this in Stackoverflow as<sup id="fnref:_sf_david_bud_mdc_java_go"><a href="#fn:_sf_david_bud_mdc_java_go" class="footnote">4</a></sup>:</p>
+
+<blockquote>
+  <p>Java MDC relies on thread local storage, something Go does not have.</p>
+</blockquote>
+
+<p>An alternative solution is holding the <code class="highlighter-rouge">trackingId</code> in a global context,
+such as creating a <code class="highlighter-rouge">RequestContext</code> basing on the <code class="highlighter-rouge">gin.Context</code><sup id="fnref:_note_where_go_code_from"><a href="#fn:_note_where_go_code_from" class="footnote">5</a></sup>:</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">type</span><span class="x"> </span><span class="n">RequestContext</span><span class="x"> </span><span class="k">struct</span><span class="x"> </span><span class="p">{</span><span class="x">
+  </span><span class="o">*</span><span class="n">gin</span><span class="o">.</span><span class="n">Context</span><span class="x">
+
+  </span><span class="n">TrackingId</span><span class="x">    </span><span class="kt">string</span><span class="x">
+</span><span class="p">}</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">newContext</span><span class="p">(</span><span class="n">c</span><span class="x"> </span><span class="o">*</span><span class="n">gin</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span><span class="x"> </span><span class="o">*</span><span class="n">RequestContext</span><span class="x"> </span><span class="p">{</span><span class="x">
+  </span><span class="k">return</span><span class="x"> </span><span class="o">&amp;</span><span class="n">RequestContext</span><span class="p">{</span><span class="x">
+    </span><span class="n">Context</span><span class="o">:</span><span class="x">    </span><span class="n">c</span><span class="p">,</span><span class="x">
+    </span><span class="n">TrackingId</span><span class="o">:</span><span class="x"> </span><span class="n">GenGuid</span><span class="p">(),</span><span class="x">
+  </span><span class="p">}</span><span class="x">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>Also, passing the <code class="highlighter-rouge">RequestContext</code> to the method where the
+logger needed:</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">func</span><span class="x"> </span><span class="n">fooAction</span><span class="p">(</span><span class="n">c</span><span class="x"> </span><span class="o">*</span><span class="n">gin</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span><span class="x"> </span><span class="p">{</span><span class="x">
+  </span><span class="k">var</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="kt">error</span><span class="x">
+
+  </span><span class="n">ctx</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">getRequestContext</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="x">
+
+  </span><span class="c">// ..., err =</span><span class="x">
+
+  </span><span class="n">logger</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="n">buildLogMessage</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="x"> </span><span class="s">"Failed in fooAction: $v"</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="p">))</span><span class="x">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>The method named <code class="highlighter-rouge">getRequestContext</code> has two purposes, one is getting the
+<code class="highlighter-rouge">RequestContext</code> if any (<code class="highlighter-rouge">val.(*RequestContext)</code>), another is
+creating a new <code class="highlighter-rouge">RequestContext</code> if not existing.</p>
+
+<p>Since seelog doesn’t support <code class="highlighter-rouge">%mdc{}</code> pattern, <code class="highlighter-rouge">buildLogMessage</code>
+can be used for appending the <code class="highlighter-rouge">trackingId</code> into the log message.</p>
+
+<p>With the pattern below, <code class="highlighter-rouge">trackingId</code> will be considered as
+a part of log message:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">"FILE"</span> <span class="na">class=</span><span class="s">"ch.qos.logback.core.FileAppender"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;file&gt;</span>${application.home:-.}/logs/application.log<span class="nt">&lt;/file&gt;</span>
+  <span class="nt">&lt;encoder&gt;</span>
+    <span class="nt">&lt;pattern&gt;</span>%date [%level] %message%n%xException<span class="nt">&lt;/pattern&gt;</span>
+  <span class="nt">&lt;/encoder&gt;</span>
+<span class="nt">&lt;/appender&gt;</span></code></pre></figure>
+
+<p>Only need is prepending the <code class="highlighter-rouge">trackingId</code> to the log message body,
+to keep the same format of log both in Scala and Java:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">// with MDC
+%date [%level] [%mdc{trackingId:--}] %message%n%xException
+
+// in Golang
+%date [%level] %message%n%xException
+
+func buildLogMessage(ctx *RequestContext, format string, parms ...interface{}) string {
+  // [trackingId] msg
+  f := fmt.Sprintf("[%s] ", ctx.TrackingId) + format
+  return fmt.Sprintf(f, parms...)
+}</code></pre></figure>
+
+<h2 id="using-httpfilter-and-dispatcher-in-scala">Using HttpFilter and Dispatcher in Scala</h2>
+
+<p>As mentioned in Yann Simon’s post<sup id="fnref:_blog_yanns_mdc_play:1"><a href="#fn:_blog_yanns_mdc_play" class="footnote">1</a></sup>:</p>
+
+<blockquote>
+  <p>To record the values in the MDC, Logback uses a ThreadLocal variable. This strategy works when one thread is used for one request. The implementation of the MDC with a ThreadLocal cannot work with this non-blocking asynchronous threading model in Play.</p>
+</blockquote>
+
+<p>Two steps need to be implemented for <code class="highlighter-rouge">trackingId</code>:</p>
+
+<ul>
+  <li>Generating the unique string for each request,</li>
+  <li>Passing the <code class="highlighter-rouge">trackingId</code> in different threads.</li>
+</ul>
+
+<p>The <code class="highlighter-rouge">HttpFilter</code> of Play Framework is a feature that makes
+it possible to run some code before or after the actions are
+invoked<sup id="fnref:_book_julien_foy_2014"><a href="#fn:_book_julien_foy_2014" class="footnote">6</a></sup>.</p>
+
+<p>The <code class="highlighter-rouge">trackingId</code> is generated before the actions are invoked,
+then it will be inserted into HTTP Response header
+after the actions are invoked. Frontend reports the <code class="highlighter-rouge">trackingId</code>
+in HTTP Response when runtime error happens.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">TrackingFilter</span> <span class="nd">@Inject</span><span class="o">()</span> <span class="o">(</span>
+  <span class="k">implicit</span> <span class="n">ec</span><span class="k">:</span> <span class="kt">ExecutionContext</span>
+<span class="o">)</span> <span class="k">extends</span> <span class="nc">EssentialFilter</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">action</span><span class="k">:</span> <span class="kt">EssentialAction</span><span class="o">)</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">EssentialAction</span> <span class="o">{</span>
+    <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">requestHeader</span><span class="k">:</span> <span class="kt">RequestHeader</span><span class="o">)</span><span class="k">:</span> <span class="kt">Accumulator</span><span class="o">[</span><span class="kt">ByteString</span>, <span class="kt">Result</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">trackingId</span> <span class="k">=</span> <span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span>
+      <span class="nc">MDC</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">"trackingId"</span><span class="o">,</span> <span class="n">trackingId</span><span class="o">)</span>
+
+      <span class="n">action</span><span class="o">(</span><span class="n">requestHeader</span><span class="o">)</span>
+        <span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withHeaders</span><span class="o">(</span><span class="s">"X-Tracking-Id"</span> <span class="o">-&gt;</span> <span class="n">trackingId</span><span class="o">)</span> <span class="o">}</span>
+        <span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">result</span> <span class="k">=&gt;</span>
+          <span class="nc">MDC</span><span class="o">.</span><span class="n">remove</span><span class="o">(</span><span class="s">"trackingId"</span><span class="o">)</span>
+          <span class="n">result</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>The <code class="highlighter-rouge">trackingId</code> generated in <code class="highlighter-rouge">TrackingFilter</code> needs to be passed into the MDC of
+different threads, where the Customized Akka Dispatcher or ExecutionContext mentioned by
+Yann Simon is needed.</p>
+
+<p>The main implementation of customized Akka Dispatcher copied as below,
+The switch of different threads happenes in <code class="highlighter-rouge">self.execute(() =&gt; {})</code>, where a new
+Runnable instance is created:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">execute</span><span class="o">(</span><span class="n">runnable</span><span class="k">:</span> <span class="kt">Runnable</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">self</span><span class="o">.</span><span class="n">execute</span><span class="o">(()</span> <span class="k">=&gt;</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">oldMDCContext</span> <span class="k">=</span> <span class="nc">MDC</span><span class="o">.</span><span class="n">getCopyOfContextMap</span>
+
+  <span class="n">setContextMap</span><span class="o">(</span><span class="n">mdcContext</span><span class="o">)</span>
+  <span class="k">try</span> <span class="o">{</span>
+    <span class="n">runnable</span><span class="o">.</span><span class="n">run</span><span class="o">()</span>
+  <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+    <span class="n">setContextMap</span><span class="o">(</span><span class="n">oldMDCContext</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">})</span></code></pre></figure>
+
+<h2 id="tips-in-implementation">Tips in Implementation</h2>
+
+<p>Play Framework has been shipped with Dependency Injection
+from 2.4 <sup id="fnref:_play_di_in_24"><a href="#fn:_play_di_in_24" class="footnote">7</a></sup>, in version 2.6, <code class="highlighter-rouge">Controller</code> and <code class="highlighter-rouge">ExecutionContext.global</code>
+has been deprecated and replaced with injected case class<sup id="fnref:_play_di_in_26"><a href="#fn:_play_di_in_26" class="footnote">8</a></sup>.
+When <code class="highlighter-rouge">TrackingFilter</code> is used as an injected class, we need configure to use Filters
+in <code class="highlighter-rouge">play.http.filters</code> conf item<sup id="fnref:_play_http_filters"><a href="#fn:_play_http_filters" class="footnote">9</a></sup>.</p>
+
+<p>After that, we will learn from the server starting log that Play enabled four <code class="highlighter-rouge">HttpFilter</code> by default:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>info] <span class="o">[</span>-] p.a.h.EnabledFilters - Enabled Filters <span class="o">(</span>see &lt;https://www.playframework.com/documentation/latest/Filters&gt;<span class="o">)</span>:
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+    play.filters.cors.CORSFilter
+
+<span class="o">[</span>info] <span class="o">[</span>-] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span></code></pre></figure>
+
+<p>Being enable of <code class="highlighter-rouge">AllowedHostsFilter</code> may receive some
+error saying “Host not allowed: server-name”, or “Host not allowed: private-ip”
+in some IaaS platform using the load balance for health check.
+In this case, a white list of allowed hosts should be configured<sup id="fnref:_play_host_allowed"><a href="#fn:_play_host_allowed" class="footnote">10</a></sup>.</p>
+
+<p>Another solution for fixing the “Host not allowed: server-name” error is removing
+<code class="highlighter-rouge">AllowedHostsFilter</code>：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Filters</span> <span class="nd">@Inject</span><span class="o">()</span> <span class="o">(</span>
+  <span class="n">defaultFilters</span><span class="k">:</span> <span class="kt">EnabledFilters</span><span class="o">,</span>
+  <span class="n">tracking</span><span class="k">:</span> <span class="kt">TrackingFilter</span>
+<span class="o">)</span> <span class="k">extends</span> <span class="nc">DefaultHttpFilters</span><span class="o">(</span><span class="n">defaultFilters</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">filter</span> <span class="o">{</span>
+  <span class="k">case</span> <span class="n">f</span><span class="k">:</span> <span class="kt">AllowedHostsFilter</span> <span class="o">=&gt;</span> <span class="kc">false</span>
+  <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="kc">true</span>
+<span class="o">}</span> <span class="o">:+</span> <span class="n">tracking</span><span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span></code></pre></figure>
+
+<p>A final tip for customized Dispatcher is the name of
+dispatcher conf node may be <code class="highlighter-rouge">akka.actor</code>, instead of <code class="highlighter-rouge">play.akka.actor</code>
+mentioned in Yann Simon’s post. Anyway, runtime will choose a correct one.</p>
+
+<h1 id="diagnosis-of-tracking-id-not-written-in-log-message">Diagnosis of Tracking Id not Written in Log Message</h1>
+
+<h2 id="issue-description">Issue Description</h2>
+
+<p>Most log messages don’t have the <code class="highlighter-rouge">trackingId</code> after implemented the customized
+Akka Dispather.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>info] <span class="o">[</span>-] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span>
+<span class="o">[</span>warn] <span class="o">[</span>-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
+<span class="o">[</span>debug] <span class="o">[</span>-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector<span class="o">(</span>security, profile<span class="o">)</span>
+<span class="o">[</span>debug] <span class="o">[</span>-] c.l.p.a.v.g.ActivityApi - start the get last message
+<span class="o">[</span>debug] <span class="o">[</span>-] c.l.p.n.d.ReactiveMongoManager<span class="nv">$ </span>-  &lt;:&gt; Connecting reactive driver</code></pre></figure>
+
+<p>Putting log in <code class="highlighter-rouge">TrackingFilter</code> will print some trackable log messages, but not all：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>info] <span class="o">[</span>-] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span>
+<span class="o">[</span>debug] <span class="o">[</span>3734068e-f354-4de4-a9e7-25fc6ed9a1cb] c.l.TrackingFilter -  &lt;:&gt; trackingId generated: 3734068e-f354-4de4-a9e7-25fc6ed9a1cb
+<span class="o">[</span>warn] <span class="o">[</span>-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
+<span class="o">[</span>debug] <span class="o">[</span>-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector<span class="o">(</span>security, profile<span class="o">)</span></code></pre></figure>
+
+<p>Moreover, putting the log in <code class="highlighter-rouge">MDCPropagatingDispatcher</code>, will see：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>info] <span class="o">[</span>-] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span>
+<span class="o">[</span>debug] <span class="o">[</span>a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] c.l.TrackingFilter -  &lt;:&gt; trackingId generated: a5a7cbab-6ee4-4dd8-b54e-64217dc7357e
+<span class="o">[</span>debug] <span class="o">[</span>a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] old context: null
+<span class="o">[</span>debug] <span class="o">[</span>a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] new context: <span class="o">{</span><span class="nv">trackingId</span><span class="o">=</span>a5a7cbab-6ee4-4dd8-b54e-64217dc7357e<span class="o">}</span>
+<span class="c"># many log skipped  ...</span>
+<span class="o">[</span>debug] <span class="o">[</span>-] old context: null
+<span class="o">[</span>debug] <span class="o">[</span>-] new context: null
+<span class="o">[</span>debug] <span class="o">[</span>-] old context: <span class="o">{}</span>
+<span class="o">[</span>debug] <span class="o">[</span>-] new context: null</code></pre></figure>
+
+<h2 id="solution-for-tracking-id-missing">Solution for Tracking Id Missing</h2>
+
+<p>The last log messages indicate:</p>
+
+<ul>
+  <li>The customized Akka Dispatcher works, since the log contain the message from <code class="highlighter-rouge">MDCPropagatingDispatcher</code>,</li>
+  <li>The thread keeps switching, since multiple messages of <code class="highlighter-rouge">old / new context</code> show up
+in the log.</li>
+</ul>
+
+<p>So the question of Tracking Id missing becomes
+<strong>why <code class="highlighter-rouge">trackingId</code> is not passing in MDC of different threads</strong>.
+In order to find out the solution, we display the thread name in each
+log message:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Log format</span>
+<span class="c"># &lt;pattern&gt;%coloredLevel [%mdc{trackingId:--}] [%thread] %logger{15} - %message%n%xException{10}&lt;/pattern&gt;</span>
+
+<span class="o">[</span>info] <span class="o">[</span>-] <span class="o">[</span>scala-execution-context-global-80] play.api.Play - Application started <span class="o">(</span>Dev<span class="o">)</span>
+<span class="o">[</span>debug] <span class="o">[</span>006bc4df-0310-4793-a88d-923dfde227d9] <span class="o">[</span>play-dev-mode-akka.actor.default-dispatcher-2] c.l.TrackingFilter -  &lt;:&gt; trackingId generated: 006bc4df-0310-4793-a88d-923dfde227d9
+<span class="o">[</span>debug] <span class="o">[</span>006bc4df-0310-4793-a88d-923dfde227d9] <span class="o">[</span>application-akka.actor.default-dispatcher-2] - old context: null
+<span class="o">[</span>debug] <span class="o">[</span>006bc4df-0310-4793-a88d-923dfde227d9] <span class="o">[</span>application-akka.actor.default-dispatcher-2] - new context: <span class="o">{</span><span class="nv">trackingId</span><span class="o">=</span>006bc4df-0310-4793-a88d-923dfde227d9<span class="o">}</span>
+<span class="o">[</span>warn] <span class="o">[</span>-] <span class="o">[</span>scala-execution-context-global-80] - <span class="o">[</span><span class="s1">'token'</span>: <span class="s1">'fd'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'request'</span>: <span class="s1">'POST /api/auth'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'clientIp'</span>: <span class="s1">'0:0:0:0:0:0:0:1'</span><span class="o">]</span> &lt;:&gt; Valid token not found</code></pre></figure>
+
+<p>The last two messages are the key to locating the issue, one has <code class="highlighter-rouge">trackingId</code>,
+another has not, and the thread names are different：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>debug] <span class="o">[</span>006bc4df-0310-4793-a88d-923dfde227d9] <span class="o">[</span>application-akka.actor.default-dispatcher-2] - new context: <span class="o">{</span><span class="nv">trackingId</span><span class="o">=</span>006bc4df-0....
+<span class="o">[</span>warn] <span class="o">[</span>-] <span class="o">[</span>scala-execution-context-global-80] - <span class="o">[</span><span class="s1">'token'</span>: <span class="s1">'404'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'request'</span>: <span class="s1">'POST /api/auth'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'clientIp'</span>: <span class="s1">'0:0:0:0:0:0:0:1'</span><span class="o">]</span> &lt;:&gt; Valid token not found</code></pre></figure>
+
+<p>These two messages may generated by different thread objects,
+one is created by <code class="highlighter-rouge">akka.actor.default-dispatcher</code>,
+another is created by some scala object related to
+<code class="highlighter-rouge">scala.concurrent.ExecutionContext.global</code>.</p>
+
+<p>The name of <code class="highlighter-rouge">scala-execution-context-global-80</code> reminds me that Play 2.6 encourages
+developer to use Dependency Injection, not global <code class="highlighter-rouge">ExecutionContext.global</code><sup id="fnref:_play_ec_deprected"><a href="#fn:_play_ec_deprected" class="footnote">11</a></sup>. And from the thread information
+of log messages, it is one step closer to the final solution.</p>
+
+<h2 id="replacing-executioncontextglobal-with-injected-object">Replacing ExecutionContext.global with Injected Object</h2>
+
+<p>Basing on the analysis above, the implicit usage of <code class="highlighter-rouge">ExecutionContext.global</code> has
+finally been found in source code, it should be replaced by injected <code class="highlighter-rouge">ExecutionContext</code>
+as the solution below:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Security</span> <span class="nd">@Inject</span><span class="o">()</span> <span class="o">(</span>
+<span class="o">+</span>  <span class="k">implicit</span> <span class="n">ec</span><span class="k">:</span> <span class="kt">ExecutionContext</span><span class="o">,</span>
+  <span class="n">membersDao</span><span class="k">:</span> <span class="kt">MembersDao</span><span class="o">,</span>
+  <span class="n">userApiToken</span><span class="k">:</span> <span class="kt">UserApiTokenDao</span><span class="o">,</span>
+  <span class="n">enforceHttpsAction</span><span class="k">:</span> <span class="kt">EnforceHttpsAction</span>
+<span class="o">)</span> <span class="o">{</span>
+
+<span class="o">-</span>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">ec</span> <span class="k">=</span> <span class="n">scala</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="nc">ExecutionContext</span><span class="o">.</span><span class="n">global</span>
+
+<span class="o">}</span></code></pre></figure>
+
+<p>And this solution works:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>debug] <span class="o">[</span>f6ab38a5-1461-44c9-a5f8-ce7764025fad] -  &lt;:&gt; trackingId generated: f6ab38a5-1461-44c9-a5f8-ce7764025fad
+<span class="o">[</span>warn] <span class="o">[</span>f6ab38a5-1461-44c9-a5f8-ce7764025fad] - <span class="o">[</span><span class="s1">'token'</span>: <span class="s1">'404'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'request'</span>: <span class="s1">'POST /api/auth'</span><span class="o">]</span> | <span class="o">[</span><span class="s1">'clientIp'</span>: <span class="s1">'0:0:0:0:0:0:0:1'</span><span class="o">]</span> &lt;:&gt; Valid token not found</code></pre></figure>
+
+<h1 id="improve-of-tracking-id">Improve of Tracking Id</h1>
+
+<p>The importance of Tracking Id is evidently. Since this post
+only focus on the backend Tracking Id generating, an improve
+of Tracking Id is frontend generating. The Tracking Id
+will take its entire life cycle starting from the HTTP Request initialization,
+going through the load balance, network, and arriving at backend side. After
+the business calculation in backend server finish, the Tracking Id will be finally responsed
+back to the frontend side.</p>
+
+<p>The system deployed with the Ngnix needs writing the <code class="highlighter-rouge">trackingId</code> into the
+Ngnix, then the <code class="highlighter-rouge">condition</code> conf<sup id="fnref:_ngix_condition_log"><a href="#fn:_ngix_condition_log" class="footnote">12</a></sup> can be used for Access Log.
+Even more, the Access Log can be configured for tracking the <code class="highlighter-rouge">4xx</code> HTTP Response only for production error.</p>
+
+<p>Reporting the <code class="highlighter-rouge">trackingId</code> from frontend:</p>
+
+<ul>
+  <li>can track the access log of Nginx,</li>
+  <li>can help build the story in backend.</li>
+</ul>
+
+<p>No need of reading and searching word by word in large log file.</p>
+
+<h1 id="reference">Reference</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:_blog_yanns_mdc_play">
+      <p><a href="http://yanns.github.io/blog/2014/05/04/slf4j-mapped-diagnostic-context-mdc-with-play-framework/">SLF4J Mapped Diagnostic Context (MDC) With Play Framework</a> by Yann Simon, 2014&nbsp;<a href="#fnref:_blog_yanns_mdc_play" class="reversefootnote">&#8617;</a>&nbsp;<a href="#fnref:_blog_yanns_mdc_play:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:_github_rishabh9_issue1">
+      <p><a href="https://github.com/rishabh9/mdc-propagation-dispatcher/issues/1"><code class="highlighter-rouge">TrackingId</code> not printed as description in issue #1 of rishabh9/mdc-propagation-dispatcher</a>&nbsp;<a href="#fnref:_github_rishabh9_issue1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_github_cihub_seelog_format_ref">
+      <p><a href="https://github.com/cihub/seelog/wiki/Format-reference/7eb0ebc6df74a6386165d9b4687445c6b86bac97">Format Reference of cihub/seelog</a>&nbsp;<a href="#fnref:_github_cihub_seelog_format_ref" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_sf_david_bud_mdc_java_go">
+      <p><a href="https://stackoverflow.com/a/41049394"><em>“Java MDC relies on thread local storage, Go does not have”</em> by David Budworth’s reply on Stackoverflow</a>&nbsp;<a href="#fnref:_sf_david_bud_mdc_java_go" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_note_where_go_code_from">
+      <p>The <code class="highlighter-rouge">RequestContext</code> originally comes from the Golang code of my colleague in Hujiang. Basing on that, I added the <code class="highlighter-rouge">TrackingId</code> and wrote it to log.&nbsp;<a href="#fnref:_note_where_go_code_from" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_book_julien_foy_2014">
+      <p>Julien Richard-Foy, Play Framework Essentials, Packt Publishing 2014&nbsp;<a href="#fnref:_book_julien_foy_2014" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_play_di_in_24">
+      <p><a href="https://www.playframework.com/documentation/2.4.x/ScalaDependencyInjection">Runtime Dependency Injection in Play 2.4</a>&nbsp;<a href="#fnref:_play_di_in_24" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_play_di_in_26">
+      <p><a href="https://playframework.com/documentation/2.6.x/Migration26#scala-controller-changes">Scala Controller Changes in Play 2.6</a>&nbsp;<a href="#fnref:_play_di_in_26" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_play_http_filters">
+      <p><a href="https://www.playframework.com/documentation/2.6.x/ScalaHttpFilters#Using-filters">Using Filters in Play 2.6</a>&nbsp;<a href="#fnref:_play_http_filters" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_play_host_allowed">
+      <p><a href="https://www.playframework.com/documentation/2.6.x/AllowedHostsFilter#Configuring-allowed-hosts">Configure Allowed Hosts</a>&nbsp;<a href="#fnref:_play_host_allowed" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_play_ec_deprected">
+      <p><a href="https://playframework.com/documentation/2.6.x/Migration26#play.api.libs.concurrent.Execution-is-deprecated"><code class="highlighter-rouge">play.api.libs.concurrent.Execution</code> is deprecated</a>&nbsp;<a href="#fnref:_play_ec_deprected" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:_ngix_condition_log">
+      <p><a href="http://nginx.org/en/docs/http/ngx_http_log_module.html">Module ngx_http_log_module</a>&nbsp;<a href="#fnref:_ngix_condition_log" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <h4>Similar Posts</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+                      Bolero, Cumulative Update (Sep 04, 2016)
+                      <small>Sep 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/08/22/scala-quick-tour-part-ii">
+                      Scala Quick Tour Part II
+                      <small>Aug 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/08/21/scala-quick-tour-part-i">
+                      Scala Quick Tour Part I
+                      <small>Aug 21, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+                      Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo
+                      <small>Jul 27, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk">
+                      Design a Cashier Microservice with Ping++ SDK
+                      <small>Jul 11, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala';
+      this.page.identifier = '/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala';
+      this.page.title = 'Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

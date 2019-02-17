@@ -1,0 +1,833 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/guide/2013/12/21/how-to-make-code-of-algojs-run-in-nodejs-as-in-browser" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/guide/2013/12/21/how-to-make-code-of-algojs-run-in-nodejs-as-in-browser" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      How to Make Code of Tango.js Run in Node.js as in Browser &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/guide/2013/12/21/how-to-make-code-of-algojs-run-in-nodejs-as-in-browser">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">How to Make Code of Tango.js Run in Node.js as in Browser</h1>
+  <span class="post-date">Dec 21, 2013</span>
+  
+<blockquote>
+  <p>I have planed to run unit test by reading file as the input for algorithm like graph algorithm for a few months (see <a href="https://github.com/scozv/algo-js/issues/18" title="issue #18">issue #18</a>). However, it is not easy or effective to read local file from browser, even using <code class="highlighter-rouge">FileReader</code> in JavaScript. An alternative way is that we can read file  using the file system of Node.js, where we write JavaScript code as in browser.</p>
+
+  <p>So the top proiority is <strong>making codes run appropriately in Node.js as they run in browser</strong>, including the codes of unit tests. I am going to tell the details of this process today:</p>
+
+  <ul>
+    <li>Making codes of algorithm work in Node.js, and</li>
+    <li>Making codes of unit tests work in Node.js, and</li>
+    <li>Introduce CI into my project.</li>
+  </ul>
+</blockquote>
+
+<!--more-->
+
+<p><a name="pi">
+</a></p>
+
+<h2 id="window-and-global">window and global</h2>
+<p>In browser, we have the global variable named <code class="highlighter-rouge">window</code> , <code class="highlighter-rouge">Array</code> is <code class="highlighter-rouge">window.Array</code>, and <code class="highlighter-rouge">Math</code> is <code class="highlighter-rouge">window.Math</code>, etc. The <strong>Tango.js</strong> also plugs object into <code class="highlighter-rouge">window</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(function (sorting, undefined) {
+    sorting.mergeSort = function () {};
+})(window.Sorting = window.Sorting || {})
+</code></pre>
+</div>
+
+<p>So that we can sort an array in browser using the script below:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Sorting.mergeSort(3, 1, 4, 1, 5, 9, 2, 6);
+</code></pre>
+</div>
+
+<p>More than that, in Tango.js, I extend <code class="highlighter-rouge">Array</code> and <code class="highlighter-rouge">Math</code> directly:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(function (array, undefined) {
+    array.zip = function (a, b) {};
+    array.prototype.clone = function () {};
+})(window.Array = window.Array || {})
+</code></pre>
+</div>
+
+<p>It is not a good practice that we change the object in <code class="highlighter-rouge">window</code> directly. But in my opinion, <strong>the most important part in Tango.js is Algo(rithm), not js.</strong> So I just want to use a simple way, instead of introducing a global module named like <code class="highlighter-rouge">Algo</code> which we have to write like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Algo.Sorting.mergeSort();
+Algo.Array.zip();
+Algo.Array.clone();
+</code></pre>
+</div>
+
+<p>Following this idea of simplification, I load the code of algorithm into the global variable in Node.js named <code class="highlighter-rouge">global</code> (see <a href="https://github.com/scozv/algo-js/blob/master/qunit/q.js" title="a file named q.js"><code class="highlighter-rouge">./qunit/q.js</code></a>):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>window = global;
+
+require('../src/t.js')
+require('../src/x.array.js');
+require('../src/sorting.js');
+</code></pre>
+</div>
+
+<p>Look, we give the <code class="highlighter-rouge">global</code> an alias name at first, so that we do not need to change any codes of algorithm. Again, my idea of simplification is that:</p>
+
+<blockquote>
+  <p>It is not a good practice that we change the object in <code class="highlighter-rouge">global</code> directly. But the most important part in Tango.js is Algo(rithm), not js.</p>
+</blockquote>
+
+<p><br /></p>
+
+<p>By the way, I did try to exposure module using <code class="highlighter-rouge">module.exports</code>, but I failed to figure out a way, in Node.js, to exposure ONLY one module named <code class="highlighter-rouge">Sorting</code> from three files: sorting.js, sorting.mergeSort.js, and sorting.quickSort.js as they are something like partial class.</p>
+
+<h2 id="node-qunit">node-qunit</h2>
+<p>After loading objects of algorithm into <code class="highlighter-rouge">global</code>, we are going to find out how to run previous codes of unit test in Node.js without modifying test scripts.</p>
+
+<p>We use the project <a href="https://github.com/kof/node-qunit" title="node-qunit, Port of QUnit unit testing framework to nodejs"><code class="highlighter-rouge">node-qunit</code></a>, which allow us to run unit test like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ cd algo-js
+$ npm install node-qunit
+$ node # or nodejs in ubuntu
+&gt; require('./qunit/q.js'); /*loading algorithm code into global*/
+&gt; var qunit = require('qunit');
+&gt; qunit.run({
+&gt;&gt;&gt;&gt;&gt; code: './qunit/q.js',
+&gt;&gt;&gt;&gt;&gt; tests: ['./qunit/q-sorting.js']},
+&gt;&gt;&gt;&gt;&gt; function (err, report) {
+&gt;&gt;&gt;&gt;&gt; 	console.log(err ? err : report);
+&gt;&gt;&gt;&gt;&gt; });
+</code></pre>
+</div>
+
+<h2 id="grunt">Grunt</h2>
+<p>Grunt, as it says, is a JavaScript task runner. If you configure your project, you will run unit test using command below which helps us use Continuous Integration:
+<code class="highlighter-rouge">$ grunt test</code>.</p>
+
+<p>We use <a href="https://npmjs.org/package/grunt-node-qunit" title="Grunt task running node-qnuit"><code class="highlighter-rouge">grunt-node-qunit</code></a> plugin for grunt task, which is Grunt task running <a href="https://github.com/kof/node-qunit" title="node-qunit, Port of QUnit unit testing framework to nodejs">node-qunit</a>.</p>
+
+<p>Here is the list of <em>How to</em>:</p>
+
+<ol>
+  <li>
+    <p>configure project’s <code class="highlighter-rouge">package.json</code> file</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>$ npm init
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>install <code class="highlighter-rouge">grunt-cli</code></p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>$ npm i -g grunt-cli
+</code></pre>
+    </div>
+  </li>
+  <li>add grunt dependencies into project (see <a href="http://gruntjs.com/getting-started#package.json" title="grunt configuration on package.json">official docs</a>)</li>
+  <li>
+    <p>install <code class="highlighter-rouge">grunt</code></p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>$ npm i grunt --save-dev
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>add <code class="highlighter-rouge">Gruntfile.js</code> to resister task</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>module.exports = function (grunt) {
+   grunt.initConfig({task-name: {}});
+   grunt.loadNpmTasks('grunt-node-qunit');
+   grunt.registerTask('default', ['task-name']);
+};
+</code></pre>
+    </div>
+  </li>
+  <li>add test script into <code class="highlighter-rouge">package.json</code>, which allow us to run <code class="highlighter-rouge">$ npm test</code></li>
+  <li>run <code class="highlighter-rouge">$ grunt</code> to test the configuration</li>
+  <li>run <code class="highlighter-rouge">$ grunt --stack</code> to debug grunt task script</li>
+  <li>run <code class="highlighter-rouge">$ npm test</code> to test <code class="highlighter-rouge">package.json</code> configuration</li>
+</ol>
+
+<p><br /></p>
+
+<p>A little attention we should pay on is we may face an error on ubuntu says:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/usr/bin/env: node: No such file or directory
+</code></pre>
+</div>
+
+<p>See <a href="https://github.com/joyent/node/issues/3911" title="issue #3911">here</a> to fix it.</p>
+
+<h2 id="droneio">Drone.io</h2>
+<p><a href="https://drone.io/github.com/scozv/algo-js/latest"><img src="https://drone.io/github.com/scozv/algo-js/status.png" alt="Build Status" /></a></p>
+
+<p>The web <a href="https://drone.io/" title="drone.io">drone.io</a> is an online CI service. There are other options of online CI.
+Some advantages of drone.io are:</p>
+
+<ul>
+  <li>CI for Github, Google Code and Bitbucket</li>
+  <li>CI command is hosted in drone.io, instead of a file in our project folder</li>
+</ul>
+
+<p>The CI command for Tango.js is:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm -d install
+npm install -g grunt-cli
+npm test
+</code></pre>
+</div>
+
+<h2 id="next">Next</h2>
+<p>I am going to fix <a href="https://github.com/scozv/algo-js/issues/18" title="issue #18">issue #18</a>.</p>
+
+<p><br /></p>
+
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+                
+                <h4>Similar Posts</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2016/07/22/donot-ask-the-devs-to-prepare-env-by-click">
+                      DO NOT Prepare the Development Environment by Click and Click
+                      <small>Jul 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration">
+                      A Loose Coupling Architecture of the Web Solution with Continuous Integration
+                      <small>May 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/guide/2013/12/21/how-to-make-code-of-algojs-run-in-nodejs-as-in-browser';
+      this.page.identifier = '/guide/2013/12/21/how-to-make-code-of-algojs-run-in-nodejs-as-in-browser';
+      this.page.title = 'How to Make Code of Tango.js Run in Node.js as in Browser';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+
