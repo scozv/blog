@@ -11,7 +11,7 @@ weight: 200
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}
 
-## [简体中文](https://scozv.github.io/blog/zh/cv/)
+<!-- ## [简体中文](https://scozv.github.io/blog/zh/cv/) -->
 
 ## TL;DR
 
@@ -19,7 +19,7 @@ weight: 200
   <tbody>
     <tr>
       <td style="text-align: left">Updated on</td>
-      <td style="text-align: left">June, 2018</td>
+      <td style="text-align: left">January, 2019</td>
     </tr>
     <tr>
       <td style="text-align: left">Links</td>
@@ -49,11 +49,12 @@ weight: 200
       <td style="text-align: left">
         <div class="tech-list">
           <div class="tag">Scala</div>
+          <div class="tag">Spark</div>
           <div class="tag">RESTful</div>
           <div class="tag">Akka</div>       
           <div class="tag">React.js</div>
           <div class="tag">Redis</div>
-          <div class="tag">Play!</div>
+          <div class="tag">Play</div>
           <div class="tag">ECMAScript 6</div>
           <div class="tag">Oracle</div>
           <div class="tag">Golang</div>
@@ -63,7 +64,9 @@ weight: 200
           <div class="tag">MongoDB</div>
           <div class="tag">StatsD</div>
           <div class="tag">Docker</div>
-          <div class="tag">DevOps</div>
+          <div class="tag">OpenShift</div>
+          <div class="tag">AWS</div>
+          <div class="tag">Google API</div>
           <div class="tag">Agile</div>
         </div>
       </td>
@@ -75,7 +78,7 @@ weight: 200
 
 * **Shanghai Jiaotong University** _2013 ~ 2017_
 
-Part-time programme for Master of Software Engineering. The graduation paper addressing the loose coupling architecture and its application on financial system has been submitted in June 2017. The certification of MSE Degree has been issued in November 2017.
+Part-time Master of Software Engineering. Focusing on Digitalization of Finance and Data Processing with FinTech.
 
 * **Ningbo University** _2005 ~ 2009_
 
@@ -87,41 +90,40 @@ Information System and Information Management, Bachelor Degree
 
 Company | Standard Chartered Singapore
 :-----|:-----
-Product | Investment Advisory System with Scala, Kotlin and OpenShift
+Product | Investment Advisory System with Scala, Akka HTTP, Cats, Kotlin and Docker, Ansible with OpenShift
 Time | Feb, 2018 ~ Present
 
-* Integrated new essential data source (RESTful API) with Scala.
-* Contributing architecture design idea after new data integrated.
+* Working with different team to design the solution of multiple raw data integration.
+* Consuming the essential Portfolio data source for Advisory product with Scala, Redis and Kafka, providing RESTful API with high availability for 3 countries or regions.
+* Built realtime data monitor with Sysdig, OpenShift. Experiment for Distributed Performance testing with Gatling and Spark.
 
-### G Product Core Data Analysis System (Product Owner since June, 2017)
+### G Product Core Data Analysis System (Service Owner since June, 2017)
 
 Company | LeadIQ
 :-----|:-----
-Product | Data Analysis System with Play 2.6 and Akka 2.5
+Product | Product Core Data Analysis System with Scala, Play 2.6, Akka, Kafka and Spark and Google API
 Time | Sept, 2016 ~ Dec, 2017
 
-* Designed entire architecture for the backend RESTful server with Play!, Akka, Kafka, Redis and MongoDB.
-* Integrated with Google API, including Gmail API, Drive API, Cloud Pub/Sub.
-* Integrated with Hostedgraphite for production metrics, Ansible for AWS (DevOps).
 * Contributed 81% of the backend Scala code.
-* Collaborated with the frontend team based on the RESTful specification.
-* Managing version and release. Making the decision and taking the responsibility.
+* Designed part of architecture for the core backend RESTful API with Scala, Play, Akka, Kafka.
+* Designed data processing solution and integrated Kafka and Spark to process core data.
+* Integrated with the Google API, including the Google OAuth 2.0, Gmail API, Drive API, Cloud Pub/Sub, using Akka Actor, Akka Stream and Kafka.
+* Integrated with Hostedgraphite for production metrics, Graylog for log system, Ansible for AWS EC and LB (DevOps).
+* Implementation of Akka Work Pulling Pattern and customized dispatcher.
 
 ###  S O2O Online Shopping Platform (Part-time)
 
 Company | SHANLIN Network
 :------|:----------
 Role | Co-founder & Tech Leader
-Project | O2O Online Fruits Shopping Based on WeChat Eco-system
+Project | O2O Online shopping platform in WeChat with Scala and React.js.
 Time | Aug, 2015 ~ Apr, 2016
 
-* Started up the initial project with the Business and Product Design Manager.
-* Built the part time development team for the backend and frontend.
-* Planned regular technical training session.
-* Designed entire architecture for the RESTful server and React.js frontend application.
+* Initialized the project with the Business and Product Design Manager.
+* Built the part-time development team for the backend and frontend.
+* Designed entire loose coupling architecture and deployment pipeline with JIRA, Bitbucket CI and Azure.
 * Contributed 63% of the backend Scala code.
-* Integrated with WeChat, and Ping++ API for order payment.
-* Integrated the essential DevOps with Azure.
+* Integrated with WeChat API, Ping++ API for user management and payment.
 * Delivered beta version on Dec 31st, 2015 with payment service integrated.
 
 ## Working Experience (`Golang`, `.NET` Related)
@@ -130,22 +132,14 @@ Time | Aug, 2015 ~ Apr, 2016
 
 Company | Hujiang Education & Technology
 :-------|:-----------
-Project | DFS RESTful API for Production Line based on Golang
-Time | Sept, 2016 ~ Oct, 2016
+Project | Distributed file system server with `Golang` and Qiniu Intelligent Multimedia API
+Time | Sept, 2016 ~ Dec, 2016
 Role | `Golang` development and the owner of Delivery Team
 
-As the owner of the Distributed File System, I took charge of Requirement Analysis, Golang development, Version Control and Release.
-
-Achievement of DFS:
-
-* Improved the unit tests and release script for Golang system.
-* Released 3 new RESTful API as the request from production department.
-* Fixed 1 runtime error due to the unmerged branch.
-* Collaborated with the development team of the IaaS provider for specific feature.
-* Created 27 Gitlab issues and finished 19 issues of them.
-
-As a member of Infrastructure Architect Team, delivered 5 training sessions of _Algorithm 101_, including the Big O, Fundamental Data Structures, Tail Recursion and Sorting.
-Meanwhile I was leading 6 members delivery team, building the continuous delivery process cross over the entire development group, communicating with cross departments to get resources and support.
+* Managed the delivery team to building the continuous delivery procedure for entire development group.
+* Rewarded a high qualified performance rating at the end of 4 months.
+* Delivered 3 new RESTful API. Fixed 1 critical runtime issue. 19 DONE of 27 Gitlab issues.
+* 5 training sessions of Algorithm 101, including the Big O, Fundamental Data Structures, Tail Recursion and Sorting.
 
 
 ### Q Treasury Solution Project (Sr. Product Development Engineer)
@@ -153,7 +147,7 @@ Meanwhile I was leading 6 members delivery team, building the continuous deliver
 Company | SunGard
 :-------|:------------
 Time | June, 2013 ~ Aug, 2016
-Summary | Worked in Q V6 project, a web solution for Treasury Software & Management System. In these 3 years, collaborated with 10+ members team on Equity, Fees and Accounting modules. Mainly using `ASP .NET MVC` and the AOP conception for data validation.
+Summary | Worked in QUANTUM V6 project, a web solution for Treasury Software & Management System. In these 3 years, collaborated with 10+ members team on Equity, Fees and Accounting modules. Mainly using ASP .NET MVC, Oracle. Running in Agile team and building the daily pipeline for UI regression test.
 
 ### Y Vehicle Accident Claim Center Project
 
@@ -220,7 +214,7 @@ a part of my task.
 
 ### Next Plan
 
-I am pushing myself to be an Architect or Leading role in Software Engineering now,
+I am pushing myself to be an Architect and Leading role in Software Engineering now,
 since I've already prepared a lot for this in recent 4 ~ 5 years.
 
 
