@@ -1,0 +1,1156 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="zh"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/guide/2016/08/22/scala-quick-tour-part-ii" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/guide/2016/08/22/scala-quick-tour-part-ii" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      Scala函数编程（二） &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/zh/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/zh/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog/zh">
+      首页
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/archive/">
+              
+                归档
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/categories/">
+              
+                分类
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/tags/">
+              
+                标签
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/about/">
+              
+                关于
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/zh/credits">
+      致谢
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/guide/2016/08/22/scala-quick-tour-part-ii">
+        English
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog/zh"
+                 title="首页">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">Scala函数编程（二）</h1>
+  <span class="post-date">Aug 22, 2016</span>
+  
+<h1 class="no_toc" id="摘要">摘要</h1>
+
+<blockquote>
+  <p>本文是《Scala函数编程》系列的第二部分，<a href="https://scozv.github.io/blog/zh/guide/2016/08/21/scala-quick-tour-part-i">第一部分</a>
+介绍了函数编程（FP）的基本概念、函数分别可以作为参数和返回值。</p>
+
+  <p>在第二个部分里面，我们将介绍一个非常重要的设计模式——尾递归（Tail Recursion）。之后
+会通过<code class="highlighter-rouge">Scala</code>里面的<code class="highlighter-rouge">List[T]</code>来阐述尾递归在线性集合的应用，包括如下内容：</p>
+
+  <ul>
+    <li>迭代和递归的相互转化；</li>
+    <li>递归和尾递归的区别；</li>
+    <li><code class="highlighter-rouge">Scala</code>中的泛型简介；</li>
+    <li>使用递归的方式构造一个<code class="highlighter-rouge">List[Int]</code>；</li>
+    <li>模式匹配简介（未完成）；</li>
+    <li><code class="highlighter-rouge">head</code>、<code class="highlighter-rouge">tail</code>等方法的尾递归实现（未完成）；</li>
+    <li><code class="highlighter-rouge">take</code>、<code class="highlighter-rouge">reverse</code>等方法的尾递归实现（未完成）；</li>
+    <li><code class="highlighter-rouge">append</code>、<code class="highlighter-rouge">prepend</code>等方法的尾递归实现（未完成）；</li>
+    <li>遍历映射（<code class="highlighter-rouge">map</code>）和<code class="highlighter-rouge">reduce</code>的尾递归实现（未完成）;</li>
+    <li><code class="highlighter-rouge">Scala</code>中的<code class="highlighter-rouge">List[T]</code>源代码分析（未完成）。</li>
+  </ul>
+
+  <p>为了便于理解，部分名词、专有术语，我直接使用英文，不作任何翻译。</p>
+
+  <p>我依然建议去听原版公开课<sup id="fnref:open_progfun1"><a href="#fn:open_progfun1" class="footnote">1</a></sup>，并完成所有的Assignment。另外，还要多写代码。</p>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#迭代和递归" id="markdown-toc-迭代和递归">迭代和递归</a>    <ul>
+      <li><a href="#阶乘函数的迭代计算" id="markdown-toc-阶乘函数的迭代计算">阶乘函数的迭代计算</a></li>
+      <li><a href="#迭代计算的一般定义" id="markdown-toc-迭代计算的一般定义">迭代计算的一般定义</a></li>
+      <li><a href="#calcacc-item还是calcitem-acc" id="markdown-toc-calcacc-item还是calcitem-acc"><code class="highlighter-rouge">calc(acc, item)</code>还是<code class="highlighter-rouge">calc(item, acc)</code>？</a></li>
+      <li><a href="#从迭代到递归" id="markdown-toc-从迭代到递归">从迭代，到递归</a></li>
+      <li><a href="#递归的call-stack" id="markdown-toc-递归的call-stack">递归的Call Stack</a></li>
+    </ul>
+  </li>
+  <li><a href="#尾递归tail-recursion" id="markdown-toc-尾递归tail-recursion">尾递归（Tail Recursion）</a>    <ul>
+      <li><a href="#尾递归初览" id="markdown-toc-尾递归初览">尾递归初览</a></li>
+      <li><a href="#尾递归的一般形式" id="markdown-toc-尾递归的一般形式">尾递归的一般形式</a></li>
+      <li><a href="#递归和尾递归的区别" id="markdown-toc-递归和尾递归的区别">递归和尾递归的区别</a></li>
+      <li><a href="#尾递归的练习题" id="markdown-toc-尾递归的练习题">尾递归的练习题</a></li>
+      <li><a href="#尾递归对数组求和" id="markdown-toc-尾递归对数组求和">尾递归对数组求和</a></li>
+    </ul>
+  </li>
+  <li><a href="#listt" id="markdown-toc-listt"><code class="highlighter-rouge">List[T]</code></a>    <ul>
+      <li><a href="#泛型简介type-parameterization" id="markdown-toc-泛型简介type-parameterization">泛型简介（Type Parameterization）</a></li>
+      <li><a href="#listt的递归定义" id="markdown-toc-listt的递归定义"><code class="highlighter-rouge">List[T]</code>的递归定义</a></li>
+      <li><a href="#listt的递归实现" id="markdown-toc-listt的递归实现"><code class="highlighter-rouge">List[T]</code>的递归实现</a>        <ul>
+          <li><a href="#实现一个泛型链表" id="markdown-toc-实现一个泛型链表">实现一个泛型链表</a></li>
+          <li><a href="#使用右关联操作符" id="markdown-toc-使用右关联操作符">使用<code class="highlighter-rouge">#:</code>右关联操作符</a></li>
+          <li><a href="#模式匹配" id="markdown-toc-模式匹配">模式匹配</a></li>
+        </ul>
+      </li>
+      <li><a href="#scala中的listt" id="markdown-toc-scala中的listt"><code class="highlighter-rouge">Scala</code>中的<code class="highlighter-rouge">List[T]</code></a></li>
+      <li><a href="#模式匹配简介" id="markdown-toc-模式匹配简介">模式匹配简介</a></li>
+      <li><a href="#使用模式匹配和尾递归实现listint的求和" id="markdown-toc-使用模式匹配和尾递归实现listint的求和">使用模式匹配和尾递归，实现<code class="highlighter-rouge">List[Int]</code>的求和</a></li>
+      <li><a href="#map和foreach" id="markdown-toc-map和foreach"><code class="highlighter-rouge">map</code>和<code class="highlighter-rouge">foreach</code></a></li>
+      <li><a href="#其它listt方法的实现" id="markdown-toc-其它listt方法的实现">其它<code class="highlighter-rouge">List[T]</code>方法的实现</a></li>
+      <li><a href="#map和reduce" id="markdown-toc-map和reduce"><code class="highlighter-rouge">map</code>和<code class="highlighter-rouge">reduce</code></a></li>
+      <li><a href="#map和flatmap" id="markdown-toc-map和flatmap"><code class="highlighter-rouge">map</code>和<code class="highlighter-rouge">flatMap</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#listt接口文档和源代码分析" id="markdown-toc-listt接口文档和源代码分析"><code class="highlighter-rouge">List[T]</code>接口文档和源代码分析</a></li>
+  <li><a href="#综合练习" id="markdown-toc-综合练习">综合练习</a>    <ul>
+      <li><a href="#使用指定的一系列函数定义完成函数的实现" id="markdown-toc-使用指定的一系列函数定义完成函数的实现">使用指定的一系列函数定义，完成函数的实现</a></li>
+    </ul>
+  </li>
+  <li><a href="#练习题参考答案" id="markdown-toc-练习题参考答案">练习题参考答案</a>    <ul>
+      <li><a href="#递归一般定义中的函数类型推断" id="markdown-toc-递归一般定义中的函数类型推断">递归一般定义中的函数类型推断</a></li>
+      <li><a href="#尾递归的一般形式严格定义" id="markdown-toc-尾递归的一般形式严格定义">尾递归的一般形式（严格定义）</a></li>
+    </ul>
+  </li>
+  <li><a href="#参考文献" id="markdown-toc-参考文献">参考文献</a></li>
+</ul>
+
+<h1 id="迭代和递归">迭代和递归</h1>
+
+<p>考虑正整数的阶乘（Factorial）函数：</p>
+
+<script type="math/tex; mode=display">f(x) = x! = \Pi_{i=1}^{x} i = x \cdot (x-1) \cdot (x-2) \cdot \ldots \cdot 2 \cdot 1</script>
+
+<p>其中我们约定<script type="math/tex">x</script>为正整数：</p>
+
+<script type="math/tex; mode=display">x \in \mathbb{Z}^{+}</script>
+
+<h2 id="阶乘函数的迭代计算">阶乘函数的迭代计算</h2>
+
+<p>本文中的迭代计算，使用<code class="highlighter-rouge">JavaScript</code>语言，因为，你可以直接在浏览器中（F12进入调试面板）运行这段脚本：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">acc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">acc</span> <span class="o">=</span> <span class="nx">acc</span> <span class="o">*</span> <span class="nx">i</span><span class="p">;</span>
+  <span class="p">}</span>  <span class="c1">// end for-loop</span>
+
+  <span class="k">return</span> <span class="nx">acc</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>以上代码，等价于：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">acc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">acc</span> <span class="o">=</span> <span class="nx">acc</span> <span class="o">*</span> <span class="nx">i</span><span class="p">;</span>
+    <span class="nx">i</span><span class="o">--</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">acc</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="迭代计算的一般定义">迭代计算的一般定义</h2>
+
+<p>从上面的阶乘迭代，可以总结出迭代的几个组成要素：</p>
+
+<ul>
+  <li>迭代的退出条件，比如，当<code class="highlighter-rouge">i &gt; 0</code>不满足的时候，迭代退出；</li>
+  <li>迭代的累积器（Accumulator），比如上面的<code class="highlighter-rouge">acc</code>变量，未来，我们将使用<code class="highlighter-rouge">acc</code>表示累积器。需要注意的是，
+这里“累积”的“积”不是“乘积”的意思（只是碰巧，我们在此使用乘法而已）。Accumulator这个单词，很好地
+解释了“累积”的含义；</li>
+  <li><code class="highlighter-rouge">acc</code>的初始值，此处我们是乘法，所以初始值设置为<code class="highlighter-rouge">1</code>，如果是加法，我们的初始值可以使用<code class="highlighter-rouge">0</code>；</li>
+  <li>每一次迭代，<code class="highlighter-rouge">acc</code>将会和一个元素发生运算，运算结果会重复赋值给<code class="highlighter-rouge">acc</code>；</li>
+  <li>迭代进入下一个元素，我们将这些元素成为<code class="highlighter-rouge">item</code>；</li>
+  <li>注意到，迭代版本中，<code class="highlighter-rouge">acc</code>会被重复赋值，并在循环退出之后，按值返回（<code class="highlighter-rouge">return</code>）。</li>
+</ul>
+
+<p>根据这几个要素，我们给出迭代的一般定义：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">acc</span> <span class="o">=</span> <span class="nx">init</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">shouldQuit</span><span class="p">(</span><span class="nx">item</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nx">acc</span> <span class="o">=</span> <span class="nx">calc</span><span class="p">(</span><span class="nx">acc</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
+  <span class="nx">item</span> <span class="o">=</span> <span class="nx">nextItem</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="k">return</span> <span class="nx">acc</span></code></pre></figure>
+
+<h2 id="calcacc-item还是calcitem-acc"><code class="highlighter-rouge">calc(acc, item)</code>还是<code class="highlighter-rouge">calc(item, acc)</code>？</h2>
+
+<p>使用二叉数，前序和后序遍历来表示两种不同的计算方式。</p>
+
+<p>可以看出<code class="highlighter-rouge">calc(acc, item)</code>和<code class="highlighter-rouge">calc(item, acc)</code>的区别。
+我们也会在<code class="highlighter-rouge">List[T]</code>的部分，更多地提到这两者的区别。</p>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">          calc(acc, item)                      calc(item, acc)
+            /       \                             /        \
+           /   ...   \                           /   ...    \
+          /           item_n               item_1            \
+        calc()                                             calc()
+        /     \                                            /   \
+      calc()   item_3                              item_(n-2)  calc()
+      /     \                                                /   \
+   calc()  item_2                                   item_(n-1)  calc()
+   /     \                                                     /   \
+init()  item_1                                            item_n   init()</code></pre></figure>
+
+<p>练习：</p>
+
+<blockquote>
+  <p>通过上面的两张图示，阐述<code class="highlighter-rouge">calc(acc, item)</code>和<code class="highlighter-rouge">calc(item, acc)</code>的区别。</p>
+</blockquote>
+
+<h2 id="从迭代到递归">从迭代，到递归</h2>
+
+<p>练习：</p>
+
+<blockquote>
+  <p>请（用伪代码）写出阶乘计算的递归实现。</p>
+</blockquote>
+
+<p>写完之后，需要检验如下的Test Case：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">f</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nx">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nx">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nx">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nx">f</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">120</span></code></pre></figure>
+
+<p>下面给出<code class="highlighter-rouge">Scala</code>的递归实现：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">x</span> <span class="o">*</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">else</span> <span class="mi">1</span></code></pre></figure>
+
+<p>迭代那一小节里面，我们给出了迭代的一般定义，这里
+我们将迭代的一般定义，转化为递归的一般定义：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">ItemType</span><span class="o">)</span><span class="k">:</span> <span class="kt">AccumulatorType</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="o">(</span><span class="nc">NOT</span> <span class="n">shouldQuit</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="n">calc</span><span class="o">(</span><span class="n">f</span><span class="o">(</span><span class="n">nextItem</span><span class="o">()),</span> <span class="n">x</span><span class="o">)</span>
+  <span class="k">else</span> <span class="n">init</span><span class="o">()</span></code></pre></figure>
+
+<p>练习（非常重要）：</p>
+
+<blockquote>
+  <p>根据上面的递归一般定义，推断出下列函数的函数类型：</p>
+
+  <div class="highlighter-rouge"><pre class="highlight"><code> f: ItemType =&gt; AccumulatorType
+ shouldQuit
+ calc
+ nextItem
+ init
+</code></pre>
+  </div>
+</blockquote>
+
+<h2 id="递归的call-stack">递归的Call Stack</h2>
+
+<p>练习：</p>
+
+<blockquote>
+  <p>根据我们上面定义的阶乘递归函数，Evaluate <script type="math/tex">5!</script>。</p>
+</blockquote>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">x</span> <span class="o">*</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">else</span> <span class="mi">1</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="nx">f</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="nx">f</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>                   
+<span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="nx">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">*</span> <span class="nx">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+<span class="o">=</span> <span class="mi">120</span></code></pre></figure>
+
+<p>我们对上面的Call Stack作如下说明：</p>
+
+<ul>
+  <li>整个调用堆栈最大耗用长度为5；</li>
+  <li>至少需要5个<code class="highlighter-rouge">push</code>操作，才能实现状态<code class="highlighter-rouge">5 * 4 * 3 * 2 * f(1)</code>；</li>
+  <li>至少需要另外5个<code class="highlighter-rouge">pop</code>、另外5个<code class="highlighter-rouge">push</code>操作，才能缩短堆栈的长度，最终完成Evaluation。</li>
+</ul>
+
+<p>所以使用递归面临的最大问题就是，Call Stack过长。</p>
+
+<h1 id="尾递归tail-recursion">尾递归（Tail Recursion）</h1>
+
+<p>下面我们来看尾递归（Tail Recursion），这是一个非常重要的概念。</p>
+
+<h2 id="尾递归初览">尾递归初览</h2>
+
+<p>我们首先给出尾递归的阶乘实现：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">x</span> <span class="o">*</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">else</span> <span class="mi">1</span>
+
+<span class="c1">// Tail Recursion
+</span><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">acc</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">item</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">item</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">g</span><span class="o">(</span><span class="n">item</span> <span class="o">*</span> <span class="n">acc</span><span class="o">,</span> <span class="n">item</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">else</span> <span class="n">acc</span>
+
+  <span class="n">g</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>我们对上述尾递归的实现，备注如下：</p>
+
+<ul>
+  <li>当递归终止条件满足时，我们退出递归，返回<code class="highlighter-rouge">acc</code>，此时，计算已经完成；</li>
+  <li>由于退出递归的时候，Evaluation已经完成，所以理论上，我们连Call Stack都不需要维护；</li>
+  <li>实际上，<code class="highlighter-rouge">Scala</code>和其它大多数FP一样，会对尾递归作出优化。</li>
+</ul>
+
+<h2 id="尾递归的一般形式">尾递归的一般形式</h2>
+
+<p>回顾一下递归的一般形式：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">ItemType</span><span class="o">)</span><span class="k">:</span> <span class="kt">AccumulatorType</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="o">(</span><span class="nc">NOT</span> <span class="n">shouldQuit</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="n">calc</span><span class="o">(</span><span class="n">f</span><span class="o">(</span><span class="n">nextItem</span><span class="o">()),</span> <span class="n">x</span><span class="o">)</span>
+  <span class="k">else</span> <span class="n">init</span><span class="o">()</span></code></pre></figure>
+
+<p>我们给出尾递归的一般形式：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">ItemType</span><span class="o">)</span><span class="k">:</span> <span class="kt">AccumulatorType</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">acc</span><span class="k">:</span> <span class="kt">AccumulatorType</span><span class="o">,</span> <span class="n">item</span><span class="k">:</span> <span class="kt">ItemType</span><span class="o">)</span> <span class="k">=</span>
+    <span class="k">if</span> <span class="o">(</span><span class="nc">NOT</span> <span class="n">shouldQuit</span><span class="o">(</span><span class="n">item</span><span class="o">))</span> <span class="n">g</span><span class="o">(</span><span class="n">calc</span><span class="o">(</span><span class="n">acc</span><span class="o">,</span> <span class="n">item</span><span class="o">),</span> <span class="n">nextItem</span><span class="o">())</span>
+    <span class="k">else</span> <span class="n">acc</span>
+
+  <span class="n">g</span><span class="o">(</span><span class="n">init</span><span class="o">(),</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>练习（非常重要）：</p>
+
+<blockquote>
+  <p>根据上面的尾递归一般形式，推断出下列函数的函数类型：</p>
+
+  <div class="highlighter-rouge"><pre class="highlight"><code> f: ItemType =&gt; AccumulatorType
+ g
+ shouldQuit
+ calc
+ nextItem
+ init
+</code></pre>
+  </div>
+</blockquote>
+
+<h2 id="递归和尾递归的区别">递归和尾递归的区别</h2>
+
+<p>请先完成递归和尾递归一般定义的类型推断的练习题。</p>
+
+<p>在尾递归中，我们通常需要引入一个临时局部函数<code class="highlighter-rouge">g</code>，实际上，函数<code class="highlighter-rouge">g</code>才是递归函数。
+这样的思想，也非常符合函数编程的思想——函数是Pure，不带状态（Stateless）的。
+因为，就递归<code class="highlighter-rouge">g</code>而言，初始状态<code class="highlighter-rouge">init()</code>不应该带入函数的实现（Implementation）中。</p>
+
+<h2 id="尾递归的练习题">尾递归的练习题</h2>
+
+<p>习题1：</p>
+
+<blockquote>
+  <p>在<code class="highlighter-rouge">Scala</code>的REPL中编写尾递归一般形式的严格定义，保证编译通过。</p>
+</blockquote>
+
+<p>习题2：</p>
+
+<h2 id="尾递归对数组求和">尾递归对数组求和</h2>
+
+<p>到此，尾递归的介绍马上就要告一段落了。我们马上要开始
+讲解《Scala函数编程》（二）的另一个重要内容——<code class="highlighter-rouge">List[T]</code>。</p>
+
+<p>在正式进入<code class="highlighter-rouge">List[T]</code>的讲解前，我们先来做一个练习：</p>
+
+<blockquote>
+  <p>使用尾递归，实现数组的求和。</p>
+</blockquote>
+
+<p>我给出一个伪代码实现：</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">g</span><span class="p">(</span><span class="nx">acc</span><span class="p">,</span> <span class="nx">xs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">xs</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="nx">acc</span>
+    <span class="k">else</span> <span class="k">return</span> <span class="nx">g</span><span class="p">(</span><span class="nx">acc</span> <span class="o">+</span> <span class="nx">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">subArray</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">subArray</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">startIndex</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">startIndex</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">g</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">acc</span><span class="p">)</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>需要注意的是，上述<code class="highlighter-rouge">subArray</code>的时间复杂度为<script type="math/tex">O_{i\in [1,n]}(i)</script>，
+这将导致整个递归的时间复杂度为<script type="math/tex">O(\sum_{i=0}^{n} i) = O(\frac{n(n+1)}{2})=O(n^2)</script>。</p>
+
+<p>实际情况是，我们期望的数组求和的时间复杂度必须为<script type="math/tex">O(n)</script>。</p>
+
+<h1 id="listt"><code class="highlighter-rouge">List[T]</code></h1>
+
+<h2 id="泛型简介type-parameterization">泛型简介（Type Parameterization）</h2>
+
+<p>泛型在某些语言中（比如<code class="highlighter-rouge">C#</code>）称为“Generic Type”，
+在<code class="highlighter-rouge">Scala</code>的参考书《Programming in Scala》<sup id="fnref:scala_progfun_2nd"><a href="#fn:scala_progfun_2nd" class="footnote">2</a></sup>（Chapter 19 Type Parameterization）中，使用的是“Type Parameterization”。</p>
+
+<p>前者说，泛型是一种“通用”的类型，后者表示泛型是“一种参数化的类型”。</p>
+
+<p>本文使用中文“泛型”，如果涉及到英文，我将采用 “Type Parameterization”。</p>
+
+<p>和大多数语言的泛型定义一样：</p>
+
+<ul>
+  <li>
+    <p>需要在类或者方法上，声明一个或多个类型参数（Type Parameter）名称，比如</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>class Traversable[T] {}
+def field[T](query: String, fieldName: String): T = ???
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>和普通的参数一样，类型参数的名称可以任取，比如：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>class Dictionary[KeyType,ValueType] {}
+def insert[IndexType, ItemType]: List[ItemType] = ???
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>但是，从<code class="highlighter-rouge">Scala</code>的接口文档<sup id="fnref:scala_api_doc"><a href="#fn:scala_api_doc" class="footnote">3</a></sup>和源代码<sup id="fnref:github_scala"><a href="#fn:github_scala" class="footnote">4</a></sup>可以看出，
+因为是“泛”型，我们的参数类型名称不应该被限定，所以，
+可以使用如下的风格定义参数类型：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>class List[A] {}
+class Map[A, B]{}
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h2 id="listt的递归定义"><code class="highlighter-rouge">List[T]</code>的递归定义</h2>
+
+<p>我们按照如下的递归方式，定义一个<code class="highlighter-rouge">List[T]</code>：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">List[T]</code>可以为空，我们称其为<code class="highlighter-rouge">Nil</code>；</li>
+  <li>任意一个元素<code class="highlighter-rouge">x: T</code>，可以和任意一个<code class="highlighter-rouge">xs: List[T]</code>，组成一个新的<code class="highlighter-rouge">List[T]</code>，我们称
+这个组合动作（function）为<code class="highlighter-rouge">cons</code>——取”construction”的前四个字母。</li>
+</ul>
+
+<h2 id="listt的递归实现"><code class="highlighter-rouge">List[T]</code>的递归实现</h2>
+
+<p>这一小节，我们使用递归定义，实现<code class="highlighter-rouge">List[T]</code>。
+如果有语法上，不明白的地方，请自行搜索相关资料。</p>
+
+<p>有关OOP的内容，我会在之后的部分中重新讲。</p>
+
+<p>建议阅读<code class="highlighter-rouge">List[T]</code>的<code class="highlighter-rouge">Scala</code>的源代码 <sup id="fnref:github_scala_list_t"><a href="#fn:github_scala_list_t" class="footnote">5</a></sup>。</p>
+
+<p>为了不和<code class="highlighter-rouge">Scala</code>中的<code class="highlighter-rouge">List[T]</code>和<code class="highlighter-rouge">Nil</code>冲突，以下的实现
+有意更换了名称。</p>
+
+<h3 id="实现一个泛型链表">实现一个泛型链表</h3>
+
+<h3 id="使用右关联操作符">使用<code class="highlighter-rouge">#:</code>右关联操作符</h3>
+
+<h3 id="模式匹配">模式匹配</h3>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">trait</span> <span class="nc">GenericList</span><span class="o">[</span><span class="kt">+T</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">isEmpty</span><span class="k">:</span> <span class="kt">Boolean</span>
+  <span class="k">def</span> <span class="n">size</span><span class="k">:</span> <span class="kt">Int</span>
+
+  <span class="k">def</span> <span class="n">head</span><span class="k">:</span> <span class="kt">T</span>
+  <span class="k">def</span> <span class="n">tail</span><span class="k">:</span> <span class="kt">GenericList</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="k">object</span> <span class="nc">EmptyList</span> <span class="k">extends</span> <span class="nc">GenericList</span><span class="o">[</span><span class="kt">Nothing</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">isEmpty</span> <span class="k">=</span> <span class="kc">true</span>
+  <span class="k">def</span> <span class="n">size</span> <span class="k">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="n">head</span> <span class="k">=</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span><span class="o">(</span><span class="s">"head of empty list"</span><span class="o">)</span>
+  <span class="k">def</span> <span class="n">tail</span> <span class="k">=</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">UnsupportedOperationException</span><span class="o">(</span><span class="s">"tail of empty list"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="k">class</span> <span class="nc">NonEmptyList</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">head</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">tail</span><span class="k">:</span> <span class="kt">GenericList</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="k">extends</span> <span class="nc">GenericList</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="k">this</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span> <span class="k">=</span> <span class="k">this</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="nc">EmptyList</span><span class="o">)</span>
+
+  <span class="k">val</span> <span class="n">isEmpty</span> <span class="k">=</span> <span class="kc">false</span>
+  <span class="k">def</span> <span class="n">size</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">acc</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">xs</span><span class="k">:</span> <span class="kt">GenericList</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">xs</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">EmptyList</span> <span class="k">=&gt;</span> <span class="n">acc</span>
+      <span class="k">case</span> <span class="nc">NonEmptyList</span><span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="n">ys</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">g</span><span class="o">(</span><span class="n">acc</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">ys</span><span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="n">g</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="k">this</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="k">object</span> <span class="nc">GenericList</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">()</span><span class="k">:</span> <span class="kt">GenericList</span><span class="o">[</span><span class="kt">Nothing</span><span class="o">]</span> <span class="k">=</span> <span class="nc">EmptyList</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">x</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span> <span class="kt">GenericList</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="k">=</span> <span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="nc">EmptyList</span><span class="o">)</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">x1</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">x2</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span> <span class="kt">GenericList</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="k">=</span> <span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="nc">GenericList</span><span class="o">(</span><span class="n">x2</span><span class="o">))</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">x1</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">x2</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">x3</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span> <span class="kt">GenericList</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="k">=</span> <span class="nc">NonEmptyList</span><span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="nc">GenericList</span><span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">x3</span><span class="o">))</span>
+<span class="o">}</span>
+
+<span class="k">val</span> <span class="n">xs0</span> <span class="k">=</span> <span class="nc">GenericList</span><span class="o">()</span>
+<span class="n">xs0</span><span class="o">.</span><span class="n">size</span>
+<span class="n">xs0</span><span class="o">.</span><span class="n">isEmpty</span>
+<span class="nc">GenericList</span><span class="o">(</span><span class="s">"Apple"</span><span class="o">)</span>
+<span class="nc">GenericList</span><span class="o">(</span><span class="mf">1.2</span><span class="o">,</span> <span class="mf">3.5</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">xs1</span> <span class="k">=</span> <span class="nc">GenericList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+<span class="n">xs1</span><span class="o">.</span><span class="n">size</span>
+<span class="n">xs1</span><span class="o">.</span><span class="n">isEmpty</span></code></pre></figure>
+
+<p>以上的实现，使用了“单向链式列表”这一数据结构，
+我认为这些基础的数据结构，是程序员的基本修养，请
+自行查阅相关资料。</p>
+
+<p>思考：</p>
+
+<blockquote>
+  <ol>
+    <li>为什么<code class="highlighter-rouge">head</code>和<code class="highlighter-rouge">tail</code>的声明是<code class="highlighter-rouge">def</code>而不是<code class="highlighter-rouge">val</code>？</li>
+    <li>为什么<code class="highlighter-rouge">Nil</code>的继承来自<code class="highlighter-rouge">ListLike[Nothing]</code>，而非<code class="highlighter-rouge">ListLike[T]</code>?</li>
+    <li>如果去掉<code class="highlighter-rouge">trait GenericList[+T]</code>中的<code class="highlighter-rouge">+</code>号，是否能够编译通过？</li>
+    <li>
+      <p>请问如下代码的输出结果为：</p>
+
+      <div class="highlighter-rouge"><pre class="highlight"><code> val xs0 = GenericList()
+ xs0.size
+ xs0.isEmpty
+ GenericList("Apple")
+ GenericList(1.2, 3.5)
+ val xs1 = GenericList(1, 2, 3)
+ xs1.size
+ xs1.isEmpty
+</code></pre>
+      </div>
+    </li>
+    <li>
+      <p>请问如下代码的输出结果（请仔细思考）：</p>
+
+      <div class="highlighter-rouge"><pre class="highlight"><code> val xs2 = GenericList(1, 2, 3, 4)
+ xs2.size
+ xs2.isEmpty      
+</code></pre>
+      </div>
+    </li>
+  </ol>
+</blockquote>
+
+<h2 id="scala中的listt"><code class="highlighter-rouge">Scala</code>中的<code class="highlighter-rouge">List[T]</code></h2>
+
+<h2 id="模式匹配简介">模式匹配简介</h2>
+
+<h2 id="使用模式匹配和尾递归实现listint的求和">使用模式匹配和尾递归，实现<code class="highlighter-rouge">List[Int]</code>的求和</h2>
+
+<h2 id="map和foreach"><code class="highlighter-rouge">map</code>和<code class="highlighter-rouge">foreach</code></h2>
+
+<h2 id="其它listt方法的实现">其它<code class="highlighter-rouge">List[T]</code>方法的实现</h2>
+
+<h2 id="map和reduce"><code class="highlighter-rouge">map</code>和<code class="highlighter-rouge">reduce</code></h2>
+
+<h2 id="map和flatmap"><code class="highlighter-rouge">map</code>和<code class="highlighter-rouge">flatMap</code></h2>
+
+<h1 id="listt接口文档和源代码分析"><code class="highlighter-rouge">List[T]</code>接口文档和源代码分析</h1>
+
+<p>实际上<code class="highlighter-rouge">List[T]</code>的很多实现并没有使用递归，而是使用的迭代。
+因为迭代的效率和性能高。</p>
+
+<h1 id="综合练习">综合练习</h1>
+
+<h2 id="使用指定的一系列函数定义完成函数的实现">使用指定的一系列函数定义，完成函数的实现</h2>
+
+<p>举例：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// 已知
+</span><span class="k">def</span> <span class="n">f0</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">???</span>
+<span class="k">def</span> <span class="n">f1</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">???</span>
+<span class="c1">// 实现
+</span><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">???</span>
+<span class="c1">// 参考答案
+</span><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">f1</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">f0</span><span class="o">(</span><span class="n">x</span><span class="o">))</span></code></pre></figure>
+
+<h1 id="练习题参考答案">练习题参考答案</h1>
+
+<h2 id="递归一般定义中的函数类型推断">递归一般定义中的函数类型推断</h2>
+
+<p>重申一下，我认为这道练习题非常重要，建议先独立完成这道练习题。</p>
+
+<p>给出如下的递归一般定义：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">[</span><span class="kt">ItemType</span>, <span class="kt">AccumulatorType</span><span class="o">](</span><span class="n">x</span><span class="k">:</span> <span class="kt">ItemType</span><span class="o">)</span><span class="k">:</span> <span class="kt">AccumulatorType</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="o">(!</span> <span class="n">shouldQuit</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="n">calc</span><span class="o">(</span><span class="n">f</span><span class="o">(</span><span class="n">nextItem</span><span class="o">()),</span> <span class="n">x</span><span class="o">)</span> <span class="k">else</span> <span class="n">init</span><span class="o">()</span></code></pre></figure>
+
+<p>练习：</p>
+
+<blockquote>
+  <p>根据上面的递归一般定义，推断出下列函数的函数类型：</p>
+
+  <div class="highlighter-rouge"><pre class="highlight"><code> f: ItemType =&gt; AccumulatorType
+ shouldQuit
+ calc
+ nextItem
+ init
+</code></pre>
+  </div>
+</blockquote>
+
+<p>参考答案：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">shouldQuit</span><span class="o">[</span><span class="kt">ItemType</span><span class="o">](</span><span class="n">x</span><span class="k">:</span> <span class="kt">ItemType</span><span class="o">)</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="o">???</span>
+<span class="k">def</span> <span class="n">calc</span><span class="o">[</span><span class="kt">ItemType</span>, <span class="kt">AccumulatorType</span><span class="o">](</span><span class="n">acc</span><span class="k">:</span> <span class="kt">AccumulatorType</span><span class="o">,</span> <span class="n">x</span><span class="k">:</span> <span class="kt">ItemType</span><span class="o">)</span><span class="k">:</span> <span class="kt">AccumulatorType</span> <span class="o">=</span> <span class="o">???</span>
+<span class="k">def</span> <span class="n">nextItem</span><span class="o">[</span><span class="kt">ItemType</span><span class="o">]()</span><span class="k">:</span> <span class="kt">ItemType</span> <span class="o">=</span> <span class="o">???</span>
+<span class="k">def</span> <span class="n">init</span><span class="o">[</span><span class="kt">AccumulatorType</span><span class="o">]()</span><span class="k">:</span> <span class="kt">AccumulatorType</span> <span class="o">=</span> <span class="o">???</span></code></pre></figure>
+
+<p>上面的几个函数定义，必须在<code class="highlighter-rouge">Scala</code>的REPL中编译通过。
+这里使用了泛型定义，如果不理解，请尝试阅读
+《Programming in Scala》<sup id="fnref:scala_progfun_2nd:1"><a href="#fn:scala_progfun_2nd" class="footnote">2</a></sup>（Chapter 19 Type Parameterization）。</p>
+
+<h2 id="尾递归的一般形式严格定义">尾递归的一般形式（严格定义）</h2>
+
+<blockquote>
+  <p>使用匿名函数，代替尾递归一般定义中的临时函数<code class="highlighter-rouge">g</code>。</p>
+</blockquote>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">[</span><span class="kt">ItemType</span>, <span class="kt">AccumulatorType</span><span class="o">](</span><span class="n">x</span><span class="k">:</span> <span class="kt">ItemType</span><span class="o">)</span><span class="k">:</span> <span class="kt">AccumulatorType</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">acc</span><span class="k">:</span> <span class="kt">AccumulatorType</span><span class="o">,</span> <span class="n">item</span><span class="k">:</span> <span class="kt">ItemType</span><span class="o">)</span><span class="k">:</span> <span class="kt">AccumulatorType</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="o">(!</span> <span class="n">shouldQuit</span><span class="o">(</span><span class="n">item</span><span class="o">))</span> <span class="n">g</span><span class="o">(</span><span class="n">calc</span><span class="o">(</span><span class="n">acc</span><span class="o">,</span> <span class="n">item</span><span class="o">),</span> <span class="n">nextItem</span><span class="o">())</span>
+    <span class="k">else</span> <span class="n">acc</span>
+
+  <span class="n">g</span><span class="o">(</span><span class="n">init</span><span class="o">(),</span> <span class="n">x</span><span class="o">)</span>
+<span class="o">}</span></code></pre></figure>
+
+<h1 id="参考文献">参考文献</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:open_progfun1">
+      <p><a href="https://www.coursera.org/learn/progfun1">Functional Programming Principles in Scala</a> from École Polytechnique Fédérale de Lausanne&nbsp;<a href="#fnref:open_progfun1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:scala_progfun_2nd">
+      <p>Martin Odersky, Lex Spoon, Bill Venners. Programming in Scala (Second Edition), Artima Press&nbsp;<a href="#fnref:scala_progfun_2nd" class="reversefootnote">&#8617;</a>&nbsp;<a href="#fnref:scala_progfun_2nd:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:scala_api_doc">
+      <p><a href="http://www.scala-lang.org/api/current/index.html">Scala API Documentation</a>&nbsp;<a href="#fnref:scala_api_doc" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:github_scala">
+      <p><a href="https://github.com/scala/scala">Scala on Github</a>&nbsp;<a href="#fnref:github_scala" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:github_scala_list_t">
+      <p><a href="https://github.com/scala/scala/blob/v2.11.8/src/library/scala/collection/immutable/List.scala"><code class="highlighter-rouge">List.scala</code> Source Code on Github</a>&nbsp;<a href="#fnref:github_scala_list_t" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+                
+                <h4>您也许还想读……</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala">
+                      使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id
+                      <small>Jul 18, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+                      Bolero，累积更新说明（2016-09-04）
+                      <small>Sep 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/08/21/scala-quick-tour-part-i">
+                      Scala函数编程（一）
+                      <small>Aug 21, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+                      Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板
+                      <small>Jul 27, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk">
+                      使用Ping++设计可供集中收银的微服务
+                      <small>Jul 11, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/zh/guide/2016/08/22/scala-quick-tour-part-ii';
+      this.page.identifier = '/guide/2016/08/22/scala-quick-tour-part-ii';
+      this.page.title = 'Scala函数编程（二）';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

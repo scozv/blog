@@ -1,0 +1,1224 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="zh"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      使用Ping++设计可供集中收银的微服务 &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/zh/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/zh/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog/zh">
+      首页
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/archive/">
+              
+                归档
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/categories/">
+              
+                分类
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/tags/">
+              
+                标签
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/about/">
+              
+                关于
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/zh/credits">
+      致谢
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk">
+        English
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog/zh"
+                 title="首页">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">使用Ping++设计可供集中收银的微服务</h1>
+  <span class="post-date">Jul 11, 2016</span>
+  
+<h1 class="no_toc" id="摘要">摘要</h1>
+
+<blockquote>
+  <p>使用Ping++可以快速接入不同的支付渠道。
+通常情况下，每一个应用需要在Ping++后台系统中，对应地创建一个应用，
+用来调用Ping++的接口。</p>
+
+  <p>本文尝试设计这样的解决方案——该方案仅有一个Ping++应用，但同时满足多个（独立）应用的支付场景。
+本文提到的解决方案，目前处在设计阶段。</p>
+
+  <p>本文将提到如下话题：</p>
+
+  <ul>
+    <li>使用Ping++完成一般的支付流程</li>
+    <li>来自百货大楼购物的启发</li>
+    <li>设计可供集中收银的微服务</li>
+  </ul>
+
+  <p>本文的不足之处在于：</p>
+
+  <ul>
+    <li>对微服务的理解还停留在概念阶段</li>
+    <li>暂时还未涉及退款、提现流程</li>
+  </ul>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#两种ping应用的使用方法" id="markdown-toc-两种ping应用的使用方法">两种Ping++应用的使用方法</a>    <ul>
+      <li><a href="#通常的ping应用的使用方法" id="markdown-toc-通常的ping应用的使用方法">通常的Ping++应用的使用方法</a></li>
+      <li><a href="#来自百货大楼购物流程的启发" id="markdown-toc-来自百货大楼购物流程的启发">来自百货大楼购物流程的启发</a></li>
+    </ul>
+  </li>
+  <li><a href="#术语" id="markdown-toc-术语">术语</a>    <ul>
+      <li><a href="#应用" id="markdown-toc-应用">应用</a></li>
+      <li><a href="#应用的view层" id="markdown-toc-应用的view层">应用的<code class="highlighter-rouge">View</code>层</a></li>
+      <li><a href="#应用的后台服务restful-server" id="markdown-toc-应用的后台服务restful-server">应用的后台服务：<code class="highlighter-rouge">RESTful Server</code></a></li>
+      <li><a href="#ping应用" id="markdown-toc-ping应用">Ping++应用</a></li>
+      <li><a href="#集中收银" id="markdown-toc-集中收银">集中收银</a></li>
+    </ul>
+  </li>
+  <li><a href="#使用ping完成一般购物的支付流程" id="markdown-toc-使用ping完成一般购物的支付流程">使用Ping++完成一般购物的支付流程</a>    <ul>
+      <li><a href="#支付流程示意图" id="markdown-toc-支付流程示意图">支付流程示意图</a></li>
+      <li><a href="#将购物流程一般化" id="markdown-toc-将购物流程一般化">将购物流程一般化</a></li>
+      <li><a href="#订单类的设计" id="markdown-toc-订单类的设计">订单类的设计</a></li>
+    </ul>
+  </li>
+  <li><a href="#设计可供集中收银的微服务" id="markdown-toc-设计可供集中收银的微服务">设计可供集中收银的微服务</a>    <ul>
+      <li><a href="#一个微服务并不是微服务" id="markdown-toc-一个微服务并不是微服务">一个微服务并不是微服务</a></li>
+      <li><a href="#收银中心的微服务设计" id="markdown-toc-收银中心的微服务设计">收银中心的微服务设计</a>        <ul>
+          <li><a href="#将原来的一个restful-server拆分成多个微服务" id="markdown-toc-将原来的一个restful-server拆分成多个微服务">将原来的一个<code class="highlighter-rouge">RESTful Server</code>拆分成多个微服务</a></li>
+          <li><a href="#集中收银台的设计图" id="markdown-toc-集中收银台的设计图">集中收银台的设计图</a></li>
+          <li><a href="#收银台服务的restful-api设计" id="markdown-toc-收银台服务的restful-api设计">收银台服务的<code class="highlighter-rouge">RESTful API</code>设计</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="两种ping应用的使用方法">两种Ping++应用的使用方法</h1>
+
+<p><code class="highlighter-rouge">TL;DR</code>，你可以先阅读<strong>术语</strong>一节，对本文出现的名词的定义。</p>
+
+<h2 id="通常的ping应用的使用方法">通常的Ping++应用的使用方法</h2>
+
+<p>通常情况下，我们的每一个应用，都会对应在Ping++后台管理页面，
+创建一个Ping++应用。</p>
+
+<h2 id="来自百货大楼购物流程的启发">来自百货大楼购物流程的启发</h2>
+
+<p>百货大楼购物，通常都在收银台付款，而非店铺中，流程可以整理为：</p>
+
+<ol>
+  <li>用户在店铺购物，确认购物车</li>
+  <li>用户使用购物车，在店铺开具购物小票</li>
+  <li>用户凭店铺的购物小票前往收银台</li>
+  <li>用户支付并得到支付成功的凭证</li>
+  <li>用户使用支付凭证，回到店铺完成购物</li>
+</ol>
+
+<p>启发就是：</p>
+
+<ul>
+  <li>将百货大楼的每一个店铺看作一个应用</li>
+  <li>将唯一的一个收银台，设计成微服务，用来和Ping++联系</li>
+  <li>将支付模块，从应用中独立出来</li>
+</ul>
+
+<h1 id="术语">术语</h1>
+
+<p>为了便于阅读和理解，我解释一下文中将会出现的如下名词：</p>
+
+<h2 id="应用">应用</h2>
+
+<p>应用是一个很抽象的名词，可以是一个功能简单的计算器软件，也可以是一个
+功能丰富的个人财务管理软件：小到一个程序，大到一个系统。</p>
+
+<p>应用也有不同的表现形式，可以是一个可执行文件、一个Web，或者是一个安装在智能手机（设备）
+上的App。</p>
+
+<p>本文的应用，通常：</p>
+
+<ul>
+  <li>具有完整业务流程的一个系统</li>
+  <li>它有<code class="highlighter-rouge">View</code>表现页面</li>
+  <li>它有后台服务</li>
+  <li>不同的应用，在业务上没有重合的地方</li>
+</ul>
+
+<h2 id="应用的view层">应用的<code class="highlighter-rouge">View</code>层</h2>
+
+<p>我在之前的文章提到：<code class="highlighter-rouge">View</code>和后台服务应该完全独立（代码、开发、部署都要独立），
+这里的<code class="highlighter-rouge">View</code>就是应用的表现形式，在下面的文章中：</p>
+
+<ul>
+  <li>用户的操作，都在<code class="highlighter-rouge">View</code>层进行</li>
+  <li>客户端，通常就是指<code class="highlighter-rouge">View</code>层</li>
+</ul>
+
+<h2 id="应用的后台服务restful-server">应用的后台服务：<code class="highlighter-rouge">RESTful Server</code></h2>
+
+<p>我建议应用的所有后台服务，都应该封装成<code class="highlighter-rouge">RESTful API</code>的形式，在下面的文章中，
+如下的名词，应该都是指应用的后台服务：</p>
+
+<ul>
+  <li>服务端</li>
+  <li><code class="highlighter-rouge">RESTful Server</code></li>
+  <li>后台服务</li>
+</ul>
+
+<h2 id="ping应用">Ping++应用</h2>
+
+<p>可以在Ping++管理平台创建一个或者多个Ping++应用，每一个Ping++应用，都有一个<code class="highlighter-rouge">app_id</code>。
+每一个Ping++应用里面，可以配置独立的支付渠道。</p>
+
+<h2 id="集中收银">集中收银</h2>
+
+<p>本文想要设计的集中收银解决方案，最终创建一个Ping++应用，
+完成多个独立应用的支付需求。</p>
+
+<h1 id="使用ping完成一般购物的支付流程">使用Ping++完成一般购物的支付流程</h1>
+
+<p>可以先去阅读官方的<a href="https://www.pingxx.com/docs/overview/flow/charge">支付流程说明</a>。</p>
+
+<h2 id="支付流程示意图">支付流程示意图</h2>
+
+<p>如下的示例图，将以购物为例，更详细地解释支付流程：</p>
+
+<ol>
+  <li>客户端选择一系列（数组）的购买商品</li>
+  <li>客户端向RESTful Server申请订单</li>
+  <li>RESTful Server向客户端Response返回带有订单编号的订单数据</li>
+  <li>客户端使用订单数据向RESTful Server申请Ping++的支付票据（Charge对象）</li>
+  <li>RESTful Server向Ping++服务器，请求Charge对象</li>
+  <li>RESTful Server收到Ping++服务器的Response，同时将Charge对象传递给客户端</li>
+  <li>客户端拿到Charge对象，调用Ping++ Client SDK开始支付</li>
+  <li>（以下为异步流程）</li>
+  <li>Ping++服务器确认支付结果之后，向RESTful Server发送一个POST请求，告知结果</li>
+  <li>RESTful Server接收到这个Webhook之后，修改订单的支付状态</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">+------------------------------------------+----------------+
+|                                          |                |
+|    STEP 1                                |   Client Side  |
+|    put product into cart                 |                |
+|                                          +----------------+
+|    STEP 4                             STEP 7              | STEP 8
+|                                       (Ping++ Client SDK) |         +--------+
+|    use Order data                                         | finish  |        |
+|    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
+|                                       request a payment   | +-----&gt; |        |
++-----------------------------------------------------------+         +--------+
+  + ^                  + ^
+  | |                  | |
+  | | STEP 2 &amp; 3       | | STEP 4                STEP 5
+  | |                  | |                       (Ping++ Server SDK)
+  | | apply an order   | | apply for Charge
+  | |                  | |
+  | | RESPONSE the     | | payload with          apply for Charge
+  | | Order {_id, ...} | | previous Order data   from Ping++ Server
+  | |                  | |                           +
+  v +                  v +                           |
++-------------------------------------+              |     +--------+
+|                                     | STEP 5       |     |        |
+|                  STEP 6             | +------------+---&gt; |        |
+|                                     | &lt;----------------+ |        |
+|                  get Charge data    |                    |        |
+|                  from Ping++ Server | &lt;----------------+ | Ping++ |
++---------------+                     | STEP 9             | Server |
+|               |  RESPONSE to View   | (Async)            |        |
+| RESTful Sever |                     |                    |        |
+|               |                     | Webhook            |        |
+| Cashier       |                     | POST notification  |        |
+|               |                     | to RESTful server  |        |
++---------------+---------------------+                    +--------+</code></pre></figure>
+
+<h2 id="将购物流程一般化">将购物流程一般化</h2>
+
+<p>上面的示意图流程，有两点要说明的：</p>
+
+<ol>
+  <li>对于任何的支付流程，我们都可以尝试包装成上述的流程，比如在电子阅读平台，“支付并阅读”这个按钮，
+是没有挑选商品到购物车流程的，我们可以将上述流程中的一系列变换为“包含一个元素的数组”。参考下面的
+订单类的设计</li>
+  <li>RESTful Server可以按照功能，拆分成不同的服务，参考下面的收银微服务的设计</li>
+</ol>
+
+<h2 id="订单类的设计">订单类的设计</h2>
+
+<p>目前在用的设计如下，只列出重要的属性（Property），从最上层订单类到所购商品：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Order</span> <span class="o">{</span>
+  <span class="n">cart</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">CartItem</span><span class="o">]</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">CartItem</span> <span class="o">{</span>
+  <span class="n">purchasedProducts</span><span class="k">:</span> <span class="kt">GenericProduct</span>
+  <span class="n">quantity</span><span class="k">:</span> <span class="kt">Int</span>
+<span class="o">}</span>
+
+<span class="n">interface</span> <span class="nc">GenericProduct</span> <span class="o">{</span>
+  <span class="n">productTitle</span><span class="k">:</span> <span class="kt">String</span>
+  <span class="n">price</span><span class="k">:</span> <span class="kt">Double</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>对于上面提到的“支付并阅读”这类的流程，
+最终的<code class="highlighter-rouge">Order</code>实例满足<code class="highlighter-rouge">cart</code>数组只有一个元素：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">singleItemOrder</span> <span class="n">should</span> <span class="n">be</span> <span class="n">instanceOf</span> <span class="nc">Order</span>
+<span class="n">singleItemOrder</span><span class="o">.</span><span class="n">cart</span> <span class="n">shoule</span> <span class="n">be</span> <span class="n">size</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span></code></pre></figure>
+
+<h1 id="设计可供集中收银的微服务">设计可供集中收银的微服务</h1>
+
+<h2 id="一个微服务并不是微服务">一个微服务并不是微服务</h2>
+
+<p>一个微服务并不能形成一个完整的系统（应用），设计的收银台微服务，
+还需要和其它模块、其它的微服务相互交互，就购物支付流程而言，我们至少还需要：</p>
+
+<ul>
+  <li>基础服务，比如<code class="highlighter-rouge">GET /products</code>等基本信息</li>
+  <li>订单服务，用来生成订单编号、控制订单的状态等</li>
+</ul>
+
+<h2 id="收银中心的微服务设计">收银中心的微服务设计</h2>
+
+<h3 id="将原来的一个restful-server拆分成多个微服务">将原来的一个<code class="highlighter-rouge">RESTful Server</code>拆分成多个微服务</h3>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">+------------------------+          +-----------------------+
+|                        |          |                       |
+|  RESTful Server        |          |  RESTful Server       |
+|                        |          |                       |
+|  Static data           |          |  Order system         |
++------------------------+          +-----------------------+
+ +                                   +  ^
+ |                                   |  | STEP 2 &amp; 3
+ | STEP 1                            |  |
+ | put product into cart             |  | apply an order
+ |                                   |  |
+ |                                   |  | RESPONSE the
+ v                                   v  + Order {_id, ...}
++------------------------------------------+----------------+
+|                                          |                |
+|                                          |   Client Side  |
+|                                          |                |
+|                                          +----------------+
+|    STEP 4                             STEP 7              | STEP 8
+|                                       (Ping++ Client SDK) |         +--------+
+|    use Order data                                         | finish  |        |
+|    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
+|                                       request a payment   | +-----&gt; |        |
++-----------------------------------------------------------+         +--------+
+  +  STEP 4              ^
+  |                      |
+  |  apply for Charge    |
+  |                      |             STEP 5
+  |  payload with        |             (Ping++ Server SDK)
+  |  previous Order data |
+  v                      +             apply for Charge
+                                       from Ping++ Server
++-------------------------------------+                    +--------+
+|                                     | +----------------&gt; |        |
+|                  STEP 6             | &lt;----------------+ |        |
+|                                     |                    |        |
+|                  get Charge data    |                    |        |
+|                  from Ping++ Server | &lt;----------------+ | Ping++ |
++---------------+                     | STEP 9             | Server |
+|               |  RESPONSE to View   | (Async)            |        |
+| RESTful Sever |                     |                    |        |
+|               |                     | Webhook            |        |
+| Cashier       |                     | POST notification  |        |
+|               |                     | to RESTful server  |        |
++---------------+---------------------+                    +--------+</code></pre></figure>
+
+<h3 id="集中收银台的设计图">集中收银台的设计图</h3>
+
+<figure class="highlight"><pre><code class="language-raw" data-lang="raw">+------------------------+          +-----------------------+
+|                        |          |                       |
+|  RESTful Server        |          |  RESTful Server       |
+|                        |          |                       |
+|  Static data           |          |  Order system         |
++------------------------+          +-----------------------+
+   +                                   +  ^
+   |                                   |  | STEP 2 &amp; 3
+   | STEP 1                            |  |
+   | put product into cart             |  | apply an order
+   |                                   |  |
+   |                                   |  | RESPONSE the
+   v                                   v  + Order {_id, ...}
+ +------------------------------------------+----------------+
+ |                                          |                |
+ |                                          |   Client Side  |
+ |                                          |                |
+ |                                          +----------------+
+ |    STEP 4                             STEP 7              | STEP 8
+ |                                       (Ping++ Client SDK) |         +--------+
+ |    use Order data                                         | finish  |        |
+ |    to apply Ping++ Charge data        use Charge data     | payment | AnyPay |
+ |                                       request a payment   | +-----&gt; |        |
+ +-----------------------------------------------------------+         +--------+
+  +  STEP 4              ^
+  |                      |
+  |  apply for Charge    |
+  |                      |             STEP 5
+  |  payload with        |             (Ping++ Server SDK)
+  |  previous Order data |
+  v                      +             apply for Charge
+                                       from Ping++ Server
++-------------------------------------+                    +--------+
+|                                     | +----------------&gt; |        |
+|                  STEP 6             | &lt;----------------+ |        |
+|                                     |                    |        |
+|                  get Charge data    |                    |        |
+|                  from Ping++ Server | &lt;----------------+ | Ping++ |
++---------------+                     | STEP 9             | Server |
+|               |  RESPONSE to View   | (Async)            |        |
+| RESTful Sever |                     |                    |        |
+|               |                     | Webhook            |        |
+| Cashier       |                     | POST notification  |        |
+|               |                     | to RESTful server  |        |
++---------------+---------------------+                    +--------+
++  ^                            +  ^
+|  |  apply for Charge          |  |  apply for Charge
+|  |                            |  |
+|  |  payload with              |  |  payload with
+|  |  GenericOrder data         |  |  GenericOrder data
+|  |                            |  |
+v  +                            v  +
++---------+     +---------+     +---------+
+|         |     |         |     |         |
+| App 1   |     | App 2   |     | App 3   |
+|         |     |         |     |         |
++---------+     +---------+     +---------+</code></pre></figure>
+
+<h3 id="收银台服务的restful-api设计">收银台服务的<code class="highlighter-rouge">RESTful API</code>设计</h3>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// STEP 4 apply for Charge data
+</span><span class="nc">POST</span> <span class="o">/</span><span class="n">cashier</span><span class="o">/</span><span class="n">charge</span>
+
+<span class="n">payload</span><span class="k">:</span> <span class="o">{</span>
+  <span class="kt">order:</span> <span class="kt">Order</span> <span class="o">{</span> <span class="k">_</span><span class="kt">id</span><span class="o">,</span> <span class="kt">...</span><span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// STEP 6
+</span><span class="nc">RESPONSE</span><span class="k">:</span> <span class="o">{</span>
+  <span class="kt">data:</span> <span class="kt">Ping++</span> <span class="kt">Charge</span> <span class="kt">data</span>
+<span class="o">}</span>
+
+<span class="c1">// STEP 9
+</span><span class="nc">POST</span> <span class="o">/</span><span class="n">cashier</span><span class="o">/</span><span class="n">webhook</span></code></pre></figure>
+
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <h4>您也许还想读……</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala">
+                      使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id
+                      <small>Jul 18, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+                      Bolero，累积更新说明（2016-09-04）
+                      <small>Sep 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/08/22/scala-quick-tour-part-ii">
+                      Scala函数编程（二）
+                      <small>Aug 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/08/21/scala-quick-tour-part-i">
+                      Scala函数编程（一）
+                      <small>Aug 21, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+                      Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板
+                      <small>Jul 27, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/zh/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk';
+      this.page.identifier = '/pattern/2016/07/11/designing-cashier-microservice-with-ping-sdk';
+      this.page.title = '使用Ping++设计可供集中收银的微服务';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

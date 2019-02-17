@@ -1,0 +1,815 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/algo/2013/11/03/how-to-update-heap-in-dijkstra-shortest-path" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/algo/2013/11/03/how-to-update-heap-in-dijkstra-shortest-path" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      How to Update Heap in Dijkstra Shortest Path Algorithm &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/algo/2013/11/03/how-to-update-heap-in-dijkstra-shortest-path">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">How to Update Heap in Dijkstra Shortest Path Algorithm</h1>
+  <span class="post-date">Nov 03, 2013</span>
+  
+<blockquote>
+  <p>When we use a <strong>heap</strong> to improve the runing time of Dijkstra shortest path algorithm from <script type="math/tex">O(nm)</script> to <script type="math/tex">O(n \ln m)</script>, we may find that it is not easy to keep the heap in heap order just using insert() or delete(). This post describes the update of that heap.</p>
+
+  <p>I suppose that you might:</p>
+
+  <ul>
+    <li>know how to wirte Dijkstra algorithm with <script type="math/tex">O(nm)</script> running time, and</li>
+    <li>know how to use heap.</li>
+  </ul>
+</blockquote>
+
+<!--more-->
+
+<p><a name="pi">
+</a></p>
+
+<p>To speed up the finding minimum length of path in each stage in Dijkstra shortest path algorithm, we can use a binary heap to store frontier path, according to many words, like <a href="http://en.wikipedia.org/wiki/Heap_(data_structure)#Applications" title="Wikipedia"><em>Heap Application</em></a>, or Tim Roughgarden’s <a href="https://www.coursera.org/course/algo" title="Algorithms: Design and Analysis, Part 1">algorithm course</a>.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">dijstra</span><span class="p">(</span><span class="nx">graph</span><span class="p">,</span> <span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">s</span> <span class="o">=</span> <span class="nx">s</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="nx">frontier</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Heap</span><span class="p">();</span>
+  <span class="nx">frontier</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">]);</span>
+
+  <span class="k">while</span> <span class="p">(</span> <span class="o">!</span><span class="nx">frontier</span><span class="p">.</span><span class="nx">isEmpty</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">n</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// O(logn) on pop() instead of O(n)</span>
+    <span class="c1">//   from linear selection of minimum length</span>
+    <span class="nx">current</span> <span class="o">=</span> <span class="nx">frontier</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+
+    <span class="nx">graph</span><span class="p">.</span><span class="nx">edgesOf</span><span class="p">(</span><span class="nx">current</span><span class="p">)</span>
+     <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">v</span> <span class="o">=&gt;</span> <span class="o">!</span><span class="nx">v</span><span class="p">.</span><span class="nx">isVisisted</span><span class="p">)</span>
+     <span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">v</span> <span class="o">=&gt;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">frontier</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">v</span><span class="p">))</span>
+          <span class="c1">// update path length on v in frontier</span>
+        <span class="nl">else</span><span class="p">:</span>
+          <span class="nx">frontier</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">v</span><span class="p">,</span> <span class="nx">current</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nx">weightOf</span><span class="p">(</span><span class="nx">current</span><span class="p">,</span> <span class="nx">v</span><span class="p">)]);</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>It sounds easy, however the 1st revision of <code class="highlighter-rouge">dijkstra()</code> in Tango.js is failed to update heap correctly, where I just update the value of one vertex without keeping heap order.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="k">if</span> <span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">__labelAt__</span><span class="p">(</span><span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+	<span class="c1">// not visited, update each in frontier</span>
+	<span class="kd">var</span> <span class="nx">updated</span> <span class="o">=</span> <span class="nx">frontier</span><span class="p">.</span><span class="nx">__id__</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;&amp;</span>
+      <span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">current</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nx">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="kc">true</span><span class="p">);</span>
+	<span class="p">});</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">updated</span><span class="p">){</span>
+    <span class="nx">frontier</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]]);</span>
+	<span class="p">}</span>
+<span class="p">}</span> <span class="c1">// end if, unvisited</span></code></pre></figure>
+
+<p>How to update and keep heap order?</p>
+
+<p>While, when we update the MinHeap, it means that we may replace the item at that index with a value <strong>LESS</strong> than the origin one. According to the definition of minimum binary heap, each parent is less than their children. (see picture from <a href="http://en.wikipedia.org/wiki/Heap_(data_structure)#Applications" title="Wikipedia">Wikipedia</a>)</p>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/6/69/Min-heap.png" alt="Min Heap" /></p>
+
+<p>So, if we replace <script type="math/tex">17</script> with a <strong>LESS</strong> value called <script type="math/tex">x</script>.
+<script type="math/tex">x</script> is still less than its children,
+but <script type="math/tex">x</script> may be less than <script type="math/tex">2</script> (its parent).
+As the algorithm of <code class="highlighter-rouge">push()</code> of heap, we need to exchange <script type="math/tex">x</script> with its parent, great-parent…, until heap is ordered. That is:</p>
+
+<p><strong>Using <code class="highlighter-rouge">heap.swim()</code> to update that heap.</strong> (see <a href="https://goo.gl/NssHNy" title="Diff of Tango.js">diff</a> of revision)</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">updated</span> <span class="o">=</span> <span class="nx">frontier</span><span class="p">.</span><span class="nx">__id__</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">k</span><span class="p">){</span>
+  <span class="c1">// return x &amp;&amp; x[0] === v[0] &amp;&amp; (doUpdate, true)</span>
+  <span class="k">return</span> <span class="nx">x</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="nx">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;&amp;</span>
+    <span class="p">((</span><span class="kd">function</span><span class="p">(){</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">current</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nx">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+        <span class="nx">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">current</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nx">v</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+        <span class="c1">// swim like push() in heap is important to update heap</span>
+        <span class="nx">frontier</span><span class="p">.</span><span class="nx">__swim__</span><span class="p">(</span><span class="nx">k</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">})(),</span> <span class="kc">true</span><span class="p">);</span>
+<span class="p">});</span></code></pre></figure>
+
+<p><br /></p>
+
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <h4>Similar Posts</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/algo/2017/03/23/use-minimum-matched-string-and-extended-regex-for-wildcard-matching">
+                      Design Test Cases Before Write Implementation If the Former Is Easier
+                      <small>Mar 23, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/algo/2013/11/03/how-to-update-heap-in-dijkstra-shortest-path';
+      this.page.identifier = '/algo/2013/11/03/how-to-update-heap-in-dijkstra-shortest-path';
+      this.page.title = 'How to Update Heap in Dijkstra Shortest Path Algorithm';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

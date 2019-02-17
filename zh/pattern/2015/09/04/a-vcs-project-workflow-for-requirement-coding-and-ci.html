@@ -1,0 +1,1456 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="zh"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/pattern/2015/09/04/a-vcs-project-workflow-for-requirement-coding-and-ci" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/pattern/2015/09/04/a-vcs-project-workflow-for-requirement-coding-and-ci" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      用于需求分析、开发以至持续集成的源代码管理工作模式 &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/zh/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/zh/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog/zh">
+      首页
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/archive/">
+              
+                归档
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/categories/">
+              
+                分类
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/tags/">
+              
+                标签
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/zh/about/">
+              
+                关于
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/zh/credits">
+      致谢
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/pattern/2015/09/04/a-vcs-project-workflow-for-requirement-coding-and-ci">
+        English
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog/zh"
+                 title="首页">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">用于需求分析、开发以至持续集成的源代码管理工作模式</h1>
+  <span class="post-date">Sep 04, 2015</span>
+  
+<h1 class="no_toc" id="摘要">摘要</h1>
+<blockquote>
+  <p>开发团队中，使用Word或者PDF文档，或者邮件来描述需求，可能导致同样内容的文档出现在不同成员的电脑上，进而可能导致
+版本不一致。另外两次版本的需求更改，很难进行差异比较（Word和PDF文档不是简单的文本文件）。
+一种解决方案是，使用文本文件（比如Markdown或者LaTeX）来描述需求，并将所有的文件纳入源代码管理。
+所以，本文描述的这个工作流，将所有的文档纳入源代码管理。同时还将提到：</p>
+
+  <ul>
+    <li>使用Issue来跟踪需求、变更和问题解决</li>
+    <li>产品、测试和开发等不同角色如何便捷的使用Bitbucket来提出并跟踪任务</li>
+    <li>一些基本的工具，比如c9.io，或者git的基本用法</li>
+    <li>Markdown的基本语法</li>
+  </ul>
+</blockquote>
+
+<!--more-->
+
+<ul id="markdown-toc">
+  <li><a href="#环境准备" id="markdown-toc-环境准备">环境准备</a>    <ul>
+      <li><a href="#了解atlassian" id="markdown-toc-了解atlassian">了解Atlassian</a></li>
+      <li><a href="#注册bitbucket" id="markdown-toc-注册bitbucket">注册Bitbucket</a></li>
+      <li><a href="#操作系统和git环境" id="markdown-toc-操作系统和git环境">操作系统和Git环境</a></li>
+      <li><a href="#git环境简介" id="markdown-toc-git环境简介">Git环境简介</a></li>
+      <li><a href="#编辑文本文档" id="markdown-toc-编辑文本文档">编辑文本文档</a>        <ul>
+          <li><a href="#ubuntu系统下的建议" id="markdown-toc-ubuntu系统下的建议">Ubuntu系统下的建议</a></li>
+          <li><a href="#windows系统下的建议" id="markdown-toc-windows系统下的建议">Windows系统下的建议</a></li>
+          <li><a href="#使用c9io" id="markdown-toc-使用c9io">使用c9.io</a></li>
+        </ul>
+      </li>
+      <li><a href="#移动端的访问" id="markdown-toc-移动端的访问">移动端的访问</a></li>
+    </ul>
+  </li>
+  <li><a href="#不同角色的工作流程" id="markdown-toc-不同角色的工作流程">不同角色的工作流程</a>    <ul>
+      <li><a href="#产品和需求的变更" id="markdown-toc-产品和需求的变更">产品和需求的变更</a></li>
+      <li><a href="#mention" id="markdown-toc-mention"><code class="highlighter-rouge">@</code>mention</a></li>
+      <li><a href="#email-notification" id="markdown-toc-email-notification">Email Notification</a></li>
+    </ul>
+  </li>
+  <li><a href="#附录" id="markdown-toc-附录">附录</a>    <ul>
+      <li><a href="#全局规则" id="markdown-toc-全局规则">全局规则</a>        <ul>
+          <li><a href="#文件命名" id="markdown-toc-文件命名">文件命名</a></li>
+          <li><a href="#源代码存放的文件要求" id="markdown-toc-源代码存放的文件要求">源代码存放的文件要求</a></li>
+        </ul>
+      </li>
+      <li><a href="#markdown基本语法介绍" id="markdown-toc-markdown基本语法介绍">Markdown基本语法介绍</a></li>
+      <li><a href="#latex基本语法介绍" id="markdown-toc-latex基本语法介绍">LaTeX基本语法介绍</a></li>
+      <li><a href="#常用的git场景" id="markdown-toc-常用的git场景">常用的Git场景</a>        <ul>
+          <li><a href="#如何修改最近一次commit的备注" id="markdown-toc-如何修改最近一次commit的备注">如何修改最近一次commit的备注</a></li>
+          <li><a href="#想暂时回到某一个历史版本" id="markdown-toc-想暂时回到某一个历史版本">想暂时回到某一个历史版本</a></li>
+          <li><a href="#如何在当前的版本上做一些实验性的修改但不确定是否提交" id="markdown-toc-如何在当前的版本上做一些实验性的修改但不确定是否提交">如何在当前的版本上做一些实验性的修改，但不确定是否提交</a></li>
+        </ul>
+      </li>
+      <li><a href="#c9io的基本环境配置" id="markdown-toc-c9io的基本环境配置">c9.io的基本环境配置</a></li>
+      <li><a href="#bitbucket和github在acadamic-license上的比较" id="markdown-toc-bitbucket和github在acadamic-license上的比较">Bitbucket和Github在Acadamic License上的比较</a></li>
+    </ul>
+  </li>
+  <li><a href="#参考文献" id="markdown-toc-参考文献">参考文献</a></li>
+</ul>
+
+<h1 id="环境准备">环境准备</h1>
+<p>本文提到的“环境”，不是开发环境，而是对每个成员都是适用的基本工作环境。</p>
+
+<p>本文提到的“源代码”，不仅仅是开发代码，而是团队运行过程中所有的文档，包括：</p>
+
+<ul>
+  <li>需求文档及附件</li>
+  <li>团队工作流程</li>
+  <li>统一的开发风格文档</li>
+  <li>其它所有和团队有关，并需要记录的文档</li>
+</ul>
+
+<p>所有输出的成品，比如编译生成的PDF文件，不应该纳入源代码管理。</p>
+
+<h2 id="了解atlassian">了解Atlassian</h2>
+
+<p>Atlassian的<a href="https://www.atlassian.com/software">产品线</a>比较全面，
+我目前使用的三个是：</p>
+
+<ul>
+  <li>JIRA：Issue系统</li>
+  <li>Bitbucket：Git源代码管理</li>
+  <li>Bamboo：CI系统</li>
+</ul>
+
+<p>目前，每一个产品都有如下两个版本：</p>
+
+<ul>
+  <li>Cloud：由Atlassian托管的SaaS服务</li>
+  <li>Server：自主托管的软件</li>
+</ul>
+
+<p><strong>两个版本除了部署托管方式不同，页面和使用方式都非常类似。</strong></p>
+
+<p><strong>所以，在同一个产品的不同版本之间相互迁移，不会造成用户体验的不习惯。</strong></p>
+
+<p>比如：</p>
+
+<ul>
+  <li>
+    <p>Bitbucket Cloud：对应的网址是如下，所有的源代码托管到Atlassian服务器</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>https://bitbucket.org
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Bitbucket Server（原名叫Stash）：个人或企业自主购买服务器，自主部署</p>
+  </li>
+</ul>
+
+<h2 id="注册bitbucket">注册Bitbucket</h2>
+<p>首先注册一个<a href="https://bitbucket.org">bitbucket.org</a>账号，bitbucket是一个在线的源代码管理系统，支持多个私有库，
+默认每个库支持5位成员协同工作。</p>
+
+<p>进入bitbucket页面之后，左侧导航栏常用的菜单为：</p>
+
+<ul>
+  <li>提交（commits）：用来查看所有的版本信息</li>
+  <li>问题（issues）：所有的问题列表，可对每一个问题进行讨论，并跟踪当前问题的处理进度</li>
+  <li>下载（downloads）：可以将每一个阶段的文档整理成PDF文件，存放到“下载”表中，以便向团队之外人展示</li>
+</ul>
+
+<p>Bitbucket支持在线编辑和预览Markdown文档。</p>
+
+<h2 id="操作系统和git环境">操作系统和Git环境</h2>
+
+<ul>
+  <li>建议使用Ubuntu操作系统，便于自动化脚本的管理</li>
+  <li>如果使用Windows系统，需要安装<a href="https://git-for-windows.github.io/">Git-for-windows</a></li>
+  <li>可以尝试使用CloudIDE，推荐使用<a href="https://c9.io">c9.io</a>或者<a href="https://Koding.io">Koding.io</a>，
+这两个云端IDE都配置了Ubuntu的虚机</li>
+</ul>
+
+<h2 id="git环境简介">Git环境简介</h2>
+
+<p>当团队成员获得了某一个源代码仓库（repo）的访问权限之后，需要安装Git环境，用来提交和查看不是时期的源代码。</p>
+
+<!--* Linux用户建议在`Bash`环境下使用Git-->
+<!--* Mac用户可以通过-->
+<!--* Windows用户可以安装[TortoiseGit] [1]或者[Git for Windows] [2]-->
+
+<p>建议在<code class="highlighter-rouge">Bash</code>环境下使用Git。</p>
+
+<p>Git的仓库（repo）有三类：</p>
+
+<ul>
+  <li>服务器上的中心库，指的是托管在bitbucket.org上的库，每一位成员需要不时地从服务器上获取最新的源代码，同时也要将自己的
+更改提交保存到服务器上</li>
+  <li>其他成员电脑上的库，只有当其他成员将他们的更改提交到了服务器上，我们才能获取更新，看到这些更改</li>
+  <li>本地自己的库，同样的，只有我们将自己的更改提交到服务器，团队其他成员才能获取我们的更新</li>
+</ul>
+
+<p>一般而言，Git环境的基本流程是：</p>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># 0. 克隆或更新本地库，将服务器上的变更，更新到本地</span>
+git pull
+<span class="c"># 0. 修改、编辑源代码，标记变更的文件，并为本次变更添加一个描述</span>
+git add file_changed.txt
+git commit -m <span class="s1">'本次变更的描述信息'</span>
+<span class="c"># 0. 可以重复上一个步骤，多次变更文件</span>
+<span class="c"># 0. 一并提交本地的所有的更新到服务器上</span>
+git push</code></pre></figure>
+
+<h2 id="编辑文本文档">编辑文本文档</h2>
+
+<h3 id="ubuntu系统下的建议">Ubuntu系统下的建议</h3>
+
+<ul>
+  <li>如果有能力，请用<code class="highlighter-rouge">vim</code>或<code class="highlighter-rouge">emacs</code>。（<strong>友情提示：这两个编辑器的学习比较耗时，请合理安排时间</strong>）</li>
+  <li>使用开源的<a href="https://atom.io/"><code class="highlighter-rouge">atom.io</code></a>编辑器，可以使用<a href="https://launchpad.net/~webupd8team/+archive/ubuntu/atom"><code class="highlighter-rouge">webupd8team</code>提供的<code class="highlighter-rouge">ppa</code></a></li>
+  <li>付费使用<a href="https://www.sublimetext.com/">Sublime Text</a></li>
+</ul>
+
+<h3 id="windows系统下的建议">Windows系统下的建议</h3>
+
+<ul>
+  <li>使用开源的<a href="https://atom.io/"><code class="highlighter-rouge">atom.io</code></a>编辑器</li>
+</ul>
+
+<h3 id="使用c9io">使用c9.io</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>https://c9.io
+</code></pre>
+</div>
+
+<p>这是一个网页版的代码编辑器，在一些个人电脑环境有限的情况下，可以直接在网页里面写代码。</p>
+
+<p>特色是：</p>
+
+<ul>
+  <li>登录之后，整个环境就是你上次的文档环境，不管你在什么操作系统上，只要你能上网</li>
+  <li>代码高亮</li>
+  <li><code class="highlighter-rouge">Markdown</code>同步预览，一边编辑<code class="highlighter-rouge">.md</code>文件，一边查看最终的效果</li>
+  <li>智能提示</li>
+  <li>更重要的是，提供了一个具有<code class="highlighter-rouge">su</code>权限的<code class="highlighter-rouge">Ubuntu</code>的<code class="highlighter-rouge">Terminal</code>，也就
+意味着，你在网页里面可以使用一个<code class="highlighter-rouge">Ubuntu</code>操作系统了</li>
+</ul>
+
+<h2 id="移动端的访问">移动端的访问</h2>
+<p><code class="highlighter-rouge">iOS</code>上使用<a href="https://itunes.apple.com/cn/app/codebucket-bitbucket-for-ios/id551531422?">CodeBucket</a>访问源代码库。</p>
+
+<p><code class="highlighter-rouge">Android</code>平台使用<a href="http://www.coolapk.com/apk/fi.iki.kuitsi.bitbeaker">Bitbeaker</a>。</p>
+
+<p>移动端通常可用于问题的讨论。</p>
+
+<h1 id="不同角色的工作流程">不同角色的工作流程</h1>
+
+<h2 id="产品和需求的变更">产品和需求的变更</h2>
+<p>需求最开始可以在问题（issue） 列表中讨论，逐步反映到需求文档中，具体而言：</p>
+
+<ol>
+  <li>新增一个问题（issue）</li>
+  <li>团队成员在每一个问题的评论中讨论</li>
+  <li>
+    <p>编写对应的需求文档，并在提交的时候，关联问题编号（使用英文字符井号<code class="highlighter-rouge">#</code>）</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>git commit -m '新增某某需求，参考问题 #1'
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h2 id="mention"><code class="highlighter-rouge">@</code>mention</h2>
+
+<p>在issue的讨论中，可以使用<code class="highlighter-rouge">@username</code>提及某一个队员，一般来说，对方会收到一封邮件，
+所以为了方便，请使用 <strong>简短</strong> 并且容易在键盘上打出来的<code class="highlighter-rouge">username</code>。</p>
+
+<p>另外，我建议：</p>
+
+<ul>
+  <li>请将你的<code class="highlighter-rouge">username</code>视为开源开发社区的一个身份，所以尽量，在如下开发者社区使用同样的<code class="highlighter-rouge">username</code>：
+    <ul>
+      <li>Bitbucket.org</li>
+      <li>c9.io</li>
+      <li>github.com</li>
+      <li>gitlab.com</li>
+      <li>stackexchange.com</li>
+      <li>stackoverflow.com</li>
+      <li>mail.yandex.com</li>
+    </ul>
+  </li>
+  <li>可以使用同样的邮箱</li>
+  <li>如果刚刚进入开源开发社区，可以修改你觉得不合适的<code class="highlighter-rouge">username</code></li>
+  <li>确定<code class="highlighter-rouge">username</code>之后，或者使用了很久的<code class="highlighter-rouge">username</code>，永远不要修改</li>
+</ul>
+
+<h2 id="email-notification">Email Notification</h2>
+
+<p>除了用于登录、注册的邮箱外，如果你想及时地收到Notification（比如某人<code class="highlighter-rouge">@</code>了你），
+可以在个人设置中，添加一个额外的邮箱地址。</p>
+
+<h1 id="附录">附录</h1>
+
+<h2 id="全局规则">全局规则</h2>
+
+<h3 id="文件命名">文件命名</h3>
+
+<ul>
+  <li>
+    <p>所有的文件名称只包含英文字母、数字和下划线，比如：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  requirement_001_user_login.md
+</code></pre>
+    </div>
+  </li>
+  <li>所有的文件名不要出现空格和其它特殊字符</li>
+  <li>所有的文本文件，比如<code class="highlighter-rouge">.md</code>，都设置为<code class="highlighter-rouge">UTF-8</code>编码，以免中文字体出现乱码</li>
+  <li>所有的附件（图片、PPT文件等），使用简短的文件名描述图片内容，并在文档中注明</li>
+</ul>
+
+<h3 id="源代码存放的文件要求">源代码存放的文件要求</h3>
+
+<p>源代码存放的文件，都要能够做比较（<code class="highlighter-rouge">git diff</code>）。</p>
+
+<p>对于诸如，<code class="highlighter-rouge">.pdf</code>、<code class="highlighter-rouge">.exe</code>、<code class="highlighter-rouge">.ppt</code>等文件，是不适合做<code class="highlighter-rouge">git diff</code>的，因为如果
+使用<code class="highlighter-rouge">text</code>文本编辑器打开这些文件，看到的都是二进制编码。</p>
+
+<p>如下文件，需要通过源代码管理：</p>
+
+<ul>
+  <li>所有的<code class="highlighter-rouge">Markdown</code>文档的源文件：<code class="highlighter-rouge">.md</code>，包括：
+    <ul>
+      <li>面向开发者的文档</li>
+      <li>团队的规范文档</li>
+      <li>必要的会议记录</li>
+      <li>所有的需求文档</li>
+      <li>其它</li>
+    </ul>
+  </li>
+  <li>有能力的团队，可以使用<code class="highlighter-rouge">LaTeX</code>来编写文档，参考<a href="http://scozv.github.io/help/2015/08/12/introduction-of-building-documents-with-latex">此处</a></li>
+  <li>所有的源代码</li>
+  <li>必要的配置文件，注意区分开发环境和生产环境，同时，注意生产配置的保密</li>
+</ul>
+
+<p><strong>如下的文件，请不要放到源代码托管，</strong></p>
+
+<p><strong>如下的文件，请不要放到源代码托管，</strong></p>
+
+<p><strong>如下的文件，请不要放到源代码托管：</strong></p>
+
+<ul>
+  <li><del>源代码的编译产物，比如<code class="highlighter-rouge">dll</code>、<code class="highlighter-rouge">exe</code>或者其它编译后的文件</del></li>
+  <li><del>非文本的文档，比如<code class="highlighter-rouge">pdf</code>、<code class="highlighter-rouge">docs</code>等</del>，参考<a href="https://github.com/weijianwen/SJTUThesis/issues/26">这个讨论</a></li>
+  <li><del>源代码的dependencies，比如<code class="highlighter-rouge">Node.js</code>项目里面的<code class="highlighter-rouge">node_modules</code>文件夹</del></li>
+</ul>
+
+<p>参考常用的<code class="highlighter-rouge">gitignore</code>文件：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>https://github.com/github/gitignore
+</code></pre>
+</div>
+
+<h2 id="markdown基本语法介绍">Markdown基本语法介绍</h2>
+<p>bitbucket中可以直接编辑和预览文件。
+详细的语法说明，可以参考：https://bitbucket.org/tutorials/markdowndemo/overview</p>
+
+<p>常用的语法有如下：</p>
+
+<ul>
+  <li>
+    <p>目录</p>
+
+    <p>在文档的开始，使用<code class="highlighter-rouge">[TOC]</code>来自动生成文章的目录，比如</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-md" data-lang="md"><span class="gh"># 第一章</span>
+第一章内容
+<span class="gu">## 1.1小节</span>
+<span class="gu">## 1.2小节</span>
+<span class="gh"># 第二章</span></code></pre></figure>
+
+<ul>
+  <li>
+    <p>换行</p>
+
+    <p><code class="highlighter-rouge">Markdown</code>中的换行需要敲两下回车，
+一个回车不会换行。
+这样的好处是，我们在编写文档的过程中，
+每行不会太长，便于我们阅读。
+不管是文档还是代码，如果每行的内容
+太多的话，我们就要拖动
+页面下方的水平滚动条，
+来查看和阅读
+这一行后面的内容。
+如果，真的这样的话，想必是很
+不方便的。</p>
+
+    <p>比如，“换行”这一小节的<code class="highlighter-rouge">Markdown</code>源代码如下，同时，我们不需要让每行段落，
+过长，比如两种源代码，最终的显示效果一样：</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-md" data-lang="md"><span class="sb">`Markdown`</span>中的换行需要敲两下回车，
+一个回车不会换行。
+这样的好处是，我们在编写文档的过程中，
+每行不会太长，便于我们阅读。
+不管是文档还是代码，如果每行的内容
+太多的话，我们就要拖动
+页面下方的水平滚动条，
+来查看和阅读
+这一行后面的内容。
+如果，真的这样的话，想必是很
+不方便的。
+
+比如，“换行”这一小节的<span class="sb">`Markdown`</span>源代码如下，
+同时，我们不需要让每行段落，
+过长，比如两种源代码，最终的显示效果一样：<span class="sb">
+
+
+`Markdown`</span>中的换行需要敲两下回车，一个回车不会换行。  这样的好处是，我们在编写文档的过程中，  每行不会太长，便于我们阅读。  不管是文档还是代码，如果每行的内容 太多的话，我们就要拖动  页面下方的水平滚动条，  来查看和阅读  这一行后面的内容。  如果，真的这样的话，想必是很  不方便的。
+
+比如，“换行”这一小节的<span class="sb">`Markdown`</span>源代码如下，同时，我们不需要让每行段落，过长，比如两种源代码，最终的显示效果一样：</code></pre></figure>
+
+<ul>
+  <li>章节级别</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-md" data-lang="md"><span class="c">&lt;!-- 使用一个井号，来表示章节1，比如 --&gt;</span>
+<span class="gh"># Heading 1</span>
+<span class="c">&lt;!-- 使用两个井号，来表示第二级章节，比如 --&gt;</span>
+<span class="gu">## Heading 1.1</span>
+<span class="c">&lt;!-- 可以向下一直写到第五级，即 --&gt;</span>
+<span class="gu">##### Heading 1.1.1.1.1</span></code></pre></figure>
+
+<ul>
+  <li>粗体和斜体</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-md" data-lang="md"><span class="c">&lt;!-- 用两个星号包围需要加粗的字体： --&gt;</span>
+<span class="gs">**粗体**</span>
+<span class="c">&lt;!-- 用一个星号包围需要倾斜的字体： --&gt;</span>
+<span class="ge">*斜体*</span></code></pre></figure>
+
+<ul>
+  <li>
+    <p>超链接</p>
+
+    <p>通常超链接的语法如下：</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-md" data-lang="md"><span class="p">[</span><span class="nv">Markdown 语法</span><span class="p">](</span><span class="sx">https://daringfireball.net/projects/markdown/syntax</span><span class="p">)</span></code></pre></figure>
+
+<ul>
+  <li>
+    <p>列表</p>
+
+    <p>使用一个井号，标记列表中的元素，比如</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-md" data-lang="md"><span class="p">*</span> Item one
+<span class="p">*</span> Item two
+<span class="p">*</span> Item three</code></pre></figure>
+
+<ul>
+  <li>
+    <p>表格</p>
+
+    <p>注意，下列语法中的短横线只需要使用一个就够了，列之间用竖线分割。</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-md" data-lang="md">第一列的表头       | 第二列的表头
+-----------------| -------------
+第一行第一列的内容  | 第一行第二列的内容
+第二行第一列的内容  | 第二行第二列的内容</code></pre></figure>
+
+<h2 id="latex基本语法介绍">LaTeX基本语法介绍</h2>
+
+<h2 id="常用的git场景">常用的Git场景</h2>
+<p>本小节主要参考文献[Chacon and Straub, 2014] <sup id="fnref:pro_git2"><a href="#fn:pro_git2" class="footnote">1</a></sup>。</p>
+
+<p>下列的代码段中，以<code class="highlighter-rouge">$</code>打头的命令需要在<code class="highlighter-rouge">bash</code>中执行。其余的为命令执行的结果。</p>
+
+<h3 id="如何修改最近一次commit的备注">如何修改最近一次commit的备注<sup id="fnref:gb_undo"><a href="#fn:gb_undo" class="footnote">2</a></sup></h3>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="gp">$ </span>git commit --amend</code></pre></figure>
+
+<h3 id="想暂时回到某一个历史版本">想暂时回到某一个历史版本<sup id="fnref:st_checkout"><a href="#fn:st_checkout" class="footnote">3</a></sup></h3>
+
+<p>有的时候，突然发现了一个问题，但是明明记得之前某个时间段是正常的。
+此时，需要回到之前的某一个版本（commit），尝试找到是哪一次提交引发了该问题。</p>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># 0. 列出最近的一系列提交</span>
+<span class="gp">$ </span>git log --pretty<span class="o">=</span>oneline -n 20 --graph --abbrev-commit
+<span class="k">*</span> 9ecb341 fix markdown href syntax
+<span class="k">*</span> 3f0828b fix markdown coding syntax
+<span class="k">*</span> 72fc362 fix markdown syntax
+<span class="k">*</span> 4175860 draft <span class="k">for </span>vcs wrkflow
+<span class="k">*</span> 94259e0 fix typo of lataxing
+<span class="k">*</span> 8ecbced no center <span class="k">for </span>equation
+<span class="k">*</span> 794bcee blockquote equation
+<span class="k">*</span> b0ca566 fix div <span class="k">in </span>markdown
+
+<span class="c"># 0. 临时返回到之前的某一次提交</span>
+<span class="gp">$ </span>git checkout 94259e0
+
+<span class="c"># 0. 使用二分查找，反复执行`git checkout`，直到定位到某两个**相邻**的版本，也即，</span>
+<span class="c"># 前一个版本还是正常的，后一个版本就出现了问题</span>
+
+<span class="c"># 0. 比较这两个**相邻**版本的差异，分析问题</span>
+<span class="gp">$ </span>git diff 4175860 94259e0
+
+<span class="c"># 0. 回撤这些临时版本</span>
+<span class="gp">$ </span>git checkout master</code></pre></figure>
+
+<h3 id="如何在当前的版本上做一些实验性的修改但不确定是否提交">如何在当前的版本上做一些实验性的修改，但不确定是否提交</h3>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># 充分利用Git的Branch特性，在当前的版本上创建一个分支，然后做实验性的修改。</span>
+<span class="gp">$ </span>git branch experiment
+
+<span class="c"># 确认了这些修改之后，可以将实验分支上的更改合并到当前位置</span>
+<span class="gp">$ </span>git checkout master
+<span class="gp">$ </span>git merge master experiment</code></pre></figure>
+
+<p>另外，关于分支合并，<code class="highlighter-rouge">rebase</code>和<code class="highlighter-rouge">merge</code>的区别可以参考<a href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing">这篇文章</a>（这个区别一般
+只有开发才会用到）。简单理解：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">merge</code>是将两条路径的最后一个节点合并在一起，然后继续往下走</li>
+  <li><code class="highlighter-rouge">rebase</code>是将旁边路径上的更改，反映到当前路径上。原先的两条路径不会有交点，但是当前路径上的每一分提交都会被重写，从而反映
+旁边路径上的更改</li>
+  <li>如果当前路径上的某些提交已经更新（<code class="highlighter-rouge">git push</code>）到了服务器，则需要重新获取历史版本（<code class="highlighter-rouge">git pull</code>）</li>
+</ul>
+
+<h2 id="c9io的基本环境配置">c9.io的基本环境配置</h2>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># create workspace</span>
+<span class="c"># private</span>
+<span class="c"># choose a EMPTY template</span>
+
+<span class="c"># generate SSH key for Git server,</span>
+<span class="c"># https://confluence.atlassian.com/x/YwV9E</span>
+ssh-keygen -t rsa -b 4096
+vi ~/.ssh/id_rsa.pub
+<span class="c"># start the ssh-agent in the background</span>
+<span class="nb">eval</span> <span class="s2">"</span><span class="k">$(</span>ssh-agent -s<span class="k">)</span><span class="s2">"</span>
+ssh-add ~/.ssh/id_rsa
+<span class="c"># record SSH key into Github and Bitbucket</span>
+<span class="c"># clone Git repo into c9.io</span>
+<span class="c"># git clone git@bitbucket.org:username/repo.git</span></code></pre></figure>
+
+<h2 id="bitbucket和github在acadamic-license上的比较">Bitbucket和Github在Acadamic License上的比较</h2>
+
+<p>在Acadamic License结束之后，Bitbucket依然允许5人小组的私有库，但是Github需要付费，才能继续使用私有库。</p>
+
+<h1 id="参考文献">参考文献</h1>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:pro_git2">
+      <p>Chacon, S. and Straub, B. (2014). Pro Git, Second Edition.: NY. Apress.&nbsp;<a href="#fnref:pro_git2" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:gb_undo">
+      <p><a href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">Git Basics - Undoing Things</a>&nbsp;<a href="#fnref:gb_undo" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:st_checkout">
+      <p><a href="http://stackoverflow.com/a/4114122">Temporarily switch to a different commit</a>&nbsp;<a href="#fnref:st_checkout" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                
+                <h4>您也许还想读……</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/09/05/bolero-cumulative-update-on-sep-04-2016">
+                      Bolero，累积更新说明（2016-09-04）
+                      <small>Sep 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/guide/2016/07/27/bolero-a-restful-scaffold-with-scala">
+                      Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板
+                      <small>Jul 27, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2016/07/22/donot-ask-the-devs-to-prepare-env-by-click">
+                      无代码不欢乐——使用统一的Bash脚本搭建开发环境
+                      <small>Jul 22, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2016/05/18/a-linear-branch-management-with-git">
+                      一套简洁的基于Git的线性分支管理工作流
+                      <small>May 18, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/zh/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration">
+                      基于低耦合和持续集成的Web架构
+                      <small>May 05, 2016</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/zh/pattern/2015/09/04/a-vcs-project-workflow-for-requirement-coding-and-ci';
+      this.page.identifier = '/pattern/2015/09/04/a-vcs-project-workflow-for-requirement-coding-and-ci';
+      this.page.title = '用于需求分析、开发以至持续集成的源代码管理工作模式';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+

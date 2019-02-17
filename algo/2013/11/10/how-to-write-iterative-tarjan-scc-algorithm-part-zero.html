@@ -1,0 +1,844 @@
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Sans::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta http-equiv="Content-Language" content="en"><link rel="alternate" i18n="en" href="https://scozv.github.io/blog/algo/2013/11/10/how-to-write-iterative-tarjan-scc-algorithm-part-zero" />
+<link rel="alternate" i18n="zh" href="https://scozv.github.io/blog/zh/algo/2013/11/10/how-to-write-iterative-tarjan-scc-algorithm-part-zero" />
+
+
+  <meta name="description" content="">
+   <meta name="author" content="Scott">
+
+  <title>
+    
+      
+      How to Write Iterative Tarjan SCC Algorithm, Part I &middot; Code this.
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/poole.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/syntax.css">
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/themes/lanyon/css/lanyon.css">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
+
+  <!--[if lt IE 9]>
+  <script src="https://scozv.github.io/blog/assets/themes/lanyon/resources/respond/Respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://scozv.github.io/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+  <link href="https://scozv.github.io/blog/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://scozv.github.io/blog/assets/img/incognito_t.ico">
+
+  <!-- Load KaTeX -->
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/katex.min.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/katex/render.css" />
+  <link rel="stylesheet" href="https://scozv.github.io/blog/assets/css/override.css">
+
+  <script src="https://scozv.github.io/blog/assets/jquery/jquery.min.js"></script>
+</head>
+
+
+  <body class="layout-reverse sidebar-overlay">
+
+    
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input
+  type="checkbox"
+  class="sidebar-checkbox"
+  id="sidebar-checkbox"
+  
+>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Any Thoughts in Programming</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item"
+      href="https://scozv.github.io/blog">
+      Home
+    </a>
+    
+
+    
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/archive/">
+              
+                Archive
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/categories/">
+              
+                Categories
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/tags/">
+              
+                Tags
+              
+            </a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+            <a class="sidebar-nav-item"
+              href="https://scozv.github.io/blog/about/">
+              
+                About
+              
+            </a>
+        
+      
+    
+      
+        
+      
+    
+  </nav>
+
+  
+  <div class="sidebar-item">
+    <span class="force-mono-font">&copy;</span> 2019 &middot;
+    <a href="https://github.com/scozv">Scott</a> &middot;
+    <a href="https://scozv.github.io/blog/credits">
+      Credits
+    </a> |
+    <a style="font-weight: bold;"
+      href="https://scozv.github.io/blog/zh/algo/2013/11/10/how-to-write-iterative-tarjan-scc-algorithm-part-zero">
+        中文
+    </a>
+  </div>
+</div>
+
+
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+           content to avoid any CSS collisions with our real content. -->
+      <div class="wrap">
+        <div class="masthead">
+          <div class="container">
+            <h3 class="masthead-title">
+              <a href="https://scozv.github.io/blog"
+                 title="Home">
+                Code this.
+              </a>
+              <small>Any Thoughts in Programming</small>
+            </h3>
+          </div>
+        </div>
+
+        <div class="container content">
+          
+
+
+
+<div class="post">
+  <h1 class="post-title">How to Write Iterative Tarjan SCC Algorithm, Part I</h1>
+  <span class="post-date">Nov 10, 2013</span>
+  
+<blockquote>
+  <p>During the work on <a href="https://github.com/scozv/tango" title="Tango.js">Tango.js</a>, I found there is a limitation on recursive stack size of JavaScript. This series posts describe the way to convert recursive Tarjan SCC algorithm to iterative one, containing:</p>
+
+  <ul>
+    <li>Part I: Iterative BFS and DFS algorithm on graph;</li>
+    <li><a href="https://scozv.github.io/blog/algo/2013/11/23/how-to-write-iterative-tarjan-scc-algorithm-part-one" title="Tarjan, Part II">Part II</a>: Iterative topological sort and Kosaraju SCC algorithm on graph;</li>
+    <li>Part III: Iterative Tarjan SCC algorithm on graph.</li>
+  </ul>
+</blockquote>
+
+<!--more-->
+
+<p><a name="pi">
+</a></p>
+
+<h2 id="recursive-dfs">Recursive DFS</h2>
+
+<p>It is easy to write down a recursive BFS or DFS algorithm on graph. Take DFS for example:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">DFS</span><span class="p">(</span><span class="nx">graph</span><span class="p">,</span> <span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// do something on this node and mark it as visited</span>
+
+  <span class="p">(</span><span class="k">for</span> <span class="nx">x</span> <span class="k">in</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">getAdjacentVertex</span><span class="p">(</span><span class="nx">node</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// then we DFS on each adjacent vertex of this node</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">graph</span><span class="p">.</span><span class="nx">isVisited</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">DFS</span><span class="p">(</span><span class="nx">graph</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nx">graph</span><span class="p">.</span><span class="nx">markVisited</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The call of recursive function is managed by a stack, we may see ‘Call Stack’, or ‘Error Stack’ in some IDE tools. Recursive function is brief, and it is easy to understand sometimes. But if there is limitation on stack size, We may try to write it as iterative way.</p>
+
+<h2 id="call-stack">Call Stack</h2>
+
+<p>Firstly, we see what happen in recursive DFS above, for the graph with only two paths:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1 → 2 → 3
+1 → 4
+</code></pre>
+</div>
+
+<p>we call <code class="highlighter-rouge">DFS(1)</code>, find <code class="highlighter-rouge"><span class="p">{</span><span class="err">2,</span><span class="w"> </span><span class="err">4</span><span class="p">}</span></code> as adjacent vertex, then we call <code>DFS<sub>1</sub>(2)</code> (notation  <code>DFS<sub>i</sub>(j)</code> means the parent call of <code class="highlighter-rouge">j</code> in stack is <code class="highlighter-rouge">i</code>). Next call  <code>DFS<sub>2</sub>(3)</code> finding <code class="highlighter-rouge"><span class="p">{</span><span class="err">3</span><span class="p">}</span></code> as adjacent vertex of <code class="highlighter-rouge">2</code> and finish <code>DFS<sub>1</sub>(2)</code>. Finally  call  <code>DFS<sub>1</sub>(4)</code> and finish <code class="highlighter-rouge">DFS(1)</code>.</p>
+
+<h2 id="stack-frontier">Stack Frontier</h2>
+
+<p>If we have a stack named <code class="highlighter-rouge">frontier</code>, we push <code class="highlighter-rouge">1</code> at first, then pop to visit <code class="highlighter-rouge">1</code>. Push <code class="highlighter-rouge">[4, 2]</code>, and pop <code class="highlighter-rouge">2</code>. Next push <code class="highlighter-rouge">[3]</code> as adjacent vertex of <code class="highlighter-rouge">2</code> (the stack is <code class="highlighter-rouge">( 4, 3 &gt;</code> now). Finally pop <code class="highlighter-rouge">3</code> and <code class="highlighter-rouge">4</code> to finish search.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Row Index</th>
+      <th style="text-align: center">Current <code class="highlighter-rouge">v</code></th>
+      <th style="text-align: left">Action</th>
+      <th style="text-align: left"><code class="highlighter-rouge">frontier</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">initial call</td>
+      <td style="text-align: left">( 1 &gt;</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">find <code class="highlighter-rouge"><span class="p">{</span><span class="err">2,</span><span class="w"> </span><span class="err">4</span><span class="p">}</span></code> as adjacent vertex of <code class="highlighter-rouge">1</code></td>
+      <td style="text-align: left">( 4, 2 &gt;</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">2</td>
+      <td style="text-align: left">pop <code class="highlighter-rouge">2</code> to visit</td>
+      <td style="text-align: left">( 4 &gt;</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3</td>
+      <td style="text-align: center">2</td>
+      <td style="text-align: left">find <code class="highlighter-rouge"><span class="p">{</span><span class="err">3</span><span class="p">}</span></code> of <code class="highlighter-rouge">2</code></td>
+      <td style="text-align: left">( 4, 3 &gt;</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">3</td>
+      <td style="text-align: left">pop <code class="highlighter-rouge">3</code> to visit</td>
+      <td style="text-align: left">( 4 &gt;</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">5</td>
+      <td style="text-align: center">4</td>
+      <td style="text-align: left">pop <code class="highlighter-rouge">4</code> to visit</td>
+      <td style="text-align: left">empty</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>(notation <code class="highlighter-rouge">( &gt;</code> specifies we push and pop from right side)</p>
+
+<h2 id="attentions">Attentions</h2>
+
+<p>There are two things we need to pay attentions:</p>
+
+<ul>
+  <li><strong>Visiting Order</strong>. At row index 1, we push <code class="highlighter-rouge">4</code> at first, in order to visit graph as same order of recursive call. However this is not very important, I just want to sync the order of iterative way and the order of recursive way. Pushing <code class="highlighter-rouge">4</code> at first or pushing <code class="highlighter-rouge">2</code> at first will get correct topological order or SCC, which we are going to find out at following two parts.</li>
+  <li>
+    <p><strong>Vertex Status</strong>. If we have only two paths in graph like: <code class="highlighter-rouge">1 → 2 → 3</code> and <code class="highlighter-rouge">1 → 3 → 4</code>. We have stack like this:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">Row Index</th>
+          <th style="text-align: center">Current <code class="highlighter-rouge">v</code></th>
+          <th style="text-align: left">Action</th>
+          <th style="text-align: left"><code class="highlighter-rouge">frontier</code></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">0</td>
+          <td style="text-align: center">1</td>
+          <td style="text-align: left">initial call</td>
+          <td style="text-align: left">( 1 &gt;</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">1</td>
+          <td style="text-align: center">1</td>
+          <td style="text-align: left">find <code class="highlighter-rouge"><span class="p">{</span><span class="err">2,</span><span class="w"> </span><span class="err">3</span><span class="p">}</span></code> as adjacent vertex of <code class="highlighter-rouge">1</code></td>
+          <td style="text-align: left">( 3, 2 &gt;</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2</td>
+          <td style="text-align: center">2</td>
+          <td style="text-align: left">pop <code class="highlighter-rouge">2</code> to visit</td>
+          <td style="text-align: left">( 3 &gt;</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">3</td>
+          <td style="text-align: center">2</td>
+          <td style="text-align: left">find <code class="highlighter-rouge"><span class="p">{</span><span class="err">3</span><span class="p">}</span></code> of <code class="highlighter-rouge">2</code></td>
+          <td style="text-align: left">( 3, 3 &gt;</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>(notation <code class="highlighter-rouge">( &gt;</code> specifies we push and pop from right side)</p>
+
+    <p>We may notice at row index 3, we push duplicate <code class="highlighter-rouge">3</code> into frontier. So we need a vertex status to mark vertex as being visited or being pushed into stack (see <a href="https://github.com/scozv/algo-js/issues/8" title="Issue 8">issue #8</a>).</p>
+  </li>
+</ul>
+
+<h2 id="running-time">Running Time</h2>
+<p>Here is simplified code of iterative DFS:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// 0. initialize stack, O(1)</span>
+
+  <span class="c1">// 1. for all vertex, O(|V|)</span>
+  <span class="k">while</span> <span class="p">(</span><span class="nx">not</span> <span class="nx">frontier</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// 1.0 visit current vertex, O(1)</span>
+
+    <span class="c1">// 1.1 process all vertex out from the current</span>
+    <span class="p">(</span><span class="k">for</span> <span class="nx">x</span> <span class="k">in</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">getAdjacentVertex</span><span class="p">(</span><span class="nx">current</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">frontier</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+      <span class="c1">// process each adjacent vertex of the current one</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>In our code (comment 1.1) below, for each vertex, we process its adjacent vertex,
+which we find from outgoing edges of current vertex.
+We let the number of outgoing edges of vertex <script type="math/tex">i</script> is <script type="math/tex">e_i</script>,
+and <script type="math/tex">n=\|V\|, m=\|E\|</script> as the number of vertex and number of edges respectively, so we write the running time as following:</p>
+
+<script type="math/tex; mode=display">T = O(1) + \sum_{i=1}^{n} \left [ O(1) + e_i \right ]</script>
+
+<script type="math/tex; mode=display">= O(1) + \sum_{i=1}^{n}O(1) + \sum_{i=1}^{n}e_i</script>
+
+<p>And notice that the sum of outgoing edges of all vertex is the the number of all edges, that is <script type="math/tex">\sum_{i=1}^{n}e_i=\left \|E \right \|=m</script>, so we have:</p>
+
+<script type="math/tex; mode=display">T=O(1)+O(n)+O(m)=O(n+m)</script>
+
+<h2 id="next">Next</h2>
+
+<p>Read code in <code class="highlighter-rouge">graph.search.js</code> on <a href="https://github.com/scozv/tango" title="Tango.js">Tango.js</a>, and reference <a href="http://blog.moertel.com/posts/2013-05-11-recursive-to-iterative.html" title="Recursive to Iterative by Tom Moertel">this series of posts</a> by Tom Moertel for more details on <em>Recursive to Iterative</em>.</p>
+
+<p><a href="https://scozv.github.io/blog/algo/2013/11/23/how-to-write-iterative-tarjan-scc-algorithm-part-one" title="Tarjan, Part II">Next</a> part of this series, I am going to describe some ideas on iterative topological order algorithm which can be applied on Kosaraju SCC algorithm.</p>
+
+<p><br /></p>
+
+
+</div>
+
+<div class="related">
+  
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <h4>Similar Posts</h4>
+                <ul class="related-posts">
+                
+                <li>
+                    <a href="https://scozv.github.io/blog/algo/2017/03/23/use-minimum-matched-string-and-extended-regex-for-wildcard-matching">
+                      Design Test Cases Before Write Implementation If the Former Is Easier
+                      <small>Mar 23, 2017</small>
+                    </a>
+                </li>
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+
+    </ul>
+
+
+</div>
+
+
+
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = 'https://scozv.github.io/blog/algo/2013/11/10/how-to-write-iterative-tarjan-scc-algorithm-part-zero';
+      this.page.identifier = '/algo/2013/11/10/how-to-write-iterative-tarjan-scc-algorithm-part-zero';
+      this.page.title = 'How to Write Iterative Tarjan SCC Algorithm, Part I';
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://scozv.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+    
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    <script src="https://scozv.github.io/blog/assets/katex/katex.min.js" type="text/javascript"></script>
+    <script async src="https://scozv.github.io/blog/assets/katex/render.js" type="text/javascript"></script>
+    
+
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter43762899 = new Ya.Metrika({id:43762899, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/43762899" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+
+
+
+  </body>
+</html>
+
