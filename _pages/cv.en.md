@@ -11,15 +11,15 @@ weight: 200
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}
 
-## [简体中文](https://scozv.github.io/blog/zh/cv/)
+<!-- ## [简体中文](https://scozv.github.io/blog/zh/cv/) -->
 
 ## TL;DR
 
 <table>
   <tbody>
     <tr>
-      <td style="text-align: left">Latest updated</td>
-      <td style="text-align: left">September, 2017</td>
+      <td style="text-align: left">Updated on</td>
+      <td style="text-align: left">January, 2019</td>
     </tr>
     <tr>
       <td style="text-align: left">Links</td>
@@ -39,22 +39,22 @@ weight: 200
         <div class="tech-list">
           <div class="tag">SJTU</div>
           <div class="tag">MSE</div>
-          <div class="tag">8 years</div>
+          <div class="tag">9 years</div>
           <div class="tag">Tech Lead</div>
         </div>
       </td>
     </tr>
     <tr>
-      <td style="text-align: left">Tech</td>
+      <td style="text-align: left">Skills</td>
       <td style="text-align: left">
         <div class="tech-list">
           <div class="tag">Scala</div>
+          <div class="tag">Spark</div>
+          <div class="tag">RESTful</div>
           <div class="tag">Akka</div>       
           <div class="tag">React.js</div>
-          <div class="tag">Redux</div>
-          <div class="tag">Node.js</div>
-          <div class="tag">RESTful</div>
-          <div class="tag">Play!</div>
+          <div class="tag">Redis</div>
+          <div class="tag">Play</div>
           <div class="tag">ECMAScript 6</div>
           <div class="tag">Oracle</div>
           <div class="tag">Golang</div>
@@ -62,10 +62,12 @@ weight: 200
           <div class="tag">LaTeX</div>
           <div class="tag">Linux</div>
           <div class="tag">MongoDB</div>
-          <div class="tag">Azure</div>
+          <div class="tag">StatsD</div>
           <div class="tag">Docker</div>
+          <div class="tag">OpenShift</div>
           <div class="tag">AWS</div>
-          <div class="tag">JIRA</div>
+          <div class="tag">Google API</div>
+          <div class="tag">Agile</div>
         </div>
       </td>
     </tr>
@@ -74,176 +76,147 @@ weight: 200
 
 ## Education
 
-* **Shanghai Jiaotong University** _2013 ~ Now_
+* **Shanghai Jiaotong University** _2013 ~ 2017_
 
-  Master of Software Engineering (Financial Information System, Part time), Master Degree
+Part-time Master of Software Engineering. Focusing on Digitalization of Finance and Data Processing with FinTech.
+
 * **Ningbo University** _2005 ~ 2009_
 
-  Information System and Information Management, Bachelor Degree
+Information System and Information Management, Bachelor Degree
 
-## Working Experience (`Scala` Related)
+## Working Experiences (`Scala` Related)
 
-### G Product Core Data Analysis System
+### P Investment Advisory System
+
+Company | Standard Chartered Singapore
+:-----|:-----
+Product | Investment Advisory System with Scala, Akka HTTP, Cats, Kotlin and Docker, Ansible with OpenShift
+Time | Feb, 2018 ~ Present
+
+* Working with different team to design the solution of multiple raw data integration.
+* Consuming the essential Portfolio data source for Advisory product with Scala, Redis and Kafka, providing RESTful API with high availability for 3 countries or regions.
+* Built realtime data monitor with Sysdig, OpenShift. Experiment for Distributed Performance testing with Gatling and Spark.
+
+### G Product Core Data Analysis System (Service Owner since June, 2017)
 
 Company | LeadIQ
 :-----|:-----
-Project | Data Analysis System Based on Play 2.6 and Akka 2.5
-Time | 2017.06 ~ Now
+Product | Product Core Data Analysis System with Scala, Play 2.6, Akka, Kafka and Spark and Google API
+Time | Sept, 2016 ~ Dec, 2017
 
-Achievement:
-* 80% committed code on August 2017.
-* Data I/O with Mongo, Redis and Postgres based on Dependencies Injection.
-* Isolated threads for 3rd API server and data query with separating `dispatcher`.
-* Log message `TrackingId` with `CUID` and integrated with Graylog.
-* Design and implementation the activities report based on Graph, improve the query time complexity from  $$O(n\cdot m)$$ down to $$O(\log n)$$.
-* Deployment with AWS EC and LB.
-* Throttle implementation for 3rd API request with Akka Stream.
-* Lite admin page with `dva`, `antd` and `React.js`.
+* Contributed 81% of the backend Scala code.
+* Designed part of architecture for the core backend RESTful API with Scala, Play, Akka, Kafka.
+* Designed data processing solution and integrated Kafka and Spark to process core data.
+* Integrated with the Google API, including the Google OAuth 2.0, Gmail API, Drive API, Cloud Pub/Sub, using Akka Actor, Akka Stream and Kafka.
+* Integrated with Hostedgraphite for production metrics, Graylog for log system, Ansible for AWS EC and LB (DevOps).
+* Implementation of Akka Work Pulling Pattern and customized dispatcher.
 
-### L Product Core Data Category System
+###  S O2O Online Shopping Platform (Part-time)
 
-Company | LeadIQ
-:-------|:---------
-Project | Data Category System on Play 2.3 and Akka 2.3
-Time | Sept, 2016 ~ Now
-
-Achievement:
-
-* 800+ commits from January to August 2017, 300 commits more than next developer.
-* Implementation of 3 business modules.
-* Integration with 2 3rd party services.
-* Implementation of Akka Work Pulling Pattern and customized `dispatcher`.
-* Implementation of TrackingId.
-* Post with title [_Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6_](https://scozv.github.io/blog/pattern/2017/07/18/injection-of-tracking-id-to-logback-message-with-customer-dispatcher-and-mapped-diagnostic-contexts-in-scala).
-
-###  S O2O Online Selling Platform (as the Tech Leader)
-
-Company | Project in SJTU
+Company | SHANLIN Network
 :------|:----------
-Project | O2O Online Fruits Selling Based on WeChat Eco-system
+Role | Co-founder & Tech Leader
+Project | O2O Online shopping platform in WeChat with Scala and React.js.
 Time | Aug, 2015 ~ Apr, 2016
-Role | Tech Leader, Architect and Deployment Manager
 
-Achievement:
-
-* Isolation between Frontend and Backend.
-* `Async` I/O with `MongoDB` based on `ReactiveMongo`.
-* Mocking the HTTP Request with `FakeApplication`.
-* A global business validation design with Monad principle.
-* Multiple payment channel integration with Ping++ SDK.
-* Token authentication.
-* Automatic test and deployment scripts.
-* `React.js` webpage.
-* 3 posts on this project:
-  - [_Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo_](https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala)
-  - [_A Loose Coupling Architecture of the Web Solution with Continuous Integration_](https://scozv.github.io/blog/pattern/2016/05/05/a-low-coupling-architecture-of-the-web-solution-with-continuous-integration)
-  - [_A Linear Branch Management With Git_](https://scozv.github.io/blog/pattern/2016/05/18/a-linear-branch-management-with-git)
-
+* Initialized the project with the Business and Product Design Manager.
+* Built the part-time development team for the backend and frontend.
+* Designed entire loose coupling architecture and deployment pipeline with JIRA, Bitbucket CI and Azure.
+* Contributed 63% of the backend Scala code.
+* Integrated with WeChat API, Ping++ API for user management and payment.
+* Delivered beta version on Dec 31st, 2015 with payment service integrated.
 
 ## Working Experience (`Golang`, `.NET` Related)
 
-### D DFS RESTful API for Production Line (as a Sr. Product Development Engineer)
+### D Distributed File System API (Sr. Software Engineer in Infrastructure Architect Team)
 
 Company | Hujiang Education & Technology
 :-------|:-----------
-Project | DFS RESTful API for Production Line based on Golang
-Time | Sept, 2016 ~ Oct, 2016
-Role | `Golang` development
-Notes | Provide the RESTful API for production line using Golang and Gin Web Framework. Meanwhile lead 6 members delivery team, build the continuous delivery process cross over the entire development group, communicate with cross departments to get resources and support.
+Project | Distributed file system server with `Golang` and Qiniu Intelligent Multimedia API
+Time | Sept, 2016 ~ Dec, 2016
+Role | `Golang` development and the owner of Delivery Team
+
+* Managed the delivery team to building the continuous delivery procedure for entire development group.
+* Rewarded a high qualified performance rating at the end of 4 months.
+* Delivered 3 new RESTful API. Fixed 1 critical runtime issue. 19 DONE of 27 Gitlab issues.
+* 5 training sessions of Algorithm 101, including the Big O, Fundamental Data Structures, Tail Recursion and Sorting.
 
 
-### Q Treasury Solution Project (as a Sr. Product Development Engineer)
+### Q Treasury Solution Project (Sr. Product Development Engineer)
 
 Company | SunGard
 :-------|:------------
 Time | June, 2013 ~ Aug, 2016
-Summary | Be responsible to implementation of `Fees` calculation API. Mainly using `ASP .NET MVC` and the AOP conception for data validation.
+Summary | Worked in QUANTUM V6 project, a web solution for Treasury Software & Management System. In these 3 years, collaborated with 10+ members team on Equity, Fees and Accounting modules. Mainly using ASP .NET MVC, Oracle. Running in Agile team and building the daily pipeline for UI regression test.
 
-### Y Vehicle Accident Claim Center Project (as a Developer)
+### Y Vehicle Accident Claim Center Project
 
 Company | Cognizant
 :-------|:------------
 Time | Oct, 2011 ~ June, 2013
 Summary | Be responsible to call center implementation, and the workflow implementation of orders.
 
-### K Hospital Information System (as a Developer)
+### K Hospital Information System
 
-Company| Ningbo KingT Software Company
+Company| Ningbo KingT Software
 :-------|:------------
 Time | April, 2010 ~ Oct, 2011
 Summary | Be involved into the deployment and the `PL/SQL` reporting implementation.
 
-### N HR Resume Management System (as an Intern Developer)
+### N HR Resume Management System (Intern)
 
 Company | Nordic Industrial Park (Ningbo) Co., Ltd.
 :-------|:------------
 Time | Sept, 2009 ~ April, 2010
-Summary | Delivery a Resume information system to collection the resumes and candidates information.
+Summary | Delivery a Resume information system to collect the resumes and candidates information.
 
 
 ## Candidate Overview
 
-### Working Experiences in Last Two Years
+### Three Phases of 9 Years on Software Engineering
 
-I grew fast in last two years, I delivered
-a small online shopping project with 6 members team
-during 2015 to 2016 when I was studying in SJTU
-for Master of Software Engineering.
+I consider 9 years of my software engineering experiences
+as three phases below.
 
-As the Tech Lead, I improved a lot from the stage that
-only gross requirement was available to the stage that
-all features has been delivered, calling this as a _Zero to One_.
+The first phase was from 2009 when I just graduated from university to 2014. I worked
+in Healthcare, Insurance project. I learnt querying the information
+form the raw data, and also learnt the skill of
+the data query optimization.
 
-In recent 1 year, I moved to Singapore, kept learning and writing on React, Scala, and most important, delivered the solutions.
+The second phase was from 2014 when I was enrolled into the SJTU to 2016.
+I worked in a Corporate Liquidation System, the CI platform,
+and I passed the CFA Level I exam.
+I realized the difference between being a team developer
+and being a Team Lead. I delivered a online shopping system
+with 6 members part-time team, improved my decoupling and architecture ability.
+Meanwhile, I started to implement fundamental algorithm with JavaScript
+(see project [tango](https://scozv.github.io/tango/en/)), including linear, sorting
+and basic graph algorithm.
 
-I led 3 small teams in past two years, I learn the collaboration,
-the communication, and how to choose the team member,
-how to get support from other team.
+The third phase was from September 2016 when I joined the
+Infrastructure Architect Team in Hujiang to January 2017
+when I moved to Singapore until now. I understand that
+a programming language is the expression of requirement.
+Writing the program with high quality of source code is just one step
+of Software Engineering. A lot of efforts should be also applied on
+deployment, monitoring, data integration, log system, health check,
+and metrics, also the architecture design as well, such
+as concurrent, reliability, throughput.
+A project owner needs to understand
+and plan the roadmap, resources (internal or external) of project.
 
-I read and I learn. I already passed the Level I exam of CFA.
-I have submitted the Master Degree graduation paper on June, which
-has addressed the Loose Coupling architecture and the application
-in Financial Information System.
-
-
-### Three Stages for Last 8 Years of Software Engineering
-
-I consider my last 8 years of software engineering experiences
-as three stages.
-
-The first stage is from 2009 when I graduated to 2014, I worked
-in Healthcare, Insurance project. I learnt the information is
-much more the raw data, the data query optimization. I read a lot
-from MSDN. However I was working as a team member in that period.
-
-
-The second stage is from 2014 when I enrolled the SJTU with
-full score on  entrance exam of specialized course to 2016.
-I worked in a complicated Financial Information System, the CI platform, and I passed the CFA Level I exam.
-I realized the difference between being the team developer
-and being Team Lead. Then I delivered a online shopping system
-with 6 team member, improved my architect ability. However, I had
-limited conception on engineering practice.
-
-
-The third stage is from September 2016 when I joined the
-Fundamental Architect Group of Hujiang to January 2017
-when I moved to working in Singapore and to now. I understand
-the programming language is the expression of requirement.
-No much more effect needed for comparing the programming languages,
-since besides of different languages, instead, many software engineering topics are mandatory, deployment, monitor, log system, Health Check,
-and metrics. Also a lot of conception on architect design, such
-as concurrent, reliablity, throughput. I practice not only the delivery of code, but also the engineering ability.
-
-I make the requirement happen, and I ensure the system keeping running.
+I try to delivery the solution as scheduled,
+and ensure the system keeping running. Reading
+the log history of the project I own every morning
+is a part of daily work if it's possible, and
+building the alert for realtime monitoring is also
+a part of my task.
 
 ### Next Plan
 
-I have great passion on what I am doing, I believe that team work is not
-full of individual of elite, it is collaboration and delivery on time.
+I am pushing myself to be an Architect and Leading role in Software Engineering now,
+since I've already prepared a lot for this in recent 4 ~ 5 years.
 
-I will stay on Team Lead path, that picking the appropriate tools
-for the final solution, working with team for the last delivery.
 
 
 <style>
