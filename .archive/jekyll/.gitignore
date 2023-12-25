@@ -1,0 +1,26 @@
+_site/*
+_theme_packages/*
+
+Thumbs.db
+.DS_Store
+
+!.gitkeep
+
+.rbenv-version
+.rvmrc
+
+*.lock
+*.zip
+*.tar.gz
+
+# meld
+*.md.orig
+*_BASE_*
+*_BACKUP_*
+*_LOCAL_*
+*_REMOTE_*
+.rake_tasks~
+
+
+db.json
+node_modules
