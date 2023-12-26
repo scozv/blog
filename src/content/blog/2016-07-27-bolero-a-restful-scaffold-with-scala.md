@@ -1,14 +1,17 @@
 ---
-layout: post
 title: "Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo"
+postSlug: bolero-p1-simple-restful-scaffold-with-play-reactivemongo
+pubDatetime: 2016-07-28 22:19:31+08:00
 description: ""
 category: "guide"
-tags: ["scala","scaffold","project","architecture","restful"]
+tags: ["scala", "scaffold", "project", "architecture", "restful"]
 lang: "en"
 ---
+
 {% include JB/setup %}
 
 # Abstract
+
 {:.no_toc}
 
 > Bolero is a `RESTful` Scaffold with `Scala`, `Play!` and `ReactiveMongo`.
@@ -16,21 +19,21 @@ lang: "en"
 > `Play!` handles the HTTP Request and Response, while the `ReactiveMongo`
 > reads and write with `MongoDB`. This article will introduce a few ideas in Bolero, including:
 >
-> * `Model` naming and Jsonfying,
-> * `RESTful API` design,
-> * `CORS` configuration,
-> * Token based authentication,
-> * `EitherOrError`, a Monad class for global rules,
-> * Webhook handling,
-> * `FakeApplication` for HTTP Request mock,
-> * Deploy with `sbt-native`.
+> - `Model` naming and Jsonfying,
+> - `RESTful API` design,
+> - `CORS` configuration,
+> - Token based authentication,
+> - `EitherOrError`, a Monad class for global rules,
+> - Webhook handling,
+> - `FakeApplication` for HTTP Request mock,
+> - Deploy with `sbt-native`.
 >
 > You may find the source code of `Bolero` on [scozv/bolero](https://github.com/scozv/bolero).
 
 <!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+- Will be replaced with the ToC, excluding the "Contents" header
+  {:toc}
 
 # Principles of `Bolero`
 
@@ -44,9 +47,9 @@ Let's look at the principles of `Bolero`.
 Loose Coupling is a very important idea of `Bolero`, I develop and deploy the
 View (web page) and `RESTful` Server individually:
 
-* `Bolero` only provides the `RESTful` Server, the view engine of `Play !` is
+- `Bolero` only provides the `RESTful` Server, the view engine of `Play !` is
   not used in `Bolero`. I am planning to replace `Play!` with `Spary.io`,
-* As the `RESTful` Server, `Bolero` ensures that all data returned is `JSON` format.
+- As the `RESTful` Server, `Bolero` ensures that all data returned is `JSON` format.
 
 We can apply `Bolero` for multiple `RESTful` Server, however, `Bolero` is NOT
 a Microservices Framework. Currently, the `Scala` version of `Lagom` Framework
@@ -65,15 +68,15 @@ Another path is from `MongoDB` to `models`, and then to `JSON` in web page.
 
 So we need to build the model in 3 places:
 
-* `JSON` model in web page, `TypeScript` is recommanded for `JSON` modeling,
-* `Scala` model in `RESTful` Server, `trait` or `case`,
-* `JSON` model in `MongoDB`.
+- `JSON` model in web page, `TypeScript` is recommanded for `JSON` modeling,
+- `Scala` model in `RESTful` Server, `trait` or `case`,
+- `JSON` model in `MongoDB`.
 
 In order to keep consistency in 3 places, the naming convention is:
 
-* `_id` is used for all primary fields,
-* `NameOfModel` is camel-casing, with initial letter Uppercase,
-* `propertyOfModel` is camel-casing, with initial letter lowercase.
+- `_id` is used for all primary fields,
+- `NameOfModel` is camel-casing, with initial letter Uppercase,
+- `propertyOfModel` is camel-casing, with initial letter lowercase.
 
 > Attentions:
 >
@@ -84,13 +87,13 @@ In order to keep consistency in 3 places, the naming convention is:
 `Play!` provides `Reads` and `Writes` [^play_json] for
 `JSON` serialization and deserialization:
 
-* It `Writes` code model to `JSON`, while,
-* `Reads` data as strong-typed model from `JSON`.
+- It `Writes` code model to `JSON`, while,
+- `Reads` data as strong-typed model from `JSON`.
 
 Also, `Play!` contains `Formats` for `JSON` automated mapping [^play_json_auto].
 
 {% highlight scala %}
-import play.api.libs.json._
+import play.api.libs.json.\_
 
 implicit val autoReads = Json.reads[T]
 implicit val autoWrites = Json.writes[T]
@@ -107,12 +110,13 @@ implicit val autoFormat = Json.format[T]
 >
 > The reason of NOT using `Formats[T]` is:
 >
-> * When any changes happen in any places, we have to update the code of `Reads` and `Writes`,
+> - When any changes happen in any places, we have to update the code of `Reads` and `Writes`,
 >   otherwise, an error will be thrown:
->   
+>
 >        play.api.libs.json.JsResultException: "obj.field_name":{"msg":["error.path.missing"]
-> * `JSON` formatting will be more flexible, such as `Writing` empty when `Option[T]` is `None`,
-> * We can use different naming conventions in different places.
+>
+> - `JSON` formatting will be more flexible, such as `Writing` empty when `Option[T]` is `None`,
+> - We can use different naming conventions in different places.
 
 Polymorphism is the core idea of OOP, when using the `Reads` and `Writes`,
 we may encounter the compile error saying:
@@ -123,7 +127,7 @@ ambiguous reference to overloaded definition
 
 That means code has the conflict overrides,
 if you have the same issue,
-please read the source code of [`Bolero`]((https://github.com/scozv/bolero)),
+please read the source code of [`Bolero`](<(https://github.com/scozv/bolero)>),
 or drop me a message.
 
 ## Tips on `RESTful API` Design
@@ -135,11 +139,11 @@ will NOT provide the View page.
 
 Generally, factors below should be considered during the `RESTful API` design:
 
-* HTTP Method, such as `GET`, `POST`, `PUT`, etc [^rest_http_method],
-* `URI`, like `/user/:id/profile`, parameters can be used for sorting, pagination or filtering,
-* `payload` data that is usually used in `POST` or `PUT`, it will be transferred to `RESTful` Server from Client side,
-* HTTP Header, metadata of HTTP Request, we can add authentication token in Header,
-* HTTP Response data, the returning value of `RESTful API`.
+- HTTP Method, such as `GET`, `POST`, `PUT`, etc [^rest_http_method],
+- `URI`, like `/user/:id/profile`, parameters can be used for sorting, pagination or filtering,
+- `payload` data that is usually used in `POST` or `PUT`, it will be transferred to `RESTful` Server from Client side,
+- HTTP Header, metadata of HTTP Request, we can add authentication token in Header,
+- HTTP Response data, the returning value of `RESTful API`.
 
 ### Consistency in payload and Response
 
@@ -198,18 +202,18 @@ under Loose Coupling principle and multiple instance deployment.
 And, If we need the access origin control, or to monitor the
 HTTP Request, we can:
 
-* use `Filters` of `Play!` [^play_filter],
-* use `origin` of HTTP Request to restrict origin source,
-* limit the abnormal high frequency sending of HTTP Request in client side.
+- use `Filters` of `Play!` [^play_filter],
+- use `origin` of HTTP Request to restrict origin source,
+- limit the abnormal high frequency sending of HTTP Request in client side.
 
 ### URI, the Plurals, and the Order
 
 `Bolero` has the naming conventions of `URI` below:
 
-* using simple nouns in `URI`,
-* NOT using any symbol except the `/`,
-* NOT using camel-case,
-* using ONLY singular form of nouns in `URI`, even the Response data is `List`:
+- using simple nouns in `URI`,
+- NOT using any symbol except the `/`,
+- NOT using camel-case,
+- using ONLY singular form of nouns in `URI`, even the Response data is `List`:
 
       // get the list of user
       GET /user
@@ -220,10 +224,11 @@ HTTP Request, we can:
   named `user`, when we need a file, or need to access the entire folder, we will also access
   the path named `/user`. We don't use path `/user` for a single user,
   and use path `/users` for a gourp of user at same time,
-* the sorting rules of `Bolero`'s HTTP Response data:
-    * returning sorted data if HTTP Request has the specific sorting rule,
-    * returning sorted data if the biz requirement needs,
-    * otherwise, `Bolero` will not ensure the order of list.
+
+- the sorting rules of `Bolero`'s HTTP Response data:
+  - returning sorted data if HTTP Request has the specific sorting rule,
+  - returning sorted data if the biz requirement needs,
+  - otherwise, `Bolero` will not ensure the order of list.
 
 # Details in Codes
 
@@ -235,24 +240,24 @@ The brief structure of `Bolero` code is:
 {% highlight sh %}
 .
 ├── app
-|   ├── base                // utils function
-|   ├── biz                 // business implement, ONLY access MongoDB here
-|   ├── contollers          // controll of MVC
-|   └── models              
-|       ├── interop         // models used for interact with 3rd party API
-|       └── model.scala     // modeling data in Scala
+| ├── base // utils function
+| ├── biz // business implement, ONLY access MongoDB here
+| ├── contollers // controll of MVC
+| └── models  
+| ├── interop // models used for interact with 3rd party API
+| └── model.scala // modeling data in Scala
 |
-├── conf                    // Play! configuration
-|   ├── application.conf
-|   ├── play.plugins
-|   ├── release.conf
-|   └── routes
+├── conf // Play! configuration
+| ├── application.conf
+| ├── play.plugins
+| ├── release.conf
+| └── routes
 |
-├── project                  // project configuration
-|   ├── build.properties
-|   └── plugin.sbt
+├── project // project configuration
+| ├── build.properties
+| └── plugin.sbt
 |
-├── test                     // test case
+├── test // test case
 |
 └── build.sbt
 {% endhighlight %}
@@ -267,8 +272,8 @@ In `Scala`, `trait` means an ability,
 Hierarchical model(s) is (are) conntected with each other.
 We can use `union-find` to maintain the relationship:
 
-* the `rootId` of root object is its own `_id`,
-* for any two instances, if they have the same `rootId`, they are connected.
+- the `rootId` of root object is its own `_id`,
+- for any two instances, if they have the same `rootId`, they are connected.
 
 ### `CanBeJsonfied`, reading and writing `JSON`
 
@@ -287,17 +292,17 @@ Naming as `Mask`, is inspired from Oracle Data Masking [^oracle_mask].
 
 Before creating an `Order`, we need validate a serial of rules on this `Order`:
 
-* does the user have the privilege of creating order,
-* is there enough inventory for this order,
-* is price valid,
-* is the coupon of order valid,
-* etc.
+- does the user have the privilege of creating order,
+- is there enough inventory for this order,
+- is price valid,
+- is the coupon of order valid,
+- etc.
 
 `Bolero` provides a Monad Pattern named `OrderOrError`,
 it accepts an `OrderOrError`, and will
 
-* return `Order`, if previous order valid, otherwise,
-* return `Error`.
+- return `Order`, if previous order valid, otherwise,
+- return `Error`.
 
 Learning from the `Try` of `Scala` [^scala_try] , I designed
 `OrderOrError` as below:
@@ -307,20 +312,21 @@ Learning from the `Try` of `Scala` [^scala_try] , I designed
 type OrderOrError = Either[Order, Error]
 
 def genericValidation(order: Order, db: DB): Future[OrderOrError] = {
-  ???
-  /*
-  * we connect DB and validate the order,
-  * so a Future[T] will be returned
-  * */
-}
+???
+/\*
+
+- we connect DB and validate the order,
+- so a Future[T] will be returned
+- \*/
+  }
 
 def genericRule
 (order: Future[OrderOrError], db: => DB)
 (implicit ec: ExecutionContext): Future[OrderOrError] =
-  order.flatMap {
-    case Right(e) => Future.successful(Right(e))
-    case Left(o) => genericValidation(o, db)
-  }
+order.flatMap {
+case Right(e) => Future.successful(Right(e))
+case Left(o) => genericValidation(o, db)
+}
 {% endhighlight %}
 
 > Attention:
@@ -331,34 +337,33 @@ def genericRule
 >       ModelOrError[A].map(A => B): ModelOrError[B]
 >       ModelOrError[A].flatMap(A => ModelOrError[B]): ModelOrError[B]
 
-
 ## `CanCrossOrigin`, handling the `OPTION` Request
 
 `OPTION` Request is used for `POST` or `PUT` of CORS, we need to:
 
-* define the `OPTION` router, and,
-* return `HTTP 200` after accepting the `OPTION` Request.
+- define the `OPTION` router, and,
+- return `HTTP 200` after accepting the `OPTION` Request.
 
 {% highlight scala %}
 // routes
-// OPTIONS       /*path        controllers.CORSController.preFlight(path)
+// OPTIONS /\*path controllers.CORSController.preFlight(path)
 // controllers
 class CORSController
-  extends Controller
-  with CanCrossOrigin {
-  def preFlight(path: String) = Action { request =>
-    corsOPTION(path)
-  }
+extends Controller
+with CanCrossOrigin {
+def preFlight(path: String) = Action { request =>
+corsOPTION(path)
+}
 }
 
 // CanCrossOrigin
 trait CanCrossOrigin {
-  self: Controller =>
+self: Controller =>
 
-  def corsOPTION(from: String = "..."): Result = {
-    ???
-    // add Access-Control-Allow-Origin to header
-  }
+def corsOPTION(from: String = "..."): Result = {
+???
+// add Access-Control-Allow-Origin to header
+}
 }
 {% endhighlight %}
 
@@ -375,20 +380,20 @@ Currently, methods below are provided:
 
 {% highlight scala %}
 trait CanConnectDB2[T] {
-  // Lists all T
-  def list(db: DB): Future[Seq[T]] = ???
-  // Quereis one T with specific _id
-  def one(db: DB, id: String): Future[Option[T]] = ???
-  // Gets the value of specific field of one T
-  def field[B](db: DB, id: String, fieldName: String): Future[Option[B]] = ???
-  // Lists the specific field values
-  def sequence(db: DB, selector: JsObject, fieldName: String): Future[Seq[B]] = ???
-  // Inserts one T
-  def insert(db: DB, document: T): Future[WriteResult] = ???
-  // Updates T(s) when selector holds
-  def update(db: DB, selector: JsObject, update: T): Future[UpdateWriteResult] = ???
-  // Edits one T with specific _id
-  def edit(db: DB, id: String, update: T):Future[UpdateWriteResult] = ???
+// Lists all T
+def list(db: DB): Future[Seq[T]] = ???
+// Quereis one T with specific \_id
+def one(db: DB, id: String): Future[Option[T]] = ???
+// Gets the value of specific field of one T
+def field[B](db: DB, id: String, fieldName: String): Future[Option[B]] = ???
+// Lists the specific field values
+def sequence(db: DB, selector: JsObject, fieldName: String): Future[Seq[B]] = ???
+// Inserts one T
+def insert(db: DB, document: T): Future[WriteResult] = ???
+// Updates T(s) when selector holds
+def update(db: DB, selector: JsObject, update: T): Future[UpdateWriteResult] = ???
+// Edits one T with specific \_id
+def edit(db: DB, id: String, update: T):Future[UpdateWriteResult] = ???
 }
 {% endhighlight %}
 
@@ -428,11 +433,11 @@ is located in [`test`](https://github.com/scozv/bolero/tree/master/test) folder.
 {% highlight sh %}
 .
 ├── test
-|   |                               // still use previous release file,
-|   ├── WithApplication.scala       //   instead of WithApplication from Play! 2.4
-|   ├── CanConnectDB.scala          // connect to test database
-|   ├── CanFakeHTTP.scala           // fake HTTP Request
-|   └── BoleroApplicationSpec.scala // test files, can be separated
+| | // still use previous release file,
+| ├── WithApplication.scala // instead of WithApplication from Play! 2.4
+| ├── CanConnectDB.scala // connect to test database
+| ├── CanFakeHTTP.scala // fake HTTP Request
+| └── BoleroApplicationSpec.scala // test files, can be separated
 
 {% endhighlight %}
 
@@ -463,14 +468,14 @@ Supposing we have a huge project (codename: PJ), and we separate
 this project into different code repositories:
 
 {% highlight bash %}
-pj-docs                 # documentation center, using Markdown
-pj-core-restful         # this is where the Bolero use
-pj-core-web             # Web models, using TypeScript
-pj-client-web           # View, the user interface, using `pj-core-web`
-pj-client-device        # View, application
-pj-client-console       # View, core management system, still using `pj-core-web`
-pj-deploy               # deploy configuration, NOT open to developers
-pj-data                 # production data backup, NOT open to developers
+pj-docs # documentation center, using Markdown
+pj-core-restful # this is where the Bolero use
+pj-core-web # Web models, using TypeScript
+pj-client-web # View, the user interface, using `pj-core-web`
+pj-client-device # View, application
+pj-client-console # View, core management system, still using `pj-core-web`
+pj-deploy # deploy configuration, NOT open to developers
+pj-data # production data backup, NOT open to developers
 {% endhighlight %}
 
 # References

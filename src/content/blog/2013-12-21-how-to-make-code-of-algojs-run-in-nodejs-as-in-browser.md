@@ -1,20 +1,22 @@
 ---
-layout: post
 title: "How to Make Code of Tango.js Run in Node.js as in Browser"
+postSlug: compile-tangojs-in-nodejs
+pubDatetime: 2013-12-21 22:56:45+08:00
 description: ""
 category: "guide"
 tags: ["ci", "unit", "grunt"]
 lang: en
 ---
+
 {% include JB/setup %}
 
-> I have planed to run unit test by reading file as the input for algorithm like graph algorithm for a few months (see [issue #18] [1]). However, it is not easy or effective to read local file from browser, even using `FileReader` in JavaScript. An alternative way is that we can read file  using the file system of Node.js, where we write JavaScript code as in browser.
+> I have planed to run unit test by reading file as the input for algorithm like graph algorithm for a few months (see [issue #18] [1]). However, it is not easy or effective to read local file from browser, even using `FileReader` in JavaScript. An alternative way is that we can read file using the file system of Node.js, where we write JavaScript code as in browser.
 >
-> So the top proiority is __making codes run appropriately in Node.js as they run in browser__, including the codes of unit tests. I am going to tell the details of this process today:
+> So the top proiority is **making codes run appropriately in Node.js as they run in browser**, including the codes of unit tests. I am going to tell the details of this process today:
 >
-> * Making codes of algorithm work in Node.js, and
-> * Making codes of unit tests work in Node.js, and
-> * Introduce CI into my project.
+> - Making codes of algorithm work in Node.js, and
+> - Making codes of unit tests work in Node.js, and
+> - Introduce CI into my project.
 
 <!--more-->
 
@@ -22,7 +24,8 @@ lang: en
 </a>
 
 ## window and global
-In browser, we have the global variable named `window` , `Array` is `window.Array`, and `Math` is `window.Math`, etc. The __Tango.js__ also plugs object into `window`:
+
+In browser, we have the global variable named `window` , `Array` is `window.Array`, and `Math` is `window.Math`, etc. The **Tango.js** also plugs object into `window`:
 
     (function (sorting, undefined) {
         sorting.mergeSort = function () {};
@@ -39,7 +42,7 @@ More than that, in Tango.js, I extend `Array` and `Math` directly:
         array.prototype.clone = function () {};
     })(window.Array = window.Array || {})
 
-It is not a good practice that we change the object in `window` directly. But in my opinion, __the most important part in Tango.js is Algo(rithm), not js.__ So I just want to use a simple way, instead of introducing a global module named like `Algo` which we have to write like this:
+It is not a good practice that we change the object in `window` directly. But in my opinion, **the most important part in Tango.js is Algo(rithm), not js.** So I just want to use a simple way, instead of introducing a global module named like `Algo` which we have to write like this:
 
     Algo.Sorting.mergeSort();
     Algo.Array.zip();
@@ -62,6 +65,7 @@ Look, we give the `global` an alias name at first, so that we do not need to cha
 By the way, I did try to exposure module using `module.exports`, but I failed to figure out a way, in Node.js, to exposure ONLY one module named `Sorting` from three files: sorting.js, sorting.mergeSort.js, and sorting.quickSort.js as they are something like partial class.
 
 ## node-qunit
+
 After loading objects of algorithm into `global`, we are going to find out how to run previous codes of unit test in Node.js without modifying test scripts.
 
 We use the project [`node-qunit`] [4], which allow us to run unit test like this:
@@ -79,6 +83,7 @@ We use the project [`node-qunit`] [4], which allow us to run unit test like this
     >>>>> });
 
 ## Grunt
+
 Grunt, as it says, is a JavaScript task runner. If you configure your project, you will run unit test using command below which helps us use Continuous Integration:
 `$ grunt test`.
 
@@ -88,43 +93,47 @@ Here is the list of _How to_:
 
 0. configure project's `package.json` file
 
-       $ npm init
-0. install `grunt-cli`
+   $ npm init
 
-       $ npm i -g grunt-cli
-0. add grunt dependencies into project (see [official docs] [5])
-0. install `grunt`
+1. install `grunt-cli`
 
-       $ npm i grunt --save-dev
-0. add `Gruntfile.js` to resister task
+   $ npm i -g grunt-cli
 
-       module.exports = function (grunt) {
-          grunt.initConfig({task-name: {}});
-          grunt.loadNpmTasks('grunt-node-qunit');
-          grunt.registerTask('default', ['task-name']);
-       };
+2. add grunt dependencies into project (see [official docs] [5])
+3. install `grunt`
 
-0. add test script into `package.json`, which allow us to run `$ npm test`
-0. run `$ grunt` to test the configuration
-0. run `$ grunt --stack` to debug grunt task script
-0. run `$ npm test` to test `package.json` configuration
+   $ npm i grunt --save-dev
+
+4. add `Gruntfile.js` to resister task
+
+   module.exports = function (grunt) {
+   grunt.initConfig({task-name: {}});
+   grunt.loadNpmTasks('grunt-node-qunit');
+   grunt.registerTask('default', ['task-name']);
+   };
+
+5. add test script into `package.json`, which allow us to run `$ npm test`
+6. run `$ grunt` to test the configuration
+7. run `$ grunt --stack` to debug grunt task script
+8. run `$ npm test` to test `package.json` configuration
 
 <br />
 
 A little attention we should pay on is we may face an error on ubuntu says:
 
-	/usr/bin/env: node: No such file or directory
+    /usr/bin/env: node: No such file or directory
 
 See [here] [8] to fix it.
 
 ## Drone.io
+
 [![Build Status](https://drone.io/github.com/scozv/algo-js/status.png)](https://drone.io/github.com/scozv/algo-js/latest)
 
 The web [drone.io] [7] is an online CI service. There are other options of online CI.
 Some advantages of drone.io are:
 
-* CI for Github, Google Code and Bitbucket
-* CI command is hosted in drone.io, instead of a file in our project folder
+- CI for Github, Google Code and Bitbucket
+- CI command is hosted in drone.io, instead of a file in our project folder
 
 The CI command for Tango.js is:
 
@@ -133,6 +142,7 @@ The CI command for Tango.js is:
     npm test
 
 ## Next
+
 I am going to fix [issue #18] [1].
 
 <br />

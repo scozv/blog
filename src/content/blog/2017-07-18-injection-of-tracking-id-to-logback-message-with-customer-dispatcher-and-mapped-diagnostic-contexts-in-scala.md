@@ -1,14 +1,28 @@
 ---
-layout: post
 title: "Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6"
+postSlug: akka-mdc-tracking-id-in-log
+pubDatetime: 2017-07-18 04:03:15+08:00
 description: ""
 category: "pattern"
-tags: ["scala", "akka", "trackingId", "resourceId", "mdc", "play", "play2.6", "go", "golang"]
+tags:
+  [
+    "scala",
+    "akka",
+    "trackingId",
+    "resourceId",
+    "mdc",
+    "play",
+    "play2.6",
+    "go",
+    "golang",
+  ]
 lang: "en"
 ---
+
 {% include JB/setup %}
 
 # Abstract
+
 {:.no_toc}
 
 > Two approaches of adding global value to Mapped Diagnostic Contexts（MDC)
@@ -26,16 +40,16 @@ lang: "en"
 > Logging the thread name is useful for locating the reason of issue.
 > According to thread information of log messages, a solution or fix that
 >
-> * changing the configuration name `play.akka.actor` to `akka.actor`, and
-> * replacing `scala.concurrent.ExecutionContext` with injected object
+> - changing the configuration name `play.akka.actor` to `akka.actor`, and
+> - replacing `scala.concurrent.ExecutionContext` with injected object
 >
 > has been found
-and applied.
+> and applied.
 
 <!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+- Will be replaced with the ToC, excluding the "Contents" header
+  {:toc}
 
 # Introduction
 
@@ -97,24 +111,23 @@ the exact linear story can be extracted from the large log files:
 
 {% endhighlight %}
 
-
 A flow of generating and passing the `trackingId` in Play 2.6 is designed as below:
 
 0. HTTP Request accepted in backend server side,
-0. `trackingId` generated for each request in `HttpFilter` of Play,
-0. `trackingId` passed to MDC and appended to log message,
-0. `trackingId` inserted into the header of HTTP Response,
-0. frontend side received the `trackingId`.
+1. `trackingId` generated for each request in `HttpFilter` of Play,
+2. `trackingId` passed to MDC and appended to log message,
+3. `trackingId` inserted into the header of HTTP Response,
+4. frontend side received the `trackingId`.
 
 The approaches provided in Yann Simon's post are used for passing the `trackingId`
 to Mapped Diagnostic Contexts (MDC). So that we can use the Logback pattern with `%mdc{trackingId}` to write `trackingId` in log messages:
 
 {% highlight xml %}
 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-  <file>${application.home:-.}/logs/application.log</file>
-  <encoder>
-    <pattern>%date [%level] [%mdc{trackingId:--}] %message%n%xException</pattern>
-  </encoder>
+<file>${application.home:-.}/logs/application.log</file>
+<encoder>
+<pattern>%date [%level] [%mdc{trackingId:--}] %message%n%xException</pattern>
+</encoder>
 </appender>
 {% endhighlight %}
 
@@ -131,19 +144,18 @@ explained this in Stackoverflow as[^_sf_david_bud_mdc_java_go]:
 An alternative solution is holding the `trackingId` in a global context,
 such as creating a `RequestContext` basing on the `gin.Context`[^_note_where_go_code_from]:
 
-
 {% highlight go %}
 type RequestContext struct {
-  *gin.Context
+\*gin.Context
 
-  TrackingId    string
+TrackingId string
 }
 
 func newContext(c *gin.Context) *RequestContext {
-  return &RequestContext{
-    Context:    c,
-    TrackingId: GenGuid(),
-  }
+return &RequestContext{
+Context: c,
+TrackingId: GenGuid(),
+}
 }
 {% endhighlight %}
 
@@ -151,14 +163,14 @@ Also, passing the `RequestContext` to the method where the
 logger needed:
 
 {% highlight go %}
-func fooAction(c *gin.Context) {
-  var err error
+func fooAction(c \*gin.Context) {
+var err error
 
-  ctx := getRequestContext(c)
+ctx := getRequestContext(c)
 
-  // ..., err =
+// ..., err =
 
-  logger.Errorf(buildLogMessage(ctx, "Failed in fooAction: $v", err))
+logger.Errorf(buildLogMessage(ctx, "Failed in fooAction: $v", err))
 }
 {% endhighlight %}
 
@@ -172,13 +184,12 @@ can be used for appending the `trackingId` into the log message.
 With the pattern below, `trackingId` will be considered as
 a part of log message:
 
-
 {% highlight xml %}
 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-  <file>${application.home:-.}/logs/application.log</file>
-  <encoder>
-    <pattern>%date [%level] %message%n%xException</pattern>
-  </encoder>
+<file>${application.home:-.}/logs/application.log</file>
+<encoder>
+<pattern>%date [%level] %message%n%xException</pattern>
+</encoder>
 </appender>
 {% endhighlight %}
 
@@ -193,10 +204,10 @@ to keep the same format of log both in Scala and Java:
 // in Golang
 %date [%level] %message%n%xException
 
-func buildLogMessage(ctx *RequestContext, format string, parms ...interface{}) string {
-  // [trackingId] msg
-  f := fmt.Sprintf("[%s] ", ctx.TrackingId) + format
-  return fmt.Sprintf(f, parms...)
+func buildLogMessage(ctx \*RequestContext, format string, parms ...interface{}) string {
+// [trackingId] msg
+f := fmt.Sprintf("[%s] ", ctx.TrackingId) + format
+return fmt.Sprintf(f, parms...)
 }
 {% endhighlight %}
 
@@ -208,8 +219,8 @@ As mentioned in Yann Simon's post[^_blog_yanns_mdc_play]:
 
 Two steps need to be implemented for `trackingId`:
 
-* Generating the unique string for each request,
-* Passing the `trackingId` in different threads.
+- Generating the unique string for each request,
+- Passing the `trackingId` in different threads.
 
 The `HttpFilter` of Play Framework is a feature that makes
 it possible to run some code before or after the actions are
@@ -222,12 +233,12 @@ in HTTP Response when runtime error happens.
 
 {% highlight scala %}
 class TrackingFilter @Inject() (
-  implicit ec: ExecutionContext
+implicit ec: ExecutionContext
 ) extends EssentialFilter {
-  def apply(action: EssentialAction) = new EssentialAction {
-    def apply(requestHeader: RequestHeader): Accumulator[ByteString, Result] = {
-      val trackingId = UUID.randomUUID().toString
-      MDC.put("trackingId", trackingId)
+def apply(action: EssentialAction) = new EssentialAction {
+def apply(requestHeader: RequestHeader): Accumulator[ByteString, Result] = {
+val trackingId = UUID.randomUUID().toString
+MDC.put("trackingId", trackingId)
 
       action(requestHeader)
         .map { _.withHeaders("X-Tracking-Id" -> trackingId) }
@@ -236,7 +247,8 @@ class TrackingFilter @Inject() (
           result
         }
     }
-  }
+
+}
 }
 {% endhighlight %}
 
@@ -248,17 +260,16 @@ The main implementation of customized Akka Dispatcher copied as below,
 The switch of different threads happenes in `self.execute(() => {})`, where a new
 Runnable instance is created:
 
-
 {% highlight scala %}
 def execute(runnable: Runnable): Unit = self.execute(() => {
-  val oldMDCContext = MDC.getCopyOfContextMap
+val oldMDCContext = MDC.getCopyOfContextMap
 
-  setContextMap(mdcContext)
-  try {
-    runnable.run()
-  } finally {
-    setContextMap(oldMDCContext)
-  }
+setContextMap(mdcContext)
+try {
+runnable.run()
+} finally {
+setContextMap(oldMDCContext)
+}
 })
 {% endhighlight %}
 
@@ -294,12 +305,12 @@ Another solution for fixing the "Host not allowed: server-name" error is removin
 
 {% highlight scala %}
 class Filters @Inject() (
-  defaultFilters: EnabledFilters,
-  tracking: TrackingFilter
+defaultFilters: EnabledFilters,
+tracking: TrackingFilter
 ) extends DefaultHttpFilters(defaultFilters.filters.filter {
-  case f: AllowedHostsFilter => false
-  case _ => true
-} :+ tracking: _*)
+case f: AllowedHostsFilter => false
+case _ => true
+} :+ tracking: _\*)
 {% endhighlight %}
 
 A final tip for customized Dispatcher is the name of
@@ -318,14 +329,14 @@ Akka Dispather.
 [warn] [-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
 [debug] [-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector(security, profile)
 [debug] [-] c.l.p.a.v.g.ActivityApi - start the get last message
-[debug] [-] c.l.p.n.d.ReactiveMongoManager$ -  <:> Connecting reactive driver
+[debug] [-] c.l.p.n.d.ReactiveMongoManager$ - <:> Connecting reactive driver
 {% endhighlight %}
 
 Putting log in `TrackingFilter` will print some trackable log messages, but not all：
 
 {% highlight bash %}
 [info] [-] play.api.Play - Application started (Dev)
-[debug] [3734068e-f354-4de4-a9e7-25fc6ed9a1cb] c.l.TrackingFilter -  <:> trackingId generated: 3734068e-f354-4de4-a9e7-25fc6ed9a1cb
+[debug] [3734068e-f354-4de4-a9e7-25fc6ed9a1cb] c.l.TrackingFilter - <:> trackingId generated: 3734068e-f354-4de4-a9e7-25fc6ed9a1cb
 [warn] [-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
 [debug] [-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector(security, profile)
 {% endhighlight %}
@@ -334,10 +345,12 @@ Moreover, putting the log in `MDCPropagatingDispatcher`, will see：
 
 {% highlight bash %}
 [info] [-] play.api.Play - Application started (Dev)
-[debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] c.l.TrackingFilter -  <:> trackingId generated: a5a7cbab-6ee4-4dd8-b54e-64217dc7357e
+[debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] c.l.TrackingFilter - <:> trackingId generated: a5a7cbab-6ee4-4dd8-b54e-64217dc7357e
 [debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] old context: null
 [debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] new context: {trackingId=a5a7cbab-6ee4-4dd8-b54e-64217dc7357e}
-# many log skipped  ...
+
+# many log skipped ...
+
 [debug] [-] old context: null
 [debug] [-] new context: null
 [debug] [-] old context: {}
@@ -348,21 +361,23 @@ Moreover, putting the log in `MDCPropagatingDispatcher`, will see：
 
 The last log messages indicate:
 
-* The customized Akka Dispatcher works, since the log contain the message from `MDCPropagatingDispatcher`,
-* The thread keeps switching, since multiple messages of `old / new context` show up
+- The customized Akka Dispatcher works, since the log contain the message from `MDCPropagatingDispatcher`,
+- The thread keeps switching, since multiple messages of `old / new context` show up
   in the log.
 
 So the question of Tracking Id missing becomes
-__why `trackingId` is not passing in MDC of different threads__.
+**why `trackingId` is not passing in MDC of different threads**.
 In order to find out the solution, we display the thread name in each
 log message:
 
 {% highlight bash %}
+
 # Log format
+
 # <pattern>%coloredLevel [%mdc{trackingId:--}] [%thread] %logger{15} - %message%n%xException{10}</pattern>
 
 [info] [-] [scala-execution-context-global-80] play.api.Play - Application started (Dev)
-[debug] [006bc4df-0310-4793-a88d-923dfde227d9] [play-dev-mode-akka.actor.default-dispatcher-2] c.l.TrackingFilter -  <:> trackingId generated: 006bc4df-0310-4793-a88d-923dfde227d9
+[debug] [006bc4df-0310-4793-a88d-923dfde227d9] [play-dev-mode-akka.actor.default-dispatcher-2] c.l.TrackingFilter - <:> trackingId generated: 006bc4df-0310-4793-a88d-923dfde227d9
 [debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - old context: null
 [debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - new context: {trackingId=006bc4df-0310-4793-a88d-923dfde227d9}
 [warn] [-] [scala-execution-context-global-80] - ['token': 'fd'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
@@ -395,13 +410,14 @@ as the solution below:
 
 {% highlight scala %}
 class Security @Inject() (
-+  implicit ec: ExecutionContext,
+
+- implicit ec: ExecutionContext,
   membersDao: MembersDao,
   userApiToken: UserApiTokenDao,
   enforceHttpsAction: EnforceHttpsAction
-) {
+  ) {
 
--  implicit val ec = scala.concurrent.ExecutionContext.global
+* implicit val ec = scala.concurrent.ExecutionContext.global
 
 }
 {% endhighlight %}
@@ -409,10 +425,9 @@ class Security @Inject() (
 And this solution works:
 
 {% highlight bash %}
-[debug] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] -  <:> trackingId generated: f6ab38a5-1461-44c9-a5f8-ce7764025fad
+[debug] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] - <:> trackingId generated: f6ab38a5-1461-44c9-a5f8-ce7764025fad
 [warn] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] - ['token': '404'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
 {% endhighlight %}
-
 
 # Improve of Tracking Id
 
@@ -430,31 +445,22 @@ Even more, the Access Log can be configured for tracking the `4xx` HTTP Response
 
 Reporting the `trackingId` from frontend:
 
-* can track the access log of Nginx,
-* can help build the story in backend.
+- can track the access log of Nginx,
+- can help build the story in backend.
 
 No need of reading and searching word by word in large log file.
 
 # Reference
 
 [^_blog_yanns_mdc_play]: [SLF4J Mapped Diagnostic Context (MDC) With Play Framework](http://yanns.github.io/blog/2014/05/04/slf4j-mapped-diagnostic-context-mdc-with-play-framework/) by Yann Simon, 2014
-
 [^_github_rishabh9_issue1]: [`TrackingId` not printed as description in issue #1 of rishabh9/mdc-propagation-dispatcher](https://github.com/rishabh9/mdc-propagation-dispatcher/issues/1)
 [^_github_cihub_seelog_format_ref]: [Format Reference of cihub/seelog](https://github.com/cihub/seelog/wiki/Format-reference/7eb0ebc6df74a6386165d9b4687445c6b86bac97)
-
 [^_sf_david_bud_mdc_java_go]: [_"Java MDC relies on thread local storage, Go does not have"_ by David Budworth's reply on Stackoverflow](https://stackoverflow.com/a/41049394)
-
 [^_note_where_go_code_from]: The `RequestContext` originally comes from the Golang code of my colleague in Hujiang. Basing on that, I added the `TrackingId` and wrote it to log.
-
 [^_play_http_filters]: [Using Filters in Play 2.6](https://www.playframework.com/documentation/2.6.x/ScalaHttpFilters#Using-filters)
-
 [^_play_host_allowed]: [Configure Allowed Hosts](https://www.playframework.com/documentation/2.6.x/AllowedHostsFilter#Configuring-allowed-hosts)
 [^_play_di_in_24]: [Runtime Dependency Injection in Play 2.4](https://www.playframework.com/documentation/2.4.x/ScalaDependencyInjection)
-
 [^_play_di_in_26]: [Scala Controller Changes in Play 2.6](https://playframework.com/documentation/2.6.x/Migration26#scala-controller-changes)
-
 [^_play_ec_deprected]: [`play.api.libs.concurrent.Execution` is deprecated](https://playframework.com/documentation/2.6.x/Migration26#play.api.libs.concurrent.Execution-is-deprecated)
-
 [^_book_julien_foy_2014]: Julien Richard-Foy, Play Framework Essentials, Packt Publishing 2014
-
 [^_ngix_condition_log]: [Module ngx_http_log_module](http://nginx.org/en/docs/http/ngx_http_log_module.html)

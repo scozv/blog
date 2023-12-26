@@ -1,14 +1,17 @@
 ---
-layout: post
 title: "A Loose Coupling Architecture of the Web Solution with Continuous Integration"
+postSlug: simple-web-loose-coupling-design
+pubDatetime: 2016-05-06 16:03:07+08:00
 description: ""
 category: "pattern"
-tags: ["ci", "project","architecture"]
+tags: ["ci", "project", "architecture"]
 lang: en
 ---
+
 {% include JB/setup %}
 
 # Abstract
+
 {:.no_toc}
 
 > This article will discuss two core ideas for a Architecture of the Web Solution,
@@ -19,7 +22,6 @@ lang: en
 > However, I provide a drawing for indicating the Loose Coupling Architecture.
 
 <!--more-->
-
 
 The Loose Coupling Architecture can be explained as below:
 

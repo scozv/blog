@@ -1,6 +1,7 @@
 ---
-layout: post
-title: "Scala Quick Tour Part I"
+title: "Scala Quick Tour Part II"
+postSlug: scala-quick-tour-p2
+pubDatetime: 2016-08-22 16:31:17+08:00
 description: ""
 category: "guide"
 tags: ["scala"]
@@ -10,35 +11,37 @@ lang: en
 {% include JB/setup %}
 
 # Abstract
+
 {:.no_toc}
 
-> Three years ago, I learn the _Functional Programming Principles in Scala_ [^open_progfun1]
-> from Coursera.org. After that I wrote `Scala` and finished `Bolero` [^blog_bolero].
+> This is the second part of _Scala Quick Tour_,
+> in the [previous part](https://scozv.github.io/blog/guide/2016/08/21/scala-quick-tour-part-i),
+> we talked about Functional Programming Basis, Functional Type and the Type Inference.
 >
-> In the serial of _Scala Quick Tour_, I would like to give you:
+> In this article, I will give you a precise introduction of **Tail Recursion**,
+> which is a very important conception of Functional Programming.
+> After this introduction, I will explain the construction and operations of `List[T]`, using
+> Tail Recursion.
 >
-> * Part 1, Basis, Functional Type and Type Inference
-> * Part 2, Tail Recursion and `List[T]`
-> * Part 3, OOP in `Scala`
-> * Part 4, Pattern Match
-> * Part 5, Collections
-> * Part 6, Lazy Evaluation, Monad, `map` and `flatMap`
-> * Part 7, `Future[T]`, For Comprehension
-> * Part 8, Deep in `Bolero` [^github_bolero]
+> Briefly, the part II will cover:
 >
-> This article is Part I, and covers:
+> - Iteration to Recursion,
+> - Recursion vs Tail Recursion,
+> - First Glance of Type Parameterization and Pattern Match,
+> - Recursion Construction of `List[T]`,
+> - `head` and `tail`,
+> - `take` and `reverse`,
+> - `append` and `prepend`,
+> - `map` and `foreach`,
+> - `map` and `reduce`,
+> - Read the Source of `List.scala`.
 >
-> * Basis in Functional Programming,
-> * Two Evaluation Mode, Call By-Value and Call By-Name,
-> * Functional Type,
-> * Type Inference.
->
-> Currently, This article (Part I) is only written in Chinese.
+> Currently, This article (Part II) is only written in Chinese.
 
 <!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+- Will be replaced with the ToC, excluding the "Contents" header
+  {:toc}
 
 [^blog_bolero]: [Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo](https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala)
 [^github_bolero]: [Bolero, the Source Code](https://github.com/scozv/bolero)

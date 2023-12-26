@@ -1,17 +1,19 @@
 ---
-layout: post
 title: "A Linear Branch Management With Git"
+postSlug: linear-gitflow
+pubDatetime: 2016-07-04 22:10:27+08:00
 description: ""
 category: "pattern"
-tags: ["git","branch","rebase","merge","version"]
+tags: ["git", "branch", "rebase", "merge", "version"]
 lang: "en"
 ---
+
 {% include JB/setup %}
 
 # Abstract
+
 {:.no_toc}
 
->
 > This article publishes a Git branch management workflow, that is brief and linear,
 > inspired by `GitFlow` [^gitflow] and `Anti-GitFlow` [^gitflow_anti_01] [^gitflow_anti_02].
 >
@@ -26,16 +28,16 @@ lang: "en"
 
 <!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+- Will be replaced with the ToC, excluding the "Contents" header
+  {:toc}
 
 # Principles
 
-* Branches is plain, or linear,
-* An interface need to be provided,
-* Interface is simple, easy to invoke,
-* Release branch will not include the release configuration,
-* A build-in version naming rule is embedded in this workflow.
+- Branches is plain, or linear,
+- An interface need to be provided,
+- Interface is simple, easy to invoke,
+- Release branch will not include the release configuration,
+- A build-in version naming rule is embedded in this workflow.
 
 # Branches within Linear Git
 
@@ -47,7 +49,7 @@ This kind of release may be removed in practice.
                              ^
                              |
                              |
-                             |                    
+                             |
                              |
                              |                                                ^
       ^   OR abort feature   |                                                |
@@ -83,8 +85,8 @@ This kind of release may be removed in practice.
 
                           /master                                 /release/3.2.0
                                                             [will explain later]
-{% endhighlight %}
 
+{% endhighlight %}
 
 # `gitl`, An Interface for Linear GitFlow Workflow
 
@@ -135,17 +137,16 @@ gitl release { -P | -S | -B } finish { [release_number] }
 
 We name our version as `n.m.k`, where:
 
-* `n`, indicates the public release,
-* `m`, for sprint release, and
-* `k`, for bugfix release, that is only applied for previous public release.
+- `n`, indicates the public release,
+- `m`, for sprint release, and
+- `k`, for bugfix release, that is only applied for previous public release.
 
 ### Public Release
 
 After one or two mouth, we release to public.
 
-
 {% highlight raw %}
-  step 1                                  step 2
+step 1 step 2
 
     ^                                       ^
     |                                       |
@@ -174,7 +175,7 @@ After one or two mouth, we release to public.
     |                                       |
     +                                       +
 
- /master                                 /master
+/master /master
 
 {% endhighlight %}
 
@@ -183,36 +184,37 @@ After one or two mouth, we release to public.
 At each end of sprint, we release the sprint for internal demo.
 
 {% highlight raw %}
-step 1                       step 2                       step 3
+step 1 step 2 step 3
 
-  ^                            ^                            ^
-  |                            |                            | rebase back
-  |                            |             ^              | to master   ^
-  |                            |             |              | <----------+# tag n. m+1 .0
-  |                            |             |              |             |
-  | rebase to                  |             # bump         |             # bump version
-  | sprint release             |             |              |             |
-  |             ^              |  ^          |              |             |
-  | +---------> |              |  +----------+              |             |
-  |             |              |  | /release/n.m+1.0        |             |
-  |             |              |  |                         |             |
-  |             |              |  |                         |             |
-  |             |              |  |                         |             |
-  |             |              |  |                         |             |
-  |             |              |  |                         |             |
-  |             |              |  |                         |             |
-  +-------------+              +--+                         +-------------+
-  |  /release/n.m.0            | /n.m.0                     |     /release/n. m+1 .0
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  +                            +                            +
+^ ^ ^
+| | | rebase back
+| | ^ | to master ^
+| | | | <----------+# tag n. m+1 .0
+| | | | |
+| rebase to | # bump | # bump version
+| sprint release | | | |
+| ^ | ^ | | |
+| +---------> | | +----------+ | |
+| | | | /release/n.m+1.0 | |
+| | | | | |
+| | | | | |
+| | | | | |
+| | | | | |
+| | | | | |
+| | | | | |
++-------------+ +--+ +-------------+
+| /release/n.m.0 | /n.m.0 | /release/n. m+1 .0
+| | |
+| | |
+| | |
+| | |
+| | |
+| | |
+| | |
 
-/master                      /master                      /master
+-                            +                            +
+
+/master /master /master
 
 {% endhighlight %}
 
@@ -221,36 +223,37 @@ step 1                       step 2                       step 3
 Will fix some bug in specific public release.
 
 {% highlight raw %}
-step 1                       step 2                       step 3
+step 1 step 2 step 3
 
-  ^                            ^                            ^
-  |                            |                            | rebase back
-  |                            |             ^              | to master   ^
-  |                            |             |              | <----------+# tag n.0.k+1
-  | bugfix release             |             |              |             |
-  | is ONLY for                |             # bump         |             # bump version
-  | public release             |             |              |             |
-  |             ^              |  ^          |              |             |
-  | +---------> |              |  +----------+              |             |
-  |             |              |  | /release/n.0.k+1        |             |
-  |             |              |  |                         |             |
-  |             |              |  |                         |             |
-  |             |              |  # bugfix 2                |             # bugfix 2
-  |             |              |  |                         |             |
-  |             |              |  # bugfix 1                |             # bugfix 1
-  |             |              |  |                         |             |
-  +-------------+              +--+                         +-------------+
-  |  /release/n.0.k            | /n.0.k                     |     /release/n.0.k+1
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  |                            |                            |
-  +                            +                            +
+^ ^ ^
+| | | rebase back
+| | ^ | to master ^
+| | | | <----------+# tag n.0.k+1
+| bugfix release | | | |
+| is ONLY for | # bump | # bump version
+| public release | | | |
+| ^ | ^ | | |
+| +---------> | | +----------+ | |
+| | | | /release/n.0.k+1 | |
+| | | | | |
+| | | | | |
+| | | # bugfix 2 | # bugfix 2
+| | | | | |
+| | | # bugfix 1 | # bugfix 1
+| | | | | |
++-------------+ +--+ +-------------+
+| /release/n.0.k | /n.0.k | /release/n.0.k+1
+| | |
+| | |
+| | |
+| | |
+| | |
+| | |
+| | |
 
-/master                      /master                      /master
+-                            +                            +
+
+/master /master /master
 
 {% endhighlight %}
 
@@ -260,7 +263,9 @@ step 1                       step 2                       step 3
 
 {% highlight bash %}
 git checkout master
+
 # coding
+
 git commit -avm 'JIRA-404 regular development'
 git push
 {% endhighlight %}
@@ -271,25 +276,36 @@ git push
 git checkout master
 git branch feature/JIRA-404
 git checkout feature/JIRA-404
+
 # coding
+
 git commit -avm 'JIRA-404 feature development'
 git push
+
 # git push --set-upstream origin feature/JIRA-404
+
 {% endhighlight %}
 
 如果放弃feature：
 
 {% highlight bash %}
+
 # 各个`fork-repo`就该分支`PR`到`center-repo`
+
 # `center-repo`合并各个`PR`
+
 # `center-repo/feature/JIRA-404`设置为只读，或者不再接受`PR` （可选）
+
 {% endhighlight %}
 
 如果接受feature：
 
 {% highlight bash %}
+
 # 各个`fork-repo`就该分支`PR`到`center-repo`
+
 # `center-repo`合并各个`PR`
+
 git checkout master
 git merge -m 'JIRA-404 accept feature' feature/JIRA-404
 git tag -a feature/JIRA-404 -m 'JIRA-404 brief description of this feature'
@@ -300,10 +316,15 @@ git push origin :feature/JIRA-404
 ### Doing `bugfix` in `master`
 
 {% highlight bash %}
+
 # 默认基于`master`
+
 # 某位开发在自己的`fork-repo`上面开启bugfix分支，以`bugfix/JIRA-404`格式命名
+
 # 完成修复之后
+
 # 合并bugfix分支到`fork-repo`的master上面， 删除本地的bugfix分支
+
 {% endhighlight %}
 
 ### public release
@@ -312,23 +333,29 @@ git push origin :feature/JIRA-404
 git checkout master
 git branch release/n.m.0
 git checkout release/n.m.0
+
 # bump version, update ChangeLog
+
 # publi.sh
+
 git commit -avm 'JIRA-404 description of n.m.0'
 git tag -a n.m.0 -m 'JIRA-404 release of n.m.0'
 git checkout master
 git rebase release/n.m.0
 {% endhighlight %}
 
-###  sprint release
+### sprint release
 
 {% highlight bash %}
 git checkout release/n.m.0
 git rebase master
 git branch release/n.m+1.0
 git checkout release/n.m+1.0
+
 # bump version, update ChangeLog
+
 # publi.sh
+
 git commit -avm 'JIRA-404 description of n.m+1.0'
 git tag -a n.m+1.0 -m 'JIRA-404 release of n.m.0'
 git checkout master
@@ -343,7 +370,9 @@ git push origin :release/n.m.0
 git checkout release/n.m.k
 git branch bugfix/JIRA-404
 git checkout bugfix/JIRA-404
+
 # fix and test
+
 git checkout release/n.m.k
 git merge bugfix/JIRA-404
 git branch -d bugfix/JIRA-404
@@ -356,8 +385,11 @@ git push origin :bugfix/JIRA-404
 git checkout release/n.0.k
 git branch release/n.0.k+1
 git checkout release/n.0.k+1
+
 # bump version, update ChangeLog
+
 # publi.sh
+
 git commit -avm 'JIRA-404 description of n.0.k+1'
 git tag -a n.0.k+1 -m 'JIRA-404 release of n.0.k+1'
 git checkout master
@@ -370,7 +402,6 @@ git push origin :release/n.0.k
 
 需要考虑是通过patch的方式，还是rebase的方式将bugfix应用到master上面。
 
-
 # Linear Git Workflow with CI
 
 <!-- ## 提交并测试 -->
@@ -381,8 +412,8 @@ git push origin :release/n.0.k
 
 These problems need to be fix：
 
-* Is `gitl` complicated under Microservices ?
-* Is `gitl` conflicted with git fork, see Atlassian's _Comparing Workflows_ [^atl_comp_workf] ？
+- Is `gitl` complicated under Microservices ?
+- Is `gitl` conflicted with git fork, see Atlassian's _Comparing Workflows_ [^atl_comp_workf] ？
 
 # References
 

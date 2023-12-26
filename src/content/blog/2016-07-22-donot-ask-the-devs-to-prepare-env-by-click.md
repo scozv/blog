@@ -1,14 +1,17 @@
 ---
-layout: post
 title: "DO NOT Prepare the Development Environment by Click and Click"
+postSlug: simple-dev-environment-script
+pubDatetime: 2016-07-23 21:32:23+08:00
 description: ""
 category: "pattern"
-tags: ["bash","ci"]
+tags: ["bash", "ci"]
 lang: en
 ---
+
 {% include JB/setup %}
 
 # Abstract
+
 {:.no_toc}
 
 > This article will give you an `installation.sh` script, that
@@ -17,13 +20,11 @@ lang: en
 >
 >       wget -qO- path/to/installation.sh | bash
 >
->
 > This article will describe the process of `installation.sh`, besides, I want to express:
 >
->
-> * Use code, not mouse,
-> * Use git, when we use code,
-> * Bring the wonderful Development Experience to developers.
+> - Use code, not mouse,
+> - Use git, when we use code,
+> - Bring the wonderful Development Experience to developers.
 >
 > The `installation.sh` will only apply for `Ubuntu 14.04+`.
 >
@@ -33,8 +34,8 @@ lang: en
 
 <!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+- Will be replaced with the ToC, excluding the "Contents" header
+  {:toc}
 
 # `installation.sh`
 
@@ -47,29 +48,29 @@ wget -qO- https://raw.githubusercontent.com/scozv/dotfiles/master/os/ubuntu-serv
 
 Attentions
 
-* Run this script on `Ubuntu 14.04+`,
-* Run this script on VM, NOT on your own development environment,
-* Read the source before running any unknown `sh` file.
+- Run this script on `Ubuntu 14.04+`,
+- Run this script on VM, NOT on your own development environment,
+- Read the source before running any unknown `sh` file.
 
 # Bash Scripts, the Basis of CI
 
 Usually, the CI configuration includes:
 
-* Environment preparing
-* Tests that will run
-* Any release
-* Clean
+- Environment preparing
+- Tests that will run
+- Any release
+- Clean
 
 The 1st step is what the `installation.sh` will do.
 
 I almost write script (code) as many places any I could:
 
-* This blog site [^scozv_blog]
-* dotfiles [^scozv_dotfiles]
-* Notes（LaTeX）
-* Deployment script
-* API documents [^algo-wiki]
-* Internal documents
+- This blog site [^scozv_blog]
+- dotfiles [^scozv_dotfiles]
+- Notes（LaTeX）
+- Deployment script
+- API documents [^algo-wiki]
+- Internal documents
 
 # References
 

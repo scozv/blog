@@ -1,14 +1,17 @@
 ---
-layout: post
 title: "Introduction of Building Documents with LaTeX"
+postSlug: documenting-with-latex
+pubDatetime: 2015-08-12 12:23:01+08:00
 description: ""
 category: "guide"
-tags: ["latex","tex","project"]
+tags: ["latex", "tex", "project"]
 lang: en
 ---
+
 {% include JB/setup %}
 
 # Abstract
+
 {:.no_toc}
 
 > This article will give brief introduction for `TeX` and `LaTeX`, then discuss a few issues during using `LaTeX`
@@ -58,10 +61,10 @@ you can read [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 
 % set style for multiple lines code snippet
 \lstset{numbers=left, numberstyle=\tiny
-	, stepnumber=2, numbersep=5pt
-	, backgroundcolor=\color[rgb]{0.86,0.86,0.86}
-	, basicstyle=\footnotesize\ttfamily
-	, breaklines=true}
+, stepnumber=2, numbersep=5pt
+, backgroundcolor=\color[rgb]{0.86,0.86,0.86}
+, basicstyle=\footnotesize\ttfamily
+, breaklines=true}
 
 % set index
 \usepackage{multind}
@@ -95,16 +98,16 @@ you can read [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 % bold emphasized text
 \makeatletter
 \DeclareRobustCommand{\em}{\%
-  \@nomath\em \if b\expandafter\@car\f@series\@nil
-  \normalfont \else \bfseries \fi}
+\@nomath\em \if b\expandafter\@car\f@series\@nil
+\normalfont \else \bfseries \fi}
 \makeatother
 
 % tiny margin note
 \makeatletter
-  \long\def\@ympar#1{\%
-  \@savemarbox\@marbox{\small #1}%
-  \global\setbox\@currbox\copy\@marbox
-  \@xympar}
+\long\def\@ympar#1{\%
+\@savemarbox\@marbox{\small #1}%
+\global\setbox\@currbox\copy\@marbox
+\@xympar}
 \makeatother
 
 % reduce the space of itemize
@@ -120,7 +123,7 @@ you can read [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 \date{Aug, 12, 2015}
 \maketitle
 
-\chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
+\chapter\*{\centering \begin{normalsize}Abstract\end{normalsize}}
 \begin{quotation}
 \noindent % abstract text
 This artical will give brief introduction for TeX and LaTeX,
@@ -134,33 +137,33 @@ Finally, a LaTeX template will be attached in Appendix.
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
 \part{Part I}
-  \chapter{C01-01}
-    \include{p1_c01}
+\chapter{C01-01}
+\include{p1_c01}
 \part{Part II}
-  \chapter{C02-01}
-    \include{p2_c01}
-  \chapter{C02-02}
-    \include{p2_c02}
+\chapter{C02-01}
+\include{p2_c01}
+\chapter{C02-02}
+\include{p2_c02}
 
-  \cleardoublepage
-  \phantomsection
-  \addcontentsline{toc}{chapter}{\bibnamec}
-  \bibliographystylec{GBT7714-2005NLang}
-  \bibliographyc{code/ref}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\bibnamec}
+\bibliographystylec{GBT7714-2005NLang}
+\bibliographyc{code/ref}
 
-  \makeatletter
-  % Put section depth at the same level as \chapter.
-  \renewcommand*{\toclevel@section}{0}
-  \printindex{idx_finance}{Index of Finance}
-  % Put section depth back to its default value.
-  \renewcommand*{\toclevel@section}{1}
-  \makeatother  
+\makeatletter
+% Put section depth at the same level as \chapter.
+\renewcommand*{\toclevel@section}{0}
+\printindex{idx_finance}{Index of Finance}
+% Put section depth back to its default value.
+\renewcommand*{\toclevel@section}{1}
+\makeatother
 
-  \cleardoublepage
-  \phantomsection
-  \addcontentsline{toc}{chapter}{\bibnamef}
-  \bibliographystylef{GBT7714-2005NLang}
-  \bibliographyf{finance/ref}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\bibnamef}
+\bibliographystylef{GBT7714-2005NLang}
+\bibliographyf{finance/ref}
 
 \appendix
 \part{Appendix}
@@ -169,13 +172,10 @@ Finally, a LaTeX template will be attached in Appendix.
 \end{document}
 {% endhighlight %}
 
-
 # References
 
 [^TUG01]: [Pointers to Frequently Asked and Answered Questions](https://tug.org/tex-ptr-faq). tug.org. [OL]
-
 [^WIK01]: [`LaTeX`的趣味应用](https://zh.wikipedia.org/wiki/LaTeX#.E8.B6.A3.E5.91.B3.E6.87.89.E7.94.A8). wikipedia.org. [OL]
-
 
 [1]: https://en.wikipedia.org/wiki/TeX "TeX Wikipage"
 [2]: https://github.com/weijianwen/SJTUThesis "SJTU Thesis LaTeX Template"

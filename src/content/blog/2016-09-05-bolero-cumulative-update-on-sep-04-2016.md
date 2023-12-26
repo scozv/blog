@@ -1,34 +1,36 @@
 ---
-layout: post
 title: "Bolero, Cumulative Update (Sep 04, 2016)"
+postSlug: bolero-p2-updates
+pubDatetime: 2016-09-05 02:41:16+08:00
 description: ""
 category: "guide"
-tags: ["scala","scaffold","project","architecture","restful"]
+tags: ["scala", "scaffold", "project", "architecture", "restful"]
 lang: "en"
 ---
+
 {% include JB/setup %}
 
 # 摘要
+
 {:.no_toc}
 
 > This article gives a short description on cumulative update of `Bolero`.
 > For the entire project details, please read previous post [^blog_bolero]。
 >
->
 > You may find the source code of `Bolero` on [scozv/bolero](https://github.com/scozv/bolero).
 
 <!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+- Will be replaced with the ToC, excluding the "Contents" header
+  {:toc}
 
 # Conventions and Rules
 
 The conventions or rules in `Bolero` may not be the best practice:
 
-* Naming most `trait` with the initial `Can`, in order to state it has some sort of ability,
-* `interop` directory was used for inter-operating between 3rd party API, at beginning,
-* `_id` means primary key, and it is `String`.
+- Naming most `trait` with the initial `Can`, in order to state it has some sort of ability,
+- `interop` directory was used for inter-operating between 3rd party API, at beginning,
+- `_id` means primary key, and it is `String`.
 
 ## Uniform HTTP Response
 
@@ -36,9 +38,9 @@ All HTTP Response return uniform `JSON` as below:
 
 {% highlight raw %}
 {
-  ok: Boolean,
-  data: T,
-  error: String
+ok: Boolean,
+data: T,
+error: String
 }
 {% endhighlight %}
 
