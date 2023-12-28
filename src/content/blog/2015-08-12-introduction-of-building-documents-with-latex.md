@@ -8,13 +8,10 @@ tags: ["latex", "tex", "project"]
 lang: en
 ---
 
-{% include JB/setup %}
-
 # Abstract
 
-{:.no_toc}
-
-> This article will give brief introduction for `TeX` and `LaTeX`, then discuss a few issues during using `LaTeX`
+> This article will give brief introduction for `TeX` and `LaTeX`,
+> then discuss a few issues during using `LaTeX`
 > and how to display `LaTeX` equation on web page.
 >
 > This article is mainly written in Chinese.
@@ -22,8 +19,6 @@ lang: en
 > If you want to know the KaTeX with Jekyll,
 > you can reach [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 > A `LaTeX` template will be provided.
-
-<!--more-->
 
 # KaTeX, not MathJax
 
@@ -39,7 +34,7 @@ you can read [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 
 # A Sample of LaTeX Template
 
-{% highlight tex %}
+```tex
 \documentclass[a4paper]{book}
 
 % shortcut for scozv's github homepage
@@ -61,10 +56,10 @@ you can read [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 
 % set style for multiple lines code snippet
 \lstset{numbers=left, numberstyle=\tiny
-, stepnumber=2, numbersep=5pt
-, backgroundcolor=\color[rgb]{0.86,0.86,0.86}
-, basicstyle=\footnotesize\ttfamily
-, breaklines=true}
+  , stepnumber=2, numbersep=5pt
+  , backgroundcolor=\color[rgb]{0.86,0.86,0.86}
+  , basicstyle=\footnotesize\ttfamily
+  , breaklines=true}
 
 % set index
 \usepackage{multind}
@@ -98,16 +93,16 @@ you can read [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 % bold emphasized text
 \makeatletter
 \DeclareRobustCommand{\em}{\%
-\@nomath\em \if b\expandafter\@car\f@series\@nil
-\normalfont \else \bfseries \fi}
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
 \makeatother
 
 % tiny margin note
 \makeatletter
-\long\def\@ympar#1{\%
-\@savemarbox\@marbox{\small #1}%
-\global\setbox\@currbox\copy\@marbox
-\@xympar}
+  \long\def\@ympar#1{\%
+  \@savemarbox\@marbox{\small #1}%
+  \global\setbox\@currbox\copy\@marbox
+  \@xympar}
 \makeatother
 
 % reduce the space of itemize
@@ -123,7 +118,7 @@ you can read [this post](http://xuc.me/blog/KaTeX-and-Jekyll/).
 \date{Aug, 12, 2015}
 \maketitle
 
-\chapter\*{\centering \begin{normalsize}Abstract\end{normalsize}}
+\chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
 \begin{quotation}
 \noindent % abstract text
 This artical will give brief introduction for TeX and LaTeX,
@@ -137,40 +132,40 @@ Finally, a LaTeX template will be attached in Appendix.
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
 \part{Part I}
-\chapter{C01-01}
-\include{p1_c01}
+  \chapter{C01-01}
+    \include{p1_c01}
 \part{Part II}
-\chapter{C02-01}
-\include{p2_c01}
-\chapter{C02-02}
-\include{p2_c02}
+  \chapter{C02-01}
+    \include{p2_c01}
+  \chapter{C02-02}
+    \include{p2_c02}
 
-\cleardoublepage
-\phantomsection
-\addcontentsline{toc}{chapter}{\bibnamec}
-\bibliographystylec{GBT7714-2005NLang}
-\bibliographyc{code/ref}
+  \cleardoublepage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\bibnamec}
+  \bibliographystylec{GBT7714-2005NLang}
+  \bibliographyc{code/ref}
 
-\makeatletter
-% Put section depth at the same level as \chapter.
-\renewcommand*{\toclevel@section}{0}
-\printindex{idx_finance}{Index of Finance}
-% Put section depth back to its default value.
-\renewcommand*{\toclevel@section}{1}
-\makeatother
+  \makeatletter
+  % Put section depth at the same level as \chapter.
+  \renewcommand*{\toclevel@section}{0}
+  \printindex{idx_finance}{Index of Finance}
+  % Put section depth back to its default value.
+  \renewcommand*{\toclevel@section}{1}
+  \makeatother
 
-\cleardoublepage
-\phantomsection
-\addcontentsline{toc}{chapter}{\bibnamef}
-\bibliographystylef{GBT7714-2005NLang}
-\bibliographyf{finance/ref}
+  \cleardoublepage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\bibnamef}
+  \bibliographystylef{GBT7714-2005NLang}
+  \bibliographyf{finance/ref}
 
 \appendix
 \part{Appendix}
 \chapter{Appendix I}
 \include{appendix}
 \end{document}
-{% endhighlight %}
+```
 
 # References
 

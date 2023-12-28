@@ -10,6 +10,8 @@ import remarkMath from "remark-math";
 import remarkToc from "remark-toc";
 
 // https://astro.build/config
+// @ts-ignore
+// @ts-ignore
 export default defineConfig({
   site: SITE.website,
   integrations: [
@@ -21,10 +23,21 @@ export default defineConfig({
     sitemap(),
   ],
   markdown: {
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [
+      // @ts-ignore
+      [
+        rehypeKatex,
+        {
+          displayMode: true,
+          strict: true,
+          output: "html",
+          throwOnError: true,
+        },
+      ],
+    ],
     remarkPlugins: [
-      remarkToc,
       remarkMath,
+      remarkToc,
       [
         remarkCollapse,
         {

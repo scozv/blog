@@ -8,12 +8,6 @@ tags: ["scala"]
 lang: en
 ---
 
-{% include JB/setup %}
-
-# Abstract
-
-{:.no_toc}
-
 > Three years ago, I learn the _Functional Programming Principles in Scala_ [^open_progfun1]
 > from Coursera.org. After that I wrote `Scala` and finished `Bolero` [^blog_bolero].
 >
@@ -36,11 +30,6 @@ lang: en
 > - Type Inference.
 >
 > Currently, This article (Part I) is only written in Chinese.
-
-<!--more-->
-
-- Will be replaced with the ToC, excluding the "Contents" header
-  {:toc}
 
 [^blog_bolero]: [Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo](https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala)
 [^github_bolero]: [Bolero, the Source Code](https://github.com/scozv/bolero)

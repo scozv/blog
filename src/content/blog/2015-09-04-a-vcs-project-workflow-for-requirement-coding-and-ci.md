@@ -8,11 +8,7 @@ tags: ["latex", "markdown", "ci", "git", "jira", "project"]
 lang: en
 ---
 
-{% include JB/setup %}
-
 # Abstract
-
-{:.no_toc}
 
 > This article introduces a project workflow based on VCS
 > (Version Controll System). The principle of this workflow is
@@ -28,8 +24,6 @@ lang: en
 > - Bitbucket
 > - c9.io
 > - Markdown in 5 minutes
-
-<!--more-->
 
 # References
 

@@ -8,12 +8,6 @@ tags: ["scala"]
 lang: en
 ---
 
-{% include JB/setup %}
-
-# Abstract
-
-{:.no_toc}
-
 > This is the second part of _Scala Quick Tour_,
 > in the [previous part](https://scozv.github.io/blog/guide/2016/08/21/scala-quick-tour-part-i),
 > we talked about Functional Programming Basis, Functional Type and the Type Inference.
@@ -37,11 +31,6 @@ lang: en
 > - Read the Source of `List.scala`.
 >
 > Currently, This article (Part II) is only written in Chinese.
-
-<!--more-->
-
-- Will be replaced with the ToC, excluding the "Contents" header
-  {:toc}
 
 [^blog_bolero]: [Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo](https://scozv.github.io/blog/guide/2016/07/27/bolero-a-restful-scaffold-with-scala)
 [^github_bolero]: [Bolero, the Source Code](https://github.com/scozv/bolero)

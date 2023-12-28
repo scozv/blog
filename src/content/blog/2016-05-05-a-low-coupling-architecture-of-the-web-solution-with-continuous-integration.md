@@ -8,11 +8,7 @@ tags: ["ci", "project", "architecture"]
 lang: en
 ---
 
-{% include JB/setup %}
-
 # Abstract
-
-{:.no_toc}
 
 > This article will discuss two core ideas for a Architecture of the Web Solution,
 > that are Loose Coupling and Continuous Integration.
@@ -20,8 +16,6 @@ lang: en
 > The article is mainly written in Chinese, while the
 > English post has not been started yet.
 > However, I provide a drawing for indicating the Loose Coupling Architecture.
-
-<!--more-->
 
 The Loose Coupling Architecture can be explained as below:
 

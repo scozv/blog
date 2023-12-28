@@ -19,14 +19,8 @@ tags:
 lang: "en"
 ---
 
-{% include JB/setup %}
-
-# Abstract
-
-{:.no_toc}
-
 > Two approaches of adding global value to Mapped Diagnostic Contexts（MDC)
-> have been introduced in the post of 2014 by Yann Simon[^_blog_yanns_mdc_play].
+> have been introduced in the post of 2014 by Yann Simon[^yanns].
 > Since the global value could be added into MDC,
 > the Tracking Id used for tracking the log messages for each HTTP Request
 > can be also added into the MDC.
@@ -43,15 +37,11 @@ lang: "en"
 > - changing the configuration name `play.akka.actor` to `akka.actor`, and
 > - replacing `scala.concurrent.ExecutionContext` with injected object
 >
-> has been found
-> and applied.
+> has been found and applied.
 
-<!--more-->
+## Table of Contents
 
-- Will be replaced with the ToC, excluding the "Contents" header
-  {:toc}
-
-# Introduction
+## Introduction
 
 Applying the Software Engineering means more attention
 should be paid on Engineering, efficient delivery and
@@ -71,7 +61,7 @@ will be appended in each log message related to a HTTP Request.
 Searching the log messages by `trackingId` can find out the
 exact happened story for each specific HTTP Request.
 
-## Use Case and Design of Tracking Id
+### Use Case and Design of Tracking Id
 
 High volume of concurrence and loose coupling of distributed deployment are
 two generic facts of current system design. The log files stored in difference
@@ -80,8 +70,7 @@ Request CANNOT be written linearly.
 
 Here is an example for two requests:
 
-{% highlight bash %}
-
+```bash
 [2017-07-17T19:06:55.560Z] [DEBUG] user 1 connected
 [2017-07-17T19:06:57.121Z] [DEBUG] get token from redis
 [2017-07-17T19:07:03.289Z] [DEBUG] start the query with parameter {...}
@@ -89,8 +78,7 @@ Here is an example for two requests:
 [2017-07-17T19:07:05.192Z] [WARN] get result with 1029ms
 [2017-07-17T19:07:05.207Z] [DEBUG] get token from redis
 [2017-07-17T19:07:05.285Z] [ERROR] invalid token
-
-{% endhighlight %}
+```
 
 Reading the large log file from
 multiple server nodes with `tail -f application.log` is impossible to
@@ -99,8 +87,7 @@ locating the issue in 5 minutes.
 However, with appending `trackingId` in log message shown below,
 the exact linear story can be extracted from the large log files:
 
-{% highlight bash %}
-
+```bash
 [2017-07-17T19:06:55.560Z] [tracking-id-0001] [DEBUG] user 1 connected
 [2017-07-17T19:06:57.121Z] [tracking-id-0001] [DEBUG] get token from redis
 [2017-07-17T19:07:03.289Z] [tracking-id-0001] [DEBUG] start the query with parameter {...}
@@ -108,8 +95,7 @@ the exact linear story can be extracted from the large log files:
 [2017-07-17T19:07:05.192Z] [tracking-id-0001] [WARN] get result with 1029ms
 [2017-07-17T19:07:05.207Z] [tracking-id-1024] [DEBUG] get token from redis
 [2017-07-17T19:07:05.285Z] [tracking-id-1024] [ERROR] invalid token
-
-{% endhighlight %}
+```
 
 A flow of generating and passing the `trackingId` in Play 2.6 is designed as below:
 
@@ -122,18 +108,18 @@ A flow of generating and passing the `trackingId` in Play 2.6 is designed as bel
 The approaches provided in Yann Simon's post are used for passing the `trackingId`
 to Mapped Diagnostic Contexts (MDC). So that we can use the Logback pattern with `%mdc{trackingId}` to write `trackingId` in log messages:
 
-{% highlight xml %}
+```scala
 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-<file>${application.home:-.}/logs/application.log</file>
-<encoder>
-<pattern>%date [%level] [%mdc{trackingId:--}] %message%n%xException</pattern>
-</encoder>
+  <file>${application.home:-.}/logs/application.log</file>
+  <encoder>
+    <pattern>%date [%level] [%mdc{trackingId:--}] %message%n%xException</pattern>
+  </encoder>
 </appender>
-{% endhighlight %}
+```
 
-# Implementation of Tracking Id
+## Implementation of Tracking Id
 
-## Holding `trackingId` in Context of Golang
+### Holding `trackingId` in Context of Golang
 
 The `%mdc` pattern or fommatter is not supported in `cihub/seelog`
 package of Golang[^_github_cihub_seelog_format_ref]. David Budworth
@@ -144,35 +130,35 @@ explained this in Stackoverflow as[^_sf_david_bud_mdc_java_go]:
 An alternative solution is holding the `trackingId` in a global context,
 such as creating a `RequestContext` basing on the `gin.Context`[^_note_where_go_code_from]:
 
-{% highlight go %}
+```go
 type RequestContext struct {
-\*gin.Context
+  *gin.Context
 
-TrackingId string
+  TrackingId    string
 }
 
 func newContext(c *gin.Context) *RequestContext {
-return &RequestContext{
-Context: c,
-TrackingId: GenGuid(),
+  return &RequestContext{
+    Context:    c,
+    TrackingId: GenGuid(),
+  }
 }
-}
-{% endhighlight %}
+```
 
 Also, passing the `RequestContext` to the method where the
 logger needed:
 
-{% highlight go %}
-func fooAction(c \*gin.Context) {
-var err error
+```go
+func fooAction(c *gin.Context) {
+  var err error
 
-ctx := getRequestContext(c)
+  ctx := getRequestContext(c)
 
-// ..., err =
+  // ..., err =
 
-logger.Errorf(buildLogMessage(ctx, "Failed in fooAction: $v", err))
+  logger.Errorf(buildLogMessage(ctx, "Failed in fooAction: $v", err))
 }
-{% endhighlight %}
+```
 
 The method named `getRequestContext` has two purposes, one is getting the
 `RequestContext` if any (`val.(*RequestContext)`), another is
@@ -184,36 +170,35 @@ can be used for appending the `trackingId` into the log message.
 With the pattern below, `trackingId` will be considered as
 a part of log message:
 
-{% highlight xml %}
+```xml
 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-<file>${application.home:-.}/logs/application.log</file>
-<encoder>
-<pattern>%date [%level] %message%n%xException</pattern>
-</encoder>
+  <file>${application.home:-.}/logs/application.log</file>
+  <encoder>
+    <pattern>%date [%level] %message%n%xException</pattern>
+  </encoder>
 </appender>
-{% endhighlight %}
+```
 
 Only need is prepending the `trackingId` to the log message body,
 to keep the same format of log both in Scala and Java:
 
-{% highlight xml %}
-
+```go
 // with MDC
 %date [%level] [%mdc{trackingId:--}] %message%n%xException
 
 // in Golang
 %date [%level] %message%n%xException
 
-func buildLogMessage(ctx \*RequestContext, format string, parms ...interface{}) string {
-// [trackingId] msg
-f := fmt.Sprintf("[%s] ", ctx.TrackingId) + format
-return fmt.Sprintf(f, parms...)
+func buildLogMessage(ctx *RequestContext, format string, parms ...interface{}) string {
+  // [trackingId] msg
+  f := fmt.Sprintf("[%s] ", ctx.TrackingId) + format
+  return fmt.Sprintf(f, parms...)
 }
-{% endhighlight %}
+```
 
-## Using HttpFilter and Dispatcher in Scala
+### Using HttpFilter and Dispatcher in Scala
 
-As mentioned in Yann Simon's post[^_blog_yanns_mdc_play]:
+As mentioned in Yann Simon's post[^yanns]:
 
 > To record the values in the MDC, Logback uses a ThreadLocal variable. This strategy works when one thread is used for one request. The implementation of the MDC with a ThreadLocal cannot work with this non-blocking asynchronous threading model in Play.
 
@@ -231,14 +216,14 @@ then it will be inserted into HTTP Response header
 after the actions are invoked. Frontend reports the `trackingId`
 in HTTP Response when runtime error happens.
 
-{% highlight scala %}
+```scala
 class TrackingFilter @Inject() (
-implicit ec: ExecutionContext
+  implicit ec: ExecutionContext
 ) extends EssentialFilter {
-def apply(action: EssentialAction) = new EssentialAction {
-def apply(requestHeader: RequestHeader): Accumulator[ByteString, Result] = {
-val trackingId = UUID.randomUUID().toString
-MDC.put("trackingId", trackingId)
+  def apply(action: EssentialAction) = new EssentialAction {
+    def apply(requestHeader: RequestHeader): Accumulator[ByteString, Result] = {
+      val trackingId = UUID.randomUUID().toString
+      MDC.put("trackingId", trackingId)
 
       action(requestHeader)
         .map { _.withHeaders("X-Tracking-Id" -> trackingId) }
@@ -247,10 +232,9 @@ MDC.put("trackingId", trackingId)
           result
         }
     }
-
+  }
 }
-}
-{% endhighlight %}
+```
 
 The `trackingId` generated in `TrackingFilter` needs to be passed into the MDC of
 different threads, where the Customized Akka Dispatcher or ExecutionContext mentioned by
@@ -260,20 +244,20 @@ The main implementation of customized Akka Dispatcher copied as below,
 The switch of different threads happenes in `self.execute(() => {})`, where a new
 Runnable instance is created:
 
-{% highlight scala %}
+```scala
 def execute(runnable: Runnable): Unit = self.execute(() => {
-val oldMDCContext = MDC.getCopyOfContextMap
+  val oldMDCContext = MDC.getCopyOfContextMap
 
-setContextMap(mdcContext)
-try {
-runnable.run()
-} finally {
-setContextMap(oldMDCContext)
-}
+  setContextMap(mdcContext)
+  try {
+    runnable.run()
+  } finally {
+    setContextMap(oldMDCContext)
+  }
 })
-{% endhighlight %}
+```
 
-## Tips in Implementation
+### Tips in Implementation
 
 Play Framework has been shipped with Dependency Injection
 from 2.4 [^_play_di_in_24], in version 2.6, `Controller` and `ExecutionContext.global`
@@ -283,7 +267,7 @@ in `play.http.filters` conf item[^_play_http_filters].
 
 After that, we will learn from the server starting log that Play enabled four `HttpFilter` by default:
 
-{% highlight bash %}
+```bash
 [info] [-] p.a.h.EnabledFilters - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     play.filters.csrf.CSRFFilter
@@ -292,8 +276,7 @@ After that, we will learn from the server starting log that Play enabled four `H
     play.filters.cors.CORSFilter
 
 [info] [-] play.api.Play - Application started (Dev)
-
-{% endhighlight %}
+```
 
 Being enable of `AllowedHostsFilter` may receive some
 error saying "Host not allowed: server-name", or "Host not allowed: private-ip"
@@ -303,61 +286,59 @@ In this case, a white list of allowed hosts should be configured[^_play_host_all
 Another solution for fixing the "Host not allowed: server-name" error is removing
 `AllowedHostsFilter`：
 
-{% highlight scala %}
+```scala
 class Filters @Inject() (
-defaultFilters: EnabledFilters,
-tracking: TrackingFilter
+  defaultFilters: EnabledFilters,
+  tracking: TrackingFilter
 ) extends DefaultHttpFilters(defaultFilters.filters.filter {
-case f: AllowedHostsFilter => false
-case _ => true
-} :+ tracking: _\*)
-{% endhighlight %}
+  case f: AllowedHostsFilter => false
+  case _ => true
+} :+ tracking: _*)
+```
 
 A final tip for customized Dispatcher is the name of
 dispatcher conf node may be `akka.actor`, instead of `play.akka.actor`
 mentioned in Yann Simon's post. Anyway, runtime will choose a correct one.
 
-# Diagnosis of Tracking Id not Written in Log Message
+## Diagnosis of Tracking Id not Written in Log Message
 
-## Issue Description
+### Issue Description
 
 Most log messages don't have the `trackingId` after implemented the customized
 Akka Dispather.
 
-{% highlight bash %}
+```bash
 [info] [-] play.api.Play - Application started (Dev)
 [warn] [-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
 [debug] [-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector(security, profile)
 [debug] [-] c.l.p.a.v.g.ActivityApi - start the get last message
-[debug] [-] c.l.p.n.d.ReactiveMongoManager$ - <:> Connecting reactive driver
-{% endhighlight %}
+[debug] [-] c.l.p.n.d.ReactiveMongoManager$ -  <:> Connecting reactive driver
+```
 
 Putting log in `TrackingFilter` will print some trackable log messages, but not all：
 
-{% highlight bash %}
+```bash
 [info] [-] play.api.Play - Application started (Dev)
-[debug] [3734068e-f354-4de4-a9e7-25fc6ed9a1cb] c.l.TrackingFilter - <:> trackingId generated: 3734068e-f354-4de4-a9e7-25fc6ed9a1cb
+[debug] [3734068e-f354-4de4-a9e7-25fc6ed9a1cb] c.l.TrackingFilter -  <:> trackingId generated: 3734068e-f354-4de4-a9e7-25fc6ed9a1cb
 [warn] [-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
 [debug] [-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector(security, profile)
-{% endhighlight %}
+```
 
 Moreover, putting the log in `MDCPropagatingDispatcher`, will see：
 
-{% highlight bash %}
+```bash
 [info] [-] play.api.Play - Application started (Dev)
-[debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] c.l.TrackingFilter - <:> trackingId generated: a5a7cbab-6ee4-4dd8-b54e-64217dc7357e
+[debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] c.l.TrackingFilter -  <:> trackingId generated: a5a7cbab-6ee4-4dd8-b54e-64217dc7357e
 [debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] old context: null
 [debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] new context: {trackingId=a5a7cbab-6ee4-4dd8-b54e-64217dc7357e}
-
-# many log skipped ...
-
+# many log skipped  ...
 [debug] [-] old context: null
 [debug] [-] new context: null
 [debug] [-] old context: {}
 [debug] [-] new context: null
-{% endhighlight %}
+```
 
-## Solution for Tracking Id Missing
+### Solution for Tracking Id Missing
 
 The last log messages indicate:
 
@@ -370,28 +351,24 @@ So the question of Tracking Id missing becomes
 In order to find out the solution, we display the thread name in each
 log message:
 
-{% highlight bash %}
-
+```bash
 # Log format
-
 # <pattern>%coloredLevel [%mdc{trackingId:--}] [%thread] %logger{15} - %message%n%xException{10}</pattern>
 
 [info] [-] [scala-execution-context-global-80] play.api.Play - Application started (Dev)
-[debug] [006bc4df-0310-4793-a88d-923dfde227d9] [play-dev-mode-akka.actor.default-dispatcher-2] c.l.TrackingFilter - <:> trackingId generated: 006bc4df-0310-4793-a88d-923dfde227d9
+[debug] [006bc4df-0310-4793-a88d-923dfde227d9] [play-dev-mode-akka.actor.default-dispatcher-2] c.l.TrackingFilter -  <:> trackingId generated: 006bc4df-0310-4793-a88d-923dfde227d9
 [debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - old context: null
 [debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - new context: {trackingId=006bc4df-0310-4793-a88d-923dfde227d9}
 [warn] [-] [scala-execution-context-global-80] - ['token': 'fd'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
-
-{% endhighlight %}
+```
 
 The last two messages are the key to locating the issue, one has `trackingId`,
 another has not, and the thread names are different：
 
-{% highlight bash %}
+```bash
 [debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - new context: {trackingId=006bc4df-0....
 [warn] [-] [scala-execution-context-global-80] - ['token': '404'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
-
-{% endhighlight %}
+```
 
 These two messages may generated by different thread objects,
 one is created by `akka.actor.default-dispatcher`,
@@ -399,37 +376,37 @@ another is created by some scala object related to
 `scala.concurrent.ExecutionContext.global`.
 
 The name of `scala-execution-context-global-80` reminds me that Play 2.6 encourages
-developer to use Dependency Injection, not global `ExecutionContext.global`[^_play_ec_deprected]. And from the thread information
+developer to use Dependency Injection, not global `ExecutionContext.global`[^_play_ec_deprected].
+And from the thread information
 of log messages, it is one step closer to the final solution.
 
-## Replacing ExecutionContext.global with Injected Object
+### Replacing ExecutionContext.global with Injected Object
 
 Basing on the analysis above, the implicit usage of `ExecutionContext.global` has
 finally been found in source code, it should be replaced by injected `ExecutionContext`
 as the solution below:
 
-{% highlight scala %}
+```scala
 class Security @Inject() (
-
-- implicit ec: ExecutionContext,
++  implicit ec: ExecutionContext,
   membersDao: MembersDao,
   userApiToken: UserApiTokenDao,
   enforceHttpsAction: EnforceHttpsAction
-  ) {
+) {
 
-* implicit val ec = scala.concurrent.ExecutionContext.global
+-  implicit val ec = scala.concurrent.ExecutionContext.global
 
 }
-{% endhighlight %}
+```
 
 And this solution works:
 
-{% highlight bash %}
-[debug] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] - <:> trackingId generated: f6ab38a5-1461-44c9-a5f8-ce7764025fad
+```bash
+[debug] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] -  <:> trackingId generated: f6ab38a5-1461-44c9-a5f8-ce7764025fad
 [warn] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] - ['token': '404'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
-{% endhighlight %}
+```
 
-# Improve of Tracking Id
+## Improve of Tracking Id
 
 The importance of Tracking Id is evidently. Since this post
 only focus on the backend Tracking Id generating, an improve
@@ -450,9 +427,9 @@ Reporting the `trackingId` from frontend:
 
 No need of reading and searching word by word in large log file.
 
-# Reference
+## Reference
 
-[^_blog_yanns_mdc_play]: [SLF4J Mapped Diagnostic Context (MDC) With Play Framework](http://yanns.github.io/blog/2014/05/04/slf4j-mapped-diagnostic-context-mdc-with-play-framework/) by Yann Simon, 2014
+[^yanns]: [SLF4J Mapped Diagnostic Context (MDC) With Play Framework](http://yanns.github.io/blog/2014/05/04/slf4j-mapped-diagnostic-context-mdc-with-play-framework/) by Yann Simon, 2014
 [^_github_rishabh9_issue1]: [`TrackingId` not printed as description in issue #1 of rishabh9/mdc-propagation-dispatcher](https://github.com/rishabh9/mdc-propagation-dispatcher/issues/1)
 [^_github_cihub_seelog_format_ref]: [Format Reference of cihub/seelog](https://github.com/cihub/seelog/wiki/Format-reference/7eb0ebc6df74a6386165d9b4687445c6b86bac97)
 [^_sf_david_bud_mdc_java_go]: [_"Java MDC relies on thread local storage, Go does not have"_ by David Budworth's reply on Stackoverflow](https://stackoverflow.com/a/41049394)

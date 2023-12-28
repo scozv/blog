@@ -18,9 +18,8 @@ lang: en
 > - know how to write Dijkstra algorithm with $$O(nm)$$ running time, and
 > - know how to use heap.
 
-<!--more-->
-
-To speed up the finding minimum length of path in each stage in Dijkstra shortest path algorithm,
+To speed up the finding minimum length of path in each stage
+in Dijkstra shortest path algorithm,
 we can use a binary heap to store frontier path, according to many words,
 like [_Heap Application_] [1], or Tim Roughgarden's [algorithm course] [2].
 
