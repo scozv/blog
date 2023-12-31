@@ -10,8 +10,6 @@ import remarkMath from "remark-math";
 import remarkToc from "remark-toc";
 
 // https://astro.build/config
-// @ts-ignore
-// @ts-ignore
 export default defineConfig({
   site: SITE.website,
   integrations: [

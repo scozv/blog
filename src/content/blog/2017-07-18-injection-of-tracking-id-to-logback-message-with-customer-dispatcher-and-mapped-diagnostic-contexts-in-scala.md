@@ -20,7 +20,7 @@ lang: "en"
 ---
 
 > Two approaches of adding global value to Mapped Diagnostic Contexts（MDC)
-> have been introduced in the post of 2014 by Yann Simon[^yanns].
+> have been introduced in the post of 2014 by Yann Simon[^_blog_yanns_mdc_play].
 > Since the global value could be added into MDC,
 > the Tracking Id used for tracking the log messages for each HTTP Request
 > can be also added into the MDC.
@@ -198,7 +198,7 @@ func buildLogMessage(ctx *RequestContext, format string, parms ...interface{}) s
 
 ### Using HttpFilter and Dispatcher in Scala
 
-As mentioned in Yann Simon's post[^yanns]:
+As mentioned in Yann Simon's post[^_blog_yanns_mdc_play]:
 
 > To record the values in the MDC, Logback uses a ThreadLocal variable. This strategy works when one thread is used for one request. The implementation of the MDC with a ThreadLocal cannot work with this non-blocking asynchronous threading model in Play.
 
@@ -429,7 +429,7 @@ No need of reading and searching word by word in large log file.
 
 ## Reference
 
-[^yanns]: [SLF4J Mapped Diagnostic Context (MDC) With Play Framework](http://yanns.github.io/blog/2014/05/04/slf4j-mapped-diagnostic-context-mdc-with-play-framework/) by Yann Simon, 2014
+[^_blog_yanns_mdc_play]: [SLF4J Mapped Diagnostic Context (MDC) With Play Framework](http://yanns.github.io/blog/2014/05/04/slf4j-mapped-diagnostic-context-mdc-with-play-framework/) by Yann Simon, 2014
 [^_github_rishabh9_issue1]: [`TrackingId` not printed as description in issue #1 of rishabh9/mdc-propagation-dispatcher](https://github.com/rishabh9/mdc-propagation-dispatcher/issues/1)
 [^_github_cihub_seelog_format_ref]: [Format Reference of cihub/seelog](https://github.com/cihub/seelog/wiki/Format-reference/7eb0ebc6df74a6386165d9b4687445c6b86bac97)
 [^_sf_david_bud_mdc_java_go]: [_"Java MDC relies on thread local storage, Go does not have"_ by David Budworth's reply on Stackoverflow](https://stackoverflow.com/a/41049394)
