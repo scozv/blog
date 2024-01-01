@@ -1,6 +1,6 @@
 ---
 title: "A Loose Coupling Architecture of the Web Solution with Continuous Integration"
-postSlug: simple-web-loose-coupling-design
+slug: simple-web-loose-coupling-design
 pubDatetime: 2016-05-06 16:03:07+08:00
 description: ""
 category: "pattern"

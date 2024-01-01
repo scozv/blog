@@ -1,6 +1,6 @@
 ---
 title: "How Do We Apply the Hyde Theme to Existing Jekyll Site?"
-postSlug: jekyll-hyde-theme
+slug: jekyll-hyde-theme
 pubDatetime: 2016-03-18 07:25:05+08:00
 description: ""
 category: "guide"

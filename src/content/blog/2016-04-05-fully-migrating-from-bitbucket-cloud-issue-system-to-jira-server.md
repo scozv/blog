@@ -1,6 +1,6 @@
 ---
 title: "Fully Migrating from Bitbucket Cloud Issue System to JIRA Server"
-postSlug: bitbucket-issue-to-jira
+slug: bitbucket-issue-to-jira
 pubDatetime: 2016-04-05 21:30:02+08:00
 description: ""
 category: "guide"

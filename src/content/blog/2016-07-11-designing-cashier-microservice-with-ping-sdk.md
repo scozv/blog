@@ -1,6 +1,6 @@
 ---
 title: "Design a Cashier Microservice with Ping++ SDK"
-postSlug: simple-cashier-app-with-3rd-sdk
+slug: simple-cashier-app-with-3rd-sdk
 pubDatetime: 2016-07-14 16:58:31+08:00
 description: ""
 category: "pattern"

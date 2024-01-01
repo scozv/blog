@@ -1,6 +1,6 @@
 ---
 title: "A Linear Branch Management With Git"
-postSlug: linear-gitflow
+slug: linear-gitflow
 pubDatetime: 2016-07-04 22:10:27+08:00
 description: ""
 category: "pattern"

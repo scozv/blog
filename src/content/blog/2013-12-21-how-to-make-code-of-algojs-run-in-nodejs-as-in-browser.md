@@ -1,6 +1,6 @@
 ---
 title: "How to Make Code of Tango.js Run in Node.js as in Browser"
-postSlug: compile-tangojs-in-nodejs
+slug: compile-tangojs-in-nodejs
 pubDatetime: 2013-12-21 22:56:45+08:00
 description: ""
 category: "guide"

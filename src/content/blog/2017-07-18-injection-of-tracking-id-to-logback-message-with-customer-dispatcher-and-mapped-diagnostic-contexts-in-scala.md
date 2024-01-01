@@ -1,6 +1,6 @@
 ---
 title: "Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6"
-postSlug: akka-mdc-tracking-id-in-log
+slug: akka-mdc-tracking-id-in-log
 pubDatetime: 2017-07-18 04:03:15+08:00
 description: ""
 category: "pattern"

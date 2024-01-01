@@ -1,6 +1,6 @@
 ---
 title: "Introduction of Building Documents with LaTeX"
-postSlug: documenting-with-latex
+slug: documenting-with-latex
 pubDatetime: 2015-08-12 12:23:01+08:00
 description: ""
 category: "guide"

@@ -1,6 +1,6 @@
 ---
 title: "Understand Monads in C#"
-postSlug: monad-in-csharp
+slug: monad-in-csharp
 pubDatetime: 2014-06-20 09:20:06+08:00
 description: "An Short Literature Review on Monads in C#"
 category: "pattern"

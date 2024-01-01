@@ -1,6 +1,6 @@
 ---
 title: "How to Update Heap in Dijkstra Shortest Path Algorithm"
-postSlug: heap-update-in-dijkstra-for-nlogn
+slug: heap-update-in-dijkstra-for-nlogn
 pubDatetime: 2013-11-03 23:09:10+08:00
 description: ""
 category: "algo"

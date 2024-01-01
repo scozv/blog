@@ -1,6 +1,6 @@
 ---
 title: "A Version Controlled Project Workflow for Requirement, Coding and Continuous Integration"
-postSlug: simple-version-control-workflow
+slug: simple-version-control-workflow
 pubDatetime: 2015-09-04 10:13:54+08:00
 description: ""
 category: "pattern"

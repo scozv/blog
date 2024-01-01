@@ -1,6 +1,6 @@
 ---
 title: "Bolero, Cumulative Update (Sep 04, 2016)"
-postSlug: bolero-p2-updates
+slug: bolero-p2-updates
 pubDatetime: 2016-09-05 02:41:16+08:00
 description: ""
 category: "guide"

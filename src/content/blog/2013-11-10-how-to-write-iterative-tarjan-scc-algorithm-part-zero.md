@@ -1,6 +1,6 @@
 ---
 title: "How to Write Iterative Tarjan SCC Algorithm, Part I"
-postSlug: iterative-tarjan-scc-p1
+slug: iterative-tarjan-scc-p1
 pubDatetime: 2013-11-12 23:57:11+08:00
 description: ""
 category: "algo"

@@ -1,6 +1,6 @@
 ---
 title: "Scala Quick Tour Part II"
-postSlug: scala-quick-tour-p2
+slug: scala-quick-tour-p2
 pubDatetime: 2016-08-22 16:31:17+08:00
 description: ""
 category: "guide"
