@@ -2,106 +2,136 @@
 title: "How to Update Heap in Dijkstra Shortest Path Algorithm"
 slug: heap-update-in-dijkstra-for-nlogn
 pubDatetime: 2013-11-03 23:09:10+08:00
+modDatetime: 2024-01-20T07:41:32.235Z
 description: ""
 category: "algo"
 tags: ["algorithm", "graph", "dijkstra", "heap"]
 lang: en
 ---
 
-> When we use a **heap** to improve the running time of Dijkstra shortest path algorithm
-> from $$O(nm)$$ to $$O(n \ln m)$$, we may find that it is not easy to keep the heap
-> in heap order just using insert() or delete().
-> This post describes the update of that heap.
+> Replacing the list with a **heap** will reduce the time complexity
+> of Dijkstra shortest path algorithm
+> from $$O(nm)$$ to $$O(n \ln m)$$.
+> But when I was implementing on the algorithm with [`heap`] [^heap_swim_diff],
+> I noticed the `heap` order was destroyed right after using `insert()` or `delete()`.
+> This post describes using the `swim()` to reorder the `heap`.
 >
-> I suppose that you might:
->
-> - know how to write Dijkstra algorithm with $$O(nm)$$ running time, and
-> - know how to use heap.
+> Prerequisites: 1) knowing $$O(nm)$$ version of
+> Dijkstra algorithm, 2) basic understanding of `heap` data structure.
 
-To speed up the finding minimum length of path in each stage
-in Dijkstra shortest path algorithm,
-we can use a binary heap to store frontier path, according to many words,
-like [_Heap Application_] [1], or Tim Roughgarden's [algorithm course] [2].
+Dijkstra's shortest path algorithm is a method for finding the shortest
+paths between nodes in a graph, employing a greedy strategy by iteratively
+selecting the node with the smallest tentative distance
+from a source node to update the distances of its neighboring nodes. [^chatgpt]
+
+In the algorithm,
+binary `heap` can be used to store frontier path [^wiki_heap] [^coursera_algo_p1].
+In each iteration, only $$O(\ln m)$$ search cost is needed to find the
+next exploration (named `currentVertex`).
+This reduces the total time complexity from $$O(nm)$$ to $$O(n \ln m)$$.
 
 ```javascript
-function dijstra(graph, s) {
-  s = s || 1;
+function dijstra(graph, startVertex = 1) {
   i = 0;
 
   frontier = new Heap();
-  frontier.push([s, 0]);
+  frontier.push([startVertex, 0]);
 
-  while ( !frontier.isEmpty && i < graph.n ) {
+  while ( frontier.nonEmpty && i < graph.size ) {
     // O(logn) on pop() instead of O(n)
-    //   from linear selection of minimum length
-    current = frontier.pop();
+    // for smallest tentative distance selection
+    currentVertex = frontier.pop();
 
-    graph.edgesOf(current)
-     .filter(v => !v.isVisisted)
-     .forEach(v =>
-        if (frontier.has(v))
-          // update path length on v in frontier
-        else:
-          frontier.push([v, current[1] + weightOf(current, v)]);
+    graph.edgesOf(currentVertex)
+     .filter(neighborVertex => ! neighborVertex.isVisisted)
+     .forEach(neighborVertex =>
+        // update the distance in frontier list
     );
   }
 }
 ```
 
-It sounds easy, however the 1st revision of `dijkstra()` in Tango.js
-is failed to update heap correctly, where I just update the value of one vertex
-without keeping heap order.
+In each exploration, examine all the neighbors from `currentVertex`.
+For all `neighborVertex`, if it exists in `frontier` list, update the smallest tentative distance,
+by comparing the distance from start to `neighborVertex` recorded in `frontier` list,
+and distance from start to `neighborVertex`, with stop at `currentVertex`
+(named `distanceViaCurrentVertex`).
+Otherwise, push the `neighborVertex` into the `frontier` list with `distanceViaCurrentVertex`.
+
+Note, `frontier.distance[v]` in pseudocode below represents
+the total distance from start vertex to `v` that is recorded in `frontier` list
+so far (smallest tentative distance).
 
 ```javascript
-if (g.__labelAt__(v[0]) === -1) {
-  // not visited, update each in frontier
-  var updated = frontier.__id__.some(function (x) {
-    return (
-      x && x[0] === v[0] && ((x[1] = Math.min(x[1], current[1] + v[1])), true)
-    );
-  });
+graph.edgesOf(currentVertex)
+.filter(neighborVertex => ! neighborVertex.isVisisted)
+.forEach(neighborVertex =>
+    // get the distance from start to neighborVertex
+    // via currentVertex
+    distanceViaCurrentVertex =
+        frontier.distance[currentVertex] + distanceOf(currentVertex, neighborVertex);
 
-  if (!updated) {
-    frontier.push([v[0], v[1]]);
-  }
-} // end if, unvisited
+    // update the distance in frontier list
+    if (frontier.hasVertex(neighborVertex)) {
+        frontier.distance[neighborVertex] = Math.min(
+            frontier.distance[neighborVertex],
+            distanceViaCurrentVertex
+        );
+    } else {
+        frontier.push([neighborVertex, distanceViaCurrentVertex]);
+    }
+);
 ```
 
-How to update and keep heap order?
+In my earlier JavaScript implementation of `dijkstra()` in Tango.js [^heap_swim_diff],
+I missed one important step after updating the distance in `frontier` list,
+that is keeping the `heap` in order.
 
-While, when we update the MinHeap,
-it means that we may replace the item at that index with a
-value **LESS** than the origin one. According to the definition of minimum binary heap,
-each parent is less than their children. (see picture from [Wikipedia] [1])
+```javascript
+frontier.distance[neighborVertex] = Math.min(
+  frontier.distance[neighborVertex],
+  distanceViaCurrentVertex
+);
+// frontier is unsorted
+```
+
+How to update and maintain the heap order?
+
+While, when update the `frontier` list, which is presented using `MinHeap`,
+it means that we may only update the distance with a
+value **LESS** than the origin one.
+According to the definition of minimum binary heap, the value of
+the parent node is less than the value in children. [^wiki_heap]
 
 ![Min Heap](http://upload.wikimedia.org/wikipedia/commons/6/69/Min-heap.png)
 
-So, if we replace $$17$$ with a **LESS** value called $$x$$.
+So, if we replace $$17$$ with a **SMALLER** value called $$x$$.
 $$x$$ is still less than its children,
-but $$x$$ may be less than $$2$$ (its parent).
-As the algorithm of `push()` of heap, we need to exchange $$x$$ with its parent,
-great-parent..., until heap is ordered. That is:
+but $$x$$ may be also less than $$2$$ (its parent).
+In order to maintain the `MinHeap` order,
+we need to exchange $$x$$ with its parent,
+great-parent..., until heap is ordered.
+This exchanging with parents is what the `heap.swim()` does [^swim_function].
 
-**Using `heap.swim()` to update that heap.** (see [diff][3] of revision)
+Hence, we proceed with
+**using `heap.swim()` to maintain the heap order** (see [diff] [^heap_swim_diff] of revision).
 
 ```javascript
-var updated = frontier.__id__.some(function (x, k) {
-  // return x && x[0] === v[0] && (doUpdate, true)
-  return (
-    x &&
-    x[0] === v[0] &&
-    ((function () {
-      if (current[1] + v[1] < x[1]) {
-        x[1] = current[1] + v[1];
-        // swim like push() in heap is important to update heap
-        frontier.__swim__(k);
-      }
-    })(),
-    true)
+// update the distance in frontier list
+if (frontier.hasVertex(neighborVertex)) {
+  frontier.distance[neighborVertex] = Math.min(
+    frontier.distance[neighborVertex],
+    distanceViaCurrentVertex
   );
-});
+  // swim like push() in heap is important to update heap
+  frontier.__swim__(frontier.indexOf[neighborVertex]);
+} else {
+  frontier.push([neighborVertex, distanceViaCurrentVertex]);
+}
 ```
 
-[1]: http://en.wikipedia.org/wiki/Heap_(data_structure)#Applications "Wikipedia"
-[2]: https://www.coursera.org/course/algo "Algorithms: Design and Analysis, Part 1"
-[3]: https://github.com/scozv/algo-js/compare/9d86c04...7a5374091a506bee8f599b0345b14207f62e890a "Diff of Tango.js"
+[^chatgpt]: Paragraph summarized by ChatGPT 3.5
+[^wiki_heap]: [Wikipedia: Heap#Application](<http://en.wikipedia.org/wiki/Heap_(data_structure)#Applications>)
+[^coursera_algo_p1]: [Algorithms: Design and Analysis, Part 1](https://www.coursera.org/course/algo)
+[^heap_swim_diff]: [Diff of Tango.js](https://github.com/scozv/algo-js/compare/9d86c04...7a5374091a506bee8f599b0345b14207f62e890a)
+[^swim_function]: [`heap.swim()` in Tango.js](https://github.com/scozv/algo-js/blob/7a5374091a506bee8f599b0345b14207f62e890a/t.heap.js#L18)
