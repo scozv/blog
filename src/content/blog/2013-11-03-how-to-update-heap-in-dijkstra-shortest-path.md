@@ -105,7 +105,7 @@ the parent node is less than the value in its children. [^wiki_heap]
 
 ![Min Heap](http://upload.wikimedia.org/wikipedia/commons/6/69/Min-heap.png)
 
-So, if we replace $$17$$ with a **SMALLER** value called $$x$$.
+So, if we replace $$17$$ with a **SMALLER** value called $$x$$,
 $$x$$ is still less than its children,
 but $$x$$ may also be less than $$2$$ (its parent).
 To maintain the `MinHeap` order,
@@ -113,7 +113,7 @@ we need to exchange $$x$$ with its parent,
 grand-parent..., until the heap is ordered.
 This exchanging with parents is what the `heap.swim()` does [^swim_function].
 
-Hence, we proceed with
+Hence, I proceeded with
 **using `heap.swim()` to maintain the heap order** (see this diff [^heap_swim_diff] of git revision).
 
 ```javascript
@@ -123,7 +123,8 @@ if (frontier.hasVertex(neighborVertex)) {
     frontier.distance[neighborVertex],
     distanceViaCurrentVertex
   );
-  // swim like push() in heap is important to update heap
+  // swim, which has been included in push() in heap
+  // is important to maintain the heap order
   frontier.__swim__(frontier.indexOf[neighborVertex]);
 } else {
   frontier.push([neighborVertex, distanceViaCurrentVertex]);
