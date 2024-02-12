@@ -44,7 +44,10 @@ export default defineConfig({
       ],
     ],
     shikiConfig: {
-      theme: "one-dark-pro",
+      experimentalThemes: {
+        dark: "min-dark",
+        light: "min-light",
+      },
       wrap: true,
     },
   },
