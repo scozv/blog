@@ -1,4 +1,4 @@
-Read the blog, not me.
+Read the blog, not me :)
 
 Credits:
 
