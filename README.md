@@ -1,5 +1,11 @@
-[![Build Status](https://travis-ci.org/scozv/blog.svg?branch=master)](https://travis-ci.org/scozv/blog)
+Read the blog, not me :)
 
-https://scozv.github.io/blog/
+Credits:
 
-Read the blog, not me.
+- [Astro](https://astro.build/): A framework builds fast content sites,
+  powerful web applications, dynamic server APIs, and everything in-between.
+- [astro-paper@8e022c7](https://github.com/satnaing/astro-paper/tree/8e022c7): A minimal,
+  accessible and SEO-friendly Astro blog theme.
+- [$\KaTeX$](https://katex.org/): A fast math typesetting library for the web.
+  Integrated with this site by following
+  [_How To Render LaTeX In Markdown With Astro.js_](https://blog.alexafazio.dev/blog/render-latex-in-astro/) (fcaea42).
