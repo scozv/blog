@@ -1,13 +1,17 @@
 ---
-layout: post
-title: "对Eric Lippert所著的Monads系列文章的综述"
-description: "An Short Literature Review on Monads in C#"
-category: "pattern"
-tags: ["linq", "monad", "scala"]
+title: 对Eric Lippert所著的Monads系列文章的综述
+description: An Short Literature Review on Monads in C#
+category: pattern
+tags:
+  - linq
+  - monad
+  - scala
 lang: zh
+slug: monad-in-csharp-zh
+pubDatetime: 2014-06-20T00:00:00.000Z
 ---
 
-{% include JB/setup %}
+
 
 
 # 摘要
@@ -19,7 +23,7 @@ lang: zh
 >
 > 本文对Haskell和.NET中异步Task的理解不够，如果需要了解Task这个Monad的话，请参考Stephen Toub的文章[^ST13]。另外，本文对Monad的综述都建立在强类型系统的基础上，关于JavaScript中的Monad，请观看Douglas Crockford的演讲。Douglas说“假如你理解了Monad，你就失去了用语言来解释它的能力”[^DC13]。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

@@ -1,12 +1,18 @@
 ---
-layout: post
-title: "Bolero，累积更新说明（2016-09-04）"
-description: ""
-category: "guide"
-tags: ["scala","scaffold","project","architecture","restful"]
-lang: "zh"
+title: Bolero，累积更新说明（2016-09-04）
+description: ''
+category: guide
+tags:
+  - scala
+  - scaffold
+  - project
+  - architecture
+  - restful
+lang: zh
+slug: bolero-p2-updates-zh
+pubDatetime: 2016-09-05T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -17,7 +23,7 @@ lang: "zh"
 >
 > `Bolero`的源代码参见 [scozv/bolero](https://github.com/scozv/bolero)。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

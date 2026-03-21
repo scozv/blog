@@ -1,12 +1,14 @@
 ---
-layout: post
-title: "Scala函数编程（一）"
-description: ""
-category: "guide"
-tags: ["scala"]
+title: Scala函数编程（一）
+description: ''
+category: guide
+tags:
+  - scala
 lang: zh
+slug: scala-quick-tour-p1-zh
+pubDatetime: 2016-08-21T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -38,7 +40,7 @@ lang: zh
 > * 函数的类型（Type）；
 > * 类型推断和类型匹配。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

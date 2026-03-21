@@ -1,12 +1,16 @@
 ---
-layout: post
-title: "将网页版的QUnit.js测试移植到Node.js"
-description: ""
-category: "guide"
-tags: ["ci", "unit", "grunt"]
+title: 将网页版的QUnit.js测试移植到Node.js
+description: ''
+category: guide
+tags:
+  - ci
+  - unit
+  - grunt
 lang: zh
+slug: compile-tangojs-in-nodejs-zh
+pubDatetime: 2013-12-21T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 >  本文描述了我让代码在浏览器和Node.js两边都能运行的过程，略属娱乐。
 > 因为就项目 [Tango.js] [2] 而言，我认为，重点在算法（ *Algo*rithm ）。
@@ -21,7 +25,7 @@ lang: zh
 >
 > （2016年更新）让我们使用Webpack吧。
 
-<!--more-->
+
 
 <a name="pi">
 </a>

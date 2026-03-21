@@ -1,12 +1,19 @@
 ---
-layout: post
-title: "用于需求分析、开发以至持续集成的源代码管理工作模式"
-description: ""
-category: "pattern"
-tags: ["latex","markdown","ci","git", "jira","project"]
+title: 用于需求分析、开发以至持续集成的源代码管理工作模式
+description: ''
+category: pattern
+tags:
+  - latex
+  - markdown
+  - ci
+  - git
+  - jira
+  - project
 lang: zh
+slug: simple-version-control-workflow-zh
+pubDatetime: 2015-09-04T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 
 # 摘要
@@ -21,7 +28,7 @@ lang: zh
 > * 一些基本的工具，比如c9.io，或者git的基本用法
 > * Markdown的基本语法
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

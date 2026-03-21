@@ -1,12 +1,18 @@
 ---
-layout: post
-title: "Bitbucket Cloud的Issue至JIRA Server的完全迁移指南"
-description: ""
-category: "guide"
-tags: ["markdown","ci","git", "jira", "project"]
+title: Bitbucket Cloud的Issue至JIRA Server的完全迁移指南
+description: ''
+category: guide
+tags:
+  - markdown
+  - ci
+  - git
+  - jira
+  - project
 lang: zh
+slug: bitbucket-issue-to-jira-zh
+pubDatetime: 2016-04-05T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -25,7 +31,7 @@ lang: zh
 >
 > 完整的迁移方案和迁移脚本，需要阅读英文版本。
 
-<!--more-->
+
 
 
 # 项目架构的两个核心思想

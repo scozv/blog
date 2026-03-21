@@ -1,12 +1,18 @@
 ---
-layout: post
-title: "一套简洁的基于Git的线性分支管理工作流"
-description: ""
-category: "pattern"
-tags: ["git","branch","rebase","merge","version"]
-lang: "zh"
+title: 一套简洁的基于Git的线性分支管理工作流
+description: ''
+category: pattern
+tags:
+  - git
+  - branch
+  - rebase
+  - merge
+  - version
+lang: zh
+slug: linear-gitflow-zh
+pubDatetime: 2016-05-18T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -19,7 +25,7 @@ lang: "zh"
 >
 > 在`gitl`实现之前，我将继续使用`GitFlow`。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

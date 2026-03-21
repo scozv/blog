@@ -80,6 +80,16 @@ const currentPostIndex = allPosts.findIndex(a => a.id === post.id);
 const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
 const nextPost =
   currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
+
+/* ========== Bilingual Toggle ========== */
+const isZh = post.id.endsWith("-zh");
+const baseId = isZh ? post.id.replace(/-zh$/, "") : post.id;
+const translatedId = isZh ? baseId : `${baseId}-zh`;
+
+const hasTranslation = allPosts.some(p => p.id === translatedId);
+const translationLink = hasTranslation
+  ? getPath(translatedId, allPosts.find(p => p.id === translatedId)?.filePath)
+  : null;
 ---
 
 <Layout {...layoutProps}>
@@ -96,8 +106,27 @@ const nextPost =
     >
       {title}
     </h1>
-    <div class="my-2 flex items-center gap-2">
+    <div class="my-2 flex flex-wrap items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
+      {
+        hasTranslation && translationLink && (
+          <>
+            <span aria-hidden="true" class="opacity-80">|</span>
+            <a
+              href={translationLink}
+              class="flex items-center gap-1 text-sm opacity-80 hover:text-accent sm:text-base"
+              title={isZh ? "Read in English" : "Read in 中文"}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                <path d="M2 12h20"/>
+              </svg>
+              <span>[ {isZh ? "English" : "中文"} ]</span>
+            </a>
+          </>
+        )
+      }
       <span
         aria-hidden="true"
         class:list={[

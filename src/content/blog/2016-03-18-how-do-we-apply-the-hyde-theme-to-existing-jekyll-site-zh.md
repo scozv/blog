@@ -1,12 +1,15 @@
 ---
-layout: post
-title: "将Hyde风格移至到现有的Jekyll站点"
-description: ""
-category: "guide"
-tags: ["Jekyll", "markdown"]
+title: 将Hyde风格移至到现有的Jekyll站点
+description: ''
+category: guide
+tags:
+  - Jekyll
+  - markdown
 lang: zh
+slug: jekyll-hyde-theme-zh
+pubDatetime: 2016-03-18T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 
 # 摘要
@@ -20,7 +23,7 @@ lang: zh
 >
 > 更详细的步骤需要参看英文版本。
 
-<!--more-->
+
 
 # Jekyll的文件结构
 

@@ -1,12 +1,14 @@
 ---
-layout: post
-title: "Scala函数编程（二）"
-description: ""
-category: "guide"
-tags: ["scala"]
+title: Scala函数编程（二）
+description: ''
+category: guide
+tags:
+  - scala
 lang: zh
+slug: scala-quick-tour-p2-zh
+pubDatetime: 2016-08-22T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -32,7 +34,7 @@ lang: zh
 >
 > 我依然建议去听原版公开课[^open_progfun1]，并完成所有的Assignment。另外，还要多写代码。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

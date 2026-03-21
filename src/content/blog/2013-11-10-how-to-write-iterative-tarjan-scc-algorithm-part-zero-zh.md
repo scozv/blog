@@ -1,24 +1,28 @@
 ---
-layout: post
-title: "迭代版本的Tarjan强连通算法（一）"
-description: ""
-category : "algo"
-tags: ["algorithm", "graph", "dfs"]
+title: 迭代版本的Tarjan强连通算法（一）
+description: ''
+category: algo
+tags:
+  - algorithm
+  - graph
+  - dfs
 lang: zh
+slug: iterative-tarjan-scc-p1-zh
+pubDatetime: 2013-11-10T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 > 上个月我完成了迭代版的Tarjan强连通算法（参见 [Tango.js] [1] ） 。这一个系列的文章将解释这一过程和相关代码——包括迭代图遍历、迭代拓扑排序和Kosaraju强连通算法以及最后的迭代Tarjan算法三部分。本文先讲迭代图遍历。
 >
 > 本文大部分的解释（以及伪代码）需要阅读英文版本。
 
 
-<!--more-->
+
 
 <a name="pi">
 </a>
 
-<div class="post-content lang zh-cn">
+
 
 递归在某些程度上来说，很适合理解（只要找出递推公式），写起来也简单（因为它是递归）。我看过Erlang的一些介绍，这门函数式编程语言，在编译器的支持与优化下，很适合用递归。
 <br />
@@ -34,7 +38,7 @@ lang: zh
 <br />
 下一篇我会整理一下拓扑排序的迭代转化，并将其应用到Kosaraju强连通算法中。
 
-</div>
+
 
 <br />
 

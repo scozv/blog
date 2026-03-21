@@ -1,12 +1,15 @@
 ---
-layout: post
-title: "无代码不欢乐——使用统一的Bash脚本搭建开发环境"
-description: ""
-category: "pattern"
-tags: ["bash","ci"]
+title: 无代码不欢乐——使用统一的Bash脚本搭建开发环境
+description: ''
+category: pattern
+tags:
+  - bash
+  - ci
 lang: zh
+slug: simple-dev-environment-script-zh
+pubDatetime: 2016-07-22T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -30,7 +33,7 @@ lang: zh
 >
 > 本文会提到`dotfiles` [^dotfiles] 这个概念，但不会详细解释它。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

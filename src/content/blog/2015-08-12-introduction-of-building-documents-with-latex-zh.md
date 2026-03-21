@@ -1,12 +1,16 @@
 ---
-layout: post
-title: "介绍专业的文档系统LaTeX"
-description: ""
-category: "guide"
-tags: ["latex","tex","project"]
+title: 介绍专业的文档系统LaTeX
+description: ''
+category: guide
+tags:
+  - latex
+  - tex
+  - project
 lang: zh
+slug: documenting-with-latex-zh
+pubDatetime: 2015-08-12T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 <!--2015-08-10-introduction-of-building-documents-with-latex-->
 
@@ -17,7 +21,7 @@ lang: zh
 >
 > 同时，将演示`LaTeX`在网页中的集成。最后在附录部分，给出了样式模板的参考代码。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

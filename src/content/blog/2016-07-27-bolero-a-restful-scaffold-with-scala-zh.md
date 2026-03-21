@@ -1,12 +1,18 @@
 ---
-layout: post
-title: "Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板"
-description: ""
-category: "guide"
-tags: ["scala","scaffold","project","architecture","restful"]
-lang: "zh"
+title: Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板
+description: ''
+category: guide
+tags:
+  - scala
+  - scaffold
+  - project
+  - architecture
+  - restful
+lang: zh
+slug: bolero-p1-simple-restful-scaffold-with-play-reactivemongo-zh
+pubDatetime: 2016-07-27T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -32,7 +38,7 @@ lang: "zh"
 >
 > `Bolero`的源代码参见 [scozv/bolero](https://github.com/scozv/bolero)。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

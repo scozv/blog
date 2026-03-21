@@ -1,12 +1,22 @@
 ---
-layout: post
-title: "使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id"
-description: ""
-category: "pattern"
-tags: ["scala", "akka", "trackingId", "resourceId", "mdc", "play", "play2.6", "go", "golang"]
-lang: "zh"
+title: 使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id
+description: ''
+category: pattern
+tags:
+  - scala
+  - akka
+  - trackingId
+  - resourceId
+  - mdc
+  - play
+  - play2.6
+  - go
+  - golang
+lang: zh
+slug: akka-mdc-tracking-id-in-log-zh
+pubDatetime: 2017-07-18T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -21,7 +31,7 @@ lang: "zh"
 > 下的所有日志，都没有Tracking Id，最终通过修改配置节点`play.akka.actor`至`akka.actor`，同时替换该`ExecutionContext`的方式
 > 解决了日志中无Tracking Id的问题。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

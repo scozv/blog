@@ -1,12 +1,17 @@
 ---
-layout: post
-title: "纠结于具体的代码实现，不妨准备更完备的测试用例"
-description: ""
-category: "algo"
-tags: ["algorithm","regex","string","pattern"]
-lang: "zh"
+title: 纠结于具体的代码实现，不妨准备更完备的测试用例
+description: ''
+category: algo
+tags:
+  - algorithm
+  - regex
+  - string
+  - pattern
+lang: zh
+slug: simple-tdd-use-case-zh
+pubDatetime: 2017-03-23T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -20,7 +25,7 @@ lang: "zh"
 > 比具体的实现细节更重要。
 
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

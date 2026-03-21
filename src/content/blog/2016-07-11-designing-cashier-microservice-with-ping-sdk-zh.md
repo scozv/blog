@@ -1,12 +1,18 @@
 ---
-layout: post
-title: "使用Ping++设计可供集中收银的微服务"
-description: ""
-category: "pattern"
-tags: ["ping++","microservice","scala","restful","payment"]
-lang: "zh"
+title: 使用Ping++设计可供集中收银的微服务
+description: ''
+category: pattern
+tags:
+  - ping++
+  - microservice
+  - scala
+  - restful
+  - payment
+lang: zh
+slug: simple-cashier-app-with-3rd-sdk-zh
+pubDatetime: 2016-07-11T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -29,7 +35,7 @@ lang: "zh"
 > * 对微服务的理解还停留在概念阶段
 > * 暂时还未涉及退款、提现流程
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}

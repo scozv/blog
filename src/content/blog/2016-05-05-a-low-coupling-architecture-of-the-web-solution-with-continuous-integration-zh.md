@@ -1,12 +1,16 @@
 ---
-layout: post
-title: "基于低耦合和持续集成的Web架构"
-description: ""
-category: "pattern"
-tags: ["ci", "project","architecture"]
+title: 基于低耦合和持续集成的Web架构
+description: ''
+category: pattern
+tags:
+  - ci
+  - project
+  - architecture
 lang: zh
+slug: simple-web-loose-coupling-design-zh
+pubDatetime: 2016-05-05T00:00:00.000Z
 ---
-{% include JB/setup %}
+
 
 # 摘要
 {:.no_toc}
@@ -15,7 +19,7 @@ lang: zh
 >
 > 本文还没有完全地写完。
 
-<!--more-->
+
 
 * Will be replaced with the ToC, excluding the "Contents" header
 {:toc}
