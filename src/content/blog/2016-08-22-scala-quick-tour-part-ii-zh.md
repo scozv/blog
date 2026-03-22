@@ -1,5 +1,5 @@
 ---
-title: Scala函数编程（二）
+title: Scala函数编程（二） (中文)
 description: ''
 category: guide
 tags:

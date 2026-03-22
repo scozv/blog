@@ -1,5 +1,5 @@
 ---
-title: 将Hyde风格移至到现有的Jekyll站点
+title: 将Hyde风格移至到现有的Jekyll站点 (中文)
 description: ''
 category: guide
 tags:

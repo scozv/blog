@@ -1,5 +1,5 @@
 ---
-title: 一套简洁的基于Git的线性分支管理工作流
+title: 一套简洁的基于Git的线性分支管理工作流 (中文)
 description: ''
 category: pattern
 tags:

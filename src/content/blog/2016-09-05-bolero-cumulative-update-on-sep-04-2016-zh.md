@@ -1,5 +1,5 @@
 ---
-title: Bolero，累积更新说明（2016-09-04）
+title: Bolero，累积更新说明（2016-09-04） (中文)
 description: ''
 category: guide
 tags:

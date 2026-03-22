@@ -1,5 +1,5 @@
 ---
-title: 无代码不欢乐——使用统一的Bash脚本搭建开发环境
+title: 无代码不欢乐——使用统一的Bash脚本搭建开发环境 (中文)
 description: ''
 category: pattern
 tags:

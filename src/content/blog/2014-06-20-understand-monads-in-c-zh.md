@@ -1,5 +1,5 @@
 ---
-title: 对Eric Lippert所著的Monads系列文章的综述
+title: 对Eric Lippert所著的Monads系列文章的综述 (中文)
 description: An Short Literature Review on Monads in C#
 category: pattern
 tags:

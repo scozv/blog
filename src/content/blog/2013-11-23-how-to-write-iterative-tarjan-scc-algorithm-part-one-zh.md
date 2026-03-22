@@ -1,5 +1,5 @@
 ---
-title: 迭代版本的Tarjan强连通算法（二）
+title: 迭代版本的Tarjan强连通算法（二） (中文)
 description: ''
 category: algo
 tags:

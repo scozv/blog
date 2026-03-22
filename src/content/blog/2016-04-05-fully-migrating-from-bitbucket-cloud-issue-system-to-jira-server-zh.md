@@ -1,5 +1,5 @@
 ---
-title: Bitbucket Cloud的Issue至JIRA Server的完全迁移指南
+title: Bitbucket Cloud的Issue至JIRA Server的完全迁移指南 (中文)
 description: ''
 category: guide
 tags:

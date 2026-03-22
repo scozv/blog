@@ -1,5 +1,5 @@
 ---
-title: 基于低耦合和持续集成的Web架构
+title: 基于低耦合和持续集成的Web架构 (中文)
 description: ''
 category: pattern
 tags:

@@ -1,5 +1,5 @@
 ---
-title: 介绍专业的文档系统LaTeX
+title: 介绍专业的文档系统LaTeX (中文)
 description: ''
 category: guide
 tags:
