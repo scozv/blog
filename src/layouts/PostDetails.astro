@@ -1,5 +1,5 @@
 ---
-import { render, type CollectionEntry } from "astro:content";
+import { render, type CollectionEntry, getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -75,20 +75,26 @@ const allPosts = posts.map(({ data: { title }, id, filePath }) => ({
   filePath,
 }));
 
-const currentPostIndex = allPosts.findIndex(a => a.id === post.id);
+let currentPostIndex = allPosts.findIndex(a => a.id === post.id);
 
-const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
-const nextPost =
-  currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
-
-/* ========== Bilingual Toggle ========== */
 const isZh = post.id.endsWith("-zh");
 const baseId = isZh ? post.id.replace(/-zh$/, "") : post.id;
 const translatedId = isZh ? baseId : `${baseId}-zh`;
 
-const hasTranslation = allPosts.some(p => p.id === translatedId);
+if (isZh && currentPostIndex === -1) {
+  currentPostIndex = allPosts.findIndex(a => a.id === baseId);
+}
+
+const prevPost = currentPostIndex !== -1 && currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
+const nextPost =
+  currentPostIndex !== -1 && currentPostIndex !== allPosts.length - 1 ? allPosts[currentPostIndex + 1] : null;
+
+/* ========== Bilingual Toggle ========== */
+
+const allPostsUnfiltered = await getCollection("blog", ({ data }) => !data.draft);
+const hasTranslation = allPostsUnfiltered.some(p => p.id === translatedId);
 const translationLink = hasTranslation
-  ? getPath(translatedId, allPosts.find(p => p.id === translatedId)?.filePath)
+  ? getPath(translatedId, allPostsUnfiltered.find(p => p.id === translatedId)?.filePath)
   : null;
 ---
 
