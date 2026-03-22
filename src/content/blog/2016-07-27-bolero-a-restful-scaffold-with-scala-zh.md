@@ -1,5 +1,5 @@
 ---
-title: Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板 (中文)
+title: Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板
 description: ''
 category: guide
 tags:

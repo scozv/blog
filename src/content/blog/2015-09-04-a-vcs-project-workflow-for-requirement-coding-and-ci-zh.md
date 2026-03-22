@@ -1,5 +1,5 @@
 ---
-title: 用于需求分析、开发以至持续集成的源代码管理工作模式 (中文)
+title: 用于需求分析、开发以至持续集成的源代码管理工作模式
 description: ''
 category: pattern
 tags:

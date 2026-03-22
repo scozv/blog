@@ -1,5 +1,5 @@
 ---
-title: 使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id (中文)
+title: 使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id
 description: ''
 category: pattern
 tags:

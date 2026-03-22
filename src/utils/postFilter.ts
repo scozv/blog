@@ -3,8 +3,8 @@ import { SITE } from "@/config";
 
 const postFilter = (
   post: CollectionEntry<"blog">,
-  index: number,
-  allPosts: CollectionEntry<"blog">[]
+  index?: number,
+  allPosts?: CollectionEntry<"blog">[]
 ) => {
   const isPublishTimePassed =
     Date.now() >
@@ -16,7 +16,7 @@ const postFilter = (
 
   // Bilingual deduplication logic
   const isZh = post.id.endsWith("-zh");
-  if (isZh) {
+  if (isZh && allPosts) {
     const baseId = post.id.replace(/-zh$/, "");
     const hasEnglishVersion = allPosts.some(p => p.id === baseId);
     if (hasEnglishVersion) {

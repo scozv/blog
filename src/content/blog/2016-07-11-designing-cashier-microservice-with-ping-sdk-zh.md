@@ -1,5 +1,5 @@
 ---
-title: 使用Ping++设计可供集中收银的微服务 (中文)
+title: 使用Ping++设计可供集中收银的微服务
 description: ''
 category: pattern
 tags:
