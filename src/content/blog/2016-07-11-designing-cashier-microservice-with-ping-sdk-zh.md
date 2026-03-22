@@ -15,7 +15,6 @@ pubDatetime: 2016-07-11T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 使用Ping++可以快速接入不同的支付渠道。
 > 通常情况下，每一个应用需要在Ping++后台系统中，对应地创建一个应用，
@@ -37,8 +36,7 @@ pubDatetime: 2016-07-11T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 
 # 两种Ping++应用的使用方法

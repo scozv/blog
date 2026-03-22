@@ -24,8 +24,7 @@ lang: "en"
 >
 > You may find the source code of `Bolero` on [scozv/bolero](https://github.com/scozv/bolero).
 
-## Table of Contents
-
+## Table of contents
 ## Principles of `Bolero`
 
 I will introduce a `RESTful` Server code scaffold named `Bolero`.

@@ -39,8 +39,7 @@ lang: "en"
 >
 > has been found and applied.
 
-## Table of Contents
-
+## Table of contents
 ## Introduction
 
 Applying the Software Engineering means more attention

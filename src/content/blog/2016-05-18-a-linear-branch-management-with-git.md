@@ -22,8 +22,7 @@ lang: "en"
 > However, the Chinese article is still not finished yet, a few points need to be
 > figured out.
 
-## Table of Contents
-
+## Table of contents
 ## Principles
 
 - Branches is plain, or linear,

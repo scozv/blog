@@ -12,7 +12,6 @@ pubDatetime: 2016-07-22T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 本文最终会给出一段脚本，执行类似如下的语句：
 >
@@ -35,8 +34,7 @@ pubDatetime: 2016-07-22T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # `installation.sh`初览
 

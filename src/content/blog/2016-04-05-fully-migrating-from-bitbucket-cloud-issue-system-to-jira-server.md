@@ -24,8 +24,7 @@ lang: en
 > - Why I choose Bitbucket Cloud instead of other git server,
 > - Why I choose Ubuntu 14.04 Server instead of other OS.
 
-## Table of Contents
-
+## Table of contents
 ## Core Ideas of My Understanding of a Project
 
 **Loose Coupling** and **CI** are two core ideas of my understanding

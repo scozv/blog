@@ -10,7 +10,6 @@ lang: en
 
 # Abstract
 
-{:.no_toc}
 
 > This article is a reading note for _Monads_ [^EL13] by Eric Lippert.
 > And the note is mainly written in Chinese.

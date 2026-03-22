@@ -3,6 +3,9 @@
   "type": "module",
   "version": "5.5.1",
   "scripts": {
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
     "dev": "astro dev",
     "build": "astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
     "preview": "astro preview",
@@ -33,6 +36,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
     "@pagefind/default-ui": "^1.4.0",
+    "@playwright/test": "^1.58.2",
     "@shikijs/transformers": "^3.20.0",
     "@tailwindcss/typography": "^0.5.19",
     "@types/lodash.kebabcase": "^4.1.9",
@@ -47,7 +51,11 @@
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "puppeteer": "^24.40.0",
+    "serve": "^14.2.6",
+    "serve-handler": "^6.1.7",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.51.0"
+    "typescript-eslint": "^8.51.0",
+    "vitest": "^4.1.0"
   }
 }

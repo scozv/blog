@@ -15,7 +15,6 @@ pubDatetime: 2016-07-27T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 本文介绍一套`RESTful`的代码模板（代号：`Bolero`）——使用`Scala`语言，基于`Play!`库以及`ReactiveMongo`。
 >
@@ -40,8 +39,7 @@ pubDatetime: 2016-07-27T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # `Bolero`设计的基本理念
 

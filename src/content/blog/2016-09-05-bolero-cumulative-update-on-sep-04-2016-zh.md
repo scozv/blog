@@ -15,7 +15,6 @@ pubDatetime: 2016-09-05T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 本文是对`Bolero`代码模板的累积更新的说明和解释。
 > 有关`Bolero`的整体介绍，请参考早期的文章[^blog_bolero]。
@@ -25,8 +24,7 @@ pubDatetime: 2016-09-05T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 约定和规范
 

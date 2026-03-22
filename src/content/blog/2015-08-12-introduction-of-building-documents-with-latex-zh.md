@@ -15,7 +15,6 @@ pubDatetime: 2015-08-12T00:00:00.000Z
 <!--2015-08-10-introduction-of-building-documents-with-latex-->
 
 # 摘要
-{:.no_toc}
 > `TeX`家族是一个专业的排版系统。本文简要地介绍了`TeX`家族的常见成员，
 > 并整理出了`LaTeX`入门使用过程中会遇到的一些问题，
 >
@@ -23,8 +22,7 @@ pubDatetime: 2015-08-12T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # `TeX`家族简介
 `TeX`可以视为出版行业的专业排版系统，由[Donald Knuth](http://www-cs-faculty.stanford.edu/~knuth/)于1978年发布，

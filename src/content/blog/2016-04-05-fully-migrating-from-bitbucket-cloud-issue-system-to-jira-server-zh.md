@@ -15,7 +15,6 @@ pubDatetime: 2016-04-05T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 本文给出Bitbucket Cloud的Issue系统至JIRA Server的完整迁移方案，包括:
 >

@@ -13,7 +13,6 @@ pubDatetime: 2016-05-05T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 本文将要解释，我目前以及未来在项目中，将会一直实践的两个概念：低耦合与持续集成。
 >
@@ -21,8 +20,7 @@ pubDatetime: 2016-05-05T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 两个核心概念：低耦合与持续集成
 

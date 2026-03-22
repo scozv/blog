@@ -11,7 +11,6 @@ pubDatetime: 2016-08-21T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 接下来的一系列《Scala函数编程》，得益于公开课《Functional Programming Principles in Scala》[^open_progfun1]。
 > 我整理了函数编程中的重要概念，并加入了我两年`Scala`开发的心得体会 [^blog_bolero]。
@@ -42,8 +41,7 @@ pubDatetime: 2016-08-21T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 函数编程初览
 

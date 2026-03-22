@@ -19,7 +19,6 @@ pubDatetime: 2017-07-18T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > Yann Simon在2014的文章[^_blog_yanns_mdc_play]中总结了两种向Mapped Diagnostic Contexts（MDC）
 > 增加全局变量的编程方式，利用MDC的全局变量，可以在日志中记录每一个HTTP Request的Tracking Id。
@@ -33,8 +32,7 @@ pubDatetime: 2017-07-18T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 背景介绍
 

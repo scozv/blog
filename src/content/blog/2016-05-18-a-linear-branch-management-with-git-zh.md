@@ -15,7 +15,6 @@ pubDatetime: 2016-05-18T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 本文受`GitFlow` [^gitflow] 和`Anti-GitFlow` [^gitflow_anti_01] [^gitflow_anti_02]的启发，
 > 并在使用了`GitFlow`一段时间之后，提出了一套简洁的基于Git的线性分支管理工作流。
@@ -27,8 +26,7 @@ pubDatetime: 2016-05-18T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 总体原则
 

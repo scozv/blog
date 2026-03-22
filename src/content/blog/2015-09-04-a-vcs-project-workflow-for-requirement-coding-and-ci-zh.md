@@ -17,7 +17,6 @@ pubDatetime: 2015-09-04T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 > 开发团队中，使用Word或者PDF文档，或者邮件来描述需求，可能导致同样内容的文档出现在不同成员的电脑上，进而可能导致
 > 版本不一致。另外两次版本的需求更改，很难进行差异比较（Word和PDF文档不是简单的文本文件）。
 > 一种解决方案是，使用文本文件（比如Markdown或者LaTeX）来描述需求，并将所有的文件纳入源代码管理。
@@ -30,8 +29,7 @@ pubDatetime: 2015-09-04T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 环境准备
 本文提到的“环境”，不是开发环境，而是对每个成员都是适用的基本工作环境。

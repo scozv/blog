@@ -11,7 +11,6 @@ pubDatetime: 2016-08-22T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 本文是《Scala函数编程》系列的第二部分，[第一部分](https://scozv.github.io/blog/zh/guide/2016/08/21/scala-quick-tour-part-i)
 > 介绍了函数编程（FP）的基本概念、函数分别可以作为参数和返回值。
@@ -36,8 +35,7 @@ pubDatetime: 2016-08-22T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 
 # 迭代和递归

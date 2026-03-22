@@ -14,7 +14,6 @@ pubDatetime: 2017-03-23T00:00:00.000Z
 
 
 # 摘要
-{:.no_toc}
 
 > 如果我们有如下的一个需求：
 >
@@ -27,8 +26,7 @@ pubDatetime: 2017-03-23T00:00:00.000Z
 
 
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 需求描述
 
