@@ -57,7 +57,7 @@ pubDatetime: 2017-07-18T00:00:00.000Z
 会随机写入到日志文件中。在日志中使用Tracking Id，能够重组不同的请求
 的运行时状态。比较如下两份日志文件：
 
-{% highlight bash %}
+```bash
 
 [2017-07-17T19:06:55.560Z] [DEBUG] user 1 connected
 [2017-07-17T19:06:57.121Z] [DEBUG] get token from redis
@@ -67,10 +67,10 @@ pubDatetime: 2017-07-18T00:00:00.000Z
 [2017-07-17T19:07:05.207Z] [DEBUG] get token from redis
 [2017-07-17T19:07:05.285Z] [ERROR] invalid token
 
-{% endhighlight %}
+```
 
 
-{% highlight bash %}
+```bash
 
 [2017-07-17T19:06:55.560Z] [tracking-id-0001] [DEBUG] user 1 connected
 [2017-07-17T19:06:57.121Z] [tracking-id-0001] [DEBUG] get token from redis
@@ -80,7 +80,7 @@ pubDatetime: 2017-07-18T00:00:00.000Z
 [2017-07-17T19:07:05.207Z] [tracking-id-1024] [DEBUG] get token from redis
 [2017-07-17T19:07:05.285Z] [tracking-id-1024] [ERROR] invalid token
 
-{% endhighlight %}
+```
 
 可以看到，第二份日志清晰地记录了两个请求，而且两个请求在系统中的流转过程可以通过`trackingId`
 完整地串联起来。
@@ -99,14 +99,14 @@ Yann Simon给出的方案就是为了将`trackingId`写入
 Mapped Diagnostic Contexts中，从而可以使用如下的Pattern记录带有
 `trackingId`的日志：
 
-{% highlight xml %}
+```xml
 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
   <file>${application.home:-.}/logs/application.log</file>
   <encoder>
     <pattern>%date [%level] [%mdc{trackingId:--}] %message%n%xException</pattern>
   </encoder>
 </appender>
-{% endhighlight %}
+```
 
 # Tracking Id的实现
 
@@ -120,7 +120,7 @@ David Budworth指出“Java下MDC所依赖的线程存储（Thread Local Storage
 尽管如此，可以利用`Context`传递`trackingId`。
 一方面，在`gin.Context`的基础上新建一个对象 [^_note_where_go_code_from]：
 
-{% highlight go %}
+```go
 type RequestContext struct {
   *gin.Context
 
@@ -133,12 +133,12 @@ func newContext(c *gin.Context) *RequestContext {
     TrackingId: GenGuid(),
   }
 }
-{% endhighlight %}
+```
 
 另一方面，在需要记录日志的地方，将`RequestContext`对象传递到
 日志相关的方法中:
 
-{% highlight go %}
+```go
 func fooAction(c *gin.Context) {
   var err error
 
@@ -148,7 +148,7 @@ func fooAction(c *gin.Context) {
 
   logger.Errorf(buildLogMessage(ctx, "Failed in fooAction: $v", err))
 }
-{% endhighlight %}
+```
 
 上述代码中，`getRequestContext`用于获取（`val.(*RequestContext)`）
 或者新建一个`RequestContext`（对应`newContext`）。日志记录时，通过获取到的
@@ -158,19 +158,19 @@ func fooAction(c *gin.Context) {
 但在创建日志消息体的时候，可将`trackingId`附在消息体的最后。唯一的限制条件就是，
 日志的Pattern需设计成：
 
-{% highlight xml %}
+```xml
 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
   <file>${application.home:-.}/logs/application.log</file>
   <encoder>
     <pattern>%date [%level] %message%n%xException</pattern>
   </encoder>
 </appender>
-{% endhighlight %}
+```
 
 这样，无论是通过Java的MDC还是消息体中直接带上 `trackingId`。
 都能保证最后的日志格式一致：
 
-{% highlight xml %}
+```xml
 
 // with MDC
 %date [%level] [%mdc{trackingId:--}] %message%n%xException
@@ -183,7 +183,7 @@ func buildLogMessage(ctx *RequestContext, format string, parms ...interface{}) s
   f := fmt.Sprintf("[%s] ", ctx.TrackingId) + format
   return fmt.Sprintf(f, parms...)
 }
-{% endhighlight %}
+```
 
 ## 基于HttpFilter和Dispatcher的实现
 
@@ -197,7 +197,7 @@ Yann Simon指出，Play框架会使用不同的线程（Thread）处理同一个
 写入HTTP Response的Header中。当客户端收到异常的时候，可以告知服务端Tracking Id，
 用于查找相关的日志消息。主要的代码如下所示：
 
-{% highlight scala %}
+```scala
 class TrackingFilter @Inject() (
   implicit ec: ExecutionContext
 ) extends EssentialFilter {
@@ -215,7 +215,7 @@ class TrackingFilter @Inject() (
     }
   }
 }
-{% endhighlight %}
+```
 
 `HttpFilter`所生成的`trackingId`还需要传递到不同的线程中，并写入各个线程中的MDC里面，
 也就是将MDC中的信息从一个线程传递到另外一个线程中。
@@ -225,7 +225,7 @@ class TrackingFilter @Inject() (
 本文选用了自定义Akka Dispatcher的方式，关键的代码如下所示，
 需要注意的是，代码中线程的切换发生在`self.execute(() => {})`里：
 
-{% highlight scala %}
+```scala
 def execute(runnable: Runnable): Unit = self.execute(() => {
   val oldMDCContext = MDC.getCopyOfContextMap
 
@@ -236,7 +236,7 @@ def execute(runnable: Runnable): Unit = self.execute(() => {
     setContextMap(oldMDCContext)
   }
 })
-{% endhighlight %}
+```
 
 ## 实践过程中的建议
 
@@ -248,7 +248,7 @@ def execute(runnable: Runnable): Unit = self.execute(() => {
 
 如果自定义了`play.http.filters`参数，在Play的启动日志中可以发现，框架默认开启了四个`HttpFilter`：
 
-{% highlight bash %}
+```bash
 [info] [-] p.a.h.EnabledFilters - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     play.filters.csrf.CSRFFilter
@@ -258,7 +258,7 @@ def execute(runnable: Runnable): Unit = self.execute(() => {
 
 [info] [-] play.api.Play - Application started (Dev)
 
-{% endhighlight %}
+```
 
 如果收到了“Host not allowed: server-name”的问题，需要配置
 Host的白名单[^_play_host_allowed]。另外，一些云IaaS平台提供
@@ -267,7 +267,7 @@ Host的白名单[^_play_host_allowed]。另外，一些云IaaS平台提供
 
 如果白名单失效的话，最快的办法是移除`AllowedHostsFilter`的加载：
 
-{% highlight scala %}
+```scala
 class Filters @Inject() (
   defaultFilters: EnabledFilters,
   tracking: TrackingFilter
@@ -275,7 +275,7 @@ class Filters @Inject() (
   case f: AllowedHostsFilter => false
   case _ => true
 } :+ tracking: _*)
-{% endhighlight %}
+```
 
 
 另一个需要注意的是，自定义的Dispatcher需要配置在`akka.actor`节点之下，
@@ -288,26 +288,26 @@ Yann Simon文中配置节点为`play.akka.actor`，在实践过程中，可以�
 
 完成代码实现之后，发现大部分的日志没有Tracking Id：
 
-{% highlight bash %}
+```bash
 [info] [-] play.api.Play - Application started (Dev)
 [warn] [-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
 [debug] [-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector(security, profile)
 [debug] [-] c.l.p.a.v.g.ActivityApi - start the get last message
 [debug] [-] c.l.p.n.d.ReactiveMongoManager$ -  <:> Connecting reactive driver
-{% endhighlight %}
+```
 
 在`TrackingFilter`中加入日志之后，
 进而发现，在生成`trackingId`之后，日志上有编号，但是之后的日志却没有：
 
-{% highlight bash %}
+```bash
 [info] [-] play.api.Play - Application started (Dev)
 [debug] [3734068e-f354-4de4-a9e7-25fc6ed9a1cb] c.l.TrackingFilter -  <:> trackingId generated: 3734068e-f354-4de4-a9e7-25fc6ed9a1cb
 [warn] [-] c.z.h.HikariConfig - The initializationFailFast propery is deprecated, see initializationFailTimeout
 [debug] [-] c.l.p.a.v.g.G.w.s.com - list feature enabled: Vector(security, profile)
-{% endhighlight %}
+```
 
 进一步地，在自定义的`MDCPropagatingDispatcher`里添加日志，可以看到类似如下的结果：
-{% highlight bash %}
+```bash
 [info] [-] play.api.Play - Application started (Dev)
 [debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] c.l.TrackingFilter -  <:> trackingId generated: a5a7cbab-6ee4-4dd8-b54e-64217dc7357e
 [debug] [a5a7cbab-6ee4-4dd8-b54e-64217dc7357e] old context: null
@@ -317,7 +317,7 @@ Yann Simon文中配置节点为`play.akka.actor`，在实践过程中，可以�
 [debug] [-] new context: null
 [debug] [-] old context: {}
 [debug] [-] new context: null
-{% endhighlight %}
+```
 
 ## 解决思路
 
@@ -329,7 +329,7 @@ Yann Simon文中配置节点为`play.akka.actor`，在实践过程中，可以�
 因此，待解决的问题归纳为：为什么多个线程之间，MDC信息没有相互传递。
 既然已经意识到了是多线程的问题，不妨在日志中输出线程名称：
 
-{% highlight bash %}
+```bash
 # Log format
 # <pattern>%coloredLevel [%mdc{trackingId:--}] [%thread] %logger{15} - %message%n%xException{10}</pattern>
 
@@ -339,15 +339,15 @@ Yann Simon文中配置节点为`play.akka.actor`，在实践过程中，可以�
 [debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - new context: {trackingId=006bc4df-0310-4793-a88d-923dfde227d9}
 [warn] [-] [scala-execution-context-global-80] - ['token': 'fd'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
 
-{% endhighlight %}
+```
 
 留意到最后两条日志，一条带Tracking Id，另一条没有：
 
-{% highlight bash %}
+```bash
 [debug] [006bc4df-0310-4793-a88d-923dfde227d9] [application-akka.actor.default-dispatcher-2] - new context: {trackingId=006bc4df-0....
 [warn] [-] [scala-execution-context-global-80] - ['token': '404'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
 
-{% endhighlight %}
+```
 
 从线程的名称可以看到两条日志使用的线程是不同对象创建的：
 前者使用的是`akka.actor.default-dispatcher`，后者
@@ -361,7 +361,7 @@ Play 2.6提倡使用依赖注入，所以使用全局`ExecutionContext.global`
 通过上面的分析，尝试在代码中查找`ExecutionContext.global`的`implicit`引用，
 并使用依赖注入的方式替代`ExecutionContext.global`，一种修改方案是：
 
-{% highlight scala %}
+```scala
 class Security @Inject() (
 +  implicit ec: ExecutionContext,
   membersDao: MembersDao,
@@ -372,13 +372,13 @@ class Security @Inject() (
 -  implicit val ec = scala.concurrent.ExecutionContext.global
 
 }
-{% endhighlight %}
+```
 
 修改之后，重新启动服务，可以看到日志信息中已经包含了Tracking Id：
-{% highlight bash %}
+```bash
 [debug] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] -  <:> trackingId generated: f6ab38a5-1461-44c9-a5f8-ce7764025fad
 [warn] [f6ab38a5-1461-44c9-a5f8-ce7764025fad] - ['token': '404'] | ['request': 'POST /api/auth'] | ['clientIp': '0:0:0:0:0:0:0:1'] <:> Valid token not found
-{% endhighlight %}
+```
 
 
 # Tracking Id设计的改进

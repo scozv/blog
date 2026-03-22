@@ -3,7 +3,7 @@ import { SITE } from "@/config";
 
 const postFilter = (
   post: CollectionEntry<"blog">,
-  index?: number,
+  _index?: number,
   allPosts?: CollectionEntry<"blog">[]
 ) => {
   const isPublishTimePassed =

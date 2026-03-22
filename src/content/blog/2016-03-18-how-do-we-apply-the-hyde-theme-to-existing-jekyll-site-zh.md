@@ -30,7 +30,7 @@ pubDatetime: 2016-03-18T00:00:00.000Z
 参考__[官方文档](https://jekyllrb.com/docs/structure/)__，
 了解Jekyll的文件结构。
 
-{% highlight sh %}
+```sh
 .
 ├── assets
 |   ├── css
@@ -54,7 +54,7 @@ pubDatetime: 2016-03-18T00:00:00.000Z
 |   ├── default.html
 |   ├── page.html
 |   └── post.html
-{% endhighlight %}
+```
 
 
 # Jekyll渲染的步骤

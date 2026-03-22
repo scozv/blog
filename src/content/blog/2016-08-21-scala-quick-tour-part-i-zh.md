@@ -79,12 +79,12 @@ if-else，循环等 | 模式匹配，递归等
 
 对应地，声明式的编程，通常关注最后的目标——做什么（What），比如我们写如下的`SQL`语句：
 
-{% highlight SQL %}
+```sql
 SELECT _id, name, age
 FROM person
 WHERE class_id = 3
 ;
-{% endhighlight %}
+```
 
 我们“声明”了三个指令：
 
@@ -94,7 +94,7 @@ WHERE class_id = 3
 
 我们没有使用`for-loop`去“命令”数据库，如何去实现筛选的：
 
-{% highlight JavaScript %}
+```javascript
 res = []
 for (i = 0; i < person.length; i++) {
   if (person[i].class_id == 3) {
@@ -103,7 +103,7 @@ for (i = 0; i < person.length; i++) {
 } // end loop
 
 return res
-{% endhighlight %}
+```
 
 ## 运算法则（Theroy）并没有定义Mutable
 
@@ -113,7 +113,7 @@ $$ (a + b) + c = a + (b + c)  $$
 
 我们把这个结合律，分解成如下几个赋值的步骤：
 
-{% highlight JavaScript %}
+```javascript
 x = a + b
 y = c
 r1 = x + y
@@ -122,7 +122,7 @@ y = b + c
 r2 = x + y
 
 Assert.equals(r1, r2)
-{% endhighlight %}
+```
 
 上述的赋值，意味着各个变量都是可变的（Mutable）。
 
@@ -172,14 +172,14 @@ $$ f(f(a, b), c) == f(a, f(b, c)) $$
 
 可以在命令行中输入`scala`，开启`Scala`语言的REPL页面：
 
-{% highlight bash %}
+```bash
 $ scala
 Welcome to Scala version 2.11.6 (OpenJDK 64-Bit Server VM, Java 1.8.0_91).
 Type in expressions to have them evaluated.
 Type :help for more information.
 
 scala>
-{% endhighlight %}
+```
 
 ## 表达式
 
@@ -213,7 +213,7 @@ $$h(x, y) = x^2+y^2 = f(x^2, y^2) = f\left[ g(x), g(y) \right]$$
 
 下面我们给出$$h(3, f(4,1))$$的求值过程：
 
-{% highlight JavaScript %}
+```javascript
   h(3, f(4, 1))
 = h(3, 4+1)
 
@@ -224,7 +224,7 @@ $$h(x, y) = x^2+y^2 = f(x^2, y^2) = f\left[ g(x), g(y) \right]$$
 = f(9, 25)
 = 9 + 25
 = 34
-{% endhighlight %}
+```
 
 在上面的Evaluation过程中，我们优先将“值”应用（Apply）到
 表达式中的各个参数上，比如第一步里面，我们先计算出第二个参数$$f(4,1)$$
@@ -237,7 +237,7 @@ $$h(x, y) = x^2+y^2 = f(x^2, y^2) = f\left[ g(x), g(y) \right]$$
 
 同样上面的函数定义，我们来看第二种Evaluation的方式：
 
-{% highlight JavaScript %}
+```javascript
   h(3, f(4, 1))
 = f[g(3), g( f(4, 1) )]
 = g(3) + g[f(4, 1)]
@@ -252,7 +252,7 @@ $$h(x, y) = x^2+y^2 = f(x^2, y^2) = f\left[ g(x), g(y) \right]$$
 = 9 + 5 * 5
 = 9 + 25
 = 34
-{% endhighlight %}
+```
 
 上面的Evalution过程，我们作如下解释。
 
@@ -322,13 +322,13 @@ $$h(x, y) = x^2+y^2 = f(x^2, y^2) = f\left[ g(x), g(y) \right]$$
 
 ## 通常的函数定义
 
-{% highlight Scala %}
+```scala
 scala> def sum(x: Int, y: Int): Int = x + y
 sum: (x: Int, y: Int)Int
 
 scala> def square(x: Int): Int = x * x
 square: (x: Int)Int
-{% endhighlight %}
+```
 
 完整的函数定义规格文档参考官方文档（引用），如下做简要说明，通常的函数定义从左到右依次为：
 
@@ -346,7 +346,7 @@ square: (x: Int)Int
 `Scala`中函数调用和大多数语言一样，唯一的不同在于，如果函数接收空参数，那么
 调用时，括号可以省略：
 
-{% highlight Scala %}
+```scala
 scala> sum(1, 2)
 res6: Int = 3
 
@@ -358,7 +358,7 @@ res8: Int = 4
 
 scala> random
 res9: Int = 1
-{% endhighlight %}
+```
 
 此处有备注：
 
@@ -388,7 +388,7 @@ res9: Int = 1
 正因为一个Block也是一个表达式，我们也说过，函数体是由等号和表达式构成的，所以
 函数的定义也可以包含一个Block：
 
-{% highlight Scala %}
+```scala
 scala> def f(x: Int): Int = {
          val y = x + 1
          y
@@ -399,28 +399,28 @@ f: (x: Int)Int
 scala> f(3)
 res10: Int = 4
 
-{% endhighlight %}
+```
 
 ## 匿名函数
 
 我们可以定义一个匿名函数：
 
-{% highlight Scala %}
+```scala
 scala> (x: Int, y: Int) => x + y
 res19: (Int, Int) => Int = <function2>
 
 scala> res19(1, 2)
 res20: Int = 3
-{% endhighlight %}
+```
 
 上述的匿名函数，等价于一个Block：
 
-{% highlight Scala %}
+```scala
 {
   def res19(x: Int, y: Int): Int = x + y
   res19
 }
-{% endhighlight %}
+```
 
 # 函数类型
 
@@ -428,17 +428,17 @@ res20: Int = 3
 类型
 对于具名函数的定义：
 
-{% highlight Scala %}
+```scala
 scala> def sum(x: Int, y: Int): Int = x + y
 sum: (x: Int, y: Int)Int
-{% endhighlight %}
+```
 
 对于匿名函数的定义：
 
-{% highlight Scala %}
+```scala
 scala> (x: Int, y: Int) => x + y
 res19: (Int, Int) => Int = <function2>
-{% endhighlight %}
+```
 
 
 我们称，`(Int, Int) => Int`是一个函数类型，它是一个无穷集合，该集合：
@@ -453,22 +453,22 @@ res19: (Int, Int) => Int = <function2>
 
 如果函数不需要参数，则它对应的函数类型为：`() => ?`，比如：
 
-{% highlight Scala %}
+```scala
 scala> () => 1
 res24: () => Int = <function0>
-{% endhighlight %}
+```
 
 ## 函数作为参数
 
 函数类型（Type）类似于其它普通类型——比如`Int`——可以作为参数传递：
 
-{% highlight Scala %}
+```scala
 scala> def sumBy(x: Int, y: Int, by: Int => Int) = by(x) + by(y)
 sumBy: (x: Int, y: Int, by: Int => Int)Int
 
 scala> sumBy(1, 2, x => x * x)
 res27: Int = 5
-{% endhighlight %}
+```
 
 `sumBy`中的第三个参数`by`是一个函数类型，它表示：
 
@@ -479,15 +479,15 @@ res27: Int = 5
 
 上述`sumBy`对应的函数类型为：
 
-{% highlight Scala %}
+```scala
 (Int, Int, Int => Int) => Int
-{% endhighlight %}
+```
 
 ## 函数作为返回值
 
 同样地，函数类型（Type）类似于其它普通类型——比如`Int`——可以作为值返回：
 
-{% highlight Scala %}
+```scala
 scala> def g(step: Int) = (x: Int) => step + x
 g: (step: Int)Int => Int
 
@@ -502,30 +502,30 @@ res28: Int = 3
 
 scala> s3(2)
 res29: Int = 5
-{% endhighlight %}
+```
 
 上述`g`的定义等价于：
 
-{% highlight Scala %}
+```scala
 def g(step: Int): Int => Int = {
   def f(x: Int) = step + x
 
   f
 }
-{% endhighlight %}
+```
 
 对应的函数类型为：
 
-{% highlight Scala %}
+```scala
 Int => Int => Int
-{% endhighlight %}
+```
 
 在函数类型的表示中，默认从右向左看，所以如下两个定义是等价的：
 
-{% highlight Scala %}
+```scala
 Int => Int => Int
 Int => (Int => Int)
-{% endhighlight %}
+```
 
 表示：
 
@@ -536,9 +536,9 @@ Int => (Int => Int)
 
 所以，上述的函数类型，有别于如下的函数类型：
 
-{% highlight Scala %}
+```scala
 (Int => Int) => Int
-{% endhighlight %}
+```
 
 `(Int => Int) => Int`，表示为：
 
@@ -554,20 +554,20 @@ Int => (Int => Int)
 
 我们可以让`Scala`编译器，来推断函数的返回值，比如：
 
-{% highlight Scala %}
+```scala
 scala> def f(x: Int, y: Int) = x + y
 f: (x: Int, y: Int)Int
-{% endhighlight %}
+```
 
 应用在两个`Int`上的加法运算，得到的结果也是一个 `Int`。
 这就是类型推断的结果，帮助我们简化了函数定义。
 
 类型推断，也可以推出函数类型：
 
-{% highlight Scala %}
+```scala
 scala> def g(step: Int) = (x: Int) => step + x
 g: (step: Int)Int => Int
-{% endhighlight %}
+```
 
 如果编译器的类型推断和函数定义的返回类型一致，则称该函数的定义合法。
 
@@ -575,7 +575,7 @@ g: (step: Int)Int => Int
 
 函数的调用需要进行类型匹配，先来看基本类型的匹配：
 
-{% highlight Scala %}
+```scala
 scala> def f(x: Int, y: Double) = x + y
 f: (x: Int, y: Double)Double
 
@@ -588,13 +588,13 @@ scala> f(1.0, 2.0)
  required: Int
               f(1.0, 2.0)
                 ^
-{% endhighlight %}
+```
 
 
 函数类型（Type）类似于其它普通类型——比如`Int`——调用包含函数参数的函数，也
 需要进行类型匹配：
 
-{% highlight Scala %}
+```scala
 scala> def sumBy(x: Int, y: Int, by: Int => Int) = by(x) + by(y)
 sumBy: (x: Int, y: Int, by: Int => Int)Int
 
@@ -613,7 +613,7 @@ f: (x: Int)Int
 
 scala> sumBy(1, 2, f)
 res38: Int = 5
-{% endhighlight %}
+```
 
 我们将参数列表数量相同，并且类型匹配的函数调用，称为合法的函数调用。
 
@@ -622,14 +622,14 @@ res38: Int = 5
 不要过度依赖类型推断，在设计复杂类（尤其存在泛型）的时候，显式地定义函数返回类型，
 可以保证函数的逻辑正确，如果不显式定义返回类型的话， `Bolero`中常用的如下的类型，很容易混淆：
 
-{% highlight Scala %}
+```scala
 Future[T]
 Future[Option[T]]
 Future[Future[T]]
 Future[Seq[T]]
 Seq[Future[T]]
 // 未来的章节，会提到这些类型
-{% endhighlight %}
+```
 
 ## `Scala`语言中如何定义Call By-Value
 
@@ -643,18 +643,18 @@ Seq[Future[T]]
 
 通常的，所有函数参数都是CBV的，可以按照如下方式，定义一个CBN：
 
-{% highlight Scala %}
+```scala
 def f(x: Int, y: => Int) =
   if (x > 0) x else y
-{% endhighlight %}
+```
 
 
 可以改写为：
 
-{% highlight Scala %}
+```scala
 def f(x: Int, y: () => Int) =
   if (x > 0) x else y()
-{% endhighlight %}
+```
 
 # 综合练习
 
@@ -662,15 +662,15 @@ def f(x: Int, y: () => Int) =
 
 举例：
 
-{% highlight Scala %}
+```scala
 def f(x: Int): Int = x + 1
 // 对应的函数类型为：Int => Int
-{% endhighlight %}
+```
 
 
 题目：
 
-{% highlight Scala %}
+```scala
 def f(x: Int, y: Int, z: Int): Int = x + y - z
 def f(x: Int, y: Int, z: Int) = x * (y / z)
 def f(x: Int, y: Int, z: Int) = (x * 1.0) * (y + z)
@@ -690,13 +690,13 @@ def f(x: Int, y: () => Int) = (z: Int) => x + y() + z
 def f(x: Int) = (y: Int, z: Int) => x + y + z
 
 def f(x: Int, y: () => Int) = x + (() => y())()
-{% endhighlight %}
+```
 
 ## 判断下列的函数定义，是否合法
 
 举例：
 
-{% highlight Scala %}
+```scala
 def f(x: Int): Int = x + 1
 // 该函数定义合法，因为当x是整数的时候，(x + 1) 也是一个整数；
 // 类型推断符合函数返回类型
@@ -704,11 +704,11 @@ def f(x: Int): Int = x + 1
 def f(x: Int): String = x + 1
 // 该函数定义不合法，因为(x + 1)是一个整数，但是函数需要一个String作返回值；
 // 类型推断不符合函数的返回类型
-{% endhighlight %}
+```
 
 题目：
 
-{% highlight Scala %}
+```scala
 def f(x: Int): Int = x
 def f(x: Int): Double = x
 def f(x: Int): Double = x + 0.0
@@ -721,22 +721,22 @@ def f(x: Int, y: () => Int): Int = y
 
 def f(x: Int, y: Int => Int): Int = y(x)
 def f(x: Int, y: Int => Int): Int = (z: Int) => y(x) + z
-{% endhighlight %}
+```
 
 ## 判断下列的函数调用，是否合法
 
 举例：
 
-{% highlight Scala %}
+```scala
 def f(x: Double): Double = x + 1.0
 f()         // 调用不合法，因为参数列表的数量不匹配
 f(1.0)      // 调用合法，参数列表的数量、类型都匹配
 f(1)        // 调用合法，参数列表的数量相同，Int类型可以隐式转换为Double类型
-{% endhighlight %}
+```
 
 题目：
 
-{% highlight Scala %}
+```scala
 def f(x: Int, y: Double, z: String): Int = x + y - z.length
 f(1, 2, 3)
 f(1, 2, "3")
@@ -758,7 +758,7 @@ f(1, 2)
 f(1, x => x)
 f(1, (x: Int) => x)
 f(1, (x: Int, y: Int) => x)
-{% endhighlight %}
+```
 
 ## 根据函数类型，定义一个满足该类型的函数
 
@@ -766,17 +766,17 @@ f(1, (x: Int, y: Int) => x)
 
 举例：
 
-{% highlight Scala %}
+```scala
 // 对于函数类型：Int => Double，可定义
 def f(x: Int) = x * 1.0
 // 对应的匿名表达式为
 (x: Int) => x * 1.0
-{% endhighlight %}
+```
 
 
 题目：
 
-{% highlight Scala %}
+```scala
 () => Int
 Int => Int
 
@@ -791,7 +791,7 @@ Int => (Int => Int)
 Int => Int => Int => Int
 
 Int => (Int => Int) => Int
-{% endhighlight %}
+```
 
 ## 将包含CBN参数的函数，改写成类似的普通函数
 
@@ -799,7 +799,7 @@ Int => (Int => Int) => Int
 
 题目：
 
-{% highlight Scala %}
+```scala
 def f(x: Int, y: => Int) = x + y
 
 def f(x: Int, y: => Int) =
@@ -807,7 +807,7 @@ def f(x: Int, y: => Int) =
 
 def f(x: Int, y: => Int) =
   (z: Int) => x + y + z
-{% endhighlight %}
+```
 
 ## 设计一个布尔类型
 

@@ -34,22 +34,22 @@ pubDatetime: 2017-03-23T00:00:00.000Z
 
 假如想支持如下四种通配规则（按照规则的先后执行）：
 
-{% highlight bash %}
+```bash
 a.*       -> 1
 a-*       -> 2
 *.a.com   -> 3
 *.a.*     -> 4
-{% endhighlight %}
+```
 
 箭头左边的表示通配规则，右边表示，当一个域名（输入参数）匹配的时候，
 应该返回什么。
 
 比如，如下两个匹配的例子：
 
-{% highlight bash %}
+```bash
 z.a.com   -> 3
 z.a.io    -> 4
-{% endhighlight %}
+```
 
 # 两种实现方式
 
@@ -66,11 +66,11 @@ z.a.io    -> 4
 
 定义该方法为：
 
-{% highlight JavaScript %}
+```javascript
 function getRootDomain(domain) {
   // ...
 }
-{% endhighlight %}
+```
 
 ## 构造出匹配规则
 
@@ -78,7 +78,7 @@ function getRootDomain(domain) {
 
 示例代码如下：
 
-{% highlight raw %}
+```text
 function matchAndGetResult(domain) {
   var rootDomain = getRootDomain(domain)
   // rule 1
@@ -87,20 +87,20 @@ function matchAndGetResult(domain) {
   if (db.find(`*.$rootDomain.com`)) return 3
   if (db.find(`*.$rootDomain.*`)) return 4
 }
-{% endhighlight %}
+```
 
 如果我们适当地写几个测试用例，就会发现，上面的代码是有问题的，比如
 如下的测试用例：
 
-{% highlight JavaScript %}
+```javascript
 matchAndGetResult('z.a.com') should equal to 3
-{% endhighlight %}
+```
 
 但实际上，返回的值确是`1`。
 
 所以我们想了想，又匆匆忙忙得改改代码：
 
-{% highlight raw %}
+```text
 function matchAndGetResult(domain) {
   var rootDomain = getRootDomain(domain)
   // rule 1
@@ -108,7 +108,7 @@ function matchAndGetResult(domain) {
     return 1
   // ...
 }
-{% endhighlight %}
+```
 
 这样的方法是可行的，但是会发现两个不足的地方：
 
@@ -130,7 +130,7 @@ function matchAndGetResult(domain) {
 
 一种实现方式，可以参考如下的示例代码：
 
-{% highlight raw %}
+```text
 function matchAndGetResult(domain) {
   var rootDomain = getRootDomain(domain)
 
@@ -146,7 +146,7 @@ function matchAndGetResult(domain) {
     }
   }
 }
-{% endhighlight %}
+```
 
 # 优先考虑测试用例的完善
 

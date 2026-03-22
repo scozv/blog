@@ -54,7 +54,7 @@ $$x \in \mathbb{Z}^{+}$$
 
 本文中的迭代计算，使用`JavaScript`语言，因为，你可以直接在浏览器中（F12进入调试面板）运行这段脚本：
 
-{% highlight JavaScript %}
+```javascript
 function f(x) {
   var acc = 1;
   for (var i = x; i > 0; i--) {
@@ -63,11 +63,11 @@ function f(x) {
 
   return acc;
 }
-{% endhighlight %}
+```
 
 以上代码，等价于：
 
-{% highlight JavaScript %}
+```javascript
 function f(x) {
   var acc = 1, i = x;
   while (i > 0) {
@@ -77,7 +77,7 @@ function f(x) {
 
   return acc;
 }
-{% endhighlight %}
+```
 
 ## 迭代计算的一般定义
 
@@ -94,7 +94,7 @@ function f(x) {
 
 根据这几个要素，我们给出迭代的一般定义：
 
-{% highlight JavaScript %}
+```javascript
 var acc = init()
 
 while (NOT shouldQuit(item)) {
@@ -103,7 +103,7 @@ while (NOT shouldQuit(item)) {
 }
 
 return acc
-{% endhighlight %}
+```
 
 ## `calc(acc, item)`还是`calc(item, acc)`？
 
@@ -112,7 +112,7 @@ return acc
 可以看出`calc(acc, item)`和`calc(item, acc)`的区别。
 我们也会在`List[T]`的部分，更多地提到这两者的区别。
 
-{% highlight raw %}
+```text
           calc(acc, item)                      calc(item, acc)
             /       \                             /        \
            /   ...   \                           /   ...    \
@@ -125,7 +125,7 @@ return acc
    /     \                                                     /   \
 init()  item_1                                            item_n   init()
 
-{% endhighlight %}
+```
 
 
 练习：
@@ -140,30 +140,30 @@ init()  item_1                                            item_n   init()
 
 写完之后，需要检验如下的Test Case：
 
-{% highlight JavaScript %}
+```javascript
 f(-1) = 1
 f(0) = 1
 f(1) = 1
 f(2) = 2
 f(5) = 120
-{% endhighlight %}
+```
 
 下面给出`Scala`的递归实现：
 
-{% highlight Scala %}
+```scala
 def f(x: Int): Int =
   if (x > 0) x * f(x-1) else 1
-{% endhighlight %}
+```
 
 
 迭代那一小节里面，我们给出了迭代的一般定义，这里
 我们将迭代的一般定义，转化为递归的一般定义：
 
-{% highlight Scala %}
+```scala
 def f(x: ItemType): AccumulatorType =
   if (NOT shouldQuit(x)) calc(f(nextItem()), x)
   else init()
-{% endhighlight %}
+```
 
 练习（非常重要）：
 
@@ -181,12 +181,12 @@ def f(x: ItemType): AccumulatorType =
 
 > 根据我们上面定义的阶乘递归函数，Evaluate $$5!$$。
 
-{% highlight Scala %}
+```scala
 def f(x: Int): Int =
   if (x > 0) x * f(x-1) else 1
-{% endhighlight %}
+```
 
-{% highlight JavaScript %}
+```javascript
   f(5)
 = 5 * f(4)                   
 = 5 * 4 * f(3)
@@ -197,7 +197,7 @@ def f(x: Int): Int =
 = 5 * 4 * (6)
 = 5 * (24)
 = 120
-{% endhighlight %}
+```
 
 我们对上面的Call Stack作如下说明：
 
@@ -215,7 +215,7 @@ def f(x: Int): Int =
 
 我们首先给出尾递归的阶乘实现：
 
-{% highlight Scala %}
+```scala
 def f(x: Int): Int =
   if (x > 0) x * f(x-1) else 1
 
@@ -226,7 +226,7 @@ def f(x: Int): Int = {
 
   g(1, x)
 }
-{% endhighlight %}
+```
 
 我们对上述尾递归的实现，备注如下：
 
@@ -238,15 +238,15 @@ def f(x: Int): Int = {
 
 回顾一下递归的一般形式：
 
-{% highlight Scala %}
+```scala
 def f(x: ItemType): AccumulatorType =
   if (NOT shouldQuit(x)) calc(f(nextItem()), x)
   else init()
-{% endhighlight %}
+```
 
 我们给出尾递归的一般形式：
 
-{% highlight Scala %}
+```scala
 def f(x: ItemType): AccumulatorType = {
   def g(acc: AccumulatorType, item: ItemType) =
     if (NOT shouldQuit(item)) g(calc(acc, item), nextItem())
@@ -254,7 +254,7 @@ def f(x: ItemType): AccumulatorType = {
 
   g(init(), x)
 }
-{% endhighlight %}
+```
 
 练习（非常重要）：
 
@@ -294,7 +294,7 @@ def f(x: ItemType): AccumulatorType = {
 
 我给出一个伪代码实现：
 
-{% highlight JavaScript %}
+```javascript
 function f(xs) {
   function g(acc, xs) {
     if (xs.length < 1) return acc
@@ -311,7 +311,7 @@ function f(xs) {
 
   return g(0, acc)
 }
-{% endhighlight %}
+```
 
 需要注意的是，上述`subArray`的时间复杂度为$$O_{i\in [1,n]}(i)$$，
 这将导致整个递归的时间复杂度为$$O(\sum_{i=0}^{n} i) = O(\frac{n(n+1)}{2})=O(n^2)$$。
@@ -373,7 +373,7 @@ function f(xs) {
 
 ### 模式匹配
 
-{% highlight Scala %}
+```scala
 trait GenericList[+T] {
   val isEmpty: Boolean
   def size: Int
@@ -419,7 +419,7 @@ GenericList(1.2, 3.5)
 val xs1 = GenericList(1, 2, 3)
 xs1.size
 xs1.isEmpty
-{% endhighlight %}
+```
 
 以上的实现，使用了“单向链式列表”这一数据结构，
 我认为这些基础的数据结构，是程序员的基本修养，请
@@ -473,7 +473,7 @@ xs1.isEmpty
 
 举例：
 
-{% highlight Scala %}
+```scala
 // 已知
 def f0(x: Int): Int = ???
 def f1(x: Int, y: Int) = ???
@@ -481,7 +481,7 @@ def f1(x: Int, y: Int) = ???
 def f(x: Int): Int = ???
 // 参考答案
 def f(x: Int): Int = f1(x, f0(x))
-{% endhighlight %}
+```
 
 # 练习题参考答案
 
@@ -491,10 +491,10 @@ def f(x: Int): Int = f1(x, f0(x))
 
 给出如下的递归一般定义：
 
-{% highlight Scala %}
+```scala
 def f[ItemType, AccumulatorType](x: ItemType): AccumulatorType =
   if (! shouldQuit(x)) calc(f(nextItem()), x) else init()
-{% endhighlight %}
+```
 
 练习：
 
@@ -508,12 +508,12 @@ def f[ItemType, AccumulatorType](x: ItemType): AccumulatorType =
 
 参考答案：
 
-{% highlight Scala %}
+```scala
 def shouldQuit[ItemType](x: ItemType): Boolean = ???
 def calc[ItemType, AccumulatorType](acc: AccumulatorType, x: ItemType): AccumulatorType = ???
 def nextItem[ItemType](): ItemType = ???
 def init[AccumulatorType](): AccumulatorType = ???
-{% endhighlight %}
+```
 
 上面的几个函数定义，必须在`Scala`的REPL中编译通过。
 这里使用了泛型定义，如果不理解，请尝试阅读
@@ -524,7 +524,7 @@ def init[AccumulatorType](): AccumulatorType = ???
 
 > 使用匿名函数，代替尾递归一般定义中的临时函数`g`。
 
-{% highlight Scala %}
+```scala
 def f[ItemType, AccumulatorType](x: ItemType): AccumulatorType = {
   def g(acc: AccumulatorType, item: ItemType): AccumulatorType =
     if (! shouldQuit(item)) g(calc(acc, item), nextItem())
@@ -532,7 +532,7 @@ def f[ItemType, AccumulatorType](x: ItemType): AccumulatorType = {
 
   g(init(), x)
 }
-{% endhighlight %}
+```
 
 
 # 参考文献

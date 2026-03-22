@@ -40,13 +40,13 @@ pubDatetime: 2016-09-05T00:00:00.000Z
 
 所有的HTTP Response都返回如下统一的格式：
 
-{% highlight raw %}
+```text
 {
   ok: Boolean,
   data: T,
   error: String
 }
-{% endhighlight %}
+```
 
 ## Payload和Respose的一致性
 
@@ -72,17 +72,17 @@ pubDatetime: 2016-09-05T00:00:00.000Z
 
 参考：
 
-{% highlight raw %}
+```text
 https://github.com/scozv/bolero/commit/ea24ab2c443a802145488b81c15e2fa7266492ae
-{% endhighlight %}
+```
 
 ## 全局的`Action Not Found`处理
 
 将`Action Not Found`的异常，统一交给`ResponseError`类处理。
 
-{% highlight raw %}
+```text
 https://github.com/scozv/bolero/commit/e8991bc146adeabaf5d5f713f253a2a6fa1fe950
-{% endhighlight %}
+```
 
 ## 增强了`ResponseOk`的功能
 

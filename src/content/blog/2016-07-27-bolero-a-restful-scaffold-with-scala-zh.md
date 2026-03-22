@@ -94,7 +94,7 @@ pubDatetime: 2016-07-27T00:00:00.000Z
 
 `Play!`中也提供了用于automated mapping的`JSON`读写 [^play_json_auto]：
 
-{% highlight scala %}
+```scala
 import play.api.libs.json._
 
 implicit val autoReads = Json.reads[T]
@@ -102,7 +102,7 @@ implicit val autoWrites = Json.writes[T]
 
 // format = reads + writes
 implicit val autoFormat = Json.format[T]
-{% endhighlight %}
+```
 
 此处有建议：
 
@@ -119,9 +119,9 @@ implicit val autoFormat = Json.format[T]
 
 目前系统的建模，通常离不开继承和多态，使用`Reads`和`Writes`时，可能会遇到如下异常：
 
-{% highlight scala %}
+```scala
 ambiguous reference to overloaded definition
-{% endhighlight %}
+```
 
 表明某一个类的`Reads`或者`Writes`有重复定义的情况。我之前花了9个`git commits`来处理这个问题。
 你可以参考`Bolero`的[源代码](https://github.com/scozv/bolero)，或者给我看看错误信息。
@@ -145,18 +145,18 @@ ambiguous reference to overloaded definition
 
 如果你经常使用`Scala`中的`map()`，你就会发现如下的一致性原则：
 
-{% highlight scala %}
+```scala
 T.map(): T
 // such as
 List[A].map(): List[B]
 Future[A].map(): Future[B]
-{% endhighlight %}
+```
 
 受这一原则的启发，我在`Bolero`的`RESTful API`设计中，很多时候
 `payload`和HTTP Response的数据结构都是一样的，比如，
 如下是购物车页面，提交，生成（返回）带`_id`的订单的`RESTful`接口：
 
-{% highlight HTML %}
+```html
 POST /checkout
 
 // Request
@@ -165,7 +165,7 @@ payload: "Bolero.models.Order"
 
 // Response
 data: "Bolero.models.Order"
-{% endhighlight %}
+```
 
 这样的设计，让接口的使用变得更简单——只需要记住一个数据结构。
 
@@ -219,7 +219,7 @@ CORS是Cross Origin Resource Sharing [^mdn_cors] 的简写。
 
 该源代码的文件结构为：
 
-{% highlight sh %}
+```sh
 .
 ├── app
 |   ├── base                // API中的辅助类
@@ -242,7 +242,7 @@ CORS是Cross Origin Resource Sharing [^mdn_cors] 的简写。
 ├── test                     // 测试脚本
 |
 └── build.sbt
-{% endhighlight %}
+```
 
 ## `models`中的几个`trait`解释
 
@@ -281,7 +281,7 @@ Mask这个命名，受Oracle Data Masking [^oracle_mask] 的启发。
 
 此处，借用了`Scala`对`Try` [^scala_try] 的设计：
 
-{% highlight scala %}
+```scala
 
 type OrderOrError = Either[Order, Error]
 
@@ -300,7 +300,7 @@ def genericRule
     case Right(e) => Future.successful(Right(e))
     case Left(o) => genericValidation(o, db)
   }
-{% endhighlight %}
+```
 
 此处有备注：
 
@@ -319,7 +319,7 @@ def genericRule
 * 定义`OPTION`路由；
 * 处理`OPTION`，返回`HTTP 200`。
 
-{% highlight scala %}
+```scala
 // routes
 // OPTIONS       /*path        controllers.CORSController.preFlight(path)
 // controllers
@@ -341,7 +341,7 @@ trait CanCrossOrigin {
   }
 }
 
-{% endhighlight %}
+```
 
 ## `CanConnectDB2[T]`——统一处理数据的读写
 
@@ -352,7 +352,7 @@ trait CanCrossOrigin {
 
 目前提供如下的接口实现：
 
-{% highlight scala %}
+```scala
 trait CanConnectDB2[T] {
   // 查询所有的T
   def list(db: DB): Future[Seq[T]] = ???
@@ -369,7 +369,7 @@ trait CanConnectDB2[T] {
   // 更新指定_id的T
   def edit(db: DB, id: String, update: T):Future[UpdateWriteResult] = ???
 }
-{% endhighlight %}
+```
 
 ## 基于Token的用户认证
 
@@ -401,7 +401,7 @@ Action composition [^play_composition] 来完成Token认证。
 
 ## 测试文件的结构
 
-{% highlight sh %}
+```sh
 .
 ├── test
 |   ├── WithApplication.scala         // 升级至Play 2.4之后，使用旧版的WithApplication
@@ -409,7 +409,7 @@ Action composition [^play_composition] 来完成Token认证。
 |   ├── CanFakeHTTP.scala             // 伪造HTTP Request
 |   └── BoleroApplicationSpec.scala   // 具体的测试脚本，可以将不同的测试逻辑分割成不同的文件
 
-{% endhighlight %}
+```
 
 ## 测试的无状态
 
@@ -432,7 +432,7 @@ Action composition [^play_composition] 来完成Token认证。
 另外，在实际的使用中`Bolero`的生产配置对开发是不可见的。
 我通常会使用多个`git repo`来托管源代码（假定项目代号为`PJ`）：
 
-{% highlight bash %}
+```bash
 pj-docs                 # 文档中心，使用`Markdown`来写项目的所有文档
 pj-core-restful         # 本文的主要内容，使用`Bolero`代码模板
 pj-core-web             # 核心的Web建模，使用`TypeScript`建模
@@ -441,7 +441,7 @@ pj-client-device        # View层，App客户端
 pj-client-console       # View层，系统的后台管理平台，使用`pj-core-web`
 pj-deploy               # 以上所有`repo`的发布配置脚本，对开发不可见
 pj-data                 # 生产环境的数据备份，对开发不可见
-{% endhighlight %}
+```
 
 # 参考文献
 

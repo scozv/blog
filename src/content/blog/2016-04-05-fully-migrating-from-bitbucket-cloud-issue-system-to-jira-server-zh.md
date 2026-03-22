@@ -75,7 +75,7 @@ pubDatetime: 2016-04-05T00:00:00.000Z
 * 在JIRA Server中设置DVCS Accounts
 * 在Bitbucket Cloud里面指定JIRA Link
 * 修订历史代码提交信息，如下
-{% highlight sh %}
+```sh
 # 警告：如下的代码将会重写所有的历史commits信息
 # 警告：如下的代码将会重写所有的历史commits信息
 # 警告：如下的代码将会重写所有的历史commits信息
@@ -85,11 +85,11 @@ git filter-branch -f --msg-filter \
 git reset --hard
 git gc --aggressive
 git prune
-{% endhighlight %}
+```
 
 # JIRA安装脚本
 
-{% highlight sh %}
+```sh
 # JAVA
 sudo add-apt-repository ppa:openjdk-r/ppa
 sudo apt-get update
@@ -171,7 +171,7 @@ sudo bash /etc/init.d/mysql stop
 JIRA_HOME="/opt/atlassian/jira"
 sudo bash /etc/init.d/mysql start
 sudo bash $JIRA_HOME/bin/start-jira.sh
-{% endhighlight %}
+```
 
 # References
 

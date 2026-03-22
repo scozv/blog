@@ -136,7 +136,7 @@ pubDatetime: 2015-08-12T00:00:00.000Z
 
 ### 编译命令参考
 
-{% highlight sh %}
+```sh
 # 文件名: build.sh
 
 # 编译过程中如果出现异常中断，可能需要清除临时文件
@@ -155,7 +155,7 @@ done
 # 引用参考文献编号
 xelatex index.tex
 xelatex index.tex
-{% endhighlight %}
+```
 
 ## `LaTeX`在Web页面的使用——基于`KaTeX`库
 
@@ -198,7 +198,7 @@ $$e^x = \lim_{n\rightarrow \infty} \sum_{t=0}^{n} ( \frac{1}{t!}\cdot x^t )= \su
 如果一个字体集，少了粗体定义，则会出现这样的提示。解决方案是，
 手动指定文档中粗体对应的字体：
 
-{% highlight tex %}
+```tex
 % CJK for XeTeX
 % http://www.ctan.org/pkg/xetexref
 % https://zh.wikipedia.org/wiki/XeTeX
@@ -211,7 +211,7 @@ $$e^x = \lim_{n\rightarrow \infty} \sum_{t=0}^{n} ( \frac{1}{t!}\cdot x^t )= \su
 
 \begin{document}
 \maketitle
-{% endhighlight %}
+```
 
 ### latex error: file `multind.sty' not found
 
@@ -222,11 +222,11 @@ tex.ac.uk下的[一份文档](http://www.tex.ac.uk/cgi-bin/texfaq2html-beta?labe
 
 所以[该文档](http://bioinforma.weebly.com/random-troubleshooting.html#/)尝试安装`texlive-full`来解决问题:
 
-{% highlight base %}
+```bash
 sudo apt-get install texlive-full
 sudo texhash
 sudo texconfig
-{% endhighlight %}
+```
 
 如果想要尝试手动安装`multind.sty`，可以按照如下步骤：
 
@@ -239,7 +239,7 @@ sudo texconfig
 
 `finance`是一个文件名，而非命令。对比如下两个命令：
 
-{% highlight sh %}
+```sh
 scott@c9 [~/repo/notes] (master *)
 $ makeindex finance
 This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
@@ -255,13 +255,13 @@ Sorting entries....done (106 comparisons).
 Generating output file finance.ind....done (59 lines written, 0 warnings).
 Output written in finance.ind.
 Transcript written in finance.ilg.
-{% endhighlight %}
+```
 
 ### xeCJK error: "key-unknown"
 
 可能会在`Lubuntu 14.04`下遇到这样的问题：
 
-{% highlight sh %}
+```sh
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
 ! xeCJK error: "key-unknown"
@@ -276,11 +276,11 @@ Transcript written in finance.ilg.
 !...............................................  
 
 l.37 ...setup{AutoFakeBold=true, LoadFandol=false}
-{% endhighlight %}
+```
 
 解决方案是，更换字体配置：
 
-{% highlight tex %}
+```tex
  \usepackage{xltxtra, xeCJK}
 -\setCJKmainfont[Mapping=tex-text]{WenQuanYi Micro Hei}
 +\setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
@@ -291,7 +291,7 @@ l.37 ...setup{AutoFakeBold=true, LoadFandol=false}
 +\setmainfont{Gentium Book Basic}
 +
  \begin{document}
-{% endhighlight %}
+```
 
 ### CJK字体的选用
 
@@ -302,10 +302,10 @@ l.37 ...setup{AutoFakeBold=true, LoadFandol=false}
 不过，目前并不能顺利地在LaTeX中使用思源黑体， 参考[知乎问答](http://www.zhihu.com/question/24535443)。
 而且使用思源黑体，可能会遇到如下错误：
 
-{% highlight sh %}
+```sh
 xelatex.exe: The font file could not be found.
 xelatex.exe: Data: Source Sans Pro/OT
-{% endhighlight %}
+```
 
 
 可以参考知乎专题的[解决方案](http://zhuanlan.zhihu.com/LaTeX/19807822)，
@@ -321,10 +321,10 @@ xelatex.exe: Data: Source Sans Pro/OT
 
 解决方案如下：
 
-{% highlight tex %}
+```tex
 -\xeCJKsetup{AutoFakeBold=true}
 +\xeCJKsetup{AutoFakeBold=true, CJKmath=true}
-{% endhighlight %}
+```
 
 ### 使用强调`\emph`而非加粗`\textbf`
 
@@ -344,34 +344,34 @@ xelatex.exe: Data: Source Sans Pro/OT
 可以参考[此处](http://tex.stackexchange.com/questions/6754/what-is-the-canonical-way-to-redefine-the-emph-command/6757#6757)
 定义强调段落的样式：
 
-{% highlight tex %}
+```tex
 +% bold emphasized text
 +\makeatletter
 +\DeclareRobustCommand{\em}{\%
 +  \@nomath\em \if b\expandafter\@car\f@series\@nil
 +  \normalfont \else \bfseries \fi}
 +\makeatother
-{% endhighlight %}
+```
 
 
 ### 编译之后的文档输出有乱码
 
 检查`.tex`文档的编码，是否为`UTF-8`：
 
-{% highlight sh %}
+```sh
 file -i *.tex
-{% endhighlight %}
+```
 
 ### 文献引用编号显示为`[?]`
 
 仔细阅读编译日志，可以找到解决方案：
 
-{% highlight sh %}
+```sh
 makeindex idx_finance.idx
 bibtex index.aux
 xelatex index.tex
 +xelatex index.tex
-{% endhighlight %}
+```
 
 也就是说，编译过程中，执行两次编译命令。
 
@@ -379,7 +379,7 @@ xelatex index.tex
 
 如果想要将目录中“索引”的层级提高到“章节”级别，可以定义如下的排版格式：
 
-{% highlight tex %}
+```tex
 +  \makeatletter
 +  % Put section depth at the same level as \chapter.
 +  \renewcommand*{\toclevel@section}{0}
@@ -387,14 +387,14 @@ xelatex index.tex
 +  % Put section depth back to its default value.
 +  \renewcommand*{\toclevel@section}{1}
 +  \makeatother
-{% endhighlight %}
+```
 
 
 ### 定义“摘要”章节的样式
 
 参考stackoverflow中的讨论：
 
-{% highlight tex %}
+```tex
 % http://stackoverflow.com/q/2737326
 +\chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
 +\begin{quotation}
@@ -402,12 +402,12 @@ xelatex index.tex
 % Abstract
 +\end{quotation}
 +\clearpage
-{% endhighlight %}
+```
 
 
 ## 模板样例
 
-{% highlight tex %}
+```tex
 \documentclass[a4paper]{book}
 
 % shortcut for scozv's github homepage
@@ -538,7 +538,7 @@ Finally, a LaTeX template will be attached in Appendix.
 \chapter{Appendix I}
 \include{appendix}
 \end{document}
-{% endhighlight %}
+```
 
 
 # 参考文献

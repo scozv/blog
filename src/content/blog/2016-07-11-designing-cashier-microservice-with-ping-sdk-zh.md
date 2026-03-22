@@ -131,7 +131,7 @@ pubDatetime: 2016-07-11T00:00:00.000Z
 0. Ping++服务器确认支付结果之后，向RESTful Server发送一个POST请求，告知结果
 0. RESTful Server接收到这个Webhook之后，修改订单的支付状态
 
-{% highlight raw %}
+```text
 
 +------------------------------------------+----------------+
 |                                          |                |
@@ -169,7 +169,7 @@ pubDatetime: 2016-07-11T00:00:00.000Z
 +---------------+---------------------+                    +--------+
 
 
-{% endhighlight %}
+```
 
 ## 将购物流程一般化
 
@@ -184,7 +184,7 @@ pubDatetime: 2016-07-11T00:00:00.000Z
 
 目前在用的设计如下，只列出重要的属性（Property），从最上层订单类到所购商品：
 
-{% highlight scala %}
+```scala
 
 class Order {
   cart: List[CartItem]
@@ -200,18 +200,18 @@ interface GenericProduct {
   price: Double
 }
 
-{% endhighlight %}
+```
 
 
 对于上面提到的“支付并阅读”这类的流程，
 最终的`Order`实例满足`cart`数组只有一个元素：
 
-{% highlight scala %}
+```scala
 
 singleItemOrder should be instanceOf Order
 singleItemOrder.cart shoule be size(1)
 
-{% endhighlight %}
+```
 
 # 设计可供集中收银的微服务
 
@@ -227,7 +227,7 @@ singleItemOrder.cart shoule be size(1)
 
 ### 将原来的一个`RESTful Server`拆分成多个微服务
 
-{% highlight raw %}
+```text
 +------------------------+          +-----------------------+
 |                        |          |                       |
 |  RESTful Server        |          |  RESTful Server       |
@@ -274,11 +274,11 @@ singleItemOrder.cart shoule be size(1)
 |               |                     | to RESTful server  |        |
 +---------------+---------------------+                    +--------+
 
-{% endhighlight %}
+```
 
 ### 集中收银台的设计图
 
-{% highlight raw %}
+```text
 +------------------------+          +-----------------------+
 |                        |          |                       |
 |  RESTful Server        |          |  RESTful Server       |
@@ -337,12 +337,12 @@ v  +                            v  +
 |         |     |         |     |         |
 +---------+     +---------+     +---------+
 
-{% endhighlight %}
+```
 
 
 ### 收银台服务的`RESTful API`设计
 
-{% highlight scala %}
+```scala
 
 // STEP 4 apply for Charge data
 POST /cashier/charge
@@ -359,4 +359,4 @@ RESPONSE: {
 // STEP 9
 POST /cashier/webhook
 
-{% endhighlight %}
+```

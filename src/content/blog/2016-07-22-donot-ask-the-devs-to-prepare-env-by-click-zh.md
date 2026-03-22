@@ -43,9 +43,9 @@ pubDatetime: 2016-07-22T00:00:00.000Z
 你可以在`github`中看到安装脚本的源代码（[链接](https://github.com/scozv/dotfiles/blob/master/os/ubuntu-server.sh)）。
 或者，你也可以在虚拟机中执行如下命令：
 
-{% highlight bash %}
+```bash
 wget -qO- https://raw.githubusercontent.com/scozv/dotfiles/master/os/ubuntu-server.sh | bash
-{% endhighlight %}
+```
 
 请注意：
 
@@ -88,7 +88,7 @@ Total Commits | 137 (average 2.0 commits per active day, 0.2 per all days)
 本文提到的脚本，主要在`14.04+`上运行，建议生产环境使用`Ubuntu Server 14.04`。使用脚本可以区分
 系统的版本：
 
-{% highlight bash %}
+```bash
 # http://ask.xmodulo.com/find-ubuntu-version-codename-shell-script.html
 if [[ `lsb_release --release | cut -f2` > "15.10" ]]; then
   echo "System Upgrade for `lsb_release --release | cut -f2`"
@@ -96,16 +96,16 @@ if [[ `lsb_release --release | cut -f2` > "15.10" ]]; then
 else
   sudo apt-get update && sudo apt-get upgrade
 fi
-{% endhighlight %}
+```
 
 ## 兼容新旧环境
 
 可以通过，如下两个命令，判断某一个包是否已经安装成功：
 
-{% highlight bash %}
+```bash
 command -v "$1" > /dev/null 2>&1
 [ -d "$1" ]
-{% endhighlight %}
+```
 
 更详细的代码可以参考[此处`diff`](https://github.com/scozv/dotfiles/commit/94f984ac1c23b2bbebea03e6b21b79748dc441c9#diff-dc9087fc5f049f9e1d8e365374bcc630R1)
 
@@ -114,11 +114,11 @@ command -v "$1" > /dev/null 2>&1
 很多可视化的工具都不需要在`Server`上运行，比如IDE工具等。所以`installation.sh`应该
 区分`Server`脚本和`Desktop`脚本。
 
-{% highlight bash %}
+```bash
 wget -qO- https://raw.githubusercontent.com/scozv/dotfiles/master/os/ubuntu-server.sh | bash
 
 wget -qO- https://raw.githubusercontent.com/scozv/dotfiles/master/os/ubuntu-desktop.sh | bash
-{% endhighlight %}
+```
 
 查看上面的两个脚本的源代码，`installation.sh`封装的主要思路为：
 
@@ -172,7 +172,7 @@ wget -qO- https://raw.githubusercontent.com/scozv/dotfiles/master/os/ubuntu-desk
 其中，我使用了UCloud的CDN，因为它提供了`filemgr-linux64`脚本，可以在`bash`中方便
 地使用文件上传接口：
 
-{% highlight bash %}
+```bash
 #!/usr/bin/env bash
 
 echo "将源文件打包"
@@ -183,7 +183,7 @@ cd ~/opt/filemgr-linux64.elf
 ./filemgr-linux64 --action mput --bucket <bucket_name> --key dotfiles/ubuntu-server.sh --file ~/repo/dotfiles/os/ubuntu-server.sh
 ./filemgr-linux64 --action mput --bucket <bucket_name> --key dotfiles/ubuntu-desktop.sh --file ~/repo/dotfiles/os/ubuntu-desktop.sh
 cd ~/repo/dotfiles
-{% endhighlight %}
+```
 
 
 ## 使用花括号保证脚本的完整
@@ -191,12 +191,12 @@ cd ~/repo/dotfiles
 受`nvm`安装脚本[^nvm]的启发，为了保证`wget`的脚本的完整，使用花括号将所有的
 代码包含进入：
 
-{% highlight bash %}
+```bash
 #!/usr/bin/env bash
 {
   # code here
 }
-{% endhighlight %}
+```
 
 # 持续集成的基础——脚本化
 
