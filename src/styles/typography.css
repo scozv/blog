@@ -92,6 +92,11 @@
   }
 
   /* ===== Code Blocks & Syntax Highlighting ===== */
+  /* Katex text color */
+  .app-prose .katex-display {
+    @apply text-foreground;
+  }
+
   .astro-code {
     @apply flex border bg-(--shiki-light-bg) text-(--shiki-light) outline-border [&_span]:text-(--shiki-light);
   }
