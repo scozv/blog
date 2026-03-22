@@ -57,6 +57,9 @@ export default defineConfig({
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },
+    ssr: {
+      external: ["sanitize-html", "markdown-it"],
+    },
   },
   image: {
     responsiveStyles: true,

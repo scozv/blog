@@ -4,10 +4,11 @@ import { SITE } from "@/config";
 
 const getSortedPosts = (
   posts: CollectionEntry<"blog">[],
-  descBy: "pubDatetime" | "modDatetime" | undefined = SITE.descBy as "pubDatetime" | "modDatetime" | undefined
+  descBy: "pubDatetime" | "modDatetime" | undefined = SITE.descBy as "pubDatetime" | "modDatetime" | undefined,
+  applyFilter: boolean = true
 ) => {
-  return posts
-    .filter(postFilter)
+  const filteredPosts = applyFilter ? posts.filter(postFilter) : posts;
+  return filteredPosts
     .sort(
       (a, b) =>
         Math.floor(
