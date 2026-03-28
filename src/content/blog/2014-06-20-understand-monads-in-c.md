@@ -2,7 +2,7 @@
 title: "Understand Monads in C#"
 slug: monad-in-csharp
 pubDatetime: 2014-06-20 09:20:06+08:00
-description: "An Short Literature Review on Monads in C#"
+description: 'This article is a reading note for _Monads_ by Eric Lippert. And the note is mainly written in Chinese. For me, Monad is a pipe line, transferring the input data, including the operator and sending...'
 category: "pattern"
 tags: ["linq", "monad", "scala"]
 lang: en
@@ -20,8 +20,6 @@ lang: en
 > never break this pipe rule, nor throw error out.
 >
 > For more details, please read the English references.
-
-<!--more-->
 
 Eric Lippert indicates in his article [^EL13-8]：
 

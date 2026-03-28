@@ -1,25 +1,29 @@
 ---
-layout: post
 title: "对登录和基于Token的认证机制的理解"
-description: ""
-category: "pattern"
-tags: [auth, algo, token, security]
-lang: zh
+pubDatetime: 2016-05-12T12:00:00Z
+slug: "understanding-of-login-and-the-token-based-authentication"
+featured: false
+draft: false
+tags:
+  - drafts
+  - auth
+  - algo
+  - token
+  - security
+description: '[Legacy Draft] 本文首先抛开具体的技术，描述了我对“登录”的理解。之后会介绍基于Token的认证方式 This article will talk about what the LOGIN really is. And, introduce the Token Based Authentication'
 ---
-{% include JB/setup %}
+
+TL;DR: This was a draft when I used Jekyll for my blog site (2016). It may be incomplete or contain outdated information.
 
 # 摘要
-{:.no_toc}
 
 > 本文首先抛开具体的技术，描述了我对“登录”的理解。之后会介绍基于`Token`的认证方式
 >
 > This article will talk about what the LOGIN really is. And,
 > introduce the Token Based Authentication
 
-<!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 对登录的理解
 
@@ -34,7 +38,7 @@ lang: zh
 通常而言，租赁合同有一定的期限，超过之后，我们得续租，或者退租。而，我们拿到的钥匙，
 就是未来打开房门的通行证。
 
-{% highlight raw linenos %}
+```text
 +-----------+                         +------------+
 |           | need a appartment rent  |            |
 |   Guest   +-----------------------> |    Host    |
@@ -62,7 +66,7 @@ lang: zh
                                       |            |
                                       +------------+
 
-{% endhighlight %}
+```
 
 
 需要注意的是，如果钥匙丢了，或者租客被恶意劫持了，这把钥匙还是能够正常的

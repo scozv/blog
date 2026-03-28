@@ -1,15 +1,19 @@
 ---
-layout: post
 title: "基于RESTful API为导向的软件开发流程"
-description: ""
-category: "pattern"
-tags: ["restful","development"]
-lang: zh
+pubDatetime: 2016-07-25T12:00:00Z
+slug: "restful-api-driven-development-why-and-how"
+featured: false
+draft: false
+tags:
+  - drafts
+  - restful
+  - development
+description: '[Legacy Draft] 本文介绍一套基于RESTful API为导向的软件开发流程（以下简称“流程R”），主要的步骤为： （假定）需求已经大致确定； 同步进行如下两个步骤： - 测试人员以页面为单位，整理用例（草稿）， - 开发人员以页面为单位，按照功能点，整理RESTful接口（1.0）； 尝试整合用例和接口文档，尽量保证测试用例的每一个步骤，都有一个具体的RESTful接口与之对应； 按照功能模块，整合或者重写...'
 ---
-{% include JB/setup %}
+
+TL;DR: This was a draft when I used Jekyll for my blog site (2016). It may be incomplete or contain outdated information.
 
 # 摘要
-{:.no_toc}
 
 > 本文介绍一套基于RESTful API为导向的软件开发流程（以下简称“流程R”），主要的步骤为：
 >
@@ -31,10 +35,8 @@ lang: zh
 > * 联调前后台；
 > * 发布与部署。
 
-<!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 适用场景
 
@@ -96,4 +98,3 @@ lang: zh
 
 
 我们从页面入手，便于开发尽快地进入需求。我们考虑每一个功能点。
-

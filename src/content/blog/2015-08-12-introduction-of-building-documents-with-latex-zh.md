@@ -1,6 +1,6 @@
 ---
 title: 介绍专业的文档系统LaTeX
-description: ''
+description: 'TeX家族是一个专业的排版系统。本文简要地介绍了TeX家族的常见成员， 并整理出了LaTeX入门使用过程中会遇到的一些问题， 同时，将演示LaTeX在网页中的集成。最后在附录部分，给出了样式模板的参考代码。'
 category: guide
 tags:
   - latex

@@ -2,7 +2,7 @@
 title: "Scala Quick Tour Part II"
 slug: scala-quick-tour-p2
 pubDatetime: 2016-08-22 16:31:17+08:00
-description: ""
+description: 'This is the second part of _Scala Quick Tour_, in the previous part, we talked about Functional Programming Basis, Functional Type and the Type Inference. In this article, I will give you a precise...'
 category: "guide"
 tags: ["scala"]
 lang: en

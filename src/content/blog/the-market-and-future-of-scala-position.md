@@ -1,22 +1,25 @@
 ---
-layout: post
 title: "Scala职位市场的现状和未来展望"
-description: ""
-category: "slides"
-tags: ["restful","development","scala"]
-lang: zh
+pubDatetime: 2016-09-01T12:00:00Z
+slug: "the-market-and-future-of-scala-position"
+featured: false
+draft: false
+tags:
+  - drafts
+  - restful
+  - development
+  - scala
+description: '[Legacy Draft] 本文不是Scala语言的讲解，而是使用一些数据来描述Scala职位目前在市场上的现状，和未来的展望。'
 ---
-{% include JB/setup %}
+
+TL;DR: This was a draft when I used Jekyll for my blog site (2016). It may be incomplete or contain outdated information.
 
 # 摘要
-{:.no_toc}
 
 > 本文不是`Scala`语言的讲解，而是使用一些数据来描述Scala职位目前在市场上的现状，和未来的展望。
 
-<!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 
 # 几个基本的技术概念

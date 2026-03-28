@@ -3,7 +3,7 @@ title: "Design Test Cases Before Write Implementation If the Former Is Easier"
 slug: simple-tdd-use-case
 pubDatetime: 2017-03-31 15:50:50+08:00
 modDatetime: 2024-01-01T06:14:26.358Z
-description: ""
+description: 'If we want to map the domain according to the defined rules, and： - store the mapping rules in database, such as a.com， - for input s1.a.com，it can be matched by this rule, while, a.com cannot. Thi...'
 category: "algo"
 tags: ["algorithm", "regex", "string", "pattern"]
 lang: "en"

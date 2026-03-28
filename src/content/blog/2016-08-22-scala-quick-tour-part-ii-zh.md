@@ -1,6 +1,6 @@
 ---
 title: Scala函数编程（二）
-description: ''
+description: '本文是《Scala函数编程》系列的第二部分，第一部分 介绍了函数编程（FP）的基本概念、函数分别可以作为参数和返回值。 在第二个部分里面，我们将介绍一个非常重要的设计模式——尾递归（Tail Recursion）。之后 会通过Scala里面的List[T]来阐述尾递归在线性集合的应用，包括如下内容： 迭代和递归的相互转化； 递归和尾递归的区别； Scala中的泛型简介； 使用递归的方式构造一...'
 category: guide
 tags:
   - scala

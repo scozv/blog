@@ -1,22 +1,23 @@
 ---
-layout: post
 title: "Algorithm 101 Part II, Recursion and Linear Collections"
-description: ""
-category: "algo"
-tags: ["algorithm"]
-lang: "zh"
+pubDatetime: 2016-11-17T12:00:00Z
+slug: "algorithm-101-part-ii-recursion-and-linear-collections"
+featured: false
+draft: false
+tags:
+  - drafts
+  - algorithm
+description: '[Legacy Draft] 本次讲递归和线性序列。'
 ---
-{% include JB/setup %}
+
+TL;DR: This was a draft when I used Jekyll for my blog site (2016). It may be incomplete or contain outdated information.
 
 # 摘要
-{:.no_toc}
 
 > 本次讲递归和线性序列。
 
-<!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 ## 回顾
 

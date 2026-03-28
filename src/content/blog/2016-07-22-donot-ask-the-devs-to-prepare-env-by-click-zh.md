@@ -1,6 +1,6 @@
 ---
 title: 无代码不欢乐——使用统一的Bash脚本搭建开发环境
-description: ''
+description: '本文最终会给出一段脚本，执行类似如下的语句： wget -qO- path/to/installation.sh | bash 将会在Ubuntu系统上面配置好所有的开发环境。 本文会讲解如何写出并部署installation.sh这样的脚本，和一些建议。 除此之外，本文更愿意表达如下几个意思： 能用代码的，就别用鼠标； 既然用了代码，就纳入版本控制（Git）； 使用脚本（installat...'
 category: pattern
 tags:
   - bash

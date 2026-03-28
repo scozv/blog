@@ -1,6 +1,6 @@
 ---
 title: Bolero，累积更新说明（2016-09-04）
-description: ''
+description: '本文是对Bolero代码模板的累积更新的说明和解释。 有关Bolero的整体介绍，请参考早期的文章。 Bolero的源代码参见 scozv/bolero。'
 category: guide
 tags:
   - scala

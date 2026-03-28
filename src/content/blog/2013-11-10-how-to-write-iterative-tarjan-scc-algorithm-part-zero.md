@@ -2,7 +2,7 @@
 title: "How to Write Iterative Tarjan SCC Algorithm, Part I"
 slug: iterative-tarjan-scc-p1
 pubDatetime: 2013-11-12 23:57:11+08:00
-description: ""
+description: 'During the work on [Tango.js] [1], I found there is a limitation on recursive stack size of JavaScript. This series posts describe the way to convert recursive Tarjan SCC algorithm to iterative one...'
 category: "algo"
 tags: ["algorithm", "graph", "dfs"]
 lang: en

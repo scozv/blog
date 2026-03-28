@@ -2,7 +2,7 @@
 title: "A Loose Coupling Architecture of the Web Solution with Continuous Integration"
 slug: simple-web-loose-coupling-design
 pubDatetime: 2016-05-06 16:03:07+08:00
-description: ""
+description: 'This article will discuss two core ideas for a Architecture of the Web Solution, that are Loose Coupling and Continuous Integration. The article is mainly written in Chinese, while the English post...'
 category: "pattern"
 tags: ["ci", "project", "architecture"]
 lang: en

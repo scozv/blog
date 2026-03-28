@@ -1,6 +1,6 @@
 ---
 title: 将网页版的QUnit.js测试移植到Node.js
-description: ''
+description: '本文描述了我让代码在浏览器和Node.js两边都能运行的过程，略属娱乐。 因为就项目 [Tango.js] [2] 而言，我认为，重点在算法（ Algorithm ）。 至于引入大文本输入测试（参见 [issue #18] [1] ），是为了保证算法的正确和高效，以及今后的重构， 当然这也很重要。引入持续集成，是尽可能想让一切都是自动化。 对于已经完成了成套测试的网页版QUnit.js环境，...'
 category: guide
 tags:
   - ci

@@ -2,7 +2,7 @@
 title: "Scala Quick Tour Part I"
 slug: scala-quick-tour-p1
 pubDatetime: 2016-08-21 22:38:30+08:00
-description: ""
+description: 'Three years ago, I learn the _Functional Programming Principles in Scala_ from Coursera.org. After that I wrote Scala and finished Bolero . In the serial of _Scala Quick Tour_, I would like to give...'
 category: "guide"
 tags: ["scala"]
 lang: en

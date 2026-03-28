@@ -1,6 +1,6 @@
 ---
 title: Scala函数编程（一）
-description: ''
+description: '接下来的一系列《Scala函数编程》，得益于公开课《Functional Programming Principles in Scala》。 我整理了函数编程中的重要概念，并加入了我两年Scala开发的心得体会 。 为了便于理解，部分名词、专有术语，我直接使用英文，不作任何翻译。 《Scala函数编程》这一系列，不单纯只是原公开课的笔记整理。 我也加入了自己的理解、一些理论化的表述和一些练习...'
 category: guide
 tags:
   - scala

@@ -3,7 +3,7 @@ title: "How to Update the Heap in Dijkstra's Shortest Path Algorithm"
 slug: heap-update-in-dijkstra-for-nlogn
 pubDatetime: 2013-11-03 23:09:10+08:00
 modDatetime: 2024-01-21T13:42:21.249Z
-description: "Learn how to maintain the heap order in Dijkstra's algorithm for optimal performance."
+description: 'Replacing the list with a heap reduces the time complexity of Dijkstra''s shortest path algorithm from $O(nm)$ to $O(n \ln m)$. However, when implementing the algorithm with a heap , I noticed t...'
 category: "algo"
 tags: ["algorithm", "graph", "dijkstra", "heap"]
 lang: en

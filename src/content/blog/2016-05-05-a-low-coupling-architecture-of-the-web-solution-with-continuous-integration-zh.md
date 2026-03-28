@@ -1,6 +1,6 @@
 ---
 title: 基于低耦合和持续集成的Web架构
-description: ''
+description: '本文将要解释，我目前以及未来在项目中，将会一直实践的两个概念：低耦合与持续集成。 本文还没有完全地写完。'
 category: pattern
 tags:
   - ci

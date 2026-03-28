@@ -2,7 +2,7 @@
 title: "Bolero, Cumulative Update (Sep 04, 2016)"
 slug: bolero-p2-updates
 pubDatetime: 2016-09-05 02:41:16+08:00
-description: ""
+description: 'This article gives a short description on cumulative update of Bolero. For the entire project details, please read previous post 。 You may find the source code of Bolero on scozv/bolero.'
 category: "guide"
 tags: ["scala", "scaffold", "project", "architecture", "restful"]
 lang: "en"

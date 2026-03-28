@@ -2,7 +2,7 @@
 title: "How to Write Iterative Tarjan SCC Algorithm, Part II"
 slug: iterative-tarjan-scc-p2
 pubDatetime: 2013-11-23 23:27:18+08:00
-description: ""
+description: 'In [previous part] [4], we talked about iterative DFS, where we use a stack named frontier to keep the visiting order. This time, we are going to look at the iterative topological sort and Karasoju...'
 category: "algo"
 tags: ["algorithm", "graph", "scc"]
 lang: en

@@ -1,15 +1,18 @@
 ---
-layout: post
 title: "Algorithm 101 Part I, Big O and 2-SUM Problem"
-description: ""
-category: "algo"
-tags: ["algorithm"]
-lang: "zh"
+pubDatetime: 2016-10-31T12:00:00Z
+slug: "algorithm-101-part-i-big-o-and-2-sum-problem"
+featured: false
+draft: false
+tags:
+  - drafts
+  - algorithm
+description: '[Legacy Draft] 我认为数据结构和算法是程序员的基本技能。虽然，目前流行的代码框架，都自带很多数据结构 和算法的封装（比如各种线性结构、比如排序），但不是每一个程序员都能熟练的写出单链表、或者排序。 并且不借助IDE的智能感知。 本系列的文章将会讲解一些基本算法和数据结构，包括： 时间复杂度Big O 线性数据结构 排序 树、Hash和查找 图和常见图算法 本系列不是算法竞赛的培训，更严格地说，本系列的难度和...'
 ---
-{% include JB/setup %}
+
+TL;DR: This was a draft when I used Jekyll for my blog site (2016). It may be incomplete or contain outdated information.
 
 # 摘要
-{:.no_toc}
 
 > 我认为数据结构和算法是程序员的基本技能。虽然，目前流行的代码框架，都自带很多数据结构
 > 和算法的封装（比如各种线性结构、比如排序），但不是每一个程序员都能熟练的写出单链表、或者排序。
@@ -30,10 +33,8 @@ lang: "zh"
 >
 > 这样对理解基本的算法和数据结构，有很大的帮助。
 
-<!--more-->
 
-* Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
+## Table of contents
 
 # 算法无处不在
 
@@ -93,7 +94,7 @@ lang: "zh"
 我们可以枚举`xs`中所有的二元序列 $$(x, y)$$，然后遍历这些枚举值，看看哪一组满足
 $$x+y=T$$。
 
-{% highlight JavaScript %}
+```javascript
 for (i=0;i<len(xs);i++) {
   for (j=i;j<len(xs);j++) {
     if (xs[i] + xs[j] == T) {
@@ -101,7 +102,7 @@ for (i=0;i<len(xs);i++) {
     }
   }
 }
-{% endhighlight %}
+```
 
 ## 运行时间估计
 

@@ -2,7 +2,7 @@
 title: "Bolero, a RESTful Scaffold with Scala, Play! and ReactiveMongo"
 slug: bolero-p1-simple-restful-scaffold-with-play-reactivemongo
 pubDatetime: 2016-07-28 22:19:31+08:00
-description: ""
+description: 'Bolero is a RESTful Scaffold with Scala, Play! and ReactiveMongo. Play! handles the HTTP Request and Response, while the ReactiveMongo reads and write with MongoDB. This article will introduce a fe...'
 category: "guide"
 tags: ["scala", "scaffold", "project", "architecture", "restful"]
 lang: "en"

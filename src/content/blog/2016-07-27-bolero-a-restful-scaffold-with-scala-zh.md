@@ -1,6 +1,6 @@
 ---
 title: Bolero——基于Scala、Play!和ReactiveMongo的RESTful代码模板
-description: ''
+description: '本文介绍一套RESTful的代码模板（代号：Bolero）——使用Scala语言，基于Play!库以及ReactiveMongo。 除了基本的HTTP Request和Response处理、MongoDB的异步读写之外，Bolero还包含如下功能： Model的几个建议； RESTful API设计的几个建议； CORS跨域配置； 基于Token认证的Request处理； 全局范围内设计的一...'
 category: guide
 tags:
   - scala
