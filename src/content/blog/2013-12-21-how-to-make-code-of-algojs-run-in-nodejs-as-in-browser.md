@@ -1,5 +1,5 @@
 ---
-title: "How to Make Code of Tango.js Run in Node.js as in Browser"
+title: "Running Browser Code in Node.js via Grunt CI"
 slug: compile-tangojs-in-nodejs
 pubDatetime: 2013-12-21 22:56:45+08:00
 description: 'I have planed to run unit test by reading file as the input for algorithm like graph algorithm for a few months (see [issue #18] [1]). However, it is not easy or effective to read local file from b...'

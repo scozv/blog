@@ -1,5 +1,5 @@
 ---
-title: 迭代版本的Tarjan强连通算法（一）
+title: "迭代版本的Tarjan强连通算法（上）"
 description: '上个月我完成了迭代版的Tarjan强连通算法（参见 [Tango.js] [1] ） 。这一个系列的文章将解释这一过程和相关代码——包括迭代图遍历、迭代拓扑排序和Kosaraju强连通算法以及最后的迭代Tarjan算法三部分。本文先讲迭代图遍历。 本文大部分的解释（以及伪代码）需要阅读英文版本。'
 category: algo
 tags:

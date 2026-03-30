@@ -1,5 +1,5 @@
 ---
-title: "A Version Controlled Project Workflow for Requirement, Coding and Continuous Integration"
+title: "A Version Control System Workflow"
 slug: simple-version-control-workflow
 pubDatetime: 2015-09-04 10:13:54+08:00
 description: 'This article introduces a project workflow based on VCS (Version Controll System). The principle of this workflow is Put everything into VCS. For documents, Word or PDF files are not recommended in...'

@@ -1,5 +1,5 @@
 ---
-title: 一套简洁的基于Git的线性分支管理工作流
+title: "一套简洁的基于Git的线性分支管理工作流"
 description: '本文受GitFlow 和Anti-GitFlow 的启发， 并在使用了GitFlow一段时间之后，提出了一套简洁的基于Git的线性分支管理工作流。 简洁不仅仅是命令接口（gitl）的简单，同时也保证背后的分支简洁、线性。 本文还没有最终完成，gitl接口还没有实现，同时，还有一些没有想明白的问题——文中会一一列明。 在gitl实现之前，我将继续使用GitFlow。'
 category: pattern
 tags:

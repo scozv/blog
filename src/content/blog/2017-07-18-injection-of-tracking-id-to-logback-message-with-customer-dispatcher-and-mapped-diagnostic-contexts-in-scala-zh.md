@@ -1,5 +1,5 @@
 ---
-title: 使用自定义Akka Dispatcher和Mapped Diagnostic Contexts为Play中的日志增加Tracking Id
+title: "自定义Akka Dispatcher的MDC日志追踪ID注入"
 description: 'Yann Simon在2014的文章中总结了两种向Mapped Diagnostic Contexts（MDC） 增加全局变量的编程方式，利用MDC的全局变量，可以在日志中记录每一个HTTP Request的Tracking Id。 本文首先对Tracking Id和Yann Simon的两种方式做简要介绍，并描述实践过程 中遇到的问题。其中一个主要的问题是， 部分日志没有Tracking ...'
 category: pattern
 tags:

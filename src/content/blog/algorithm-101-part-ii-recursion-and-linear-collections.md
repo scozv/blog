@@ -1,5 +1,5 @@
 ---
-title: "Algorithm 101 Part II, Recursion and Linear Collections"
+title: "Algorithm 101: Recursion and Linear Data Structures"
 pubDatetime: 2016-11-17T12:00:00Z
 slug: "algorithm-101-part-ii-recursion-and-linear-collections"
 featured: false

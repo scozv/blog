@@ -1,5 +1,5 @@
 ---
-title: "Algorithm 101 Part I, Big O and 2-SUM Problem"
+title: "Algorithm 101: Big O and 2-SUM"
 pubDatetime: 2016-10-31T12:00:00Z
 slug: "algorithm-101-part-i-big-o-and-2-sum-problem"
 featured: false

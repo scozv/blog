@@ -1,5 +1,5 @@
 ---
-title: "Introduction of Building Documents with LaTeX"
+title: "LaTeX and KaTeX"
 slug: documenting-with-latex
 pubDatetime: 2015-08-12 12:23:01+08:00
 description: 'This article will give brief introduction for TeX and LaTeX, then discuss a few issues during using LaTeX and how to display LaTeX equation on web page. This article is mainly written in Chinese. I...'

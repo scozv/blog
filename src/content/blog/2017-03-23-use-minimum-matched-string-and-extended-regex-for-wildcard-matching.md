@@ -1,5 +1,5 @@
 ---
-title: "Design Test Cases Before Write Implementation If the Former Is Easier"
+title: "Validating Minimum Matched Strings with Regex"
 slug: simple-tdd-use-case
 pubDatetime: 2017-03-31 15:50:50+08:00
 modDatetime: 2024-01-01T06:14:26.358Z

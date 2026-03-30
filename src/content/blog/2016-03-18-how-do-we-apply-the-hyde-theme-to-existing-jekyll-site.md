@@ -1,5 +1,5 @@
 ---
-title: "How Do We Apply the Hyde Theme to Existing Jekyll Site?"
+title: "Hyde Theme into Jekyll"
 slug: jekyll-hyde-theme
 pubDatetime: 2016-03-18 07:25:05+08:00
 description: 'This article will describe the process of applying Hyde theme on my existing Jekyll Bootstrap site. And this approach can be used for applying any theme of Jekyll. The main ideas of integrating the...'

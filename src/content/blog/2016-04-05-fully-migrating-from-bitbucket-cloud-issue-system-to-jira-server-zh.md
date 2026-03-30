@@ -1,5 +1,5 @@
 ---
-title: Bitbucket Cloud的Issue至JIRA Server的完全迁移指南
+title: "从Bitbucket到JIRA Server的迁移"
 description: '本文给出Bitbucket Cloud的Issue系统至JIRA Server的完整迁移方案，包括: Issue的导入； Bitbucket和JIRA的双向关联； 修订历史的Git提交记录，从而与JIRA关联 如下话题，本文不作解释: 为什么是JIRA； 为什么用Bitbucket； 为什么我只用Ubuntu 14.04 Server操作系统 完整的迁移方案和迁移脚本，需要阅读英文版本。'
 category: guide
 tags:

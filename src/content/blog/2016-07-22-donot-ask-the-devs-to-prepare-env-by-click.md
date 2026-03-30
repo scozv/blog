@@ -1,5 +1,5 @@
 ---
-title: "DO NOT Prepare the Development Environment by Click and Click"
+title: "Automating Dev Environments Setup with Bash Scripts"
 slug: simple-dev-environment-script
 pubDatetime: 2016-07-23 21:32:23+08:00
 description: 'This article will give you an installation.sh script, that can be used to prepare the development environment. Instead of click and click, we just simply run this command in bash： wget -qO- path/to...'

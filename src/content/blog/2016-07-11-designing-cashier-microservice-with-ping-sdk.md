@@ -1,5 +1,5 @@
 ---
-title: "Design a Cashier Microservice with Ping++ SDK"
+title: "Architectural Design of a Cashier Microservice"
 slug: simple-cashier-app-with-3rd-sdk
 pubDatetime: 2016-07-14 16:58:31+08:00
 description: 'Ping++ provides a facade implementation for multiple payments. Usually, each application we create needs a corresponding Ping++ application. In this article, I try to design a cashier microservice ...'

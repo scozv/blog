@@ -1,5 +1,5 @@
 ---
-title: "Putting Tracking Id to Log Message with Customized Akka Dispatcher and Mapped Diagnostic Contexts in Play 2.6"
+title: "MDC Tracking IDs in Play 2.6 with Custom Akka Dispatchers"
 slug: akka-mdc-tracking-id-in-log
 pubDatetime: 2017-07-18 04:03:15+08:00
 description: 'Two approaches of adding global value to Mapped Diagnostic Contexts（MDC) have been introduced in the post of 2014 by Yann Simon. Since the global value could be added into MDC, the Tracking Id used...'

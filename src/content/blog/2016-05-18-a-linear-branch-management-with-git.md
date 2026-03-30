@@ -1,5 +1,5 @@
 ---
-title: "A Linear Branch Management With Git"
+title: "A Linear Git Branching Model for CI/CD Workflows"
 slug: linear-gitflow
 pubDatetime: 2016-07-04 22:10:27+08:00
 description: 'This article publishes a Git branch management workflow, that is brief and linear, inspired by GitFlow and Anti-GitFlow . The gitl, that has not been implemented yet, is not just interface-simplifi...'

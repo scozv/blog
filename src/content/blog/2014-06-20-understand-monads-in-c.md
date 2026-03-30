@@ -1,5 +1,5 @@
 ---
-title: "Understand Monads in C#"
+title: "Understanding Monads in C#"
 slug: monad-in-csharp
 pubDatetime: 2014-06-20 09:20:06+08:00
 description: 'This article is a reading note for _Monads_ by Eric Lippert. And the note is mainly written in Chinese. For me, Monad is a pipe line, transferring the input data, including the operator and sending...'
