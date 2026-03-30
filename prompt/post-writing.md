@@ -128,6 +128,10 @@ This is a fixed string. Use it word-for-word on every LLM-written post. Do not v
 
 ### Post structure:
 
+The post should read as an **article**, not meeting minutes. Use descriptive section headings that tell the reader what the section is about (e.g., `## Stripping the Homepage`, `## The YAML Escape Sequence Bug`, `## Bilingual Post Support`). Do **not** use numbered headings like `## Iteration 1: [Label]` — that reads like a log, not a post.
+
+Group related work under one heading when it forms a natural topic. For instance, three prompts about build warnings, legacy folder cleanup, and favicon generation can share a section called `## Build Warnings and Legacy Cleanup` rather than being three separate numbered iterations.
+
 ```markdown
 ---
 # frontmatter
@@ -142,49 +146,50 @@ One paragraph: what system/task/context existed going in.
 ## The Problem
 
 What was broken, unclear, or needed to be built? State constraints plainly.
+Use a bullet list if there are multiple distinct issues.
 
-## The Goal
-
-What was the desired end state? Be specific.
-
-## Iteration 1: [Short Label]
+## [Descriptive Topic Heading]
 
 **Prompt:**
 > User's exact message here — spelling and typos corrected, wording unchanged.
 
-What happened. What the LLM proposed or produced. Whether it worked.
-Keep this to 2–4 sentences or a short bullet list. The prompt quote carries the intent;
-the surrounding prose just records the outcome.
-
-## Iteration 2: [Short Label]
+Explain what happened: what was tried, what was the root cause, what fixed it.
+Write as narrative prose — walk the reader through the reasoning the way the
+author's legacy posts do ("I noticed...", "The culprit was...", "So we need...").
+A section should have enough prose that a reader unfamiliar with the chat
+understands the *why*, not just the *what*.
 
 **Prompt:**
-> Next message, verbatim.
+> Follow-up prompt within the same topic, if any.
+
+Continue the narrative. Multiple prompts can live under one heading when
+they are part of the same logical thread.
+
+## [Next Topic Heading]
 
 ...
 
 ## Result
 
-Final outcome. Show the diff, config change, or terminal output if relevant.
-A before/after table works well here.
+Final outcome. A before/after table works well here.
 ```
 
 ### Rules for quoting user prompts:
 
 - **Fix spelling and typos only.** Do not rephrase, reorder, or clean up the intent.
-- **Do not merge prompts.** If the user sent two separate messages, keep them as two separate iterations.
+- **Do not merge prompts.** If the user sent two separate messages, keep them as two separate `**Prompt:**` blocks — but they *can* share a section heading if they belong to the same topic.
 - **Do not omit prompts** that led to a wrong turn or a revision — those are part of the engineering story.
 - **After drafting**, present the post to the user for review and ask:
   - Are the prompts quoted faithfully?
   - Is any iteration missing or misrepresented?
   - Should any section be expanded or trimmed?
 
-### Length and prose density:
+### Prose style and density:
 
-- **Prose per iteration: 1–4 sentences maximum.** The prompt quote carries the intent — the surrounding prose records only the outcome, the key insight, or the fix. Do not restate the prompt in prose form.
-- **Do not mirror design options back as paragraphs.** If the user chose between options, state the chosen outcome in one sentence. Example: "Design aligned: English-first deduplication for lists; both versions indexed for search with `(中文)` appended."
-- **Target post length**: a 5–15 iteration session log should have under ~900 words of prose (excluding quoted prompts and the Result table). If it reads longer, trim the per-iteration prose first.
-- **Avoid sub-headers inside iterations** (e.g., `**Lists**`, `**Search**`, `**Prev/Next**` as bold pseudo-headers). Use a compact paragraph or a short bullet list instead.
+- **Write narrative prose, not bullet-point summaries.** The post should read like a colleague explaining what happened, not like meeting minutes. Explain the reasoning behind findings, show cause-and-effect, and walk through the logic of non-obvious fixes.
+- **2–6 sentences per prompt is a good range.** Enough to explain the *why* and the *how*, short enough that the prompt quote still carries the intent. Single-sentence outcomes are fine for trivial changes; longer prose is expected for debugging stories or architectural decisions.
+- **Target post length**: for a session covering 5–10 distinct topics, aim for ~1200–1800 words of prose (excluding quoted prompts and the Result table). Short enough to read in one sitting, long enough to be a useful reference.
+- **Avoid sub-headers inside sections** (e.g., bold pseudo-headers like `**Lists**`, `**Search**`). Use a compact paragraph or a short inline list instead.
 
 ---
 
