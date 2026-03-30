@@ -179,6 +179,13 @@ A before/after table works well here.
   - Is any iteration missing or misrepresented?
   - Should any section be expanded or trimmed?
 
+### Length and prose density:
+
+- **Prose per iteration: 1–4 sentences maximum.** The prompt quote carries the intent — the surrounding prose records only the outcome, the key insight, or the fix. Do not restate the prompt in prose form.
+- **Do not mirror design options back as paragraphs.** If the user chose between options, state the chosen outcome in one sentence. Example: "Design aligned: English-first deduplication for lists; both versions indexed for search with `(中文)` appended."
+- **Target post length**: a 5–15 iteration session log should have under ~900 words of prose (excluding quoted prompts and the Result table). If it reads longer, trim the per-iteration prose first.
+- **Avoid sub-headers inside iterations** (e.g., `**Lists**`, `**Search**`, `**Prev/Next**` as bold pseudo-headers). Use a compact paragraph or a short bullet list instead.
+
 ---
 
 ## 6. No PII Policy
