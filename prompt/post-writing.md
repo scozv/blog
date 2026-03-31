@@ -176,13 +176,19 @@ Final outcome. A before/after table works well here.
 
 ### Rules for quoting user prompts:
 
-- **Fix spelling and typos only.** Do not rephrase, reorder, or clean up the intent.
-- **Do not merge prompts.** If the user sent two separate messages, keep them as two separate `**Prompt:**` blocks — but they *can* share a section heading if they belong to the same topic.
-- **Do not omit prompts** that led to a wrong turn or a revision — those are part of the engineering story.
+The quoted prompt is the most important part of an LLM-written post. It is the human's voice — the raw, unfiltered thought that drove the work. Treat it accordingly.
+
+- **Verbatim, always.** Quote the user's prompt exactly as sent. Do not summarise, paraphrase, rephrase, reorder, or "clean up" the wording. The prompt is source material, not a starting point for a polished sentence.
+- **Typo and spelling fixes only.** The *only* permitted edits are correcting clear spelling mistakes and typos (e.g. `"implemantation"` → `"implementation"`). Do not fix grammar. Do not restructure sentences. Do not remove filler words. The rawness is intentional — it shows how the human actually communicated.
+- **Do not merge prompts that address different things.** If the user sent two separate messages on two separate topics, they get two separate `**Prompt:**` blocks under two separate section headings.
+- **You may merge prompts only if they are identical in intent.** If the user sent a follow-up that clarifies or corrects a previous message on the exact same micro-topic (e.g. a typo fix or a "yes, do that" confirmation), those two messages can share one `**Prompt:**` block — but only if combining them loses no information.
+- **Do not omit prompts that led to wrong turns or revisions.** A failed attempt followed by a correction is more valuable to a reader than a sanitised account of only the working path. Include both.
+- **One section heading can contain multiple `**Prompt:**` blocks** when the prompts belong to the same logical topic. The heading groups the theme; the individual prompt blocks preserve the iteration.
 - **After drafting**, present the post to the user for review and ask:
-  - Are the prompts quoted faithfully?
+  - Are the prompts quoted verbatim and faithfully?
   - Is any iteration missing or misrepresented?
-  - Should any section be expanded or trimmed?
+  - Should any section be expanded, trimmed, or re-grouped?
+
 
 ### Prose style and density:
 
@@ -190,6 +196,8 @@ Final outcome. A before/after table works well here.
 - **2–6 sentences per prompt is a good range.** Enough to explain the *why* and the *how*, short enough that the prompt quote still carries the intent. Single-sentence outcomes are fine for trivial changes; longer prose is expected for debugging stories or architectural decisions.
 - **Target post length**: for a session covering 5–10 distinct topics, aim for ~1200–1800 words of prose (excluding quoted prompts and the Result table). Short enough to read in one sitting, long enough to be a useful reference.
 - **Avoid sub-headers inside sections** (e.g., bold pseudo-headers like `**Lists**`, `**Search**`). Use a compact paragraph or a short inline list instead.
+- **Write for human readers — precision makes it useful for LLMs too.** Do not write dense "LLM reference material". A well-written human-facing post that includes (a) the exact symptom, (b) the root cause, and (c) the exact fix is already good LLM knowledge. Vagueness ("it was fixed", "we updated the config") is bad for both audiences. Always name the specific file, key, or function that changed, and state clearly *why* it was wrong.
+
 
 ---
 

@@ -46,14 +46,14 @@ The hero, featured section, and share buttons were all upstream AstroPaper defau
 **Prompt:**
 > Now you can run `npm run build`, and do review the log, and fix the warnings.
 
-`astro check` returned 8 TypeScript hints: six unused social share icons in `constants.ts`, plus `IconRss` and `featuredPosts` in `index.astro`. All removed. Final build: 0 errors, 0 warnings, 0 hints.
+`astro check` returned 8 TypeScript hints. Six were unused icon imports in `constants.ts` — `IconBrandFacebook`, `IconBrandTwitter`, and four others that had been imported for `SHARE_LINKS` entries now that the array was empty. The other two were `IconRss` and `featuredPosts` in `index.astro`, both left over from the hero section removal. Deleting the six import lines in `constants.ts` and the two declarations in `index.astro` cleared everything. Final build: 0 errors, 0 warnings, 0 hints.
 
 **Prompt:**
 > Now go and check the repo and you will find some folders like `_pages`, `_posts` and `.archive` are no longer needed. Let's git remove and clean up the files. For favicon, you can help me generate the SVG file based on my blog site title, name etc. Show me some options.
 
 `git rm -r _pages _posts .archive` removed the Jekyll directories — `.archive` alone had ~100 KaTeX font files from the old build. Three SVG favicon options were proposed: monogram "S", terminal `>_`, code braces `{}`.
 
-**Prompt (on the terminal prompt option):**
+**Prompt:**
 > I like this, but my prompt is `%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f)`. Shall I align?
 
 The final favicon was derived directly from the ZSH success-state prompt configuration: three `❯` chevrons in a blue → cyan → green gradient on a `#1e1e2e` dark background. Written in pure SVG, placed at `public/favicon.svg`.
@@ -61,7 +61,7 @@ The final favicon was derived directly from the ZSH success-state prompt configu
 **Prompt:**
 > The sublines: "All the articles I've posted.", "All the tags used in posts.", "Search any article..." — we can remove right?
 
-Dropped the `pageDesc` prop from three page files. `Main.astro` itself was not touched — keeping that upstream layout file clean for future rebases.
+Dropped the `pageDesc` prop from three page files: `posts/[...page].astro`, `tags/index.astro`, and `search.astro`. The prop controlled the subtitle paragraph rendered by `Main.astro`'s layout slot — removing the prop makes `Main.astro` conditionally skip that paragraph. `Main.astro` itself was not touched, because it is a core upstream layout file; editing it would create a merge conflict on the next `git rebase` against AstroPaper.
 
 ## Migrating the Jekyll Drafts
 
@@ -75,17 +75,14 @@ Both `src/content/blog/drafts/` and the root `_drafts/` folder were deleted. All
 **Prompt:**
 > In that case, do we still need to keep the `./drafts` folder? Also, what is the warning: `[WARN] [glob-loader] Duplicate id "..." found`?
 
-The warnings were a Vite HMR cache overlap — the dev server had both the old path (`drafts/foo.md`) and the new path (`foo.md`) indexed simultaneously mid-migration. `rm -rf .astro` cleared it on next start. No actual data conflict.
+The warnings were a Vite HMR cache overlap — the dev server had both the old path (`drafts/foo.md`) and the new path (`foo.md`) in its module graph simultaneously, so it emitted a duplicate-id warning for every file moved out of `drafts/`. The fix was `rm -rf .astro` to clear the Vite cache; the warnings were gone on next start. No actual duplicate content — the files had already been moved, not copied.
 
 ## Cleaning Up the RSS Feed
 
 **Prompt:**
 > My RSS feed is showing unparsed markdown for footnotes, TOC placeholders, and even entire reference sections. This happens because the markdown-it parser in Astro's RSS integration doesn't process these like Remark does on the main site. Can you provide a solution using regular expressions to strip these artifacts from the raw markdown body before it's passed to markdown-it for HTML conversion?
 
-The RSS feed was being generated from raw markdown `body` via `markdown-it`, but `markdown-it` doesn't share the Remark plugin chain that powers the main site — so `remark-toc` placeholders, footnote definitions, and entire Reference sections were leaking through as literal text. Four regex passes were applied to `body` in `rss.xml.ts` before rendering, stripping all of them.
-
-**Prompt:**
-> It looks much cleaner. Thank you.
+The RSS feed was being generated from raw markdown `body` via `markdown-it`, but `markdown-it` doesn't share the Remark plugin chain that powers the main site — so `remark-toc` placeholders, footnote definitions, and entire Reference sections were leaking through as literal text. Four regex passes were applied to `body` in `rss.xml.ts` before rendering, stripping all of them. The feed came out clean.
 
 ## Footer and Draft Labelling
 
@@ -143,10 +140,7 @@ This one was interesting. Three attempts at fixing the `@pagefind/default-ui` dy
 
 Diffing the commits revealed the real cause: the new `postFilter.ts` signature had made `allPosts` a positional non-optional parameter. Astro's `getCollection("blog", postFilter)` calls the filter internally with only one argument — so `allPosts` was `undefined`, `allPosts.some(...)` threw a silent `TypeError`, the build crashed before Pagefind could run, and the search UI never rendered. No error in the console, no warning in the build output. The search box just vanished.
 
-Fix: mark `allPosts` optional with `?`. Guard with `if (isZh && allPosts)`.
-
-**Prompt:**
-> It's fixed, searching box is back now.
+Fix: mark `allPosts` optional with `?`. Guard with `if (isZh && allPosts)`. The search box came back.
 
 ## RSS Full Content
 
@@ -154,6 +148,17 @@ Fix: mark `allPosts` optional with `?`. Guard with `if (isZh && allPosts)`.
 > Next, for RSS, shall we allow full content? I am ok with RSS to get full content, cause I am an RSS user and I like RSS reader to read full content. Also, for both Eng and Chinese, let's put into RSS?
 
 Two changes to `rss.xml.ts`: the collection call used `getCollection("blog", post => postFilter(post))` — the single-argument form deliberately bypasses deduplication, so both English and Chinese posts appear in the feed. Added `markdown-it` and `sanitize-html` to parse `body` into HTML for the `content` field. The regex cleanup from the RSS feed iteration was applied before parsing.
+
+## Redesigning the 404 Page
+
+**Prompt:**
+> Shall I use same code block style to about.astro, same background color, width of the box, font, font size etc. And also have the header: `Home » 404` / `Not Found`. You can even wrap it as an Astro component to reuse.
+
+The stock 404 page was a centred `<h1>404</h1>` with a `¯\_(ツ)_/¯` shrug. The first attempt created a `CodePage.astro` component wrapping raw `<pre><code>` — but raw HTML code blocks skip the Shiki pipeline entirely, so the colours and background were completely different from `about.md`'s code block.
+
+The correct fix was simpler: convert `404.astro` to `404.md` and use `AboutLayout.astro` as the layout, exactly like `about.md`. Markdown files go through the full Remark+Shiki pipeline, so the code block renders with the same theme colours, background, font, and `max-w-app` container. `CodePage.astro` was deleted. The breadcrumb needed one extra touch: `Breadcrumb.astro` gained an optional `override?: string` prop so that `AboutLayout.astro` can pass `breadcrumb: "404"` from frontmatter and render a static `Home » 404` regardless of what URL the visitor actually requested — preventing leaked path segments like `Home » peter run llm` from appearing in screenshots or being cached.
+
+`tests/404.spec.ts` covers: breadcrumb shows `"404"` (not the visited path) across five different missing URLs; heading reads "Not Found"; Python code block contains `HTTPException` and `status_code=404`; "Go back home" link navigates to `/`; header/footer rendered; `section.app-prose` container matches the About page.
 
 ## Result
 
@@ -175,3 +180,5 @@ Two changes to `rss.xml.ts`: the collection call used `getCollection("blog", pos
 | Post lists | EN + ZH shown as separate items | English-first deduplication; `-zh` hidden if EN exists |
 | Search | Both versions indexed, indistinguishable | Both indexed; `(中文)` appended to translated post titles |
 | Core layout files modified | — | 0 (all changes in config or isolated components) |
+| 404 page | Generic `404 + ¯\_(ツ)_/¯` | Python `HTTPException` block matching About page style; breadcrumb fixed to `Home » 404` via `Breadcrumb override` prop |
+| Test coverage | `search.spec.ts`, `utils.test.ts` | `tests/404.spec.ts` added: breadcrumb override, code block content, home link, layout parity |
