@@ -1,13 +1,12 @@
 ---
 title: "Completing a Jekyll-to-Astro Migration with LLM Assistance"
 slug: "refactoring-astropaper-ui-simplification"
-pubDatetime: 2026-03-30T15:00:00Z
+pubDatetime: 2026-03-21T15:00:00Z
 description: '[LLM] A 10-year-old Jekyll blog, manually rebased through AstroPaper 3→4→5, then finished with LLM sessions: UI cleanup, bilingual Chinese post migration, legacy draft publishing, RSS full content, and a custom ZSH-derived favicon.'
 draft: false
 tags:
   - astro
-  - typescript
-  - zsh
+  - antigravity
   - gemini
   - claude-sonnet
   - llm-assisted
