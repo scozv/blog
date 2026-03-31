@@ -2,9 +2,9 @@ export const SITE = {
   website: "https://blog.scozv.com/", // replace this with your deployed domain
   author: "@scozv",
   profile: "https://github.com/scozv",
-  desc: "Blog powered by a minimal, responsive and SEO-friendly Astro blog theme.",
+  desc: "Engineering journal by @scozv. Backend, infrastructure, algorithms, and LLM-assisted problem-solving, since 2013.",
   title: "Code this.",
-  ogImage: "astropaper-og.jpg",
+  ogImage: "og.png",
   lightAndDarkMode: true,
   postPerIndex: 7,
   postPerPage: 7,
